@@ -8,7 +8,7 @@
 | Attendees: | Horia Botezatu, Ilia Ilinsky, Tautvydas Kuklys, Tim Guldenmundt |
 
 ## Agenda Items:
-Opening by chair (1 min)
+- Opening by chair (1 min)
 - Check-in: How is everyone doing? (How is the progress on git assingment?) (5 min)
 - Approval of the agenda - Does anyone have any additions? (2 min)
 - Approval of last minutes - Did everyone read the TA notes from the previous meeting? (2 min)
