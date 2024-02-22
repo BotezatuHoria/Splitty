@@ -91,7 +91,8 @@ public class PersonTemporary {
     @Override
     public boolean equals(Object o) {
         if (this == o) {return true;}
-        if (o == null || getClass() != o.getClass()) {return false;}
+        if (o == null || getClass() != o.getClass())
+        {return false;}
         PersonTemporary that = (PersonTemporary) o;
         return Objects.equals(email, that.email);
     }
