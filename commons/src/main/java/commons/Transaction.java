@@ -29,8 +29,9 @@ public class Transaction {
     /**
      * Private empty constructor for the Transaction class.
      */
+    @SuppressWarnings("unused")
     private Transaction() {
-
+        // for object mapper
     }
 
     /**
