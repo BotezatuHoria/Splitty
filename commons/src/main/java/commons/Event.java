@@ -5,7 +5,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -17,8 +16,6 @@ public class Event {
     protected String title;
     protected int id;
     protected String token;
-    protected List<Person> personList;
-    protected List<Transaction> transactionList;
 
     /**
      * constructor, constructs the event with all these attributes.
@@ -26,16 +23,12 @@ public class Event {
      * @param title
      * @param id
      * @param token
-     * @param personList
-     * @param transactionList
      */
-    public Event(String tag, String title, int id, String token, List<Person> personList, List<Transaction> transactionList) {
+    public Event(String tag, String title, int id, String token) {
         this.tag = tag;
         this.title = title;
         this.id = id;
         this.token = token;
-        this.personList = personList;
-        this.transactionList = transactionList;
     }
 
     /**
@@ -71,22 +64,6 @@ public class Event {
     }
 
     /**
-     * the getter of the list of persons.
-     * @return returns the list of persons participating in this event.
-     */
-    public List<Person> getPersonList() {
-        return personList;
-    }
-
-    /**
-     * the getter of the list of transactions of the event.
-     * @return returns the transactions.
-     */
-    public List<Transaction> getTransactionList() {
-        return transactionList;
-    }
-
-    /**
      * makes the event into a readable string.
      * @return returns a string of the event.
      */
@@ -97,8 +74,6 @@ public class Event {
                 ", title='" + title + '\'' +
                 ", id=" + id +
                 ", token='" + token + '\'' +
-                ", personList=" + personList +
-                ", transactionList=" + transactionList +
                 '}';
     }
 
@@ -112,7 +87,7 @@ public class Event {
         if (this == o) { return true; }
         if (o == null || getClass() != o.getClass()){ return false;}
         Event event = (Event) o;
-        return id == event.id && Objects.equals(tag, event.tag) && Objects.equals(title, event.title) && Objects.equals(token, event.token) && Objects.equals(personList, event.personList) && Objects.equals(transactionList, event.transactionList);
+        return id == event.id && Objects.equals(tag, event.tag) && Objects.equals(title, event.title) && Objects.equals(token, event.token) ;
     }
 
     /**
@@ -121,7 +96,7 @@ public class Event {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(tag, title, id, token, personList, transactionList);
+        return Objects.hash(tag, title, id, token);
     }
 }
 
