@@ -10,12 +10,12 @@ import jakarta.persistence.Id;
 @Entity
 public class PersonTemporary {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String email;
     private String firstName;
     private String lastName;
     private String iban;
     private int debt;
+    @Id
     private int eventID;
 
     /**
@@ -33,6 +33,13 @@ public class PersonTemporary {
         this.iban = iban;
         this.eventID = eventID;
         this.debt = 0;
+    }
+
+    /**
+     * empty constructor (to solve the error given on the class)
+     */
+    public PersonTemporary() {
+
     }
 
     /**

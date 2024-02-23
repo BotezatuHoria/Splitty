@@ -16,7 +16,6 @@ import java.util.Objects;
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     private int id;
 
     protected String name;
@@ -47,6 +46,7 @@ public class Transaction {
         this.money = money;
         this.currency = currency;
     }
+
 
     /**
      * Getter for the id of a transaction.

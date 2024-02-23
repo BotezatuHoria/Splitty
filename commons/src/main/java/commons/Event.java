@@ -10,10 +10,11 @@ import java.util.Objects;
 @Entity
 public class Event {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     protected String tag;
     protected String title;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     protected int id;
     protected String token;
 
@@ -29,6 +30,13 @@ public class Event {
         this.title = title;
         this.id = id;
         this.token = token;
+    }
+
+    /**
+     * unused, empty constructor (to solve the error given on the class)
+     */
+    public Event() {
+
     }
 
     /**
