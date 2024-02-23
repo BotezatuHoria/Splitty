@@ -8,7 +8,7 @@ public class CurrencyConverter {
   protected HashMap<Pair<Currency, Currency>, Double> currencyConversionRates;
 
   /**
-   * Creates empty currency Calculator
+   * Creates empty currency Calculator.
    * NOTE: NEEDS IMPLEMENTATION TO FETCH CURRENCIES FROM DATABASE AND FILLS THE CONVERTOR MAP
    */
   public CurrencyConverter() {
@@ -16,7 +16,7 @@ public class CurrencyConverter {
   }
 
   /**
-   * Creates currency converter with custom values
+   * Creates currency converter with custom values.
    * @param currencyConversionRates hashmap which stores rates of different currencies
    */
   public CurrencyConverter(HashMap<Pair<Currency, Currency>, Double> currencyConversionRates){
@@ -48,7 +48,7 @@ public class CurrencyConverter {
   }
 
   /**
-   * Imports a new currency to rate map
+   * Imports a new currency to rate map.
    * @param currencyConversionRates the map that
    */
   public void setCurrencyConversionRate(HashMap<Pair<Currency, Currency>, Double> currencyConversionRates) {
@@ -56,7 +56,7 @@ public class CurrencyConverter {
   }
 
   /**
-   * Adds a new currency to rate key value pair to the map
+   * Adds a new currency to rate key value pair to the map.
    * @param currencyFrom the Currency to convert from
    * @param currencyTo the Currency to convert to
    * @param rate the rate of conversion
@@ -67,7 +67,7 @@ public class CurrencyConverter {
   }
 
   /**
-   * Removes currency rate from map
+   * Removes currency rate from map.
    * @param currencyFrom the Currency to convert from
    * @param currencyTo the Currency to convert to
    */
@@ -77,7 +77,7 @@ public class CurrencyConverter {
   }
 
   /**
-   * Sets new rate of conversion for currency pair
+   * Sets new rate of conversion for currency pair.
    * @param currencyFrom the Currency to convert from
    * @param currencyTo the Currency to convert to
    * @param rate the new rate of conversion
