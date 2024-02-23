@@ -24,7 +24,7 @@ public class Currency {
   }
 
   /**
-   * empty constructor (to solve the error given on the class)
+   * empty constructor (to solve the error given on the class).
    */
   public Currency() {
 

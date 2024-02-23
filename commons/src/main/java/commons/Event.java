@@ -20,10 +20,10 @@ public class Event {
 
     /**
      * constructor, constructs the event with all these attributes.
-     * @param tag
-     * @param title
-     * @param id
-     * @param token
+     * @param tag tag of the event.
+     * @param title title of the event.
+     * @param id auto generated incrementing id of the event.
+     * @param token token which is needed to access the event.
      */
     public Event(String tag, String title, int id, String token) {
         this.tag = tag;
@@ -33,7 +33,7 @@ public class Event {
     }
 
     /**
-     * unused, empty constructor (to solve the error given on the class)
+     * unused, empty constructor (to solve the error given on the class).
      */
     public Event() {
 

@@ -3,8 +3,6 @@ package commons;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
@@ -36,7 +34,7 @@ public class PersonTemporary {
     }
 
     /**
-     * empty constructor (to solve the error given on the class)
+     * empty constructor (to solve the error given on the class).
      */
     public PersonTemporary() {
 
