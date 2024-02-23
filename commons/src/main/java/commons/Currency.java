@@ -15,7 +15,6 @@ public class Currency {
     this.ico = ico;
     this.name = name;
   }
-
   /**
    * Getter for ico number.
    * @return ico
@@ -65,8 +64,7 @@ public class Currency {
   */
  @Override
   public String toString() {
-    return "Ico number is:" + ico +
-            ", name of the currency is:" + name  +
-            '}';
+    return "Ico number is: " + ico +
+            ", name of the currency is: " + name;
   }
 }
