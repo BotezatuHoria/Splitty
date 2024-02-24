@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CurrencyTest {
   /**
-   * tests getter for ico number
+   * tests getter for ico number.
    */
   @Test
   void getIcoTest() {
@@ -15,7 +15,7 @@ class CurrencyTest {
   }
 
   /**
-   * tests getter for name of the currency
+   * tests getter for name of the currency.
    */
   @Test
   void getNameTest() {
@@ -24,7 +24,7 @@ class CurrencyTest {
   }
 
   /**
-   * tests equals method
+   * tests equals method.
    */
   @Test
   void testEqualsTest() {
@@ -34,7 +34,7 @@ class CurrencyTest {
   }
 
   /**
-   * tests hashcode generation
+   * tests hashcode generation.
    */
   @Test
   void testHashCodeTest() {
@@ -44,7 +44,7 @@ class CurrencyTest {
   }
 
   /**
-   * tests string representation of the object
+   * tests string representation of the object.
    */
   @Test
   void testToStringTest() {
