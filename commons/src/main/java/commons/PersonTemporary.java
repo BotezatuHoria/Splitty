@@ -3,19 +3,17 @@ package commons;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 public class PersonTemporary {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String email;
     private String firstName;
     private String lastName;
     private String iban;
     private int debt;
+    @Id
     private int eventID;
 
     /**
@@ -33,6 +31,13 @@ public class PersonTemporary {
         this.iban = iban;
         this.eventID = eventID;
         this.debt = 0;
+    }
+
+    /**
+     * empty constructor (to solve the error given on the class).
+     */
+    public PersonTemporary() {
+
     }
 
     /**

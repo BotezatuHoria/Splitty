@@ -10,25 +10,33 @@ import java.util.Objects;
 @Entity
 public class Event {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     protected String tag;
     protected String title;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     protected int id;
     protected String token;
 
     /**
      * constructor, constructs the event with all these attributes.
-     * @param tag
-     * @param title
-     * @param id
-     * @param token
+     * @param tag tag of the event.
+     * @param title title of the event.
+     * @param id auto generated incrementing id of the event.
+     * @param token token which is needed to access the event.
      */
     public Event(String tag, String title, int id, String token) {
         this.tag = tag;
         this.title = title;
         this.id = id;
         this.token = token;
+    }
+
+    /**
+     * unused, empty constructor (to solve the error given on the class).
+     */
+    public Event() {
+
     }
 
     /**
