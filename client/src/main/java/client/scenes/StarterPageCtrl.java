@@ -49,6 +49,37 @@ public class StarterPageCtrl {
         this.server = server;
     }
 
+    /**
+     * Function to add to the listView item.
+     */
+    public void addListView() {
+        List<Event> events = new ArrayList<>();
+        for (Event e: events) {
+            listView.getItems().add(e);
+        }
+    }
+
+    /**
+     * Delete method for the list view.
+     * @param e - event to be deleted from the list view.
+     * @return - the event that has been deleted.
+     */
+    public Event deleteListView(Event e) {
+        if (e == null) {
+            return null;
+        }
+        listView.getItems().remove(e);
+        return e;
+    }
+
+    /**
+     * Method to return the number of elements in the listView.
+     * @return - the number of elements in the listView.
+     */
+    public int numberOfElements() {
+        return listView.getItems().size();
+    }
+
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert createButton != null :
