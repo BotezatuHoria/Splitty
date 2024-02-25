@@ -8,7 +8,39 @@ import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CurrencyConverterTest {
-
+  /**
+   * tests converting from one currency to another.
+   */
+  @Test
+  void convert1() {
+    Currency currency1 = new Currency(67890, "Rubbles");
+    Currency currency2 = new Currency(56800, "Euro ");
+    CurrencyConverter cc = new CurrencyConverter();
+    cc.addCurrencyConversionRate(currency1, currency2, 0.01);
+    assertEquals(cc.convert(currency1, currency2, 500), 5);
+  }
+  /**
+   * tests converting from one currency to another.
+   */
+  @Test
+  void convert2() {
+    Currency currency1 = new Currency(67890, "Rubbles");
+    Currency currency2 = new Currency(56800, "Euro ");
+    CurrencyConverter cc = new CurrencyConverter();
+    cc.addCurrencyConversionRate(currency1, currency2, 0.01);
+    assertEquals(cc.convert(currency2, currency1, 5), 500);
+  }
+  /**
+   * test for correct addition of conversion rates.
+   */
+  @Test
+  void addCurrencyConversionRate() {
+    Currency currency1 = new Currency(67890, "Rubbles");
+    Currency currency2 = new Currency(56800, "Euro ");
+    CurrencyConverter cc = new CurrencyConverter();
+    cc.addCurrencyConversionRate(currency1, currency2, 0.01);
+    assertEquals(cc.convert(currency1, currency2, 500), 5);
+  }
   /**
    * test for correct getting of conversion rates.
    */
