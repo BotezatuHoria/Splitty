@@ -1,10 +1,17 @@
 package commons;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+
 import java.util.Objects;
 
+@Entity
 public class Currency {
+
+  @Id
   protected int ico;
-   protected String name;
+  protected String name;
 
   /**
    * Constructor.
@@ -15,6 +22,13 @@ public class Currency {
     this.ico = ico;
     this.name = name;
   }
+  /**
+   * empty constructor (to solve the error given on the class).
+   */
+  public Currency() {
+
+  }
+
   /**
    * Getter for ico number.
    * @return ico
