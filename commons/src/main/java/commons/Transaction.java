@@ -87,6 +87,38 @@ public class Transaction {
     }
 
     /**
+     * Setter for the name of the transaction.
+     * @param name - name of the transaction.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Setter for the date of the transaction.
+     * @param date - date of the transaction.
+     */
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    /**
+     * Setter for the value of the transaction.
+     * @param money - value of the transaction.
+     */
+    public void setMoney(double money) {
+        this.money = money;
+    }
+
+    /**
+     * Setter for the currency of the transaction.
+     * @param currency - currency in which the transaction is being made.
+     */
+    public void setCurrency(int currency) {
+        this.currency = currency;
+    }
+
+    /**
      * Equals method for the transaction class.
      * @param o - object to be compared to.
      * @return - if the 2 objects are equal.
