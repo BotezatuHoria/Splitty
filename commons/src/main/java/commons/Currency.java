@@ -22,7 +22,6 @@ public class Currency {
     this.ico = ico;
     this.name = name;
   }
-
   /**
    * empty constructor (to solve the error given on the class).
    */
@@ -79,8 +78,7 @@ public class Currency {
   */
  @Override
   public String toString() {
-    return "Ico number is:" + ico +
-            ", name of the currency is:" + name  +
-            '}';
+    return "Ico number is: " + ico +
+            ", name of the currency is: " + name;
   }
 }
