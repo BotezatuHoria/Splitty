@@ -48,6 +48,14 @@ public class Event {
     }
 
     /**
+     * the getter of the id.
+     * @return returns the id of the event.
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
      * the getter of the tag.
      * @return  returns the tag of the event.
      */
