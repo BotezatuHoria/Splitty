@@ -42,7 +42,6 @@ public class Quote {
 	@SuppressWarnings("unused")
 	private Quote() {
 		// for object mappers
-	}
 
 	public Quote(Person person, String quote) {
 		this.person = person;
