@@ -34,7 +34,6 @@ public class TransactionTest {
                 LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
                 100, 947);
         assertEquals(1970, t.getDate().getYear());
-        assertEquals(1970, t.getDate().getYear());
         assertEquals(10, t.getDate().getMonthValue());
         assertEquals(10, t.getDate().getDayOfMonth());
     }
@@ -75,5 +74,43 @@ public class TransactionTest {
                 LocalDate.of(Integer.parseInt("1971"), Integer.parseInt("2"), Integer.parseInt("5")),
                 10, 840);
         assertNotEquals(t1, t2);
+    }
+
+    @Test
+    public void setNameTest() {
+        Transaction t1 = new Transaction("test",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+                100, 947);
+        t1.setName("new test");
+        assertEquals("new test", t1.getName());
+    }
+
+    @Test
+    public void setLocalDateTest() {
+        Transaction t = new Transaction("test",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+                100, 947);
+        t.setDate(LocalDate.of(Integer.parseInt("1999"), Integer.parseInt("1"), Integer.parseInt("30")));
+        assertEquals(1999, t.getDate().getYear());
+        assertEquals(1, t.getDate().getMonthValue());
+        assertEquals(30, t.getDate().getDayOfMonth());
+    }
+
+    @Test
+    public void setMoneyTest() {
+        Transaction t = new Transaction("test",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+                100, 947);
+        t.setMoney(90);
+        assertEquals(90, t.getMoney());
+    }
+
+    @Test
+    public void setCurrencyTest() {
+        Transaction t = new Transaction("test",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+                100, 947);
+        t.setCurrency(840);
+        assertEquals(840, t.getCurrency());
     }
 }
