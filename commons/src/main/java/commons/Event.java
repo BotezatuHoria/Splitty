@@ -80,7 +80,7 @@ public class Event {
     }
 
     /**
-     * the getter for the transactions of the event
+     * the getter for the transactions of the event.
      * @return the transactions of the event
      */
     public Set<Transaction> getTransactions() {
