@@ -40,8 +40,9 @@ public class Quote {
 	public String quote;
 
 	@SuppressWarnings("unused")
-	private Quote() {
+	public Quote() {
 		// for object mappers
+	}
 
 	public Quote(Person person, String quote) {
 		this.person = person;
