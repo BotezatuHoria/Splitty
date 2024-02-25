@@ -34,12 +34,55 @@ class CurrencyTest {
   }
 
   /**
+   * tests equals method on an unequal ico.
+   */
+  @Test
+  void testEqualsTestDifferentIco() {
+    Currency currency1 = new Currency(76003872, "Euro");
+    Currency currency2 = new Currency(86003872, "Euro");
+    assertNotEquals(currency1,currency2 );
+  }
+
+  /**
+   * tests equals method on an unequal name.
+   */
+  @Test
+  void testEqualsTestDifferentName() {
+    Currency currency1 = new Currency(76003872, "Euro");
+    Currency currency2 = new Currency(76003872, "Yen");
+    assertNotEquals(currency1,currency2 );
+  }
+
+  /**
+   * tests equals method on a null input.
+   */
+  @Test
+  void testEqualsTestNull() {
+    Currency currency1 = new Currency(76003872, "Euro");
+    Currency currency2 = new Currency(0, null);
+    assertNotEquals(currency1,currency2 );
+    assertNotEquals(currency1, null);
+  }
+
+  /**
    * tests hashcode generation.
    */
   @Test
   void testHashCodeTest() {
     Currency currency1 = new Currency(75588872, "Dollar");
+    Currency currency2 = new Currency(75588872, "Dollar");
+    assertEquals(currency1, currency2);
+    assertEquals(currency2.hashCode(), currency1.hashCode());
+  }
+
+  /**
+   * tests hashcode generation on non-equal objects.
+   */
+  @Test
+  void testHashCodeTestNotEqual() {
+    Currency currency1 = new Currency(75588872, "Dollar");
     Currency currency2 = new Currency(76003872, "Euro");
+    assertNotEquals(currency1, currency2);
     assertNotEquals(currency2.hashCode(), currency1.hashCode());
   }
 
