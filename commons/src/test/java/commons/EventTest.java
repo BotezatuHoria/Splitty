@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 class EventTest {
     /**
-     * Test the getTag method
+     * Test the getTag method.
      */
     @Test
     void getTagTest(){
@@ -13,7 +13,7 @@ class EventTest {
     }
 
     /**
-     * Test the getTitle method
+     * Test the getTitle method.
      */
     @Test
     void getTitleTest(){
@@ -22,7 +22,7 @@ class EventTest {
     }
 
     /**
-     * Test the getId method
+     * Test the getId method.
      */
     @Test
     void getIdTest(){
@@ -31,7 +31,7 @@ class EventTest {
     }
 
     /**
-     * Test the getToken method
+     * Test the getToken method.
      */
     @Test
     void getTokenTest(){
@@ -40,7 +40,7 @@ class EventTest {
     }
 
     /**
-     * Test the toString method
+     * Test the toString method.
      */
     @Test
     void toStringTest(){
@@ -49,7 +49,7 @@ class EventTest {
     }
 
     /**
-     * Test the equals method with two similar events
+     * Test the equals method with two similar events.
      */
     @Test
     void equalsTest(){
@@ -59,50 +59,50 @@ class EventTest {
     }
 
     /**
-     * Test equals method with two events with different tags
+     * Test equals method with two events with different tags.
      */
     @Test
-    void DifferentTagTest(){
+    void differentTagTest(){
         Event test = new Event("Event one", "Party", 1, "1234");
         Event test2 = new Event("Event two", "Party", 1, "1234");
         assertNotEquals(test, test2);
     }
 
     /**
-     * Test equals method with two events with different titles
+     * Test equals method with two events with different titles.
      */
     @Test
-    void DifferentTitleTest(){
+    void differentTitleTest(){
         Event test = new Event("Event one", "Party", 1, "1234");
         Event test2 = new Event("Event one", "BBQ", 1, "1234");
         assertNotEquals(test, test2);
     }
 
     /**
-     * Test equals method with two events with different id's
+     * Test equals method with two events with different id's.
      */
     @Test
-    void DifferentIdTest(){
+    void differentIdTest(){
         Event test = new Event("Event one", "Party", 1, "1234");
         Event test2 = new Event("Event one", "Party", 2, "1234");
         assertNotEquals(test, test2);
     }
 
     /**
-     * Test equals method with two events with different tokens
+     * Test equals method with two events with different tokens.
      */
     @Test
-    void DifferentTokenTest(){
+    void differentTokenTest(){
         Event test = new Event("Event one", "Party", 1, "1234");
         Event test2 = new Event("Event one", "Party", 1, "4321");
         assertNotEquals(test, test2);
     }
 
     /**
-     * Test hashcode method with two similar events
+     * Test hashcode method with two similar events.
      */
     @Test
-    void HashcodeTest(){
+    void hashcodeTest(){
         Event test = new Event("Event one", "Party", 1, "1234");
         Event test2 = new Event("Event one", "Party", 1, "1234");
         assertEquals(test.hashCode(), test2.hashCode());
