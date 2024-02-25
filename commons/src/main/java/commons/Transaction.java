@@ -1,46 +1,44 @@
 package commons;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+//import jakarta.persistence.Entity;
+//import jakarta.persistence.GeneratedValue;
+//import jakarta.persistence.GenerationType;
+//import jakarta.persistence.Id;
 
-import java.util.Currency;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
  * Transaction class.
  */
-@Entity
+//@Entity
 public class Transaction {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private static int id = 0;
 
     protected String name;
-    protected Date date;
+    protected LocalDate date;
 
     protected double money;
 
-    protected Currency currency;
+    protected int currency;
 
     /**
      * Private empty constructor for the Transaction class.
      */
     @SuppressWarnings("unused")
-    private Transaction() {
+    protected Transaction() {
         // for object mapper
     }
 
     /**
      * Public class for creating a transaction.
-     * @param name
-     * @param date
-     * @param money
-     * @param currency
+     * @param name - name of the transaction
+     * @param date - date of the transaction
+     * @param money - value of the transaction
+     * @param currency - the currency in which the transaction is handled
      */
-    public Transaction(String name, Date date, double money, Currency currency) {
+    public Transaction(String name, LocalDate date, double money, int currency) {
+        id++;
         this.name = name;
         this.date = date;
         this.money = money;
@@ -68,7 +66,7 @@ public class Transaction {
      * Getter for the Date of the transaction.
      * @return - Date representation of the transaction.
      */
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -84,7 +82,7 @@ public class Transaction {
      * Getter for the currency in which the transaction is being done.
      * @return - Currency representation of the amount to be transferred.
      */
-    public Currency getCurrency() {
+    public int getCurrency() {
         return currency;
     }
 
@@ -102,7 +100,8 @@ public class Transaction {
             return false;
         }
         Transaction that = (Transaction) o;
-        return id == that.id && Double.compare(money, that.money) == 0 && Objects.equals(name, that.name) && Objects.equals(date, that.date) && Objects.equals(currency, that.currency);
+        return Double.compare(money, that.money) == 0 && Objects.equals(name, that.name) &&
+                Objects.equals(date, that.date) && Objects.equals(currency, that.currency);
     }
 
     /**
@@ -113,4 +112,15 @@ public class Transaction {
     public int hashCode() {
         return Objects.hash(id, name, date, money, currency);
     }
+
+    /**
+     * toString method for the Transaction class.
+     * @return - string representation of a Transaction with all the data
+     */
+    @Override
+    public String toString() {
+        return "Transaction " + "#" + id + ", called: " + name + ", issued on: " + date +
+                "with the value: " + currency + money + ";";
+    }
+
 }
