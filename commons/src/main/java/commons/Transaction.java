@@ -1,9 +1,9 @@
 package commons;
 
-//import jakarta.persistence.Entity;
-//import jakarta.persistence.GeneratedValue;
-//import jakarta.persistence.GenerationType;
-//import jakarta.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -11,9 +11,12 @@ import java.util.Objects;
 /**
  * Transaction class.
  */
-//@Entity
+@Entity
 public class Transaction {
-    private static int id = 0;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private static int id;
 
     protected String name;
     protected LocalDate date;
