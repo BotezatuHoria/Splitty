@@ -1,6 +1,7 @@
 package commons;
 
-import javafx.util.Pair;
+import org.apache.commons.lang3.tuple.Pair;
+
 import java.util.HashMap;
 
 public class CurrencyConverter {
@@ -31,11 +32,11 @@ public class CurrencyConverter {
    * @return corresponding amount of currencyTo
    */
   protected double convert(Currency currencyFrom, Currency currencyTo, double amount){
-    if(!currencyConversionRates.containsKey(new Pair<>(currencyFrom, currencyTo))) {
+    if(!currencyConversionRates.containsKey(Pair.of(currencyFrom, currencyTo))) {
       throw new IllegalArgumentException("Currency conversion not supported");
     }
 
-    double multiplier = currencyConversionRates.get(new Pair<>(currencyFrom, currencyTo));
+    double multiplier = currencyConversionRates.get(Pair.of(currencyFrom, currencyTo));
     return amount * multiplier;
   }
 
@@ -62,8 +63,8 @@ public class CurrencyConverter {
    * @param rate the rate of conversion
    */
   public void addCurrencyConversionRate(Currency currencyFrom, Currency currencyTo, double rate) {
-    this.currencyConversionRates.put(new Pair<>(currencyFrom, currencyTo), rate);
-    this.currencyConversionRates.put(new Pair<>(currencyTo, currencyFrom), 1.0/rate);
+    this.currencyConversionRates.put(Pair.of(currencyFrom, currencyTo), rate);
+    this.currencyConversionRates.put(Pair.of(currencyTo, currencyFrom), 1.0/rate);
   }
 
   /**
@@ -72,8 +73,8 @@ public class CurrencyConverter {
    * @param currencyTo the Currency to convert to
    */
   public void removeCurrencyConversionRate(Currency currencyFrom, Currency currencyTo) {
-    this.currencyConversionRates.remove(new Pair<>(currencyFrom, currencyTo));
-    this.currencyConversionRates.remove(new Pair<>(currencyTo, currencyFrom));
+    this.currencyConversionRates.remove(Pair.of(currencyFrom, currencyTo));
+    this.currencyConversionRates.remove(Pair.of(currencyTo, currencyFrom));
   }
 
   /**
@@ -83,7 +84,7 @@ public class CurrencyConverter {
    * @param rate the new rate of conversion
    */
   public void setCurrencyConversionRate(Currency currencyFrom, Currency currencyTo, double rate) {
-    this.currencyConversionRates.replace(new Pair<>(currencyFrom, currencyTo), rate);
-    this.currencyConversionRates.replace(new Pair<>(currencyTo, currencyFrom), 1.0/rate);
+    this.currencyConversionRates.replace(Pair.of(currencyFrom, currencyTo), rate);
+    this.currencyConversionRates.replace(Pair.of(currencyTo, currencyFrom), 1.0/rate);
   }
 }
