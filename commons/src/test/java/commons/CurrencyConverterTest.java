@@ -1,8 +1,8 @@
 package commons;
 
-import javafx.util.Pair;
-import org.junit.jupiter.api.Test;
 
+import org.junit.jupiter.api.Test;
+import org.apache.commons.lang3.tuple.Pair;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -49,8 +49,8 @@ class CurrencyConverterTest {
     Currency currency1 = new Currency(69420, "Dabloons");
     Currency currency2 = new Currency(56800, "Euro ");
     CurrencyConverter cc = new CurrencyConverter();
-    Pair<Currency, Currency> pair = new Pair<>(currency1, currency2);
-    Pair<Currency, Currency> pair1 = new Pair<>(currency2, currency1);
+    Pair<Currency, Currency> pair = Pair.of(currency1, currency2);
+    Pair<Currency, Currency> pair1 = Pair.of(currency2, currency1);
     HashMap<Pair<Currency, Currency>, Double> map = new HashMap<>();
     map.put(pair, 3.22);
     map.put(pair1, 100.0);
@@ -65,8 +65,8 @@ class CurrencyConverterTest {
     Currency currency1 = new Currency(67890, "Rubbles");
     Currency currency2 = new Currency(56800, "Euro ");
     CurrencyConverter cc = new CurrencyConverter();
-    Pair<Currency, Currency> pair = new Pair<>(currency1, currency2);
-    Pair<Currency, Currency> pair1 = new Pair<>(currency2, currency1);
+    Pair<Currency, Currency> pair = Pair.of(currency1, currency2);
+    Pair<Currency, Currency> pair1 = Pair.of(currency2, currency1);
     HashMap<Pair<Currency, Currency>, Double> map = new HashMap<>();
     map.put(pair, 0.01);
     map.put(pair1, 100.0);
@@ -83,8 +83,8 @@ class CurrencyConverterTest {
     Currency currency1 = new Currency(67890, "Rubbles");
     Currency currency2 = new Currency(56800, "Euro ");
     CurrencyConverter cc = new CurrencyConverter();
-    Pair<Currency, Currency> pair = new Pair<>(currency1, currency2);
-    Pair<Currency, Currency> pair1 = new Pair<>(currency2, currency1);
+    Pair<Currency, Currency> pair = Pair.of(currency1, currency2);
+    Pair<Currency, Currency> pair1 = Pair.of(currency2, currency1);
     HashMap<Pair<Currency, Currency>, Double> map = new HashMap<>();
     map.put(pair, 0.01);
     map.put(pair1, 100.0);
@@ -100,8 +100,8 @@ class CurrencyConverterTest {
     Currency currency1 = new Currency(67890, "Rubbles");
     Currency currency2 = new Currency(56800, "Euro ");
     CurrencyConverter cc = new CurrencyConverter();
-    Pair<Currency, Currency> pair = new Pair<>(currency1, currency2);
-    Pair<Currency, Currency> pair1 = new Pair<>(currency2, currency1);
+    Pair<Currency, Currency> pair = Pair.of(currency1, currency2);
+    Pair<Currency, Currency> pair1 = Pair.of(currency2, currency1);
     HashMap<Pair<Currency, Currency>, Double> map = new HashMap<>();
     map.put(pair, 0.01);
     map.put(pair1, 100.0);
