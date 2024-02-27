@@ -21,7 +21,7 @@ Everybody read the TA notes and understood them.
 # Points of action
 
  - How do we plan on finishing the Code of Conduct? (5 min)
-Tim suggests finishing it on Thursday but Tom suggests finishing it before then so that we can review it and agree on the final draft. We decided that Tim Horia and Tautvydas will finish it before Thursday and we will review it on Thursday. Illiya suggests standartizing the COC so that it seems more formal.
+Tim suggests finishing it on Thursday but Tom suggests finishing it before then so that we can review it and agree on the final draft. We decided that Tim Horia and Tautvydas will finish it before Thursday and we will review it on Thursday. Ilia suggests standartizing the COC so that it seems more formal.
 
  - We didn't finish the front end last week, should we work on it this week? (5 min)
 Horia already started doing the front-end mock design. We agreed to try and do the controllers and front-end until Thursday and later distribute tasks further based on the lines of codes we have.  
@@ -38,13 +38,13 @@ Discussed on the part of Code of Conduct and milestones. Also doing the controll
 We agreed we should incorporate Milestones and Issues in our workflow.
 
 - Making the milestones for the next week (3 min)
-Illya makes milestone: "Reach 2500 words for the Code of Conduct" deadline: Thursday. Work assigned to Horia Tim and Tautvydas.
+Ilia makes milestone: "Reach 2500 words for the Code of Conduct" deadline: Thursday. Work assigned to Horia Tim and Tautvydas.
 Horia makes milestone: "User Flow", deadline: Thursday. Artur takes it on.
 Horia makes milestone: "Front-End", deadline: Friday. It is assigned to everybody
 
 - Any suggestions on how we can improve our workflow? (3 min)
-Illya says that our work during the meetings is of good quality and says that our plan changed a bit during the week but that is quite natural due to the early state of the project.
-Tom suggests making our commits and merges more complete and not fragmented. Also suggests making the titles and description more descriptive. Tom says that commits should be more strict and we should merge less but of more quality. This would naturally lead to more commits during a merge. Illya suggests commiting more and merging less. We decided that a minimum of 2 people should approve before merging. 
+Ilia says that our work during the meetings is of good quality and says that our plan changed a bit during the week but that is quite natural due to the early state of the project.
+Tom suggests making our commits and merges more complete and not fragmented. Also suggests making the titles and description more descriptive. Tom says that commits should be more strict and we should merge less but of more quality. This would naturally lead to more commits during a merge. Ilia suggests commiting more and merging less. We decided that a minimum of 2 people should approve before merging. 
 
 # Action points for next week (Scrum board)
 *Every week you fill the Scrum board with new action points for that week. See the to do list for the items you should implement.*
