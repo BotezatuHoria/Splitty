@@ -34,10 +34,16 @@ public class MainCtrl {
 
     private Scene starter;
 
-    public void initialize(Stage primaryStage, Pair<StarterPageCtrl, Parent> starter) {
+    private Scene event;
+    private EventPageCtrl eventCtrl;
+
+    public void initialize(Stage primaryStage, Pair<StarterPageCtrl, Parent> starter, Pair<EventPageCtrl, Parent> event) {
         this.primaryStage = primaryStage;
         this.starterPageCtrl = starter.getKey();
         this.starter = new Scene(starter.getValue());
+
+        this.eventCtrl = event.getKey();
+        this.event = new Scene(event.getValue());
 
         showStarter();
         primaryStage.show();
@@ -59,4 +65,10 @@ public class MainCtrl {
         primaryStage.setTitle("Starter Page");
         primaryStage.setScene(starter);
     }
+
+    public void showEventPage() {
+        primaryStage.setTitle("Event Page");
+        primaryStage.setScene(event);
+    }
+
 }

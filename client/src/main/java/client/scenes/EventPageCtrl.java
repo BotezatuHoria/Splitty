@@ -4,11 +4,12 @@
 
 package client.scenes;
 
+import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 public class EventPageCtrl {
-
+    private final MainCtrl mainCtrl;
     @FXML // fx:id="addExpense"
     private Button addExpense; // Value injected by FXMLLoader
 
@@ -33,6 +34,10 @@ public class EventPageCtrl {
     @FXML // fx:id="settleDebts"
     private Button settleDebts; // Value injected by FXMLLoader
 
+    @Inject
+    public EventPageCtrl(MainCtrl mainCtrl) {
+        this.mainCtrl = mainCtrl;
+    }
 }
 
 
