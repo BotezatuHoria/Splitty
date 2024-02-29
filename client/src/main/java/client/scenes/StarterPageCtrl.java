@@ -9,16 +9,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import client.utils.ServerUtils;
 import commons.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
+import javax.inject.Inject;
+
 public class StarterPageCtrl {
 
-    private final ServerUtils server;
+    private final MainCtrl mainCtrl;
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -43,10 +44,11 @@ public class StarterPageCtrl {
 
     /**
      * Constructor for the StarterPageCtrl class.
-     * @param server - the server.
+     * @param mainCtrl - the main controller
      */
-    public StarterPageCtrl(ServerUtils server) {
-        this.server = server;
+    @Inject
+    public StarterPageCtrl(MainCtrl mainCtrl) {
+        this.mainCtrl = mainCtrl;
     }
 
     /**
@@ -78,21 +80,6 @@ public class StarterPageCtrl {
      */
     public int numberOfElements() {
         return listView.getItems().size();
-    }
-
-    @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
-        assert createButton != null :
-                "fx:id=\"createButton\" was not injected: check your FXML file 'StarterPage.fxml'.";
-        assert createTextField != null :
-                "fx:id=\"createTextField\" was not injected: check your FXML file 'StarterPage.fxml'.";
-        assert joinButton != null :
-                "fx:id=\"joinButton\" was not injected: check your FXML file 'StarterPage.fxml'.";
-        assert joinTextField != null :
-                "fx:id=\"joinTextField\" was not injected: check your FXML file 'StarterPage.fxml'.";
-        assert listView != null :
-                "fx:id=\"listView\" was not injected: check your FXML file 'StarterPage.fxml'.";
-
     }
 
 }
