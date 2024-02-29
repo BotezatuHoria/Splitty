@@ -30,16 +30,16 @@ public class MainCtrl {
     private AddQuoteCtrl addCtrl;
     private Scene add;
 
-    public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
-            Pair<AddQuoteCtrl, Parent> add) {
+    private StarterPageCtrl starterPageCtrl;
+
+    private Scene starter;
+
+    public void initialize(Stage primaryStage, Pair<StarterPageCtrl, Parent> starter) {
         this.primaryStage = primaryStage;
-        this.overviewCtrl = overview.getKey();
-        this.overview = new Scene(overview.getValue());
+        this.starterPageCtrl = starter.getKey();
+        this.starter = new Scene(starter.getValue());
 
-        this.addCtrl = add.getKey();
-        this.add = new Scene(add.getValue());
-
-        showOverview();
+        showStarter();
         primaryStage.show();
     }
 
@@ -53,5 +53,10 @@ public class MainCtrl {
         primaryStage.setTitle("Quotes: Adding Quote");
         primaryStage.setScene(add);
         add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
+    }
+
+    public void showStarter() {
+        primaryStage.setTitle("Starter Page");
+        primaryStage.setScene(starter);
     }
 }
