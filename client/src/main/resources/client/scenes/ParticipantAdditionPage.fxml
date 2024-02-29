@@ -33,12 +33,12 @@
       </Label>
       <TextField layoutX="97.0" layoutY="229.0" prefHeight="32.0" prefWidth="323.0" promptText="IBAN" />
       <TextField layoutX="97.0" layoutY="110.0" prefHeight="32.0" prefWidth="323.0" promptText="Last Name" />
-      <Button layoutX="479.0" layoutY="335.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="82.0" text="Ok">
+      <Button layoutX="479.0" layoutY="335.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="82.0" text="Ok" onAction="#create">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
-      <Button layoutX="355.0" layoutY="335.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="106.0" text="Abort">
+      <Button layoutX="355.0" layoutY="335.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="106.0" text="Abort" onAction="#abort">
          <font>
             <Font size="24.0" />
          </font>

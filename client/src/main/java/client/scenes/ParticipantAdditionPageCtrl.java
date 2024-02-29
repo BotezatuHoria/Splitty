@@ -5,16 +5,16 @@ import java.util.ResourceBundle;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
-import commons.Person;
-import jakarta.ws.rs.WebApplicationException;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 import commons.PersonTemporary;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Modality;
+
+//TODO: Check the user input to be valid before creating a new user
+//TODO: fix the event id so that it is passed from the event controller.
+//TODO: Create the Create method after the server.utils is created.
 
 public class ParticipantAdditionPageCtrl {
 
@@ -81,7 +81,7 @@ public class ParticipantAdditionPageCtrl {
      * TODO: Create this method after the server.utils is created.
      */
     public void create(){
-
+        //TODO
     }
 
     /**
@@ -103,7 +103,7 @@ public class ParticipantAdditionPageCtrl {
     }
 
     /**
-     * Method that uses user keyboard input as button input
+     * Method that uses user keyboard input as button input.
      * @param e the key that was pressed
      */
     public void keyPressed(KeyEvent e) {
@@ -118,5 +118,4 @@ public class ParticipantAdditionPageCtrl {
                 break;
         }
     }
-
 }
