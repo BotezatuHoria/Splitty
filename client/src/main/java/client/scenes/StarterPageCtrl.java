@@ -82,4 +82,8 @@ public class StarterPageCtrl {
         return listView.getItems().size();
     }
 
+
+    public void showEventPage() {
+        mainCtrl.showEventPage();
+    }
 }
