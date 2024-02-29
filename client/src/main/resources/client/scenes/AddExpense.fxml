@@ -55,6 +55,6 @@
       <Button fx:id="abortButton" layoutX="376.0" layoutY="524.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="83.0" text="Abort" />
       <Button fx:id="addButton" layoutX="474.0" layoutY="524.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="83.0" text="Add" />
       <ListView fx:id="peopleLIstView" layoutX="15.0" layoutY="236.0" prefHeight="222.0" prefWidth="561.0" />
-      <Button fx:id="addButton1" layoutX="166.0" layoutY="199.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="Add Everybody" />
+      <Button fx:id="addEverybody" layoutX="166.0" layoutY="199.0" mnemonicParsing="false" onAction="#addParticipantToView" prefHeight="26.0" prefWidth="150.0" text="Add Everybody" />
    </children>
 </AnchorPane>
