@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import commons.Event;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
