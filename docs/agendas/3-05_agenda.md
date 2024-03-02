@@ -4,7 +4,7 @@
 | Time: | 13:45 - 14:30                     |
 | Location: | Drebbelweg-PC Hall 1 (Cubical 14) |
 | Chair | Tim Guldenmundt                   |
-| Minute Taker | ?                                 |
+| Minute Taker | Horia Botezatu                    |
 | Attendees: | ?                                 |
 
 ## Agenda Items:
@@ -20,17 +20,17 @@
 - Presentation of the current app to TA (2 min)
 
 #### Main Talking Points
-- 1. Reflect on the Code of Conduct assignment. What went well? What could we have done better? Are we happy with the result? (3 min)
+1. Reflect on the Code of Conduct assignment. What went well? What could we have done better? Are we happy with the result? (3 min)
 
-- 2. Reflect on last week's work. Did we finish the front end? Is there any more work required? (4 min)
+2. Reflect on last week's work. Did we finish the front end? Is there any more work required? (4 min)
 
-- 3. What will we be working on this week? How we will make sure we each reach 100+ lines of code? (5 min)
+3. What will we be working on this week? How we will make sure we each reach 100+ lines of code? (5 min)
 
-- 4. How will we distribute the work for this week? (5 min)
+4. How will we distribute the work for this week? (5 min)
 
-- 5. Talk about this week's assignment: buddycheck. How will we make sure we all finish it before the deadline? (3 min)
+5. Talk about this week's assignment: buddycheck. How will we make sure we all finish it before the deadline? (3 min)
 
-- 6. How do we like using issue's and milestones? How could we improve using them? (3 min)
+6. How do we like using issue's and milestones? How could we improve using them? (3 min)
 
 
 - Summarize action points: Who , what , when? (3 min)
