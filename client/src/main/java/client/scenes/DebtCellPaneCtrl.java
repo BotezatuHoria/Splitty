@@ -1,19 +1,28 @@
 package client.scenes;
 
+import commons.DebtCellData;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
-import javax.xml.crypto.Data;
+import java.awt.*;
 
-public class DebtCellPaneCtrl extends ListCell<Data> {
-
+public class DebtCellPaneCtrl extends ListCell<DebtCellData> {
+  @FXML // fx:id="root"
   private Pane root;
+  @FXML // fx:id="loader"
   private FXMLLoader loader;
+  @FXML // fx:id="debtInformation"
+  private Text debtInformation;
+  @FXML // fx:id="furtherInfo"
+  private Pane furtherInfo;
 
   public DebtCellPaneCtrl() {
     // load the FXML file and set the controller
-    loader = new FXMLLoader(getClass().getResource("cell.fxml"));
+    loader = new FXMLLoader(getClass().getResource("DebtCellPane.fxml"));
     loader.setController(this);
     try {
       root = loader.load();
@@ -22,8 +31,15 @@ public class DebtCellPaneCtrl extends ListCell<Data> {
     }
   }
 
+  /**
+   * Adds and cell to the ListView.
+   * @param item The new item for the cell.
+   * @param empty whether or not this cell represents data from the list. If it
+   *        is empty, then it does not represent any domain data, but is a cell
+   *        being used to render an "empty" row.
+   */
   @Override
-  protected void updateItem(Data item, boolean empty) {
+  protected void updateItem(DebtCellData item, boolean empty) {
     super.updateItem(item, empty);
 
     if (empty || item == null) {
@@ -32,12 +48,16 @@ public class DebtCellPaneCtrl extends ListCell<Data> {
       setGraphic(null);
     } else {
       // if the cell is not empty, show the data
-      // you can access the components in the FXML file using @FXML annotations
-      // you can also set the values and styles of the components using the item object
-      // for example:
-      // titleLabel.setText(item.getTitle());
-      // infoLabel.setText(item.getInfo());
-      // imageView.setImage(item.getImage());
+      // set the values and styles of the components using the item object
+      StringBuilder generalDebtInfo = new StringBuilder();
+
+      generalDebtInfo.append(item.getSender().getFirstName());
+      generalDebtInfo.append(" gives ");
+      generalDebtInfo.append(item.getSender().getDebt());
+      generalDebtInfo.append(" euros to ");
+      generalDebtInfo.append(item.getReceiver().getFirstName());
+
+      debtInformation.setText(generalDebtInfo.toString());
 
       // add the root pane to the cell
       setText(null);
@@ -46,16 +66,17 @@ public class DebtCellPaneCtrl extends ListCell<Data> {
       // add the mouse click event handler to the root pane
       root.setOnMouseClicked(event -> {
         // toggle the expanded or collapsed state of the cell
-        // you can use the prefHeightProperty and visibleProperty of the components
-        // you can also use animations or transitions to make the changes smoother
-        // for example:
-        // if (root.getPrefHeight() == 50) {
-        //     root.setPrefHeight(100);
-        //     infoLabel.setVisible(true);
-        // } else {
-        //     root.setPrefHeight(50);
-        //     infoLabel.setVisible(false);
-        // }
+        // use the prefHeightProperty and visibleProperty of the components
+        // use animations or transitions to make the changes smoother
+        if (root.getPrefHeight() == 50) {
+          // if the cell is collapsed, expand it
+          root.setPrefHeight(100);
+          furtherInfo.setVisible(true);
+        } else {
+          // if the cell is expanded, collapse it
+          root.setPrefHeight(50);
+          furtherInfo.setVisible(false);
+        }
       });
     }
   }

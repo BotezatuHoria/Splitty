@@ -7,10 +7,8 @@ package client.scenes;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import commons.PersonTemporary;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
@@ -53,11 +51,6 @@ public class DebtSettlementCtrl {
     assert titleLabel != null : "fx:id=\"titleLabel\" was not injected: check your FXML file 'OpenDebts.fxml'.";
 
   }
-  public void addOpenDebt() {
-    PersonTemporary p =
-            new PersonTemporary("idk", "Horia", "Botezatu", "2334", 1);
-    CheckBox personCheck = new CheckBox(p.getFirstName() + " " + p.getLastName());
-    peopleLIstView.getItems().add(personCheck);
-  }
+
 
 }
