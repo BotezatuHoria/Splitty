@@ -35,15 +35,22 @@ public class MainCtrl {
     private Scene starter;
 
     private Scene event;
-    private EventPageCtrl eventCtrl;
 
-    public void initialize(Stage primaryStage, Pair<StarterPageCtrl, Parent> starter, Pair<EventPageCtrl, Parent> event) {
+    private EventPageCtrl eventCtrl;
+    private Scene statistics;
+
+    private StatisticsCtrl statisticsCtrl;
+
+    public void initialize(Stage primaryStage, Pair<StarterPageCtrl, Parent> starter, Pair<EventPageCtrl, Parent> event, Pair<StatisticsCtrl, Parent> statistics) {
         this.primaryStage = primaryStage;
         this.starterPageCtrl = starter.getKey();
         this.starter = new Scene(starter.getValue());
 
         this.eventCtrl = event.getKey();
         this.event = new Scene(event.getValue());
+
+        this.statisticsCtrl = statistics.getKey();
+        this.statistics = new Scene(statistics.getValue());
 
         showStarter();
         primaryStage.show();
@@ -71,4 +78,8 @@ public class MainCtrl {
         primaryStage.setScene(event);
     }
 
+    public void showStatisticsPage() {
+        primaryStage.setTitle("Statistics Page");
+        primaryStage.setScene(statistics);
+    }
 }
