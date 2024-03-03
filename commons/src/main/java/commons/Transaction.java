@@ -1,12 +1,10 @@
 package commons;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Transaction class.
@@ -25,6 +23,12 @@ public class Transaction {
 
     protected int currency;
 
+    @ManyToMany
+    public Set<PersonMock> participants;
+
+    @ManyToOne
+    public Person creator;
+
     /**
      * Private empty constructor for the Transaction class.
      */
@@ -40,12 +44,15 @@ public class Transaction {
      * @param money - value of the transaction
      * @param currency - the currency in which the transaction is handled
      */
-    public Transaction(String name, LocalDate date, double money, int currency) {
+    public Transaction(String name, LocalDate date, double money, int currency,
+                       Set<PersonMock> participants, Person creator) {
         id++;
         this.name = name;
         this.date = date;
         this.money = money;
         this.currency = currency;
+        this.participants = participants;
+        this.creator = creator;
     }
 
 
@@ -87,6 +94,22 @@ public class Transaction {
      */
     public int getCurrency() {
         return currency;
+    }
+
+    /**
+     * Getter for the people involved in a transaction.
+     * @return - a set of all the people involved in the transaction.
+     */
+    public Set<PersonMock> getParticipants() {
+        return participants;
+    }
+
+    /**
+     * Getter fot the creator of the transaction.
+     * @return - the creator of the transaction.
+     */
+    public Person getCreator() {
+        return creator;
     }
 
     /**

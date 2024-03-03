@@ -24,7 +24,7 @@ import java.util.Random;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import commons.Person;
+import commons.PersonMock;
 import commons.Quote;
 
 public class QuoteControllerTest {
@@ -66,7 +66,7 @@ public class QuoteControllerTest {
     }
 
     private static Quote getQuote(String q) {
-        return new Quote(new Person(q, q), q);
+        return new Quote(new PersonMock(q, q), q);
     }
 
     @SuppressWarnings("serial")

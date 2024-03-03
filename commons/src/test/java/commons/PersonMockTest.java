@@ -21,38 +21,36 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-public class QuoteTest {
-
-	private static final PersonMock SOME_PERSON = new PersonMock("a", "b");
+public class PersonMockTest {
 
 	@Test
 	public void checkConstructor() {
-		var q = new Quote(SOME_PERSON, "q");
-		assertEquals(SOME_PERSON, q.person);
-		assertEquals("q", q.quote);
+		var p = new PersonMock("f", "l");
+		assertEquals("f", p.firstName);
+		assertEquals("l", p.lastName);
 	}
 
 	@Test
 	public void equalsHashCode() {
-		var a = new Quote(new PersonMock("a", "b"), "c");
-		var b = new Quote(new PersonMock("a", "b"), "c");
+		var a = new PersonMock("a", "b");
+		var b = new PersonMock("a", "b");
 		assertEquals(a, b);
 		assertEquals(a.hashCode(), b.hashCode());
 	}
 
 	@Test
 	public void notEqualsHashCode() {
-		var a = new Quote(new PersonMock("a", "b"), "c");
-		var b = new Quote(new PersonMock("a", "b"), "d");
+		var a = new PersonMock("a", "b");
+		var b = new PersonMock("a", "c");
 		assertNotEquals(a, b);
 		assertNotEquals(a.hashCode(), b.hashCode());
 	}
 
 	@Test
 	public void hasToString() {
-		var actual = new Quote(new PersonMock("a", "b"), "c").toString();
-		assertTrue(actual.contains(Quote.class.getSimpleName()));
+		var actual = new PersonMock("a", "b").toString();
+		assertTrue(actual.contains(PersonMock.class.getSimpleName()));
 		assertTrue(actual.contains("\n"));
-		assertTrue(actual.contains("person"));
+		assertTrue(actual.contains("firstName"));
 	}
 }

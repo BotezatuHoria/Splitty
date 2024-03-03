@@ -1,56 +1,128 @@
-/*
- * Copyright 2021 Delft University of Technology
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package commons;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-public class PersonTest {
+import java.util.HashSet;
 
-	@Test
-	public void checkConstructor() {
-		var p = new Person("f", "l");
-		assertEquals("f", p.firstName);
-		assertEquals("l", p.lastName);
-	}
+import static org.junit.jupiter.api.Assertions.*;
 
-	@Test
-	public void equalsHashCode() {
-		var a = new Person("a", "b");
-		var b = new Person("a", "b");
-		assertEquals(a, b);
-		assertEquals(a.hashCode(), b.hashCode());
-	}
+class PersonTest {
 
-	@Test
-	public void notEqualsHashCode() {
-		var a = new Person("a", "b");
-		var b = new Person("a", "c");
-		assertNotEquals(a, b);
-		assertNotEquals(a.hashCode(), b.hashCode());
-	}
+    @Test
+    void getEmailTest() {
+        Person test = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+        assertEquals("test@email.com" ,test.getEmail());
+    }
 
-	@Test
-	public void hasToString() {
-		var actual = new Person("a", "b").toString();
-		assertTrue(actual.contains(Person.class.getSimpleName()));
-		assertTrue(actual.contains("\n"));
-		assertTrue(actual.contains("firstName"));
-	}
+    @Test
+    void getFirstNameTest() {
+        Person test = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+        assertEquals("First" ,test.getFirstName());
+    }
+
+    @Test
+    void getLastNameTest() {
+        Person test = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+        assertEquals("Test" ,test.getLastName());
+    }
+
+    @Test
+    void getIbanTest() {
+        Person test = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+        assertEquals("iban33" ,test.getIban());
+    }
+
+    @Test
+    void getEventIDTest() {
+        Person test = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+        assertEquals(new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()) ,test.getEvent());
+    }
+
+    @Test
+    void getDebtTest() {
+        Person test = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+        assertEquals(0 ,test.getDebt());
+    }
+
+    @Test
+    void testEquals() {
+        Person test = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+        Person test2 = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+        assertEquals(test, test2);
+    }
+
+    @Test
+    void testNotEquals() {
+        Person test = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+        Person test2 = new Person("test2@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+        assertNotEquals(test, test2);
+    }
+
+    @Test
+    void testNullEquals() {
+        Person test = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+        assertNotEquals(test, null);
+    }
+
+    @Test
+    void testSameEquals() {
+        Person test = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+        assertEquals(test, test);
+    }
+
+    @Test
+    void testDifferentEventEquals() {
+        Person test = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+        Person test2 = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 2, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+        assertEquals(test, test2);
+    }
+
+    @Test
+    void testHashCode() {
+        Person test = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+        Person test2 = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+        assertEquals(test.hashCode(), test2.hashCode());
+    }
+
+    @Test
+    void addDeptTest() {
+        Person test = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+        test.addDept(3);
+        assertEquals(3, test.getDebt());
+    }
 }
