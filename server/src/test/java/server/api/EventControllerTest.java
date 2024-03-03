@@ -23,20 +23,4 @@ class EventControllerTest {
         sut = new EventController(repo);
     }
 
-    @Test
-    void testGetAll() {
-    }
-
-    @Test
-    void getById() {
-    }
-
-    @Test
-    void add() {
-        Event test = new Event("Event one", "Party", 1, "1234", new HashSet<>(), new HashSet<>());
-        sut.add(test);
-        List<Event> events = sut.getAll();
-        for (Event event: events) System.out.println(event);
-        events.contains(test);
-    }
 }
