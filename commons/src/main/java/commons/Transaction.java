@@ -27,7 +27,7 @@ public class Transaction {
     public Set<Person> participants;
 
     @ManyToOne
-    public Person creator;
+    public PersonTemporary creator;
 
     /**
      * Private empty constructor for the Transaction class.
@@ -44,12 +44,15 @@ public class Transaction {
      * @param money - value of the transaction
      * @param currency - the currency in which the transaction is handled
      */
-    public Transaction(String name, LocalDate date, double money, int currency) {
+    public Transaction(String name, LocalDate date, double money, int currency,
+                       Set<Person> participants, PersonTemporary creator) {
         id++;
         this.name = name;
         this.date = date;
         this.money = money;
         this.currency = currency;
+        this.participants = participants;
+        this.creator = creator;
     }
 
 
@@ -91,6 +94,22 @@ public class Transaction {
      */
     public int getCurrency() {
         return currency;
+    }
+
+    /**
+     * Getter for the people involved in a transaction.
+     * @return - a set of all the people involved in the transaction.
+     */
+    public Set<Person> getParticipants() {
+        return participants;
+    }
+
+    /**
+     * Getter fot the creator of the transaction.
+     * @return - the creator of the transaction.
+     */
+    public PersonTemporary getCreator() {
+        return creator;
     }
 
     /**

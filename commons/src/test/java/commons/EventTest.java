@@ -112,10 +112,10 @@ class EventTest {
     void differentTransactionsTest(){
         Transaction t1 = new Transaction("test",
                 LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
-                100, 947);
+                100, 947, new HashSet<>(), new PersonTemporary());
         Transaction t2 = new Transaction("test",
                 LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
-                100, 957);
+                100, 957, new HashSet<>(), new PersonTemporary());
 
         Set<Transaction> transactions1 = new HashSet<>();
         transactions1.add(t1);
