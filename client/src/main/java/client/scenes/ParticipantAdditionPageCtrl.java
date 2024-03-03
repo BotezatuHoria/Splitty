@@ -1,17 +1,20 @@
 package client.scenes;
 
 import java.net.URL;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import commons.Event;
+import commons.Person;
+import commons.Transaction;
 import jakarta.ws.rs.WebApplicationException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-import commons.PersonTemporary;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 
@@ -71,11 +74,11 @@ public class ParticipantAdditionPageCtrl {
     }
 
     /**
-     * TODO: fix the event id so that it is passed from the event controller.
+     * TODO: fix the event reference so that it is passed from the event controller.
      * @return returns the created person
      */
-    private PersonTemporary getPerson(){
-        PersonTemporary p = new PersonTemporary(email.getText(), firstName.getText(), lastName.getText(), iban.getText(), 1);
+    private Person getPerson(){
+        Person p = new Person(email.getText(), firstName.getText(), lastName.getText(), iban.getText(), new Event(), new HashSet<Transaction>(), new HashSet<Transaction>());
         return p;
     }
 
