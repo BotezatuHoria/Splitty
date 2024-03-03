@@ -16,7 +16,7 @@ public class Event {
     protected int id;
     protected String token;
 
-    @ManyToMany
+    @OneToMany
     protected Set<Person> people;
 
     @OneToMany

@@ -1,9 +1,9 @@
 package commons;
 
 import java.util.Objects;
+import java.util.Set;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class PersonTemporary {
@@ -13,8 +13,15 @@ public class PersonTemporary {
     private String lastName;
     private String iban;
     private int debt;
-    @Id
-    private int eventID;
+
+    @ManyToOne
+    public Event event;
+
+    @OneToMany
+    public Set<Transaction> createdTransactions;
+
+    @ManyToMany
+    public Set<Transaction> transactions;
 
     /**
      * Constructor for people.
@@ -22,15 +29,18 @@ public class PersonTemporary {
      * @param firstName of the person
      * @param lastName of the person
      * @param iban of the bank account of the person
-     * @param eventID that this person is added to
+     * @param event that this person is added to
      */
-    public PersonTemporary(String email, String firstName, String lastName, String iban, int eventID) {
+    public PersonTemporary(String email, String firstName, String lastName, String iban, Event event,
+                           Set<Transaction> createdTransactions, Set<Transaction> transactions) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.iban = iban;
-        this.eventID = eventID;
+        this.event = event;
         this.debt = 0;
+        this.createdTransactions = createdTransactions;
+        this.transactions = transactions;
     }
 
     /**
@@ -76,8 +86,8 @@ public class PersonTemporary {
      * Getter method for the event that this person has been added to.
      * @return the even that this person has been added to
      */
-    public int getEventID() {
-        return eventID;
+    public Event getEvent() {
+        return event;
     }
 
     /**
@@ -86,6 +96,22 @@ public class PersonTemporary {
      */
     public int getDebt() {
         return debt;
+    }
+
+    /**
+     * Getter method for the transactions created by the user.
+     * @return a set of all transactions that were done by the user.
+     */
+    public Set<Transaction> getCreatedTransactions() {
+        return createdTransactions;
+    }
+
+    /**
+     * Getter method for the transactions that the person is being into.
+     * @return - a set of all the transactions in which the person is a participant.
+     */
+    public Set<Transaction> getTransactions() {
+        return transactions;
     }
 
     /**
