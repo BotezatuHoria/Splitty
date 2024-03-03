@@ -41,7 +41,13 @@ public class MainCtrl {
 
     private StatisticsCtrl statisticsCtrl;
 
-    public void initialize(Stage primaryStage, Pair<StarterPageCtrl, Parent> starter, Pair<EventPageCtrl, Parent> event, Pair<StatisticsCtrl, Parent> statistics) {
+    private Scene expense;
+
+    private AddExpenseCtrl expenseCtrl;
+
+    public void initialize(Stage primaryStage, Pair<StarterPageCtrl, Parent> starter,
+                           Pair<EventPageCtrl, Parent> event, Pair<StatisticsCtrl, Parent> statistics,
+                           Pair<AddExpenseCtrl, Parent> expense) {
         this.primaryStage = primaryStage;
         this.starterPageCtrl = starter.getKey();
         this.starter = new Scene(starter.getValue());
@@ -51,6 +57,9 @@ public class MainCtrl {
 
         this.statisticsCtrl = statistics.getKey();
         this.statistics = new Scene(statistics.getValue());
+
+        this.expenseCtrl = expense.getKey();
+        this.expense = new Scene(expense.getValue());
 
         showStarter();
         primaryStage.show();
@@ -81,5 +90,10 @@ public class MainCtrl {
     public void showStatisticsPage() {
         primaryStage.setTitle("Statistics Page");
         primaryStage.setScene(statistics);
+    }
+
+    public void showExpensePage() {
+        primaryStage.setTitle("Add Expense");
+        primaryStage.setScene(expense);
     }
 }

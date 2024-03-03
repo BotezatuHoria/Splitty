@@ -87,6 +87,13 @@ public class AddExpenseCtrl {
                         new HashSet<>(), new HashSet<>());
         CheckBox personCheck = new CheckBox(p.getFirstName() + " " + p.getLastName());
         peopleLIstView.getItems().add(personCheck);
+        addAllParticipants();
+    }
+
+    public void addAllParticipants() {
+        for (CheckBox checkBox : peopleLIstView.getItems()) {
+            checkBox.setSelected(true);
+        }
     }
 
     public void clearInputs() {
@@ -112,7 +119,7 @@ public class AddExpenseCtrl {
     /**
      * Function that returns every Node in the primary pane of the page.
      *
-     * @return
+     * @return - a list of all elements in the expensePane
      */
     public List<Node> getNodes() {
         List<Node> nodes = new LinkedList<>();

@@ -15,6 +15,7 @@
  */
 package client;
 
+import client.scenes.AddExpenseCtrl;
 import client.scenes.EventPageCtrl;
 import client.scenes.StarterPageCtrl;
 import com.google.inject.Binder;
@@ -30,6 +31,7 @@ public class MyModule implements Module {
         binder.bind(MainCtrl.class).in(Scopes.SINGLETON);
         binder.bind(StarterPageCtrl.class).in(Scopes.SINGLETON);
         binder.bind(EventPageCtrl.class).in(Scopes.SINGLETON);
+        binder.bind(AddExpenseCtrl.class).in(Scopes.SINGLETON);
     }
 
 
