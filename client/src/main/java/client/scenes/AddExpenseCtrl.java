@@ -8,11 +8,14 @@ import commons.Event;
 import commons.Person;
 import commons.Transaction;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 import javax.inject.Inject;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 
 public class AddExpenseCtrl {
 
@@ -84,5 +87,27 @@ public class AddExpenseCtrl {
         CheckBox personCheck = new CheckBox(p.getFirstName() + " " + p.getLastName());
         peopleLIstView.getItems().add(personCheck);
     }
+
+    public void clearInputs() {
+        payerBox.valueProperty().set(null);
+        expenseField.clear();
+        priceField.clear();
+        currencyBox.valueProperty().set(null);
+        dateBox.valueProperty().set(null);
+        expenseTypeBox.valueProperty().set(null);
+        peopleLIstView.refresh();
+    }
+
+    public void addExpense() {
+        clearInputs();
+        //send data to server databae
+    }
+
+    public List<Node> getNodes() {
+        List<Node> nodes = new LinkedList<>();
+        nodes.addAll(expensePane.getChildren());
+        return nodes;
+    }
+
 
 }
