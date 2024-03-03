@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="570.0" prefWidth="590.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.AddExpenseCtrl">
+<AnchorPane fx:id="expensePane" prefHeight="570.0" prefWidth="590.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.AddExpenseCtrl">
    <children>
       <Label layoutX="22.0" layoutY="14.0" text="Add/Edit Expense">
          <font>
@@ -46,15 +46,16 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="expenseLabel" layoutX="166.0" layoutY="96.0" prefHeight="26.0" prefWidth="392.0" />
-      <TextField fx:id="priceLabel" layoutX="166.0" layoutY="129.0" prefHeight="26.0" prefWidth="294.0" />
+      <TextField fx:id="expenseField" layoutX="166.0" layoutY="96.0" prefHeight="26.0" prefWidth="392.0" />
+      <TextField fx:id="priceField" layoutX="166.0" layoutY="129.0" prefHeight="26.0" prefWidth="294.0" />
       <ComboBox fx:id="payerBox" layoutX="167.0" layoutY="64.0" prefHeight="26.0" prefWidth="197.0" />
       <ComboBox fx:id="currencyBox" layoutX="475.0" layoutY="129.0" prefHeight="26.0" prefWidth="83.0" />
       <DatePicker fx:id="dateBox" layoutX="166.0" layoutY="162.0" prefHeight="26.0" prefWidth="392.0" />
       <ComboBox fx:id="expenseTypeBox" layoutX="167.0" layoutY="473.0" prefHeight="26.0" prefWidth="392.0" />
-      <Button fx:id="abortButton" layoutX="376.0" layoutY="524.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="83.0" text="Abort" />
-      <Button fx:id="addButton" layoutX="474.0" layoutY="524.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="83.0" text="Add" />
+      <Button fx:id="abortButton" layoutX="376.0" layoutY="524.0" mnemonicParsing="false" onAction="#abortExpense" prefHeight="26.0" prefWidth="83.0" text="Abort" />
+      <Button fx:id="addButton" layoutX="474.0" layoutY="524.0" mnemonicParsing="false" onAction="#addExpense" prefHeight="26.0" prefWidth="83.0" text="Add" />
       <ListView fx:id="peopleLIstView" layoutX="15.0" layoutY="236.0" prefHeight="222.0" prefWidth="561.0" />
       <Button fx:id="addEverybody" layoutX="166.0" layoutY="199.0" mnemonicParsing="false" onAction="#addParticipantToView" prefHeight="26.0" prefWidth="150.0" text="Add Everybody" />
+      <Label fx:id="errorLabel" layoutX="22.0" layoutY="524.0" text="Label" />
    </children>
 </AnchorPane>

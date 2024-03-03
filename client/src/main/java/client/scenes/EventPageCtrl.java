@@ -38,6 +38,10 @@ public class EventPageCtrl {
     public EventPageCtrl(MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
     }
+
+    public void showAddExpensePage() {
+        mainCtrl.showExpensePage();
+    }
 }
 
 
