@@ -12,7 +12,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DebtCellPaneCtrlTest{
 
-
+  /**
+   * Tests getInfoText method which is used to get text displayed in the cell of oped debts list.
+   */
   @Test
   void getInfoText() {
     Event event = new Event("tag", "BIG EVENT", 1,
