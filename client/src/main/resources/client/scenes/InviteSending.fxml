@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.InviteSendingCtrl">
    <children>
-      <Label layoutX="73.0" layoutY="14.0" prefHeight="58.0" prefWidth="453.0" text="{EventTitle}">
+      <Label fx:id="EventTitle" layoutX="73.0" layoutY="14.0" prefHeight="58.0" prefWidth="453.0" text="{EventTitle}">
          <font>
             <Font size="40.0" />
          </font>
@@ -19,7 +19,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="409.0" layoutY="90.0" prefHeight="30.0" prefWidth="126.0" text="{InviteCode}">
+      <Label fx:id="InviteCode" layoutX="409.0" layoutY="90.0" prefHeight="30.0" prefWidth="126.0" text="{InviteCode}">
          <font>
             <Font size="20.0" />
          </font>
@@ -29,9 +29,9 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <TextArea layoutX="73.0" layoutY="200.0" prefHeight="136.0" prefWidth="454.0" text="so here we can type the emails" />
-      <Button layoutX="526.0" layoutY="93.0" mnemonicParsing="false" text="copy" />
-      <Button layoutX="406.0" layoutY="344.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Send Invites">
+      <TextArea fx:id="MailInputField" layoutX="73.0" layoutY="200.0" prefHeight="136.0" prefWidth="454.0" text="so here we can type the emails" />
+      <Button fx:id="CopyInviteCodeButton" layoutX="526.0" layoutY="93.0" mnemonicParsing="false" text="copy" onAction="#copyCode" />
+      <Button fx:id="SendInviteButton" layoutX="406.0" layoutY="344.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Send Invites" onAction="#sendInvite">
          <font>
             <Font size="14.0" />
          </font>
