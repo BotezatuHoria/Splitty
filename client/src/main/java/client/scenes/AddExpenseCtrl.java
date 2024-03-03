@@ -4,12 +4,14 @@
 
 package client.scenes;
 
+import commons.Event;
 import commons.PersonTemporary;
 import commons.Transaction;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import javax.inject.Inject;
+import java.util.HashSet;
 
 public class AddExpenseCtrl {
 
@@ -67,8 +69,11 @@ public class AddExpenseCtrl {
     }
 
     public void addParticipantToView() {
+        Event e = new Event("", "", 1, ""
+                , new HashSet<>(), new HashSet<>());
         PersonTemporary p =
-                new PersonTemporary("idk", "Horia", "Botezatu", "2334", 1);
+                new PersonTemporary("idk", "Horia", "Botezatu", "2334", e,
+                        new HashSet<>(), new HashSet<>());
         CheckBox personCheck = new CheckBox(p.getFirstName() + " " + p.getLastName());
         peopleLIstView.getItems().add(personCheck);
     }
