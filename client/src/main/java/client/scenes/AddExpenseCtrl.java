@@ -109,5 +109,9 @@ public class AddExpenseCtrl {
         return nodes;
     }
 
+    public void abortExpense() {
+        clearInputs();
+        mainCtrl.showEventPage();
+    }
 
 }
