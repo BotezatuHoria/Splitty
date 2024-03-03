@@ -1,20 +1,19 @@
 package server.api;
 
+
 import java.util.List;
-import java.util.Random;
+
 
 import commons.Event;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import commons.Quote;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+
 import server.database.EventRepository;
-import server.database.QuoteRepository;
+
+
+
 
 
 @RestController
@@ -24,18 +23,28 @@ public class EventController {
     private final EventRepository repo;
 
     /**
-     * Constructor for the EventController
+     * Constructor for the EventController.
      * @param repo repository for the eventRepository
      */
     public EventController(EventRepository repo) {
         this.repo = repo;
     }
 
+    /**
+     * Gets all the events as a Jason file.
+     * @return
+     */
     @GetMapping(path = { "", "/" })
     public List<Event> getAll() {
         return repo.findAll();
     }
 
+
+    /**
+     * Method for getting and event by id from url.
+     * @param id of the event you want to get
+     * @return the event
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Event> getById(@PathVariable("id") long id) {
         if (id < 0 || !repo.existsById(id)) {
@@ -44,6 +53,11 @@ public class EventController {
         return ResponseEntity.ok(repo.findById(id).get());
     }
 
+    /**
+     * Method for adding the event to a repository.
+     * @param event you want to add
+     * @return the event you added
+     */
     @PostMapping(path = { "", "/" })
     public ResponseEntity<Event> add(@RequestBody Event event) {
 
@@ -55,6 +69,35 @@ public class EventController {
         Event saved = repo.save(event);
         return ResponseEntity.ok(saved);
     }
+
+
+    /**
+     * Deletes the event with the id you provided in the url.
+     * @param id of the event you want to delete
+     * @return the event you deleted
+     */
+    @DeleteMapping(path = {"/{id}"})
+    public ResponseEntity<Event> deleteById(@PathVariable("id") long id) {
+        if (id < 0 || !repo.existsById(id)) {
+            return ResponseEntity.badRequest().build();
+        }
+        ResponseEntity<commons.Event> response =  ResponseEntity.ok(repo.findById(id).get());
+        repo.deleteById(id);
+        return response;
+    }
+
+    // Method for adding person
+    /*@PostMapping(path = {"/{id}/person"})
+    public ResponseEntity<Person> addPerson(@RequestBody Person person, @PathVariable("id") long id) {
+        if (id < 0 || !repo.existsById(id)) {
+            return ResponseEntity.badRequest().build();
+        }
+        // Add to repository for person
+        // Access the event and add the person
+    }*/
+
+    // Add method for deleting person
+    // Add method for editing person
 
 
 }
