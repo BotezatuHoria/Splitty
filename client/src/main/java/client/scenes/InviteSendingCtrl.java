@@ -10,9 +10,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
+
+import java.awt.*;
+import java.awt.datatransfer.Clipboard; //to set the clipboard of the user when clicking the copy button, in method CopyCode.
+import java.awt.datatransfer.StringSelection; // Also in method CopyCode.
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+
 
 
 public class InviteSendingCtrl{
@@ -36,8 +42,8 @@ public class InviteSendingCtrl{
     private Button SendInviteButton; // Value injected by FXMLLoader
 
     /**
-     *very great thing i need to finish.
-     * @param server the server to connect with
+     *Constructor and therefore making the connection.
+     * @param server the server to connect with.
      * @param mainCtrl
      */
     public InviteSendingCtrl(ServerUtils server, MainCtrl mainCtrl) {
@@ -45,7 +51,10 @@ public class InviteSendingCtrl{
         this.mainCtrl = mainCtrl;
     }
 
-    public void sendInvite() {
+    /**
+     * The method that, when called, should send emails with invites to the event in every mail that has been put in the MainInputField.
+     */
+    public void sendInvite(){
         String mails = MailInputField.getText();
         Scanner scanner = new Scanner(mails);
         List<String> listOfMails = new ArrayList<>();
@@ -53,11 +62,16 @@ public class InviteSendingCtrl{
             listOfMails.add(scanner.next());
         }
         for(String s:listOfMails){
-            String recepient = s;
-            String sender = "t.p.p.vanLeest@student.tudelft.nl";
+            // here we add the protocol to send emails if we want, using a mail API like google or the Java one.
         }
 
+    }
 
+    public void copyCode(){
+        String inviteCode = InviteCode.getText(); //the code of the event, pictured on the page (not yet made to be gathered from the database).
+        StringSelection selection = new StringSelection(inviteCode); //make it a stringselection so that we can set the clipboard contents to it.
+        Clipboard board = Toolkit.getDefaultToolkit().getSystemClipboard(); // get our clipboard.
+        board.setContents(selection, selection); //copy the eventinvite code to our clipboard.
     }
 
 
