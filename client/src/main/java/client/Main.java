@@ -22,6 +22,7 @@ import java.net.URISyntaxException;
 
 import client.scenes.EventPageCtrl;
 import client.scenes.StarterPageCtrl;
+import client.scenes.StatisticsCtrl;
 import com.google.inject.Injector;
 
 //import client.scenes.AddQuoteCtrl;
@@ -43,7 +44,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws IOException {
         var starterPage = FXML.load(StarterPageCtrl.class, "client", "scenes", "StarterPage.fxml");
         var eventPage = FXML.load(EventPageCtrl.class, "client", "scenes", "EventPage.fxml");
+        var statisticsPage = FXML.load(StatisticsCtrl.class, "client", "scenes", "Statistics.fxml");
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
-        mainCtrl.initialize(primaryStage, starterPage, eventPage);
+        mainCtrl.initialize(primaryStage, starterPage, eventPage, statisticsPage);
     }
 }
