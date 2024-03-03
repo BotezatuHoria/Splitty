@@ -8,7 +8,6 @@ import java.util.Set;
 @Entity
 public class Event {
 
-
     protected String tag;
     protected String title;
     @Id
