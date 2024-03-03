@@ -86,7 +86,6 @@ public class TestQuoteRepository implements QuoteRepository {
 
     }
 
-    @Override
     public void deleteAllByIdInBatch(Iterable<Long> ids) {
         // TODO Auto-generated method stub
 

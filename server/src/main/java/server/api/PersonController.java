@@ -36,8 +36,8 @@ public class PersonController {
      * @return person who`s email matches supplied email
      */
     @GetMapping("/{email}")
-    public ResponseEntity<Person> getByEmail(@PathVariable("email") String email) {
-        if (!db.existsById(email)) {
+    public ResponseEntity<Person> getById(@PathVariable("email") String email) {
+        if (email == null || !db.existsById(email)) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -50,7 +50,7 @@ public class PersonController {
      * @return person that was added
      */
     @PostMapping(path = { "", "/" })
-    public ResponseEntity<Person> addPerson(Person person) {
+    public ResponseEntity<Person> add(Person person) {
         // The regex ensures that:
         //  - email begins with alphanumeric characters, including underscores, pluses, ampersands, asterisks, or hyphens.
         //  - may contain dots as long as they are not the first or last character and it does not come one after the other.
@@ -60,7 +60,7 @@ public class PersonController {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         Pattern emailPattern = Pattern.compile(emailRegex);
 
-        if (person.getEmail() == null || !emailPattern.matcher(person.getEmail()).matches()) {
+        if (person == null || person.getEmail() == null || !emailPattern.matcher(person.getEmail()).matches()) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -74,8 +74,8 @@ public class PersonController {
      * @return person that was deleted
      */
     @DeleteMapping("/{email}")
-    public ResponseEntity<Person> deletePerson(@PathVariable("email") String email) {
-        if (!db.existsById(email)) {
+    public ResponseEntity<Person> deleteById(@PathVariable("email") String email) {
+        if (email == null || !db.existsById(email)) {
             return ResponseEntity.badRequest().build();
         }
 
