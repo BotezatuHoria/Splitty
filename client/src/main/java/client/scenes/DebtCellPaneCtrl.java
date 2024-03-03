@@ -79,7 +79,7 @@ public class DebtCellPaneCtrl extends ListCell<DebtCellData> {
     }
   }
 
-  /**
+   /**
    * Helping method for the updateItem class that creates string with data to be displayed.
    * @param item Class containing data about transaction.
    * @return String representation of the transaction.
