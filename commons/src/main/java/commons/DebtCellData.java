@@ -2,8 +2,8 @@ package commons;
 
 public class DebtCellData {
 
-  private PersonTemporary sender;
-  private PersonTemporary receiver;
+  private Person sender;
+  private Person receiver;
   private int debt;
 
   /**
@@ -12,7 +12,7 @@ public class DebtCellData {
    * @param receiver
    * @param debt
    */
-  public DebtCellData(PersonTemporary sender, PersonTemporary receiver, int debt){
+  public DebtCellData(Person sender, Person receiver, int debt){
     this.sender = sender;
     this.receiver = receiver;
     this.debt = debt;
@@ -30,14 +30,14 @@ public class DebtCellData {
    * Getter for the sender Person.
    * @return
    */
-  public PersonTemporary getSender() {
+  public Person getSender() {
     return sender;
   }
   /**
    * Getter for the receiver Person.
    * @return
    */
-  public PersonTemporary getReceiver() {
+  public Person getReceiver() {
     return receiver;
   }
 }
