@@ -95,8 +95,12 @@ class EventTest {
 
     @Test
     void differentPeopleTest(){
-        Person p1 = new Person("fn", "ln");
-        Person p2 = new Person("fn2", "ln2");
+        Person p1 = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+        Person p2 = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
 
         Set<Person> people1 = new HashSet<>();
         people1.add(p1);
@@ -112,10 +116,10 @@ class EventTest {
     void differentTransactionsTest(){
         Transaction t1 = new Transaction("test",
                 LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
-                100, 947, new HashSet<>(), new PersonTemporary());
+                100, 947, new HashSet<>(), new Person());
         Transaction t2 = new Transaction("test",
                 LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
-                100, 957, new HashSet<>(), new PersonTemporary());
+                100, 957, new HashSet<>(), new Person());
 
         Set<Transaction> transactions1 = new HashSet<>();
         transactions1.add(t1);

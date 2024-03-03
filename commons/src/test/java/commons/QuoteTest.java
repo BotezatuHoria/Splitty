@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
 
 public class QuoteTest {
 
-	private static final Person SOME_PERSON = new Person("a", "b");
+	private static final PersonMock SOME_PERSON = new PersonMock("a", "b");
 
 	@Test
 	public void checkConstructor() {
@@ -34,23 +34,23 @@ public class QuoteTest {
 
 	@Test
 	public void equalsHashCode() {
-		var a = new Quote(new Person("a", "b"), "c");
-		var b = new Quote(new Person("a", "b"), "c");
+		var a = new Quote(new PersonMock("a", "b"), "c");
+		var b = new Quote(new PersonMock("a", "b"), "c");
 		assertEquals(a, b);
 		assertEquals(a.hashCode(), b.hashCode());
 	}
 
 	@Test
 	public void notEqualsHashCode() {
-		var a = new Quote(new Person("a", "b"), "c");
-		var b = new Quote(new Person("a", "b"), "d");
+		var a = new Quote(new PersonMock("a", "b"), "c");
+		var b = new Quote(new PersonMock("a", "b"), "d");
 		assertNotEquals(a, b);
 		assertNotEquals(a.hashCode(), b.hashCode());
 	}
 
 	@Test
 	public void hasToString() {
-		var actual = new Quote(new Person("a", "b"), "c").toString();
+		var actual = new Quote(new PersonMock("a", "b"), "c").toString();
 		assertTrue(actual.contains(Quote.class.getSimpleName()));
 		assertTrue(actual.contains("\n"));
 		assertTrue(actual.contains("person"));

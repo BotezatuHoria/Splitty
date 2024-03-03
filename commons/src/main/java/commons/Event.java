@@ -147,7 +147,7 @@ public class Event {
      * Removes person from event.
      * @param person person to remove
      */
-    public void removePerson(Person person) {
+    public void removePerson(PersonMock person) {
         this.people.remove(person);
     }
 

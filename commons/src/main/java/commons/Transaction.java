@@ -24,10 +24,10 @@ public class Transaction {
     protected int currency;
 
     @ManyToMany
-    public Set<Person> participants;
+    public Set<PersonMock> participants;
 
     @ManyToOne
-    public PersonTemporary creator;
+    public Person creator;
 
     /**
      * Private empty constructor for the Transaction class.
@@ -45,7 +45,7 @@ public class Transaction {
      * @param currency - the currency in which the transaction is handled
      */
     public Transaction(String name, LocalDate date, double money, int currency,
-                       Set<Person> participants, PersonTemporary creator) {
+                       Set<PersonMock> participants, Person creator) {
         id++;
         this.name = name;
         this.date = date;
@@ -100,7 +100,7 @@ public class Transaction {
      * Getter for the people involved in a transaction.
      * @return - a set of all the people involved in the transaction.
      */
-    public Set<Person> getParticipants() {
+    public Set<PersonMock> getParticipants() {
         return participants;
     }
 
@@ -108,7 +108,7 @@ public class Transaction {
      * Getter fot the creator of the transaction.
      * @return - the creator of the transaction.
      */
-    public PersonTemporary getCreator() {
+    public Person getCreator() {
         return creator;
     }
 

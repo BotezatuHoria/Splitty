@@ -1,63 +1,147 @@
-/*
- * Copyright 2021 Delft University of Technology
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package commons;
 
-import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
+import java.util.Objects;
+import java.util.Set;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Person {
+    @Id
+    private String email;
+    private String firstName;
+    private String lastName;
+    private String iban;
+    private int debt;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	public long id;
+    @ManyToOne
+    public Event event;
 
-	public String firstName;
-	public String lastName;
+    @OneToMany
+    public Set<Transaction> createdTransactions;
 
-	@SuppressWarnings("unused")
-	private Person() {
-		// for object mapper
-	}
+    @ManyToMany
+    public Set<Transaction> transactions;
 
-	public Person(String firstName, String lastName) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-	}
+    /**
+     * Constructor for people.
+     * @param email individual for each person
+     * @param firstName of the person
+     * @param lastName of the person
+     * @param iban of the bank account of the person
+     * @param event that this person is added to
+     */
+    public Person(String email, String firstName, String lastName, String iban, Event event,
+                  Set<Transaction> createdTransactions, Set<Transaction> transactions) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.iban = iban;
+        this.event = event;
+        this.debt = 0;
+        this.createdTransactions = createdTransactions;
+        this.transactions = transactions;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		return EqualsBuilder.reflectionEquals(this, obj);
-	}
+    /**
+     * empty constructor (to solve the error given on the class).
+     */
+    public Person() {
 
-	@Override
-	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this);
-	}
+    }
 
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, MULTI_LINE_STYLE);
-	}
+    /**
+     * Getter method for the email of the person.
+     * @return email of said person
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * Getter method first name of the person.
+     * @return first name of said person
+     */
+    public String getFirstName() {
+        return firstName;
+    }
+
+    /**
+     * Getter method for the last name of the person.
+     * @return last name of the person
+     */
+    public String getLastName() {
+        return lastName;
+    }
+
+    /**
+     * Getter method for the iban of that person.
+     * @return iban of that person
+     */
+    public String getIban() {
+        return iban;
+    }
+
+    /**
+     * Getter method for the event that this person has been added to.
+     * @return the even that this person has been added to
+     */
+    public Event getEvent() {
+        return event;
+    }
+
+    /**
+     * Returns the money that this person owes.
+     * @return the ammount of money this person owes
+     */
+    public int getDebt() {
+        return debt;
+    }
+
+    /**
+     * Getter method for the transactions created by the user.
+     * @return a set of all transactions that were done by the user.
+     */
+    public Set<Transaction> getCreatedTransactions() {
+        return createdTransactions;
+    }
+
+    /**
+     * Getter method for the transactions that the person is being into.
+     * @return - a set of all the transactions in which the person is a participant.
+     */
+    public Set<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    /**
+     * Equals method that returns true if the person is the same else false.
+     * @param o object to compare too
+     * @return true if the email is the same
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {return true;}
+        if (o == null || getClass() != o.getClass())
+        {return false;}
+        Person that = (Person) o;
+        return Objects.equals(email, that.email);
+    }
+
+    /**
+     * Hashcode for the people.
+     * @return integer value
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(email);
+    }
+
+    /**
+     * Method that adds or substract to dept.
+     * @param add the amount to add to the dept
+     */
+    public void addDept(int add) {
+        debt+=add;
+    }
 }

@@ -25,31 +25,31 @@ public class PersonTest {
 
 	@Test
 	public void checkConstructor() {
-		var p = new Person("f", "l");
+		var p = new PersonMock("f", "l");
 		assertEquals("f", p.firstName);
 		assertEquals("l", p.lastName);
 	}
 
 	@Test
 	public void equalsHashCode() {
-		var a = new Person("a", "b");
-		var b = new Person("a", "b");
+		var a = new PersonMock("a", "b");
+		var b = new PersonMock("a", "b");
 		assertEquals(a, b);
 		assertEquals(a.hashCode(), b.hashCode());
 	}
 
 	@Test
 	public void notEqualsHashCode() {
-		var a = new Person("a", "b");
-		var b = new Person("a", "c");
+		var a = new PersonMock("a", "b");
+		var b = new PersonMock("a", "c");
 		assertNotEquals(a, b);
 		assertNotEquals(a.hashCode(), b.hashCode());
 	}
 
 	@Test
 	public void hasToString() {
-		var actual = new Person("a", "b").toString();
-		assertTrue(actual.contains(Person.class.getSimpleName()));
+		var actual = new PersonMock("a", "b").toString();
+		assertTrue(actual.contains(PersonMock.class.getSimpleName()));
 		assertTrue(actual.contains("\n"));
 		assertTrue(actual.contains("firstName"));
 	}
