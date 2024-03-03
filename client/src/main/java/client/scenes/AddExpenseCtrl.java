@@ -58,6 +58,7 @@ public class AddExpenseCtrl {
     //private final ServerUtils server;
 
     private final MainCtrl mainCtrl;
+
     @Inject
     public AddExpenseCtrl(MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
@@ -98,20 +99,115 @@ public class AddExpenseCtrl {
         peopleLIstView.refresh();
     }
 
+    /**
+     * Function for the add button.
+     */
     public void addExpense() {
-        clearInputs();
-        //send data to server databae
+        if (checkCompleted()) {
+            clearInputs();
+            //send data to server databae
+        }
     }
 
+    /**
+     * Function that returns every Node in the primary pane of the page.
+     *
+     * @return
+     */
     public List<Node> getNodes() {
         List<Node> nodes = new LinkedList<>();
         nodes.addAll(expensePane.getChildren());
         return nodes;
     }
 
+    /**
+     * Function for the abort button of the expense page.
+     */
     public void abortExpense() {
         clearInputs();
         mainCtrl.showEventPage();
+    }
+
+    /**
+     * Method that checks if every input in the scene has been modified.
+     *
+     * @return - true if all inputs have a value, otherwise false.
+     */
+    public boolean checkCompleted() {
+        return checkBoxes() && checkFields() && checkListView();
+    }
+
+    /**
+     * Method that checks if all the input fields have been completed.
+     *
+     * @return - true if all fields have a value, otherwise false.
+     */
+    public boolean checkFields() {
+        if (expenseField.getText() == null || expenseField.getText().equals(" ")) {
+            errorLabel.setText("Please provide the expense!");
+            return false;
+        }
+        if ((priceField.getText() == null)) {
+            errorLabel.setText("Please provide the amount of the expense!");
+            return false;
+        }
+
+        try {
+            double x = Double.parseDouble(priceField.getText());
+        } catch (NumberFormatException e) {
+            errorLabel.setText("Please provide a valid amount.");
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Method that checks if all the combo boxes have a selected element.
+     *
+     * @return - true if anything is selected, otherwise false.
+     */
+    public boolean checkBoxes() {
+        if (payerBox.valueProperty().get() == null) {
+            errorLabel.setText("Please provide who paid! ");
+            return false;
+        }
+
+        if (currencyBox.valueProperty().get() == null) {
+            errorLabel.setText("Please select a currency!");
+            return false;
+        }
+
+        if (dateBox.valueProperty().get() == null) {
+            errorLabel.setText("Please select a valid date!");
+            return false;
+        }
+
+        if (expenseTypeBox.valueProperty().get() == null) {
+            errorLabel.setText("Please select a valid type of expense!");
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Method that checks if there is at least one person selected.
+     *
+     * @return - true if there is at least one person selected, otherwise false.
+     */
+    public boolean checkListView() {
+        boolean checked = false;
+        for (CheckBox checkBox : peopleLIstView.getItems()) {
+            if (checkBox.isSelected()) {
+                checked = true;
+                break;
+            }
+        }
+        if (checked) {
+            return true;
+        }
+        errorLabel.setText("Please select at least a person!");
+        return false;
     }
 
 }
