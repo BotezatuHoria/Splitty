@@ -9,11 +9,15 @@ import commons.Person;
 import commons.Transaction;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 
 import javax.inject.Inject;
 import java.util.HashSet;
 
 public class AddExpenseCtrl {
+
+    @FXML // fx:id="expensePane"
+    private AnchorPane expensePane; // Value injected by FXMLLoader
 
     @FXML // fx:id="abortButton"
     private Button abortButton; // Value injected by FXMLLoader
@@ -30,8 +34,11 @@ public class AddExpenseCtrl {
     @FXML // fx:id="dateBox"
     private DatePicker dateBox; // Value injected by FXMLLoader
 
-    @FXML // fx:id="expenseLabel"
-    private TextField expenseLabel; // Value injected by FXMLLoader
+    @FXML // fx:id="errorLabel"
+    private Label errorLabel; // Value injected by FXMLLoader
+
+    @FXML // fx:id="expenseField"
+    private TextField expenseField; // Value injected by FXMLLoader
 
     @FXML // fx:id="expenseTypeBox"
     private ComboBox<Transaction> expenseTypeBox; // Value injected by FXMLLoader
@@ -42,8 +49,8 @@ public class AddExpenseCtrl {
     @FXML // fx:id="peopleLIstView"
     private ListView<CheckBox> peopleLIstView; // Value injected by FXMLLoader
 
-    @FXML // fx:id="priceLabel"
-    private TextField priceLabel; // Value injected by FXMLLoader
+    @FXML // fx:id="priceField"
+    private TextField priceField; // Value injected by FXMLLoader
 
     //private final ServerUtils server;
 
@@ -60,12 +67,12 @@ public class AddExpenseCtrl {
         assert addEverybody != null : "fx:id=\"addEverybody\" was not injected: check your FXML file 'AddExpense.fxml'.";
         assert currencyBox != null : "fx:id=\"currencyBox\" was not injected: check your FXML file 'AddExpense.fxml'.";
         assert dateBox != null : "fx:id=\"dateBox\" was not injected: check your FXML file 'AddExpense.fxml'.";
-        assert expenseLabel != null : "fx:id=\"expenseLabel\" was not injected: check your FXML file 'AddExpense.fxml'.";
+        assert expensePane != null : "fx:id=\"expensePane\" was not injected: check your FXML file 'AddExpense.fxml'.";
         assert expenseTypeBox != null : "fx:id=\"expenseTypeBox\" was not injected: check your FXML file 'AddExpense.fxml'.";
         assert payerBox != null : "fx:id=\"payerBox\" was not injected: check your FXML file 'AddExpense.fxml'.";
         assert peopleLIstView != null : "fx:id=\"peopleLIstView\" was not injected: check your FXML file 'AddExpense.fxml'.";
-        assert priceLabel != null : "fx:id=\"priceLabel\" was not injected: check your FXML file 'AddExpense.fxml'.";
-
+        assert priceField != null : "fx:id=\"priceField\" was not injected: check your FXML file 'AddExpense.fxml'.";
+        assert expenseField != null : "fx:id=\"expenseField\" was not injected: check your FXML file 'AddExpense.fxml'.";
     }
 
     public void addParticipantToView() {
