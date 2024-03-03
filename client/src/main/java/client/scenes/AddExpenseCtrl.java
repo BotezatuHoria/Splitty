@@ -4,12 +4,14 @@
 
 package client.scenes;
 
-import commons.PersonTemporary;
+import commons.Event;
+import commons.Person;
 import commons.Transaction;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import javax.inject.Inject;
+import java.util.HashSet;
 
 public class AddExpenseCtrl {
 
@@ -35,7 +37,7 @@ public class AddExpenseCtrl {
     private ComboBox<Transaction> expenseTypeBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="payerBox"
-    private ComboBox<PersonTemporary> payerBox; // Value injected by FXMLLoader
+    private ComboBox<Person> payerBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="peopleLIstView"
     private ListView<CheckBox> peopleLIstView; // Value injected by FXMLLoader
@@ -67,8 +69,11 @@ public class AddExpenseCtrl {
     }
 
     public void addParticipantToView() {
-        PersonTemporary p =
-                new PersonTemporary("idk", "Horia", "Botezatu", "2334", 1);
+        Event e = new Event("", "", 1, ""
+                , new HashSet<>(), new HashSet<>());
+        Person p =
+                new Person("idk", "Horia", "Botezatu", "2334", e,
+                        new HashSet<>(), new HashSet<>());
         CheckBox personCheck = new CheckBox(p.getFirstName() + " " + p.getLastName());
         peopleLIstView.getItems().add(personCheck);
     }

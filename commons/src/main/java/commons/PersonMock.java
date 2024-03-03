@@ -21,32 +21,29 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 
 @Entity
-public class Quote {
+public class PersonMock {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public long id;
 
-	@OneToOne(cascade = CascadeType.PERSIST)
-	public PersonMock person;
-	public String quote;
+	public String firstName;
+	public String lastName;
 
 	@SuppressWarnings("unused")
-	public Quote() {
-		// for object mappers
+	private PersonMock() {
+		// for object mapper
 	}
 
-	public Quote(PersonMock person, String quote) {
-		this.person = person;
-		this.quote = quote;
+	public PersonMock(String firstName, String lastName) {
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
 
 	@Override

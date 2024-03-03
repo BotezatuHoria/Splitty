@@ -8,7 +8,6 @@ import java.util.Set;
 @Entity
 public class Event {
 
-
     protected String tag;
     protected String title;
     @Id
@@ -16,7 +15,7 @@ public class Event {
     protected int id;
     protected String token;
 
-    @ManyToMany
+    @OneToMany
     protected Set<Person> people;
 
     @OneToMany
@@ -147,7 +146,7 @@ public class Event {
      * Removes person from event.
      * @param person person to remove
      */
-    public void removePerson(Person person) {
+    public void removePerson(PersonMock person) {
         this.people.remove(person);
     }
 

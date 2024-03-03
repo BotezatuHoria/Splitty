@@ -18,7 +18,7 @@ package client.scenes;
 import com.google.inject.Inject;
 
 import client.utils.ServerUtils;
-import commons.Person;
+import commons.PersonMock;
 import commons.Quote;
 import jakarta.ws.rs.WebApplicationException;
 import javafx.fxml.FXML;
@@ -70,7 +70,7 @@ public class AddQuoteCtrl {
     }
 
     private Quote getQuote() {
-        var p = new Person(firstName.getText(), lastName.getText());
+        var p = new PersonMock(firstName.getText(), lastName.getText());
         var q = quote.getText();
         return new Quote(p, q);
     }
