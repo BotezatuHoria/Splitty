@@ -91,12 +91,13 @@ public class AddExpenseCtrl {
     }
 
     /**
-     * Method that prints all nodes
+     * Method that prints all nodes.
      */
     public void showNodes() {
         List<Node> nodes = getNodes();
-        for (Node node : nodes)
+        for (Node node : nodes) {
             System.out.println(node);
+        }
     }
 
     public void addAllParticipants() {
