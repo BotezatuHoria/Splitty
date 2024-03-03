@@ -5,14 +5,17 @@ import java.util.ResourceBundle;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import jakarta.ws.rs.WebApplicationException;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 import commons.PersonTemporary;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Modality;
 
-//TODO: Check the user input to be valid before creating a new user
+//TODO: Check the user input to be valid before creating a new user. Maybe not in this class?
 //TODO: fix the event id so that it is passed from the event controller.
 //TODO: Create the Create method after the server.utils is created.
 
@@ -78,10 +81,23 @@ public class ParticipantAdditionPageCtrl {
 
     /**
      * Method for the create button.
-     * TODO: Create this method after the server.utils is created.
+     * TODO: Finish this method after the server.utils is created.
      */
     public void create(){
         //TODO
+        try {
+            // save quote on server
+        } catch (WebApplicationException e) {
+
+            var alert = new Alert(Alert.AlertType.ERROR);
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+            return;
+        }
+
+        clearFields();
+        //mainCtrl.showEvent();  This method still needs to be created
     }
 
     /**
