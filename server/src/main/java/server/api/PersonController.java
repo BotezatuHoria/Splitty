@@ -14,7 +14,7 @@ public class PersonController {
     private final PersonRepository db;
 
     /**
-     * Constructor for the PersonController
+     * Constructor for the PersonController.
      * @param db repository for the personRepository
      */
     public PersonController(PersonRepository db) {
@@ -22,7 +22,7 @@ public class PersonController {
     }
 
     /**
-     * Get all people as json
+     * Get all people as json.
      * @return list of people as json
      */
     @GetMapping(path = { "", "/" })
@@ -31,7 +31,7 @@ public class PersonController {
     }
 
     /**
-     * Gets person entity by supplied email
+     * Gets person entity by supplied email.
      * @param email the email of the user
      * @return person who`s email matches supplied email
      */
@@ -45,7 +45,7 @@ public class PersonController {
     }
 
     /**
-     * Adds person to the database
+     * Adds person to the database.
      * @param person the person to add
      * @return person that was added
      */
@@ -69,7 +69,7 @@ public class PersonController {
     }
 
     /**
-     * Deletes person by their email
+     * Deletes person by their email.
      * @param email the email to delete by
      * @return person that was deleted
      */
