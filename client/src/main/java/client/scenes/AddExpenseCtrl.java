@@ -90,6 +90,15 @@ public class AddExpenseCtrl {
         addAllParticipants();
     }
 
+    /**
+     * Method that prints all nodes
+     */
+    public void showNodes() {
+        List<Node> nodes = getNodes();
+        for (Node node : nodes)
+            System.out.println(node);
+    }
+
     public void addAllParticipants() {
         for (CheckBox checkBox : peopleLIstView.getItems()) {
             checkBox.setSelected(true);
@@ -110,6 +119,7 @@ public class AddExpenseCtrl {
      * Function for the add button.
      */
     public void addExpense() {
+        showNodes();
         if (checkCompleted()) {
             clearInputs();
             //send data to server databae
