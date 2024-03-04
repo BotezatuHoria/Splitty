@@ -25,6 +25,9 @@ public class QuoteTest {
 
 	private static final PersonMock SOME_PERSON = new PersonMock("a", "b");
 
+	/**
+	 * Test.
+	 */
 	@Test
 	public void checkConstructor() {
 		var q = new Quote(SOME_PERSON, "q");
@@ -32,6 +35,9 @@ public class QuoteTest {
 		assertEquals("q", q.quote);
 	}
 
+	/**
+	 * Test.
+	 */
 	@Test
 	public void equalsHashCode() {
 		var a = new Quote(new PersonMock("a", "b"), "c");
@@ -40,6 +46,9 @@ public class QuoteTest {
 		assertEquals(a.hashCode(), b.hashCode());
 	}
 
+	/**
+	 * Test.
+	 */
 	@Test
 	public void notEqualsHashCode() {
 		var a = new Quote(new PersonMock("a", "b"), "c");
@@ -48,6 +57,9 @@ public class QuoteTest {
 		assertNotEquals(a.hashCode(), b.hashCode());
 	}
 
+	/**
+	 * Test.
+	 */
 	@Test
 	public void hasToString() {
 		var actual = new Quote(new PersonMock("a", "b"), "c").toString();
