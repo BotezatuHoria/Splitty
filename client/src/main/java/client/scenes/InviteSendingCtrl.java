@@ -5,6 +5,7 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -46,6 +47,7 @@ public class InviteSendingCtrl{
      * @param server the server to connect with.
      * @param mainCtrl
      */
+    @Inject
     public InviteSendingCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.server = server;
         this.mainCtrl = mainCtrl;
@@ -67,11 +69,21 @@ public class InviteSendingCtrl{
 
     }
 
+    /**
+     * So that the invitecode will be on you clipboard (to sent to connections).
+     */
     public void copyCode(){
         String inviteCode = InviteCode.getText(); //the code of the event, pictured on the page (not yet made to be gathered from the database).
         StringSelection selection = new StringSelection(inviteCode); //make it a stringselection so that we can set the clipboard contents to it.
         Clipboard board = Toolkit.getDefaultToolkit().getSystemClipboard(); // get our clipboard.
         board.setContents(selection, selection); //copy the eventinvite code to our clipboard.
+    }
+
+    /**
+     * button to go back to starterpage.
+     */
+    public void cancelGoBack(){
+        mainCtrl.showStarter();
     }
 
 

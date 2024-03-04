@@ -42,6 +42,10 @@ public class EventPageCtrl {
     public void showAddExpensePage() {
         mainCtrl.showExpensePage();
     }
+
+    public void showInvitePage(){
+        mainCtrl.showInvitePage();
+    }
 }
 
 

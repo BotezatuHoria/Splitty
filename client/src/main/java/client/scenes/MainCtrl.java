@@ -45,9 +45,13 @@ public class MainCtrl {
 
     private AddExpenseCtrl expenseCtrl;
 
+    private Scene invites;
+
+    private InviteSendingCtrl inviteSendingCtrl;
+
     public void initialize(Stage primaryStage, Pair<StarterPageCtrl, Parent> starter,
                            Pair<EventPageCtrl, Parent> event, Pair<StatisticsCtrl, Parent> statistics,
-                           Pair<AddExpenseCtrl, Parent> expense) {
+                           Pair<AddExpenseCtrl, Parent> expense, Pair<InviteSendingCtrl, Parent> invite) {
         this.primaryStage = primaryStage;
         this.starterPageCtrl = starter.getKey();
         this.starter = new Scene(starter.getValue());
@@ -61,9 +65,13 @@ public class MainCtrl {
         this.expenseCtrl = expense.getKey();
         this.expense = new Scene(expense.getValue());
 
+        this.inviteSendingCtrl = invite.getKey();
+        this.invites = new Scene(invite.getValue());
+
         showStarter();
         primaryStage.show();
     }
+
 
     public void showOverview() {
         primaryStage.setTitle("Quotes: Overview");
@@ -71,29 +79,50 @@ public class MainCtrl {
         overviewCtrl.refresh();
     }
 
+
     public void showAdd() {
         primaryStage.setTitle("Quotes: Adding Quote");
         primaryStage.setScene(add);
         add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
+    /**
+     * Sets the scene to the starter page with corresponding title.
+     */
     public void showStarter() {
         primaryStage.setTitle("Starter Page");
         primaryStage.setScene(starter);
     }
 
+    /**
+     * Sets the scene to the event page with corresponding title.
+     */
     public void showEventPage() {
         primaryStage.setTitle("Event Page");
         primaryStage.setScene(event);
     }
 
+    /**
+     * Sets the scene to the statistics page with corresponding title.
+     */
     public void showStatisticsPage() {
         primaryStage.setTitle("Statistics Page");
         primaryStage.setScene(statistics);
     }
 
+    /**
+     * Sets the scene to the expense page with corresponding title.
+     */
     public void showExpensePage() {
         primaryStage.setTitle("Add Expense");
         primaryStage.setScene(expense);
+    }
+
+    /**
+     * Sets the scene to the invite page with corresponding title.
+     */
+    public void showInvitePage() {
+        primaryStage.setTitle("Send Invites");
+        primaryStage.setScene(invites);
     }
 }

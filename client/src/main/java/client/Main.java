@@ -43,7 +43,9 @@ public class Main extends Application {
         var eventPage = FXML.load(EventPageCtrl.class, "client", "scenes", "EventPage.fxml");
         var statisticsPage = FXML.load(StatisticsCtrl.class, "client", "scenes", "Statistics.fxml");
         var expensePage = FXML.load(AddExpenseCtrl.class, "client", "scenes", "AddExpense.fxml");
+        var invitePage = FXML.load(InviteSendingCtrl.class, "client","scenes", "InviteSending.fxml");
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
-        mainCtrl.initialize(primaryStage, starterPage, eventPage, statisticsPage, expensePage);
+
+        mainCtrl.initialize(primaryStage, starterPage, eventPage, statisticsPage, expensePage, invitePage);
     }
 }
