@@ -37,6 +37,9 @@ public class EventPageCtrl {
     @FXML // fx:id="homeButton"
     private Button homeButton; // Value injected by FXMLLoader
 
+    @FXML // fx:id="showStatistics"
+    private Button showStatistics; // Value injected by FXMLLoader
+
     /**
      * Constructor for EventPageCtrl.
      * @param mainCtrl - reference to the main controller
@@ -79,6 +82,10 @@ public class EventPageCtrl {
      */
     public void goHome() {
         mainCtrl.showStarter();
+    }
+
+    public void showStatistics() {
+        mainCtrl.showStatisticsPage();
     }
 }
 
