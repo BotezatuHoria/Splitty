@@ -27,19 +27,19 @@ public class InviteSendingCtrl{
     private final MainCtrl mainCtrl;
 
     @FXML // fx:id="CopyInviteCodeButton"
-    private Button CopyInviteCodeButton; // Value injected by FXMLLoader
+    private Button copyInviteCodeButton; // Value injected by FXMLLoader
 
     @FXML // fx:id="EventTitle"
-    private Label EventTitle; // Value injected by FXMLLoader
+    private Label eventTitle; // Value injected by FXMLLoader
 
     @FXML // fx:id="InviteCode"
-    private Label InviteCode; // Value injected by FXMLLoader
+    private Label inviteCode; // Value injected by FXMLLoader
 
     @FXML // fx:id="MailInputField"
-    private TextArea MailInputField; // Value injected by FXMLLoader
+    private TextArea mailInputField; // Value injected by FXMLLoader
 
     @FXML // fx:id="SendInviteButton"
-    private Button SendInviteButton; // Value injected by FXMLLoader
+    private Button sendInviteButton; // Value injected by FXMLLoader
 
     /**
      *Constructor and therefore making the connection.
@@ -55,7 +55,7 @@ public class InviteSendingCtrl{
      * The method that, when called, should send emails with invites to the event in every mail that has been put in the MainInputField.
      */
     public void sendInvite(){
-        String mails = MailInputField.getText();
+        String mails = mailInputField.getText();
         Scanner scanner = new Scanner(mails);
         List<String> listOfMails = new ArrayList<>();
         while (scanner.hasNext()){
@@ -68,7 +68,7 @@ public class InviteSendingCtrl{
     }
 
     public void copyCode(){
-        String inviteCode = InviteCode.getText(); //the code of the event, pictured on the page (not yet made to be gathered from the database).
+        String inviteCode = this.inviteCode.getText(); //the code of the event, pictured on the page (not yet made to be gathered from the database).
         StringSelection selection = new StringSelection(inviteCode); //make it a stringselection so that we can set the clipboard contents to it.
         Clipboard board = Toolkit.getDefaultToolkit().getSystemClipboard(); // get our clipboard.
         board.setContents(selection, selection); //copy the eventinvite code to our clipboard.

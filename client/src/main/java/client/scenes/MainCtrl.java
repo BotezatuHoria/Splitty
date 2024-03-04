@@ -65,7 +65,6 @@ public class MainCtrl {
                            Pair<EventPageCtrl, Parent> event, Pair<StatisticsCtrl, Parent> statistics,
                            Pair<AddExpenseCtrl, Parent> expense,
                            Pair<ParticipantAdditionPageCtrl, Parent> addParticipant,
-                           Pair<InviteSendingCtrl, Parent> inviteSend,
                            Pair<DebtSettlementCtrl, Parent> debt,
                            Pair<LanguageSelectorCtrl, Parent> language) {
         this.primaryStage = primaryStage;
@@ -84,17 +83,14 @@ public class MainCtrl {
         this.additionPageCtrl = addParticipant.getKey();
         this.addParticipant = new Scene(addParticipant.getValue());
 
-        this.inviteSendingCtrl = inviteSend.getKey();
-        this.inviteSend = new Scene(inviteSend.getValue());
+        //this.inviteSendingCtrl = inviteSend.getKey();
+        //this.inviteSend = new Scene(inviteSend.getValue());
 
         this.debtSettlementCtrl = debt.getKey();
         this.debt = new Scene(debt.getValue());
 
         this.languageSelectorCtrl = language.getKey();
         this.language = new Scene(language.getValue());
-
-        this.statisticsCtrl = statistics.getKey();
-        this.statistics = new Scene(statistics.getValue());
 
         showStarter();
         primaryStage.show();

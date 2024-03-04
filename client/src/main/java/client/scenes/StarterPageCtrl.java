@@ -54,6 +54,11 @@ public class StarterPageCtrl {
         this.mainCtrl = mainCtrl;
     }
 
+    @FXML
+    void selectLanguage() {
+        mainCtrl.showLanguage();
+    }
+
     /**
      * Function to add to the listView item.
      */

@@ -43,15 +43,13 @@ public class Main extends Application {
         var eventPage = FXML.load(EventPageCtrl.class, "client", "scenes", "EventPage.fxml");
         var statisticsPage = FXML.load(StatisticsCtrl.class, "client", "scenes", "Statistics.fxml");
         var expensePage = FXML.load(AddExpenseCtrl.class, "client", "scenes", "AddExpense.fxml");
-        var sendInvites = FXML.load(InviteSendingCtrl.class, "client", "scenes", "InviteSending.fxml");
-        var languageSelector = FXML.load(LanguageSelectorCtrl.class, "client", "scenes",
-                "LanguageSelector.fxml");
-        var statistics = FXML.load(StatisticsCtrl.class, "client", "scenes", "Statistics.fxml");
+        var languageSelector = FXML.load(LanguageSelectorCtrl.class, "client", "scenes", "LanguageSelector.fxml");
         var debtPage = FXML.load(DebtSettlementCtrl.class, "client", "scenes", "DebtsSettlementPage.fxml");
         var addParticipants = FXML.load(ParticipantAdditionPageCtrl.class, "client", "scenes",
                 "ParticipantAdditionPage.fxml");
+        //var sendInvites = FXML.load(InviteSendingCtrl.class, "client", "scenes", "InviteSending.fxml");
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
         mainCtrl.initialize(primaryStage, starterPage, eventPage, statisticsPage, expensePage,
-                addParticipants, sendInvites, debtPage, languageSelector);
+                addParticipants,debtPage, languageSelector);
     }
 }
