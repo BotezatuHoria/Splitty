@@ -39,26 +39,47 @@ public class Quote {
 	public PersonMock person;
 	public String quote;
 
+	/**
+	 * Blank constructor for the quote class.
+	 */
 	@SuppressWarnings("unused")
 	public Quote() {
 		// for object mappers
 	}
 
+	/**
+	 * Constructor for the Quote.
+	 * @param person - person
+	 * @param quote - quote
+	 */
 	public Quote(PersonMock person, String quote) {
 		this.person = person;
 		this.quote = quote;
 	}
 
+	/**
+	 * Equals method for quote class.
+	 * @param obj - to compare with.
+	 * @return - true if the object are equal, false otherwise.
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		return EqualsBuilder.reflectionEquals(this, obj);
 	}
 
+	/**
+	 * Hashcode function.
+	 * @return - hashcode representation of the object.
+	 */
 	@Override
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
+	/**
+	 * ToString function.
+	 * @return - string representation of thw quote class.
+	 */
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, MULTI_LINE_STYLE);

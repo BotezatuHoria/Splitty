@@ -41,6 +41,11 @@ public class AddQuoteCtrl {
     @FXML
     private TextField quote;
 
+    /**
+     * Mock.
+     * @param server - server
+     * @param mainCtrl - main controller
+     */
     @Inject
     public AddQuoteCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
@@ -48,11 +53,17 @@ public class AddQuoteCtrl {
 
     }
 
+    /**
+     * Cancel function.
+     */
     public void cancel() {
         clearFields();
         mainCtrl.showOverview();
     }
 
+    /**
+     * Ok function.
+     */
     public void ok() {
         try {
             server.addQuote(getQuote());
@@ -69,18 +80,29 @@ public class AddQuoteCtrl {
         mainCtrl.showOverview();
     }
 
+    /**
+     * Get quote function.
+     * @return - a quote
+     */
     private Quote getQuote() {
         var p = new PersonMock(firstName.getText(), lastName.getText());
         var q = quote.getText();
         return new Quote(p, q);
     }
 
+    /**
+     * Clearing fields.
+     */
     private void clearFields() {
         firstName.clear();
         lastName.clear();
         quote.clear();
     }
 
+    /**
+     * KeyPressed.
+     * @param e - event
+     */
     public void keyPressed(KeyEvent e) {
         switch (e.getCode()) {
         case ENTER:

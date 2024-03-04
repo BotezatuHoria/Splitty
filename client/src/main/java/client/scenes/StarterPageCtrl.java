@@ -91,6 +91,9 @@ public class StarterPageCtrl {
     }
 
 
+    /**
+     * Method that changes the primary stage to the event page.
+     */
     public void showEventPage() {
         mainCtrl.showEventPage();
     }

@@ -84,6 +84,9 @@ public class EventPageCtrl {
         mainCtrl.showStarter();
     }
 
+    /**
+     * Method for changing to the statistics page.
+     */
     public void showStatistics() {
         mainCtrl.showStatisticsPage();
     }

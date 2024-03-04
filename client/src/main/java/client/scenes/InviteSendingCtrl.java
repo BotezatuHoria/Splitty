@@ -67,6 +67,9 @@ public class InviteSendingCtrl{
 
     }
 
+    /**
+     * Method fot copying code ??.
+     */
     public void copyCode(){
         String inviteCode = this.inviteCode.getText(); //the code of the event, pictured on the page (not yet made to be gathered from the database).
         StringSelection selection = new StringSelection(inviteCode); //make it a stringselection so that we can set the clipboard contents to it.

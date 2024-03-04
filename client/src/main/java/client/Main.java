@@ -33,6 +33,12 @@ public class Main extends Application {
     private static final Injector INJECTOR = createInjector(new MyModule());
     private static final MyFXML FXML = new MyFXML(INJECTOR);
 
+    /**
+     * Main function for the Main class.
+     * @param args - arguments
+     * @throws URISyntaxException - Syntax exception
+     * @throws IOException - io exception
+     */
     public static void main(String[] args) throws URISyntaxException, IOException {
         launch();
     }

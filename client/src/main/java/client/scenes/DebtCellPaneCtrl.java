@@ -23,6 +23,10 @@ public class DebtCellPaneCtrl extends ListCell<DebtCellData> {
     assert debtInformation != null : "fx:id=\"debtInformation\" was not injected: check your FXML file 'DebtCellPane.fxml'.";
     assert furtherInfo != null : "fx:id=\"furtherInfo\" was not injected: check your FXML file 'DebtCellPane.fxml'.";
   }
+
+  /**
+   * Constructor for debt pane controller.
+   */
   public DebtCellPaneCtrl() {
     // load the FXML file and set the controller
     loader = new FXMLLoader(getClass().getResource("DebtCellPane.fxml"));
