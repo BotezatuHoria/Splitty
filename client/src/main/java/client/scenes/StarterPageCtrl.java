@@ -39,6 +39,9 @@ public class StarterPageCtrl {
     @FXML // fx:id="joinTextField"
     private TextField joinTextField;
 
+    @FXML // fx:id="languageSelector"
+    private Button languageSelector; // Value injected by FXMLLoader
+
     @FXML // fx:id="listView"
     private ListView<Event> listView;
 

@@ -30,9 +30,8 @@ public class MainCtrl {
     private AddQuoteCtrl addCtrl;
     private Scene add;
 
-    private StarterPageCtrl starterPageCtrl;
-
     private Scene starter;
+    private StarterPageCtrl starterPageCtrl;
 
     private Scene event;
 
@@ -45,9 +44,30 @@ public class MainCtrl {
 
     private AddExpenseCtrl expenseCtrl;
 
+    private Scene addParticipant;
+
+    private ParticipantAdditionPageCtrl additionPageCtrl;
+
+    private Scene inviteSend;
+
+    private InviteSendingCtrl inviteSendingCtrl;
+
+    private Scene debt;
+
+    private DebtSettlementCtrl debtSettlementCtrl;
+
+    private Scene language;
+
+    private LanguageSelectorCtrl languageSelectorCtrl;
+
+
     public void initialize(Stage primaryStage, Pair<StarterPageCtrl, Parent> starter,
                            Pair<EventPageCtrl, Parent> event, Pair<StatisticsCtrl, Parent> statistics,
-                           Pair<AddExpenseCtrl, Parent> expense) {
+                           Pair<AddExpenseCtrl, Parent> expense,
+                           Pair<ParticipantAdditionPageCtrl, Parent> addParticipant,
+                           Pair<InviteSendingCtrl, Parent> inviteSend,
+                           Pair<DebtSettlementCtrl, Parent> debt,
+                           Pair<LanguageSelectorCtrl, Parent> language) {
         this.primaryStage = primaryStage;
         this.starterPageCtrl = starter.getKey();
         this.starter = new Scene(starter.getValue());
@@ -60,6 +80,21 @@ public class MainCtrl {
 
         this.expenseCtrl = expense.getKey();
         this.expense = new Scene(expense.getValue());
+
+        this.additionPageCtrl = addParticipant.getKey();
+        this.addParticipant = new Scene(addParticipant.getValue());
+
+        this.inviteSendingCtrl = inviteSend.getKey();
+        this.inviteSend = new Scene(inviteSend.getValue());
+
+        this.debtSettlementCtrl = debt.getKey();
+        this.debt = new Scene(debt.getValue());
+
+        this.languageSelectorCtrl = language.getKey();
+        this.language = new Scene(language.getValue());
+
+        this.statisticsCtrl = statistics.getKey();
+        this.statistics = new Scene(statistics.getValue());
 
         showStarter();
         primaryStage.show();
@@ -95,5 +130,25 @@ public class MainCtrl {
     public void showExpensePage() {
         primaryStage.setTitle("Add Expense");
         primaryStage.setScene(expense);
+    }
+
+    public void showAddParticipant() {
+        primaryStage.setTitle("Add participant");
+        primaryStage.setScene(addParticipant);
+    }
+
+    public void showInviteParticipantPage() {
+        primaryStage.setTitle("Send Invites");
+        primaryStage.setScene(inviteSend);
+    }
+
+    public void showDebtPage() {
+        primaryStage.setTitle("Open debts");
+        primaryStage.setScene(debt);
+    }
+
+    public void showLanguage() {
+        primaryStage.setTitle("Select language");
+        primaryStage.setScene(language);
     }
 }

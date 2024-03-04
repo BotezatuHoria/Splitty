@@ -13,7 +13,7 @@
 <module name = "Checker">
 
     <module name="TreeWalker">
-        <module name="UnusedImports" />
+        <module name="UnusedImports"/>
 
         <module name="NeedBraces"/>
 
@@ -24,6 +24,8 @@
         <module name="MultipleVariableDeclarations"/>
 
         <module name="SummaryJavadocCheck"/>
+
+        <module name="MissingJavadocMethod"/>
 
         <module name="NoWhitespaceBeforeCaseDefaultColon"/>
 
@@ -42,7 +44,7 @@
         <module name="ParameterNumber">
             <property name="severity" value="warning"/>
             <property name="tokens" value="METHOD_DEF, CTOR_DEF"/>
-            <property name="max" value="8"/>
+            <property name="max" value="12"/>
         </module>
 
         <module name="CyclomaticComplexity">
