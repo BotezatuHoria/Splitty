@@ -2,6 +2,7 @@ package client.scenes;
 
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 
 public class LanguageSelectorCtrl {
@@ -9,6 +10,9 @@ public class LanguageSelectorCtrl {
 
     @FXML // fx:id="languageComboBox"
     private ComboBox<?> languageComboBox;
+
+    @FXML
+    private Button backButton;
 
     @Inject
     public LanguageSelectorCtrl(MainCtrl mainCtrl) {
@@ -18,6 +22,10 @@ public class LanguageSelectorCtrl {
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert languageComboBox != null : "fx:id=\"languageComboBox\" was not injected: check your FXML file 'AddExpense.fxml'.";
+    }
+
+    public void goBack() {
+        mainCtrl.showStarter();
     }
 }
 
