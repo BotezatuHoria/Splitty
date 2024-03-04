@@ -23,7 +23,7 @@ public class MainCtrlTest {
     private MainCtrl sut;
 
     /**
-     * Setup
+     * Setup.
      */
     @BeforeEach
     public void setup() {
