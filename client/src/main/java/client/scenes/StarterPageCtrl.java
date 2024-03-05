@@ -15,7 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
-import javax.inject.Inject;
+import com.google.inject.Inject;
 
 public class StarterPageCtrl {
 
