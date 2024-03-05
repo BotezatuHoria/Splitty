@@ -59,6 +59,10 @@ public class AddExpenseCtrl {
 
     private final MainCtrl mainCtrl;
 
+    /**
+     * Constructor for the add expense controller.
+     * @param mainCtrl - reference to the main controller
+     */
     @Inject
     public AddExpenseCtrl(MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
@@ -79,6 +83,10 @@ public class AddExpenseCtrl {
         assert expenseField != null : "fx:id=\"expenseField\" was not injected: check your FXML file 'AddExpense.fxml'.";
     }
 
+    /**
+     * Method that adds participants to the listView.
+     * Full functionality will be implemented in the future.
+     */
     public void addParticipantToView() {
         Event e = new Event("", "", 1, ""
                 , new HashSet<>(), new HashSet<>());
@@ -100,12 +108,18 @@ public class AddExpenseCtrl {
         }
     }
 
+    /**
+     * Method that checks all the checkBoxes for all the participants in the list view.
+     */
     public void addAllParticipants() {
         for (CheckBox checkBox : peopleLIstView.getItems()) {
             checkBox.setSelected(true);
         }
     }
 
+    /**
+     * Method for clearing all the inputs after adding a new expense.
+     */
     public void clearInputs() {
         payerBox.valueProperty().set(null);
         expenseField.clear();

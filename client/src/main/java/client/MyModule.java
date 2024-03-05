@@ -15,14 +15,10 @@
  */
 package client;
 
-import client.scenes.AddExpenseCtrl;
-import client.scenes.EventPageCtrl;
-import client.scenes.StarterPageCtrl;
+import client.scenes.*;
 import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.google.inject.Scopes;
-
-import client.scenes.MainCtrl;
 
 public class MyModule implements Module {
 
@@ -33,6 +29,5 @@ public class MyModule implements Module {
         binder.bind(EventPageCtrl.class).in(Scopes.SINGLETON);
         binder.bind(AddExpenseCtrl.class).in(Scopes.SINGLETON);
     }
-
 
 }

@@ -35,6 +35,11 @@ public class ServerUtils {
 
 	private static final String SERVER = "http://localhost:8080/";
 
+	/**
+	 * Method for getting the quotes the hard way.
+	 * @throws IOException - IO exception
+	 * @throws URISyntaxException - Syntax exception
+	 */
 	public void getQuotesTheHardWay() throws IOException, URISyntaxException {
 		var url = new URI("http://localhost:8080/api/quotes").toURL();
 		var is = url.openConnection().getInputStream();
@@ -45,6 +50,10 @@ public class ServerUtils {
 		}
 	}
 
+	/**
+	 * Method for retrieving the quotes.
+	 * @return - a list of quotes
+	 */
 	public List<Quote> getQuotes() {
 		return ClientBuilder.newClient(new ClientConfig()) //
 				.target(SERVER).path("api/quotes") //
@@ -53,6 +62,11 @@ public class ServerUtils {
                 .get(new GenericType<List<Quote>>() {});
 	}
 
+	/**
+	 * Add quote api call.
+	 * @param quote - quote
+	 * @return - quote
+	 */
 	public Quote addQuote(Quote quote) {
 		return ClientBuilder.newClient(new ClientConfig()) //
 				.target(SERVER).path("api/quotes") //
