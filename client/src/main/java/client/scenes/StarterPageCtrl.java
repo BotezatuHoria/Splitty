@@ -97,4 +97,14 @@ public class StarterPageCtrl {
     public void showEventPage() {
         mainCtrl.showEventPage();
     }
+
+    /**
+     * should set the scene to a responsive event page with corresponding title and code etc.
+     */
+    public void showResponsiveEventPage(){
+        String name = createTextField.getText();
+        //here we should eventually make it so the title of our event gets posted.
+        // Wanted to work on this, but then realised it should represent a half-finished, not even made event
+        // with the title that should be just before the create button on the starterpage, maybe something we do later.
+    }
 }

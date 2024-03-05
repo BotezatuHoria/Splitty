@@ -22,11 +22,11 @@ public class EventPageCtrl {
     @FXML // fx:id="editParticipants"
     private Button editParticipants; // Value injected by FXMLLoader
 
-    @FXML // fx:id="fromPartipant"
-    private Button fromPartipant; // Value injected by FXMLLoader
+    @FXML // fx:id="fromParticipant"
+    private Button fromParticipant; // Value injected by FXMLLoader
 
-    @FXML // fx:id="includingParticpant"
-    private Button includingParticpant; // Value injected by FXMLLoader
+    @FXML // fx:id="includingParticipant"
+    private Button includingParticipant; // Value injected by FXMLLoader
 
     @FXML // fx:id="sendInvites"
     private Button sendInvites; // Value injected by FXMLLoader
