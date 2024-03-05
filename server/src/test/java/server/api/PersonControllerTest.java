@@ -37,14 +37,14 @@ public class PersonControllerTest {
     }
 
     @Test
-    public void getPersonNullTest() {
-        var actual = sut.getById(null);
+    public void getPersonNegativeTest() {
+        var actual = sut.getById(-1);
         assertEquals(BAD_REQUEST, actual.getStatusCode());
     }
 
     @Test
-    public void deletePersonNullTest() {
-        var actual = sut.deleteById(null);
+    public void deletePersonNegativeTest() {
+        var actual = sut.deleteById(-1);
         assertEquals(BAD_REQUEST, actual.getStatusCode());
     }
 
@@ -54,7 +54,7 @@ public class PersonControllerTest {
                 "iban33", new Event("", "", 1, "", new HashSet<>(),
                 new HashSet<>()), new HashSet<>(), new HashSet<>());
         sut.add(test);
-        var actual = sut.deleteById("test@email.com");
+        var actual = sut.deleteById(0);
         assertEquals(test, actual.getBody());
         assertEquals(new ArrayList<>(), sut.getAll());
     }
@@ -65,7 +65,7 @@ public class PersonControllerTest {
                 "iban33", new Event("", "", 1, "", new HashSet<>(),
                 new HashSet<>()), new HashSet<>(), new HashSet<>());
         sut.add(test);
-        var actual = sut.getById("test@email.com");
+        var actual = sut.getById(0);
         assertEquals(test, actual.getBody());
     }
 }

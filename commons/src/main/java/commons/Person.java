@@ -10,7 +10,6 @@ public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected int id;
-
     protected String email;
     protected String firstName;
     protected String lastName;
@@ -51,6 +50,14 @@ public class Person {
      */
     public Person() {
 
+    }
+
+    /**
+     * Getter method for the id of the person.
+     * @return id of said person
+     */
+    public int getId() {
+        return id;
     }
 
     /**

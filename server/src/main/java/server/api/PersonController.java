@@ -22,8 +22,8 @@ public class PersonController {
     }
 
     /**
-     * Get all people as json.
-     * @return list of people as json
+     * Get all people.
+     * @return list of people
      */
     @GetMapping(path = { "", "/" })
     public List<Person> getAll() {
@@ -32,16 +32,16 @@ public class PersonController {
 
     /**
      * Gets person entity by supplied email.
-     * @param email the email of the user
+     * @param id the id of the user
      * @return person who`s email matches supplied email
      */
-    @GetMapping("/{email}")
-    public ResponseEntity<Person> getById(@PathVariable("email") String email) {
-        if (email == null || !db.existsById(email)) {
+    @GetMapping("/{id}")
+    public ResponseEntity<Person> getById(@PathVariable("id") int id) {
+        if (id < 0 || !db.existsById(id)) {
             return ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.ok(db.findById(email).get());
+        return ResponseEntity.ok(db.findById(id).get());
     }
 
     /**
@@ -51,16 +51,8 @@ public class PersonController {
      */
     @PostMapping(path = { "", "/" })
     public ResponseEntity<Person> add(Person person) {
-        // The regex ensures that:
-        //  - email begins with alphanumeric characters, including underscores, pluses, ampersands, asterisks, or hyphens.
-        //  - may contain dots as long as they are not the first or last character and it does not come one after the other.
-        //  - contains an @ symbol separating the local part from the domain part.
-        //  - the domain part contains alphanumeric characters, including hyphens, but again, hyphens cannot be the first character. It then has a period . and a domain name with 2 to 7 letters to comply with domain name restrictions.
-
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-        Pattern emailPattern = Pattern.compile(emailRegex);
-
-        if (person == null || person.getEmail() == null || !emailPattern.matcher(person.getEmail()).matches()) {
+        if (person == null || person.getId() < 0 || person.getFirstName() == null
+                || person.getLastName() == null) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -70,18 +62,17 @@ public class PersonController {
 
     /**
      * Deletes person by their email.
-     * @param email the email to delete by
+     * @param id the id to delete by
      * @return person that was deleted
      */
-    @DeleteMapping("/{email}")
-    public ResponseEntity<Person> deleteById(@PathVariable("email") String email) {
-        if (email == null || !db.existsById(email)) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Person> deleteById(@PathVariable("id") int id) {
+        if (id < 0 || !db.existsById(id)) {
             return ResponseEntity.badRequest().build();
         }
 
-        ResponseEntity<Person> person = ResponseEntity.ok(db.findById(email).get());
-        db.deleteById(email);
+        ResponseEntity<Person> person = ResponseEntity.ok(db.findById(id).get());
+        db.deleteById(id);
         return person;
     }
-
 }
