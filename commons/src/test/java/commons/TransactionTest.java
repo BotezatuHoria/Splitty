@@ -9,6 +9,9 @@ import java.time.LocalDate;
 import java.util.HashSet;
 
 public class TransactionTest {
+    /**
+     * Test.
+     */
     @Test
     public void checkConstructor() {
         Transaction t = new Transaction("test",
@@ -22,6 +25,9 @@ public class TransactionTest {
         assertEquals(947, t.getCurrency());
     }
 
+    /**
+     * Test.
+     */
     @Test
     public void testName() {
         Transaction t = new Transaction("test",
@@ -29,6 +35,10 @@ public class TransactionTest {
                 100, 947, new HashSet<>(), new Person());
         assertEquals("test", t.getName());
     }
+
+    /**
+     * Test.
+     */
     @Test
     public void testLocalDate() {
         Transaction t = new Transaction("test",
@@ -39,6 +49,9 @@ public class TransactionTest {
         assertEquals(10, t.getDate().getDayOfMonth());
     }
 
+    /**
+     * Test.
+     */
     @Test
     public void testMoney() {
         Transaction t = new Transaction("test",
@@ -47,6 +60,9 @@ public class TransactionTest {
         assertEquals(100, t.getMoney());
     }
 
+    /**
+     * Test.
+     */
     @Test
     public void testCurrency() {
         Transaction t = new Transaction("test",
@@ -55,6 +71,9 @@ public class TransactionTest {
         assertEquals(947, t.getCurrency());
     }
 
+    /**
+     * Test.
+     */
     @Test
     public void testEquals() {
         Transaction t1 = new Transaction("test",
@@ -66,6 +85,9 @@ public class TransactionTest {
         assertEquals(t1, t2);
     }
 
+    /**
+     * Test.
+     */
     @Test
     public void testNotEquals() {
         Transaction t1 = new Transaction("test",
@@ -77,6 +99,9 @@ public class TransactionTest {
         assertNotEquals(t1, t2);
     }
 
+    /**
+     * Test.
+     */
     @Test
     public void setNameTest() {
         Transaction t1 = new Transaction("test",
@@ -86,6 +111,9 @@ public class TransactionTest {
         assertEquals("new test", t1.getName());
     }
 
+    /**
+     * Test.
+     */
     @Test
     public void setLocalDateTest() {
         Transaction t = new Transaction("test",
@@ -97,6 +125,9 @@ public class TransactionTest {
         assertEquals(30, t.getDate().getDayOfMonth());
     }
 
+    /**
+     * Test.
+     */
     @Test
     public void setMoneyTest() {
         Transaction t = new Transaction("test",
@@ -106,6 +137,9 @@ public class TransactionTest {
         assertEquals(90, t.getMoney());
     }
 
+    /**
+     * Test.
+     */
     @Test
     public void setCurrencyTest() {
         Transaction t = new Transaction("test",

@@ -30,9 +30,8 @@ public class MainCtrl {
     private AddQuoteCtrl addCtrl;
     private Scene add;
 
-    private StarterPageCtrl starterPageCtrl;
-
     private Scene starter;
+    private StarterPageCtrl starterPageCtrl;
 
     private Scene event;
 
@@ -45,9 +44,40 @@ public class MainCtrl {
 
     private AddExpenseCtrl expenseCtrl;
 
+    private Scene addParticipant;
+
+    private ParticipantAdditionPageCtrl additionPageCtrl;
+
+    private Scene inviteSend;
+
+    private InviteSendingCtrl inviteSendingCtrl;
+
+    private Scene debt;
+
+    private DebtCellPaneCtrl debtCellPaneCtrl;
+
+    private Scene language;
+
+    private LanguageSelectorCtrl languageSelectorCtrl;
+
+
+    /**
+     * Initialize method for the main controller.
+     * @param primaryStage - primary stage
+     * @param starter - starter page
+     * @param event - event page
+     * @param statistics - statistics page
+     * @param expense - expense page
+     * @param addParticipant - add participants page
+     * @param debt - debt page
+     * @param language - language page
+     */
     public void initialize(Stage primaryStage, Pair<StarterPageCtrl, Parent> starter,
                            Pair<EventPageCtrl, Parent> event, Pair<StatisticsCtrl, Parent> statistics,
-                           Pair<AddExpenseCtrl, Parent> expense) {
+                           Pair<AddExpenseCtrl, Parent> expense,
+                           Pair<ParticipantAdditionPageCtrl, Parent> addParticipant,
+                           Pair<DebtCellPaneCtrl, Parent> debt,
+                           Pair<LanguageSelectorCtrl, Parent> language) {
         this.primaryStage = primaryStage;
         this.starterPageCtrl = starter.getKey();
         this.starter = new Scene(starter.getValue());
@@ -61,39 +91,101 @@ public class MainCtrl {
         this.expenseCtrl = expense.getKey();
         this.expense = new Scene(expense.getValue());
 
+        this.additionPageCtrl = addParticipant.getKey();
+        this.addParticipant = new Scene(addParticipant.getValue());
+
+        //this.inviteSendingCtrl = inviteSend.getKey();
+        //this.inviteSend = new Scene(inviteSend.getValue());
+
+        this.debtCellPaneCtrl = debt.getKey();
+        this.debt = new Scene(debt.getValue());
+
+        this.languageSelectorCtrl = language.getKey();
+        this.language = new Scene(language.getValue());
+
         showStarter();
         primaryStage.show();
     }
 
+    /**
+     * Method for showing overview.
+     */
     public void showOverview() {
         primaryStage.setTitle("Quotes: Overview");
         primaryStage.setScene(overview);
         overviewCtrl.refresh();
     }
 
+    /**
+     * Method for showing the add quote.
+     */
     public void showAdd() {
         primaryStage.setTitle("Quotes: Adding Quote");
         primaryStage.setScene(add);
         add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
+    /**
+     * Method for showing the starter page.
+     */
     public void showStarter() {
         primaryStage.setTitle("Starter Page");
         primaryStage.setScene(starter);
     }
 
+    /**
+     * Method for showing the event page.
+     */
     public void showEventPage() {
         primaryStage.setTitle("Event Page");
         primaryStage.setScene(event);
     }
 
+    /**
+     * Method for showing statistics page.
+     */
     public void showStatisticsPage() {
         primaryStage.setTitle("Statistics Page");
         primaryStage.setScene(statistics);
     }
 
+    /**
+     * Method for showing the add expense page.
+     */
     public void showExpensePage() {
         primaryStage.setTitle("Add Expense");
         primaryStage.setScene(expense);
+    }
+
+    /**
+     * Method for showing the add participant page.
+     */
+    public void showAddParticipant() {
+        primaryStage.setTitle("Add participant");
+        primaryStage.setScene(addParticipant);
+    }
+
+    /**
+     * Method for showing the invite participants page.
+     */
+    public void showInviteParticipantPage() {
+        primaryStage.setTitle("Send Invites");
+        primaryStage.setScene(inviteSend);
+    }
+
+    /**
+     * Method for showing the debt page.
+     */
+    public void showDebtPage() {
+        primaryStage.setTitle("Open debts");
+        primaryStage.setScene(debt);
+    }
+
+    /**
+     * Method for showing the language selector.
+     */
+    public void showLanguage() {
+        primaryStage.setTitle("Select language");
+        primaryStage.setScene(language);
     }
 }

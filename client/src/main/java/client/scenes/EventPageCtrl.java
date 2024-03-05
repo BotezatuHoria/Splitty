@@ -34,13 +34,61 @@ public class EventPageCtrl {
     @FXML // fx:id="settleDebts"
     private Button settleDebts; // Value injected by FXMLLoader
 
+    @FXML // fx:id="homeButton"
+    private Button homeButton; // Value injected by FXMLLoader
+
+    @FXML // fx:id="showStatistics"
+    private Button showStatistics; // Value injected by FXMLLoader
+
+    /**
+     * Constructor for EventPageCtrl.
+     * @param mainCtrl - reference to the main controller
+     */
     @Inject
     public EventPageCtrl(MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
     }
 
+    /**
+     * Method for accessing the expense page.
+     */
     public void showAddExpensePage() {
         mainCtrl.showExpensePage();
+    }
+
+    /**
+     * Method for accessing the add participants page.
+     */
+    public void addParticipants() {
+        mainCtrl.showAddParticipant();
+    }
+
+    /**
+     * Method for accessing the sending invites page.
+     */
+    public void sendInvites() {
+        // to be implemented
+    }
+
+    /**
+     * Method for accessing the debts page.
+     */
+    public void settleDebts() {
+        mainCtrl.showDebtPage();
+    }
+
+    /**
+     * Method for going back to the main pge.
+     */
+    public void goHome() {
+        mainCtrl.showStarter();
+    }
+
+    /**
+     * Method for changing to the statistics page.
+     */
+    public void showStatistics() {
+        mainCtrl.showStatisticsPage();
     }
 }
 

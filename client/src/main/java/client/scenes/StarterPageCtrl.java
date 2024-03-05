@@ -39,6 +39,9 @@ public class StarterPageCtrl {
     @FXML // fx:id="joinTextField"
     private TextField joinTextField;
 
+    @FXML // fx:id="languageSelector"
+    private Button languageSelector; // Value injected by FXMLLoader
+
     @FXML // fx:id="listView"
     private ListView<Event> listView;
 
@@ -49,6 +52,11 @@ public class StarterPageCtrl {
     @Inject
     public StarterPageCtrl(MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
+    }
+
+    @FXML
+    void selectLanguage() {
+        mainCtrl.showLanguage();
     }
 
     /**
@@ -83,6 +91,9 @@ public class StarterPageCtrl {
     }
 
 
+    /**
+     * Method that changes the primary stage to the event page.
+     */
     public void showEventPage() {
         mainCtrl.showEventPage();
     }

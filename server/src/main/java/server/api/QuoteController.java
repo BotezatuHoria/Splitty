@@ -36,16 +36,30 @@ public class QuoteController {
     private final Random random;
     private final QuoteRepository repo;
 
+    /**
+     * Constructor for the quote controller.
+     * @param random - random
+     * @param repo - repository
+     */
     public QuoteController(Random random, QuoteRepository repo) {
         this.random = random;
         this.repo = repo;
     }
 
+    /**
+     * Method that gets a list of all the quotes.
+     * @return - list of quotes.
+     */
     @GetMapping(path = { "", "/" })
     public List<Quote> getAll() {
         return repo.findAll();
     }
 
+    /**
+     * Method that provides a quote by id.
+     * @param id - of the quote
+     * @return ResponseEntity of a quote
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Quote> getById(@PathVariable("id") long id) {
         if (id < 0 || !repo.existsById(id)) {
@@ -54,6 +68,11 @@ public class QuoteController {
         return ResponseEntity.ok(repo.findById(id).get());
     }
 
+    /**
+     * Method for adding a quote to the database.
+     * @param quote - quote to be added.
+     * @return ResponseEntity of a quote
+     */
     @PostMapping(path = { "", "/" })
     public ResponseEntity<Quote> add(@RequestBody Quote quote) {
 
@@ -66,10 +85,19 @@ public class QuoteController {
         return ResponseEntity.ok(saved);
     }
 
+    /**
+     * Is null or empty method.
+     * @param s - string
+     * @return - boolean
+     */
     private static boolean isNullOrEmpty(String s) {
         return s == null || s.isEmpty();
     }
 
+    /**
+     * Get random quote method.
+     * @return - ResponseEntity of a quote
+     */
     @GetMapping("rnd")
     public ResponseEntity<Quote> getRandom() {
         var quotes = repo.findAll();

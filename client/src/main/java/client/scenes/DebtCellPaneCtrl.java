@@ -7,8 +7,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
-import java.awt.*;
-
 public class DebtCellPaneCtrl extends ListCell<DebtCellData> {
   @FXML // fx:id="root"
   private Pane root;
@@ -18,7 +16,6 @@ public class DebtCellPaneCtrl extends ListCell<DebtCellData> {
   private Text debtInformation;
   @FXML // fx:id="furtherInfo"
   private Pane furtherInfo;
-
   @FXML // This method is called by the FXMLLoader when initialization is complete
   void initialize() {
     assert root != null : "fx:id=\"root\" was not injected: check your FXML file 'DebtCellPane.fxml'.";
@@ -26,6 +23,10 @@ public class DebtCellPaneCtrl extends ListCell<DebtCellData> {
     assert debtInformation != null : "fx:id=\"debtInformation\" was not injected: check your FXML file 'DebtCellPane.fxml'.";
     assert furtherInfo != null : "fx:id=\"furtherInfo\" was not injected: check your FXML file 'DebtCellPane.fxml'.";
   }
+
+  /**
+   * Constructor for debt pane controller.
+   */
   public DebtCellPaneCtrl() {
     // load the FXML file and set the controller
     loader = new FXMLLoader(getClass().getResource("DebtCellPane.fxml"));

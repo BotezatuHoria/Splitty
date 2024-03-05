@@ -41,21 +41,39 @@ public class PersonMock {
 		// for object mapper
 	}
 
+	/**
+	 * Person class.
+	 * @param firstName - firstname
+	 * @param lastName - lastname
+	 */
 	public PersonMock(String firstName, String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
 
+	/**
+	 * Equals method.
+	 * @param obj - object to compare with
+	 * @return - true if the objects are equal, false otherwise.
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		return EqualsBuilder.reflectionEquals(this, obj);
 	}
 
+	/**
+	 * Hashcode function.
+	 * @return - hash representation of the project
+	 */
 	@Override
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
+	/**
+	 * ToString method for the PersonMock class.
+	 * @return - string representation of all properties.
+	 */
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, MULTI_LINE_STYLE);

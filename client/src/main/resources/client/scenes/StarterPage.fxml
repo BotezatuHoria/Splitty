@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="487.0" prefWidth="591.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.StarterPageCtrl">
    <children>
       <Label layoutX="30.0" layoutY="23.0" text="Create New Event">
@@ -20,7 +19,7 @@
             <Font size="28.0" />
          </font>
       </Label>
-      <Button fx:id="createButton" layoutX="430.0" layoutY="76.0" mnemonicParsing="false" prefHeight="31.0" onAction="#showEventPage" prefWidth="122.0" text="Create" >
+      <Button fx:id="createButton" layoutX="430.0" layoutY="76.0" mnemonicParsing="false" onAction="#showEventPage" prefHeight="31.0" prefWidth="122.0" text="Create">
          <font>
             <Font size="20.0" />
          </font>
@@ -38,5 +37,6 @@
       <ListView fx:id="listView" editable="true" layoutX="30.0" layoutY="267.0" prefHeight="200.0" prefWidth="526.0" style="-fx-background-color: #DCDCDC;" />
       <TextField fx:id="createTextField" layoutX="30.0" layoutY="76.0" prefHeight="31.0" prefWidth="368.0" promptText="New event..." />
       <TextField fx:id="joinTextField" layoutX="30.0" layoutY="169.0" prefHeight="31.0" prefWidth="368.0" promptText="Join..." />
+      <Button fx:id="languageSelector" layoutX="503.0" layoutY="14.0" mnemonicParsing="false" onAction="#selectLanguage" prefHeight="40.0" prefWidth="74.0" text="Button" />
    </children>
 </AnchorPane>
