@@ -8,6 +8,9 @@ import jakarta.persistence.*;
 @Entity
 public class Person {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+
     private String email;
     private String firstName;
     private String lastName;
