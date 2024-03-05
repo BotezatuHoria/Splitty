@@ -9,13 +9,13 @@ import jakarta.persistence.*;
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    protected int id;
 
-    private String email;
-    private String firstName;
-    private String lastName;
-    private String iban;
-    private int debt;
+    protected String email;
+    protected String firstName;
+    protected String lastName;
+    protected String iban;
+    protected int debt;
 
     @ManyToOne
     public Event event;

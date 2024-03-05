@@ -2,9 +2,9 @@ package commons;
 
 public class DebtCellData {
 
-  private Person sender;
-  private Person receiver;
-  private int debt;
+  protected Person sender;
+  protected Person receiver;
+  protected int debt;
 
   /**
    * constructor which initializes all attributes.
