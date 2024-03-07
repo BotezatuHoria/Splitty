@@ -78,7 +78,7 @@ public class CurrencyController {
     }
 
     /**
-     * Put endpoint for updating a currency
+     * Put endpoint for updating a currency.
      * @param newCurrency updated currency
      * @param iso iso of the currency to be updated
      * @return returns the updated currency

@@ -133,7 +133,7 @@ public class Currency {
   }
 
   /**
-   * getter for the eurConversion rate
+   * getter for the eurConversion rate.
    * @return returns the conversion rate
    */
   public double getEurConversion(){
@@ -141,7 +141,7 @@ public class Currency {
   }
 
   /**
-   * Setter for the conversion rate. Sets the rate using an external api
+   * Setter for the conversion rate. Sets the rate using an external api.
    */
   public void updateConversion(){
     try {
@@ -152,7 +152,7 @@ public class Currency {
   }
 
   /**
-   * Setter for the currency name
+   * Setter for the currency name.
    * @param name the new currency name
    */
   public void setName(String name) {
@@ -160,7 +160,7 @@ public class Currency {
   }
 
   /**
-   * Setter for the iso
+   * Setter for the iso.
    * @param iso new iso
    */
   public void setIso(int iso) {
