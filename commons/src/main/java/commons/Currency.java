@@ -132,15 +132,38 @@ public class Currency {
     return result;
   }
 
+  /**
+   * getter for the eurConversion rate
+   * @return returns the conversion rate
+   */
   public double getEurConversion(){
     return this.eurConversion;
   }
 
+  /**
+   * Setter for the conversion rate. Sets the rate using an external api
+   */
   public void updateConversion(){
     try {
       this.eurConversion = fetchConversion();
     } catch (IOException e) {
       System.out.println("Failed to update conversion rate");
     }
+  }
+
+  /**
+   * Setter for the currency name
+   * @param name the new currency name
+   */
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  /**
+   * Setter for the iso
+   * @param iso new iso
+   */
+  public void setIso(int iso) {
+    this.iso = iso;
   }
 }

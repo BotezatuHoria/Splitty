@@ -77,6 +77,25 @@ public class CurrencyController {
         return s == null || s.isEmpty();
     }
 
+    /**
+     * Put endpoint for updating a currency
+     * @param newCurrency updated currency
+     * @param iso iso of the currency to be updated
+     * @return returns the updated currency
+     */
+    @PutMapping("/{iso}")
+    public Currency updateById(@RequestBody Currency newCurrency, @PathVariable int iso){
+        return repo.findById(iso)
+                .map(currency -> {
+                    currency.setName(newCurrency.getName());
+                    currency.updateConversion();
+                    return repo.save(currency);
+                })
+                .orElseGet(() -> {
+                    newCurrency.setIso(iso);
+                    return repo.save(newCurrency);
+                });
+    }
 
 
 }
