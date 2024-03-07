@@ -42,6 +42,9 @@ public class TransactionController {
         if (id < 0 || !repo.existsById(id)) {
             return ResponseEntity.badRequest().build();
         }
+        if(!repo.findById(id).isPresent()){
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok(repo.findById(id).get());
     }
 
@@ -79,6 +82,9 @@ public class TransactionController {
     @DeleteMapping(path = {"/{id}"})
     public ResponseEntity<Transaction> deleteById(@PathVariable("id") int id) {
         if (id < 0 || !repo.existsById(id)) {
+            return ResponseEntity.badRequest().build();
+        }
+        if(!repo.findById(id).isPresent()){
             return ResponseEntity.badRequest().build();
         }
         ResponseEntity<commons.Transaction> response =  ResponseEntity.ok(repo.findById(id).get());
