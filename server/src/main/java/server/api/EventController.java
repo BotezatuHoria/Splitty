@@ -2,10 +2,12 @@ package server.api;
 
 
 import java.util.List;
+import java.util.Set;
 
 
 import commons.Event;
 
+import commons.Person;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,21 +15,20 @@ import org.springframework.web.bind.annotation.*;
 import server.database.EventRepository;
 
 
-
-
-
 @RestController
 @RequestMapping("/api/event")
 public class EventController {
 
     private final EventRepository repo;
+    private  PersonController pc;
 
     /**
      * Constructor for the EventController.
      * @param repo repository for the eventRepository
      */
-    public EventController(EventRepository repo) {
+    public EventController(EventRepository repo, PersonController pc) {
         this.repo = repo;
+        this.pc = pc;
     }
 
     /**
@@ -86,18 +87,39 @@ public class EventController {
         return response;
     }
 
-    // Method for adding person
-    /*@PostMapping(path = {"/{id}/person"})
-    public ResponseEntity<Person> addPerson(@RequestBody Person person, @PathVariable("id") long id) {
+    @GetMapping("/{id}/people")
+    public ResponseEntity<Set<Person>> getPeople(@PathVariable("id") long id) {
         if (id < 0 || !repo.existsById(id)) {
             return ResponseEntity.badRequest().build();
         }
+        return ResponseEntity.ok(repo.findById(id).get().getPeople());
+    }
+
+
+
+    //@GetMapping("/{id}/people")
+    //public ResponseEntity<Set<Person>> getPeople(@PathVariable("id") long id) {
+        //if (id < 0 || repo.existsById(id)) {
+            //System.out.println(id);
+            //return ResponseEntity.badRequest().build();
+        }
+        //return null;
+        //return ResponseEntity.ok(repo.findById(id).get().getPeople());
+    //}
+     //Method for adding person
+    //@PostMapping(path = {"/{id}/person/"})
+    //public ResponseEntity<Person> addPerson(@RequestBody Person person, @PathVariable("id") long id) {
+        //if (id < 0 || !repo.existsById(id)) {
+            //return ResponseEntity.badRequest().build();
+        //}
+
         // Add to repository for person
         // Access the event and add the person
-    }*/
+        //return null;
+    //}
 
     // Add method for deleting person
     // Add method for editing person
 
 
-}
+//}

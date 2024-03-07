@@ -50,7 +50,7 @@ public class PersonController {
      * @return person that was added
      */
     @PostMapping(path = { "", "/" })
-    public ResponseEntity<Person> add(Person person) {
+    protected ResponseEntity<Person> add(Person person) {
         // The regex ensures that:
         //  - email begins with alphanumeric characters, including underscores, pluses, ampersands, asterisks, or hyphens.
         //  - may contain dots as long as they are not the first or last character and it does not come one after the other.
@@ -74,7 +74,7 @@ public class PersonController {
      * @return person that was deleted
      */
     @DeleteMapping("/{email}")
-    public ResponseEntity<Person> deleteById(@PathVariable("email") String email) {
+    protected ResponseEntity<Person> deleteById(@PathVariable("email") String email) {
         if (email == null || !db.existsById(email)) {
             return ResponseEntity.badRequest().build();
         }
