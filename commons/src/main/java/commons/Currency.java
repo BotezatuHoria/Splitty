@@ -4,6 +4,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Objects;
 
 @Entity
@@ -12,6 +17,7 @@ public class Currency {
   @Id
   protected int ico;
   protected String name;
+  protected double eurConversion;
 
   /**
    * Constructor.
@@ -21,6 +27,11 @@ public class Currency {
   public Currency(int ico, String name) {
     this.ico = ico;
     this.name = name;
+    try {
+      eurConversion = fetchConversion("USD");
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
   /**
    * empty constructor (to solve the error given on the class).
@@ -80,5 +91,38 @@ public class Currency {
   public String toString() {
     return "Ico number is: " + ico +
             ", name of the currency is: " + name;
+  }
+
+  /**
+   * Fetches the currencyConversion from eur to the different specified currency.
+   * @param iso the iso code of the currency
+   * @return returns the conversion rate
+   * @throws IOException throws ioException
+   */
+  private double fetchConversion(String iso) throws IOException {
+
+    URL url = new URL("https://v6.exchangerate-api.com/v6/874a6a98cff76d00444b486f/pair/EUR/" + iso);
+    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+    con.setRequestMethod("GET");
+    //?
+    con.setDoOutput(true);
+    con.setConnectTimeout(10000);
+    con.setReadTimeout(10000);
+
+    int status = con.getResponseCode();
+    System.out.println("Currency GET response code: " + status);
+
+    //if response code is 200
+    if (status == HttpURLConnection.HTTP_OK){
+      BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+      String inputLine;
+      StringBuffer response = new StringBuffer();
+
+      while ((inputLine = in.readLine()) != null){
+        response.append(inputLine);
+      }
+      in.close();
+    }
+    return 1;
   }
 }
