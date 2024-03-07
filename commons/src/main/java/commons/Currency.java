@@ -99,6 +99,8 @@ public class Currency {
    * Fetches the currencyConversion from eur to the different specified currency.
    * @return returns the conversion rate
    * @throws IOException throws ioException
+   * TODO: make the iso a string and add it to the get request, now it only gets the conversion from eur to usd
+   * TODO: make an error for a wrong currency iso code
    */
   private double fetchConversion() throws IOException {
     URL url = new URL("https://v6.exchangerate-api.com/v6/874a6a98cff76d00444b486f/pair/EUR/" + "USD");
