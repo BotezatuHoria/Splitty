@@ -58,7 +58,7 @@ public class TransactionController {
     public ResponseEntity<Transaction> add(@RequestBody Transaction transaction) {
 
         if (transaction.getId() < 0 || isNullOrEmpty(transaction.getName())|| transaction.getDate() == null ||
-                transaction.getMoney() == 0 || transaction.getCurrency() == 0 || transaction.getCreator() == null || transaction.getParticipants().isEmpty()) {
+                transaction.getMoney() == 0 || transaction.getCurrency() == 0 ) { //|| transaction.getCreator() == null || transaction.getParticipants().isEmpty() can be added later again
             return ResponseEntity.badRequest().build();
         }
 
