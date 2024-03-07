@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 import java.util.Set;
-//import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Event {
@@ -16,7 +15,6 @@ public class Event {
     protected int id;
     protected String token;
 
-   // @JsonManagedReference
     @OneToMany
     protected Set<Person> people;
 
