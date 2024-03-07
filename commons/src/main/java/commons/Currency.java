@@ -1,5 +1,7 @@
 package commons;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -15,20 +17,20 @@ import java.util.Objects;
 public class Currency {
 
   @Id
-  protected int ico;
+  protected int iso;
   protected String name;
   protected double eurConversion;
 
   /**
    * Constructor.
-   * @param ico ico number of a currency
+   * @param iso iso number of a currency
    * @param name name of a currency
    */
-  public Currency(int ico, String name) {
-    this.ico = ico;
+  public Currency(int iso, String name) {
+    this.iso = iso;
     this.name = name;
     try {
-      eurConversion = fetchConversion("USD");
+      eurConversion = fetchConversion();
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -44,8 +46,8 @@ public class Currency {
    * Getter for ico number.
    * @return ico
    */
-  public int getIco() {
-    return ico;
+  public int getIso() {
+    return iso;
   }
 
   /**
@@ -71,7 +73,7 @@ public class Currency {
       return false;
     }
     Currency currency = (Currency) o;
-    return ico == currency.ico && Objects.equals(name, currency.name);
+    return iso == currency.iso && Objects.equals(name, currency.name);
   }
 
   /**
@@ -80,7 +82,7 @@ public class Currency {
    */
   @Override
   public int hashCode() {
-    return Objects.hash(ico, name);
+    return Objects.hash(iso, name);
  }
 
  /**
@@ -89,19 +91,17 @@ public class Currency {
   */
  @Override
   public String toString() {
-    return "Ico number is: " + ico +
+    return "Ico number is: " + iso +
             ", name of the currency is: " + name;
   }
 
   /**
    * Fetches the currencyConversion from eur to the different specified currency.
-   * @param iso the iso code of the currency
    * @return returns the conversion rate
    * @throws IOException throws ioException
    */
-  private double fetchConversion(String iso) throws IOException {
-
-    URL url = new URL("https://v6.exchangerate-api.com/v6/874a6a98cff76d00444b486f/pair/EUR/" + iso);
+  private double fetchConversion() throws IOException {
+    URL url = new URL("https://v6.exchangerate-api.com/v6/874a6a98cff76d00444b486f/pair/EUR/" + "USD");
     HttpURLConnection con = (HttpURLConnection) url.openConnection();
     con.setRequestMethod("GET");
     //?
@@ -113,6 +113,7 @@ public class Currency {
     System.out.println("Currency GET response code: " + status);
 
     //if response code is 200
+    double result = 0;
     if (status == HttpURLConnection.HTTP_OK){
       BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
       String inputLine;
@@ -122,7 +123,24 @@ public class Currency {
         response.append(inputLine);
       }
       in.close();
+
+      final JsonNode node = new ObjectMapper().readTree(response.toString());
+
+      System.out.println("Conversion rate: " + node.get("conversion_rate"));
+      result = Double.parseDouble(node.get("conversion_rate").toString());
     }
-    return 1;
+    return result;
+  }
+
+  public double getEurConversion(){
+    return this.eurConversion;
+  }
+
+  public void updateConversion(){
+    try {
+      this.eurConversion = fetchConversion();
+    } catch (IOException e) {
+      System.out.println("Failed to update conversion rate");
+    }
   }
 }
