@@ -12,7 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
-import javax.inject.Inject;
+import com.google.inject.Inject;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;

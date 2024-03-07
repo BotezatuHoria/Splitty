@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
 
-import javax.inject.Inject;
+import com.google.inject.Inject;
 
 public class DebtSettlementCtrl {
 
