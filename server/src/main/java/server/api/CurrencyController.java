@@ -51,7 +51,7 @@ public class CurrencyController {
     @PostMapping(path = { "", "/" })
     public ResponseEntity<Currency> add(@RequestBody Currency currency) {
 
-        if (currency.getIco() == 0 || isNullOrEmpty(currency.getName())) {
+        if (currency.getIso() == 0 || isNullOrEmpty(currency.getName())) {
             return ResponseEntity.badRequest().build();
         }
 

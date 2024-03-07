@@ -11,7 +11,7 @@ class CurrencyTest {
   @Test
   void getIcoTest() {
     Currency currency = new Currency(76003872, "Euro");
-    assertEquals(currency.getIco(),76003872 );
+    assertEquals(currency.getIso(),76003872 );
   }
 
   /**
