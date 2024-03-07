@@ -45,6 +45,9 @@ public class InviteSendingCtrl{
     @FXML // fx:id="cancel"
     private Button cancel; // Value injected by FXMLLoader
 
+    @FXML // fx:id="responseCopy"
+    private Label responseCopy; // Value injected by FXMLLoader
+
     /**
      *Constructor and therefore making the connection.
      * @param server the server to connect with.
@@ -75,11 +78,13 @@ public class InviteSendingCtrl{
     /**
      * Method fot copying code ??.
      */
-    public void copyCode(){
+    public void copyCode() throws InterruptedException {
         String inviteCode = this.inviteCode.getText(); //the code of the event, pictured on the page (not yet made to be gathered from the database).
         StringSelection selection = new StringSelection(inviteCode); //make it a stringselection so that we can set the clipboard contents to it.
         Clipboard board = Toolkit.getDefaultToolkit().getSystemClipboard(); // get our clipboard.
         board.setContents(selection, selection); //copy the eventinvite code to our clipboard.
+        responseCopy.setText("Code copied!");
+
     }
 
     /**

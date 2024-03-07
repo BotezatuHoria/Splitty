@@ -54,7 +54,7 @@ public class MainCtrl {
 
     private Scene debt;
 
-    private DebtCellPaneCtrl debtCellPaneCtrl;
+    private DebtSettlementCtrl debtSettlementCtrl;
 
     private Scene language;
 
@@ -76,7 +76,8 @@ public class MainCtrl {
                            Pair<EventPageCtrl, Parent> event, Pair<StatisticsCtrl, Parent> statistics,
                            Pair<AddExpenseCtrl, Parent> expense,
                            Pair<ParticipantAdditionPageCtrl, Parent> addParticipant,
-                           Pair<DebtCellPaneCtrl, Parent> debt,
+                           Pair<InviteSendingCtrl, Parent> inviteSend,
+                           Pair<DebtSettlementCtrl, Parent> debt,
                            Pair<LanguageSelectorCtrl, Parent> language) {
         this.primaryStage = primaryStage;
         this.starterPageCtrl = starter.getKey();
@@ -94,10 +95,10 @@ public class MainCtrl {
         this.additionPageCtrl = addParticipant.getKey();
         this.addParticipant = new Scene(addParticipant.getValue());
 
-        //this.inviteSendingCtrl = inviteSend.getKey();
-        //this.inviteSend = new Scene(inviteSend.getValue());
+        this.inviteSendingCtrl = inviteSend.getKey();
+        this.inviteSend = new Scene(inviteSend.getValue());
 
-        this.debtCellPaneCtrl = debt.getKey();
+        this.debtSettlementCtrl = debt.getKey();
         this.debt = new Scene(debt.getValue());
 
         this.languageSelectorCtrl = language.getKey();
