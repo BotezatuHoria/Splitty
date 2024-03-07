@@ -2,6 +2,7 @@ package server.api;
 
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -95,7 +96,15 @@ public class EventController {
         return ResponseEntity.ok(repo.findById(id).get().getPeople());
     }
 
-
+    @PutMapping(path = { "/{id}/person"})
+    public ResponseEntity<Event> add(@PathVariable("id")long id, @RequestBody Person person) {
+        person.setEvent((int) id);
+        pc.add(person);
+        Event event = getById(id).getBody();
+        event.addPerson(person);
+        Event saved = repo.save(event);
+        return ResponseEntity.ok(saved);
+    }
 
     //@GetMapping("/{id}/people")
     //public ResponseEntity<Set<Person>> getPeople(@PathVariable("id") long id) {
