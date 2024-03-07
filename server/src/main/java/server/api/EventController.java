@@ -21,10 +21,11 @@ import server.database.EventRepository;
 public class EventController {
 
     private final EventRepository repo;
-    private  PersonController pc;
+    private PersonController pc;
 
     /**
      * Constructor for the EventController.
+     *
      * @param repo repository for the eventRepository
      */
     public EventController(EventRepository repo, PersonController pc) {
@@ -34,9 +35,10 @@ public class EventController {
 
     /**
      * Gets all the events as a Jason file.
+     *
      * @return
      */
-    @GetMapping(path = { "", "/" })
+    @GetMapping(path = {"", "/"})
     public List<Event> getAll() {
         return repo.findAll();
     }
@@ -44,6 +46,7 @@ public class EventController {
 
     /**
      * Method for getting and event by id from url.
+     *
      * @param id of the event you want to get
      * @return the event
      */
@@ -57,14 +60,15 @@ public class EventController {
 
     /**
      * Method for adding the event to a repository.
+     *
      * @param event you want to add
      * @return the event you added
      */
-    @PostMapping(path = { "", "/" })
+    @PostMapping(path = {"", "/"})
     public ResponseEntity<Event> add(@RequestBody Event event) {
 
-        if (event.getId() < 0 || event.getTag() == null || event.getTitle() == null || event.getToken() == null||
-        event.getPeople() == null || event.getTransactions() == null) {
+        if (event.getId() < 0 || event.getTag() == null || event.getTitle() == null || event.getToken() == null ||
+                event.getPeople() == null || event.getTransactions() == null) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -75,6 +79,7 @@ public class EventController {
 
     /**
      * Deletes the event with the id you provided in the url.
+     *
      * @param id of the event you want to delete
      * @return the event you deleted
      */
@@ -83,7 +88,7 @@ public class EventController {
         if (id < 0 || !repo.existsById(id)) {
             return ResponseEntity.badRequest().build();
         }
-        ResponseEntity<commons.Event> response =  ResponseEntity.ok(repo.findById(id).get());
+        ResponseEntity<commons.Event> response = ResponseEntity.ok(repo.findById(id).get());
         repo.deleteById(id);
         return response;
     }
@@ -96,8 +101,8 @@ public class EventController {
         return ResponseEntity.ok(repo.findById(id).get().getPeople());
     }
 
-    @PutMapping(path = { "/{id}/person"})
-    public ResponseEntity<Event> add(@PathVariable("id")long id, @RequestBody Person person) {
+    @PutMapping(path = {"/{id}/person"})
+    public ResponseEntity<Event> add(@PathVariable("id") long id, @RequestBody Person person) {
         person.setEvent((int) id);
         pc.add(person);
         Event event = getById(id).getBody();
@@ -106,29 +111,20 @@ public class EventController {
         return ResponseEntity.ok(saved);
     }
 
-    //@GetMapping("/{id}/people")
-    //public ResponseEntity<Set<Person>> getPeople(@PathVariable("id") long id) {
-        //if (id < 0 || repo.existsById(id)) {
-            //System.out.println(id);
-            //return ResponseEntity.badRequest().build();
+    @DeleteMapping(path = {"/{idEvent}/person/{idPerson}"})
+    public ResponseEntity<Event> deleteById(@PathVariable("idEvent") long idEvent,
+                                            @PathVariable("idPerson") String idPerson) {
+        if (Objects.equals(pc.getById(idPerson), ResponseEntity.badRequest())) {
+            return ResponseEntity.badRequest().build();
         }
-        //return null;
-        //return ResponseEntity.ok(repo.findById(id).get().getPeople());
-    //}
-     //Method for adding person
-    //@PostMapping(path = {"/{id}/person/"})
-    //public ResponseEntity<Person> addPerson(@RequestBody Person person, @PathVariable("id") long id) {
-        //if (id < 0 || !repo.existsById(id)) {
-            //return ResponseEntity.badRequest().build();
-        //}
-
-        // Add to repository for person
-        // Access the event and add the person
-        //return null;
-    //}
-
-    // Add method for deleting person
-    // Add method for editing person
-
-
-//}
+        if ((idEvent < 0 || !repo.existsById(idEvent) || idPerson == null)) {
+            return ResponseEntity.badRequest().build();
+        }
+        Event event = getById(idEvent).getBody();
+        event.removePerson(pc.getById(idPerson).getBody());
+        Event saved = repo.save(event);
+        ResponseEntity<Event> response = ResponseEntity.ok(saved);
+        pc.deleteById(idPerson);
+        return response;
+    }
+}
