@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import server.database.PersonRepository;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/api/person")
