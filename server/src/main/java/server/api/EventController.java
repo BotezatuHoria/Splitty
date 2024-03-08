@@ -113,11 +113,11 @@ public class EventController {
 
     @DeleteMapping(path = {"/{idEvent}/person/{idPerson}"})
     public ResponseEntity<Event> deleteById(@PathVariable("idEvent") long idEvent,
-                                            @PathVariable("idPerson") String idPerson) {
+                                            @PathVariable("idPerson") int idPerson) {
         if (Objects.equals(pc.getById(idPerson), ResponseEntity.badRequest())) {
             return ResponseEntity.badRequest().build();
         }
-        if ((idEvent < 0 || !repo.existsById(idEvent) || idPerson == null)) {
+        if ((idEvent < 0 || !repo.existsById(idEvent) || idPerson < 0)) {
             return ResponseEntity.badRequest().build();
         }
         Event event = getById(idEvent).getBody();
