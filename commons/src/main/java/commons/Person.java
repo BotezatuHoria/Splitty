@@ -19,7 +19,7 @@ public class Person {
 
     //@JsonBackReference
     //@ManyToOne
-    public int event;
+    public Event event;
 
     @OneToMany
     public Set<Transaction> createdTransactions;
