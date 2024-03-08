@@ -19,7 +19,7 @@ public class Person {
 
     //@JsonBackReference
     //@ManyToOne
-    public Event event;
+    public int event;
 
     @OneToMany
     public Set<Transaction> createdTransactions;
@@ -117,14 +117,6 @@ public class Person {
      */
     public void setDebt(int debt) {
         this.debt = debt;
-    }
-
-    /**
-     * Setter for event.
-     * @param event the email to set to
-     */
-    public void setEvent(Event event) {
-        this.event = event;
     }
 
     /**
