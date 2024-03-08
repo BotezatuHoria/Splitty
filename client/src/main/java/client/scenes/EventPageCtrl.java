@@ -67,7 +67,7 @@ public class EventPageCtrl {
      * Method for accessing the sending invites page.
      */
     public void sendInvites() {
-        // to be implemented
+        mainCtrl.showInviteParticipantPage();
     }
 
     /**

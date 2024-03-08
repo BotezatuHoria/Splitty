@@ -2,6 +2,7 @@ package commons;
 
 import java.util.Objects;
 import java.util.Set;
+//import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.*;
 
@@ -16,8 +17,9 @@ public class Person {
     protected String iban;
     protected int debt;
 
-    @ManyToOne
-    public Event event;
+    //@JsonBackReference
+    //@ManyToOne
+    public int event;
 
     @OneToMany
     public Set<Transaction> createdTransactions;
@@ -39,7 +41,7 @@ public class Person {
         this.firstName = firstName;
         this.lastName = lastName;
         this.iban = iban;
-        this.event = event;
+        this.event = event.getId();
         this.debt = 0;
         this.createdTransactions = createdTransactions;
         this.transactions = transactions;
@@ -51,6 +53,7 @@ public class Person {
     public Person() {
 
     }
+
 
     /**
      * Getter method for the id of the person.
@@ -160,7 +163,7 @@ public class Person {
      * Getter method for the event that this person has been added to.
      * @return the even that this person has been added to
      */
-    public Event getEvent() {
+    public int getEvent() {
         return event;
     }
 
@@ -188,11 +191,17 @@ public class Person {
         return transactions;
     }
 
+    public void setEvent(int event) {
+        this.event = event;
+    }
+
     /**
      * Equals method that returns true if the person is the same else false.
      * @param o object to compare too
      * @return true if the email is the same
      */
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {return true;}

@@ -1,11 +1,13 @@
 package server.api;
 
+import commons.Person;
 import commons.Transaction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import server.database.TransactionRepository;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/transaction")
@@ -38,6 +40,9 @@ public class TransactionController {
     @GetMapping("/{id}")
     public ResponseEntity<Transaction> getById(@PathVariable("id") int id){
         if (id < 0 || !repo.existsById(id)) {
+            return ResponseEntity.badRequest().build();
+        }
+        if(!repo.findById(id).isPresent()){
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(repo.findById(id).get());
@@ -79,10 +84,94 @@ public class TransactionController {
         if (id < 0 || !repo.existsById(id)) {
             return ResponseEntity.badRequest().build();
         }
+        if(!repo.findById(id).isPresent()){
+            return ResponseEntity.badRequest().build();
+        }
         ResponseEntity<commons.Transaction> response =  ResponseEntity.ok(repo.findById(id).get());
         repo.deleteById(id);
         return response;
     }
 
+    /**
+     * Updates the name of a transaction in the database with a specific id.
+     * @param id the id of the transaction to update
+     * @param name the changed name of the to update transaction.
+     * @return returns the updated transaction
+     */
+    @PutMapping(path = {"/{id}/name"})
+    public ResponseEntity<Transaction> updateNameById(@PathVariable("id") int id, @RequestBody String name){
+        if (id < 0 || !repo.existsById(id) || isNullOrEmpty(name)) {
+            return ResponseEntity.badRequest().build();
+        }
+        Transaction transaction = getById(id).getBody();
+        if (transaction == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        transaction.setName(name);
+        repo.save(transaction);
+        return ResponseEntity.ok(transaction);
+    }
+
+    /**
+     * Updates the set of participants of a transaction in the database with a specific id.
+     * @param id the id of the transaction to update
+     * @param participants the changed set of participants of the to update transaction.
+     * @return returns the updated transaction
+     */
+    @PutMapping(path = {"/{id}/participants"})
+    public ResponseEntity<Transaction> updateParticipantsById(@PathVariable("id") int id, @RequestBody Set<Person> participants){
+        if (id < 0 || !repo.existsById(id) || participants == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        Transaction transaction = getById(id).getBody();
+        if (transaction == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        transaction.setParticipants(participants);
+        repo.save(transaction);
+        return ResponseEntity.ok(transaction);
+    }
+
+    /**
+     * Updates the creator of a transaction in the database with a specific id.
+     * @param id the id of the transaction to update
+     * @param creator the changed creator of the to update transaction.
+     * @return returns the updated transaction
+     */
+    @PutMapping(path = {"/{id}/creator"})
+    public ResponseEntity<Transaction> updateCreatorById(@PathVariable("id") int id, @RequestBody Person creator){
+        if (id < 0 || !repo.existsById(id) || creator == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        Transaction transaction = getById(id).getBody();
+        if (transaction == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        transaction.setCreator(creator);
+        repo.save(transaction);
+        return ResponseEntity.ok(transaction);
+    }
+
+    /**
+     * Updates the creator of a transaction in the database with a specific id.
+     * @param id the id of the transaction to update
+     * @param currency the changed currency of the to update transaction.
+     * @return returns the updated transaction
+     */
+    @PutMapping(path = {"/{id}/currency"})
+    public ResponseEntity<Transaction> updateCurrencyById(@PathVariable("id") int id, @RequestBody int currency){
+        if (id < 0 || !repo.existsById(id) || currency ==0) {
+            return ResponseEntity.badRequest().build();
+        }
+        Transaction transaction = getById(id).getBody();
+        if (transaction == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        transaction.setCurrency(currency);
+        repo.save(transaction);
+        return ResponseEntity.ok(transaction);
+    }
+
 
 }
+
