@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 import server.database.PersonRepository;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -85,7 +86,7 @@ public class TestPersonRepository implements PersonRepository {
                                 return Optional.of(person);
                         }
                 }
-                return null;
+                return Optional.empty();
         }
 
         @Override
@@ -100,13 +101,27 @@ public class TestPersonRepository implements PersonRepository {
 
         @Override
         public <S extends Person> S save(S entity) {
-                persons.add(entity);
-                return entity;
+                Optional<Person> p = findById(entity.getId());
+                if (p.isPresent()) {
+                        Person person = p.get();
+                        person.setDebt(entity.getDebt());
+                        person.setEmail(entity.getEmail());
+                        person.setIban(entity.getIban());
+                        person.setEvent(entity.getEvent());
+                        person.setFirstName(entity.getFirstName());
+                        person.setLastName(entity.getLastName());
+                        person.setTransactions(entity.getTransactions());
+                        person.setCreatedTransactions(entity.getCreatedTransactions());
+                        return (S) person;
+                } else {
+                        persons.add(entity);
+                        return entity;
+                }
         }
 
         @Override
         public Optional<Person> findById(Integer id) {
-                return Optional.of(find(id).get());
+                return find(id);
         }
 
         @Override

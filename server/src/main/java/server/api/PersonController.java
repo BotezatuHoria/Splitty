@@ -31,9 +31,9 @@ public class PersonController {
     }
 
     /**
-     * Gets person entity by supplied email.
+     * Gets person entity by supplied id.
      * @param id the id of the user
-     * @return person who`s email matches supplied email
+     * @return person who`s id matches supplied id
      */
     @GetMapping("/{id}")
     public ResponseEntity<Person> getById(@PathVariable("id") int id) {
@@ -61,7 +61,7 @@ public class PersonController {
     }
 
     /**
-     * Deletes person by their email.
+     * Deletes person by their id.
      * @param id the id to delete by
      * @return person that was deleted
      */
@@ -74,5 +74,21 @@ public class PersonController {
         ResponseEntity<Person> person = ResponseEntity.ok(db.findById(id).get());
         db.deleteById(id);
         return person;
+    }
+
+    /**
+     * Updates person based on their id.
+     * @param id the id to update by
+     * @return person that was updated
+     */
+    @PatchMapping("/{id}")
+    public ResponseEntity<Person> updateById(@PathVariable("id") int id, Person person) {
+        if (id < 0 || !db.existsById(id) || person == null || person.getId() != id
+                || person.getFirstName() == null || person.getLastName() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        db.save(person);
+        return ResponseEntity.ok(db.findById(id).get());
     }
 }

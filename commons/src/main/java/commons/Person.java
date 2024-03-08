@@ -77,6 +77,70 @@ public class Person {
     }
 
     /**
+     * Setter for email.
+     * @param email the email to set to
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * Setter for firstName.
+     * @param firstName the email to set to
+     */
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    /**
+     * Setter for lastName.
+     * @param lastName the email to set to
+     */
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    /**
+     * Setter for iban.
+     * @param iban the email to set to
+     */
+    public void setIban(String iban) {
+        this.iban = iban;
+    }
+
+    /**
+     * Setter for debt.
+     * @param debt the email to set to
+     */
+    public void setDebt(int debt) {
+        this.debt = debt;
+    }
+
+    /**
+     * Setter for event.
+     * @param event the email to set to
+     */
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+
+    /**
+     * Setter for createdTransactions.
+     * @param createdTransactions the email to set to
+     */
+    public void setCreatedTransactions(Set<Transaction> createdTransactions) {
+        this.createdTransactions = createdTransactions;
+    }
+
+    /**
+     * Setter for transactions.
+     * @param transactions the email to set to
+     */
+    public void setTransactions(Set<Transaction> transactions) {
+        this.transactions = transactions;
+    }
+
+    /**
      * Getter method for the last name of the person.
      * @return last name of the person
      */

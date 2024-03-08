@@ -43,6 +43,12 @@ public class PersonControllerTest {
     }
 
     @Test
+    public void getPersonDoesNotExistTest() {
+        var actual = sut.getById(5);
+        assertEquals(BAD_REQUEST, actual.getStatusCode());
+    }
+
+    @Test
     public void deletePersonNegativeTest() {
         var actual = sut.deleteById(-1);
         assertEquals(BAD_REQUEST, actual.getStatusCode());
@@ -67,5 +73,39 @@ public class PersonControllerTest {
         sut.add(test);
         var actual = sut.getById(0);
         assertEquals(test, actual.getBody());
+    }
+
+    @Test
+    public void updatePersonNegativeTest() {
+        Person test = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+        var actual = sut.updateById(-1, test);
+        assertEquals(BAD_REQUEST, actual.getStatusCode());
+    }
+
+    @Test
+    public void updatePersonDoesNotExistTest() {
+        Person test = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+        sut.add(test);
+        var actual = sut.updateById(2, test);
+        assertEquals(BAD_REQUEST, actual.getStatusCode());
+    }
+
+    @Test
+    public void updatePersonTest() {
+        Person test = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+
+        Person test2 = new Person("test2@gmail.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+        sut.add(test);
+        var actual = sut.updateById(0, test2);
+        assertEquals(actual.getBody(), test2);
+        assertEquals(actual.getBody(), sut.getById(0).getBody());
     }
 }
