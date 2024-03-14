@@ -57,8 +57,9 @@ public class TransactionController {
     @PostMapping(path = { "", "/" })
     public ResponseEntity<Transaction> add(@RequestBody Transaction transaction) {
 
-        if (transaction.getId() < 0 || isNullOrEmpty(transaction.getName())|| transaction.getDate() == null ||
-                transaction.getMoney() == 0 || transaction.getCurrency() == 0 ) { //|| transaction.getCreator() == null || transaction.getParticipants().isEmpty() can be added later again
+        if (transaction == null || transaction.getCreator() == null || transaction.getParticipants().isEmpty() ||
+                transaction.getId() < 0 || isNullOrEmpty(transaction.getName())|| transaction.getDate() == null ||
+                transaction.getMoney() == 0 || transaction.getCurrency() == 0  ) {
             return ResponseEntity.badRequest().build();
         }
 
