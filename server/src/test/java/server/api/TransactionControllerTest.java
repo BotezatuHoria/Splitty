@@ -1,14 +1,10 @@
 package server.api;
-import commons.Event;
-import commons.Person;
+
 import commons.Transaction;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
