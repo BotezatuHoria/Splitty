@@ -9,11 +9,13 @@ import jakarta.persistence.*;
 @Entity
 public class Person {
     @Id
-    private String email;
-    private String firstName;
-    private String lastName;
-    private String iban;
-    private int debt;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected int id;
+    protected String email;
+    protected String firstName;
+    protected String lastName;
+    protected String iban;
+    protected int debt;
 
     //@JsonBackReference
     //@ManyToOne
@@ -54,6 +56,14 @@ public class Person {
 
 
     /**
+     * Getter method for the id of the person.
+     * @return id of said person
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
      * Getter method for the email of the person.
      * @return email of said person
      */
@@ -67,6 +77,62 @@ public class Person {
      */
     public String getFirstName() {
         return firstName;
+    }
+
+    /**
+     * Setter for email.
+     * @param email the email to set to
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * Setter for firstName.
+     * @param firstName the email to set to
+     */
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    /**
+     * Setter for lastName.
+     * @param lastName the email to set to
+     */
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    /**
+     * Setter for iban.
+     * @param iban the email to set to
+     */
+    public void setIban(String iban) {
+        this.iban = iban;
+    }
+
+    /**
+     * Setter for debt.
+     * @param debt the email to set to
+     */
+    public void setDebt(int debt) {
+        this.debt = debt;
+    }
+
+    /**
+     * Setter for createdTransactions.
+     * @param createdTransactions the email to set to
+     */
+    public void setCreatedTransactions(Set<Transaction> createdTransactions) {
+        this.createdTransactions = createdTransactions;
+    }
+
+    /**
+     * Setter for transactions.
+     * @param transactions the email to set to
+     */
+    public void setTransactions(Set<Transaction> transactions) {
+        this.transactions = transactions;
     }
 
     /**

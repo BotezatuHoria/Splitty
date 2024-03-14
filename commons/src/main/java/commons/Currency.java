@@ -10,16 +10,16 @@ import java.util.Objects;
 public class Currency {
 
   @Id
-  protected int ico;
+  protected int iso;
   protected String name;
 
   /**
    * Constructor.
-   * @param ico ico number of a currency
+   * @param iso iso number of a currency
    * @param name name of a currency
    */
-  public Currency(int ico, String name) {
-    this.ico = ico;
+  public Currency(int iso, String name) {
+    this.iso = iso;
     this.name = name;
   }
   /**
@@ -30,11 +30,11 @@ public class Currency {
   }
 
   /**
-   * Getter for ico number.
-   * @return ico
+   * Getter for iso number.
+   * @return iso
    */
-  public int getIco() {
-    return ico;
+  public int getIso() {
+    return iso;
   }
 
   /**
@@ -60,7 +60,7 @@ public class Currency {
       return false;
     }
     Currency currency = (Currency) o;
-    return ico == currency.ico && Objects.equals(name, currency.name);
+    return iso == currency.iso && Objects.equals(name, currency.name);
   }
 
   /**
@@ -69,7 +69,7 @@ public class Currency {
    */
   @Override
   public int hashCode() {
-    return Objects.hash(ico, name);
+    return Objects.hash(iso, name);
  }
 
  /**
@@ -78,7 +78,7 @@ public class Currency {
   */
  @Override
   public String toString() {
-    return "Ico number is: " + ico +
+    return "Iso number is: " + iso +
             ", name of the currency is: " + name;
   }
 }
