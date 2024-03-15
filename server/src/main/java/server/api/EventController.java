@@ -167,4 +167,27 @@ public class EventController {
         Event saved = repo.save(event);
         return ResponseEntity.ok(saved);
     }
+
+    @DeleteMapping(path = {"/{idEvent}/expenses/delete/{idTransaction}"})
+    public ResponseEntity<Event> deleteTransactionById(@PathVariable("idEvent") long idEvent,
+                                                       @PathVariable("idTransaction") int idTransaction) {
+        if (Objects.equals(tc.getById(idTransaction), ResponseEntity.badRequest())) {
+            return ResponseEntity.badRequest().build();
+        }
+        if ((idEvent < 0 || !repo.existsById(idEvent) || idTransaction < 0)) {
+            return ResponseEntity.badRequest().build();
+        }
+        Event event = getById(idEvent).getBody();
+        event.removeTransaction(tc.getById(idTransaction).getBody());
+
+        Person person = pc.getById(tc.getById(idTransaction).getBody().getCreator().getId()).getBody();
+        person.getCreatedTransactions().remove(tc.getById(idTransaction).getBody());
+
+        pc.updateById(tc.getById(idTransaction).getBody().getCreator().getId(), person);
+
+        Event saved = repo.save(event);
+        ResponseEntity<Event> response = ResponseEntity.ok(saved);
+        tc.deleteById(idTransaction);
+        return response;
+    }
 }
