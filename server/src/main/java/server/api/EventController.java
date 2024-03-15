@@ -9,6 +9,7 @@ import java.util.Set;
 import commons.Event;
 
 import commons.Person;
+import commons.Transaction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -126,5 +127,13 @@ public class EventController {
         ResponseEntity<Event> response = ResponseEntity.ok(saved);
         pc.deleteById(idPerson);
         return response;
+    }
+
+    @GetMapping(path = {"/{idEvent}/expenses"})
+    public ResponseEntity<Set<Transaction>> getExpenses(@PathVariable("idEvent") long idEvent) {
+        if (idEvent < 0 || !repo.existsById(idEvent)) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(repo.findById(idEvent).get().getTransactions());
     }
 }

@@ -4,6 +4,8 @@ import java.util.Objects;
 import java.util.Set;
 //import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
@@ -22,9 +24,11 @@ public class Person {
     public int event;
 
     @OneToMany
+    @JsonIgnoreProperties("creator")
     public Set<Transaction> createdTransactions;
 
     @ManyToMany
+    @JsonIgnore
     public Set<Transaction> transactions;
 
     /**
