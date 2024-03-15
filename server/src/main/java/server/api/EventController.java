@@ -1,6 +1,7 @@
 package server.api;
 
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -24,14 +25,17 @@ public class EventController {
     private final EventRepository repo;
     private PersonController pc;
 
+    private TransactionController tc;
+
     /**
      * Constructor for the EventController.
      *
      * @param repo repository for the eventRepository
      */
-    public EventController(EventRepository repo, PersonController pc) {
+    public EventController(EventRepository repo, PersonController pc, TransactionController tc) {
         this.repo = repo;
         this.pc = pc;
+        this.tc = tc;
     }
 
     /**
@@ -102,7 +106,7 @@ public class EventController {
         return ResponseEntity.ok(repo.findById(id).get().getPeople());
     }
 
-    @PutMapping(path = {"/{id}/person"})
+    @PostMapping(path = {"/{id}/person"})
     public ResponseEntity<Event> add(@PathVariable("id") long id, @RequestBody Person person) {
         person.setEvent((int) id);
         pc.add(person);
@@ -135,5 +139,32 @@ public class EventController {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(repo.findById(idEvent).get().getTransactions());
+    }
+
+    @PostMapping(path = {"/{idEvent}/expenses/create/{idCreator}"})
+    public ResponseEntity<Event> createNewExpense(@PathVariable("idEvent") long idEvent,
+                                                  @PathVariable("idCreator") int idCreator,
+                                                  @RequestBody Transaction transaction) {
+        if (idEvent < 0 || !repo.existsById(idEvent)) {
+            return ResponseEntity.badRequest().build();
+        }
+        transaction.setCreator(pc.getById(idCreator).getBody());
+
+        Person person = pc.getById(idCreator).getBody();
+        Set<Transaction> createdTransactions;
+        if (person.getCreatedTransactions() == null) {
+            person.setCreatedTransactions(Collections.emptySet());
+        }
+        createdTransactions = person.getCreatedTransactions();
+        createdTransactions.add(transaction);
+        person.setCreatedTransactions(createdTransactions);
+        tc.add(transaction);
+        pc.updateById(idCreator, person);
+        Event event = getById(idEvent).getBody();
+        Set<Transaction> transactions = event.getTransactions();
+        transactions.add(transaction);
+        event.setTransactions(transactions);
+        Event saved = repo.save(event);
+        return ResponseEntity.ok(saved);
     }
 }

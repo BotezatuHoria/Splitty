@@ -23,7 +23,9 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Set;
 
+import commons.Transaction;
 import org.glassfish.jersey.client.ClientConfig;
 
 import commons.Quote;
@@ -74,4 +76,13 @@ public class ServerUtils {
 				.accept(APPLICATION_JSON) //
 				.post(Entity.entity(quote, APPLICATION_JSON), Quote.class);
 	}
+
+	public Set<Transaction> getTransactions(int id) {
+		return ClientBuilder.newClient(new ClientConfig())
+				.target(SERVER).path("api/event/" + id + "/expenses")
+				.request(APPLICATION_JSON)
+				.accept(APPLICATION_JSON)
+				.get(new GenericType<Set<Transaction>>() {});
+	}
+
 }

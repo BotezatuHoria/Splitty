@@ -25,6 +25,7 @@ public class Transaction {
     protected int currency;
 
     @ManyToMany
+    @JsonIgnoreProperties("createdTransactions")
     public Set<Person> participants;
 
     @ManyToOne
