@@ -1,5 +1,6 @@
 package commons;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -24,9 +25,11 @@ public class Transaction {
     protected int currency;
 
     @ManyToMany
+    @JsonIgnoreProperties({"createdTransactions", "transactions"})
     public Set<Person> participants;
 
     @ManyToOne
+    @JsonIgnoreProperties({"createdTransactions", "transactions"})
     public Person creator;
 
     /**
