@@ -25,11 +25,11 @@ public class Transaction {
     protected int currency;
 
     @ManyToMany
-    @JsonIgnoreProperties("createdTransactions")
+    @JsonIgnoreProperties({"createdTransactions", "transactions"})
     public Set<Person> participants;
 
     @ManyToOne
-    @JsonIgnoreProperties("createdTransactions")
+    @JsonIgnoreProperties({"createdTransactions", "transactions"})
     public Person creator;
 
     /**
