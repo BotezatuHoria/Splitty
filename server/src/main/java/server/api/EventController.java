@@ -60,6 +60,12 @@ public class EventController {
         return ResponseEntity.ok(repo.findById(id).get());
     }
 
+    /**
+     * Update method for updating an event.
+     * @param id - the id of the event
+     * @param event - the new structure of the event
+     * @return - the event as a JSON
+     */
     @PatchMapping("/{id}")
     public ResponseEntity<Event> updateById(@PathVariable("id") long id, @RequestBody Event event) {
         if (event.getId() < 0 || !repo.existsById(id) || event.getId() != id || event.getTag() == null || event.getTitle() == null
@@ -106,6 +112,11 @@ public class EventController {
         return response;
     }
 
+    /**
+     * Get function for all the people in a certain event.
+     * @param id - id of the event
+     * @return - a set of all the people in the event
+     */
     @GetMapping("/{id}/people")
     public ResponseEntity<Set<Person>> getPeople(@PathVariable("id") long id) {
         if (id < 0 || !repo.existsById(id)) {
@@ -114,6 +125,12 @@ public class EventController {
         return ResponseEntity.ok(repo.findById(id).get().getPeople());
     }
 
+    /**
+     * Method for adding a person to an event.
+     * @param id - id of the event
+     * @param person - person to be added to the event
+     * @return - current state of the event
+     */
     @PostMapping(path = {"/{id}/person"})
     public ResponseEntity<Event> add(@PathVariable("id") long id, @RequestBody Person person) {
         person.setEvent((int) id);
@@ -124,6 +141,12 @@ public class EventController {
         return ResponseEntity.ok(saved);
     }
 
+    /**
+     * Method for deleting a person from the event.
+     * @param idEvent - id of the event
+     * @param idPerson - id of the person to be deleted
+     * @return - the new state of the event
+     */
     @DeleteMapping(path = {"/{idEvent}/person/{idPerson}"})
     public ResponseEntity<Event> deleteById(@PathVariable("idEvent") long idEvent,
                                             @PathVariable("idPerson") int idPerson) {
@@ -141,6 +164,11 @@ public class EventController {
         return response;
     }
 
+    /**
+     * Method for retrieving all the expenses that are into an event.
+     * @param idEvent - id of the event
+     * @return - a set of all expenses in the event
+     */
     @GetMapping(path = {"/{idEvent}/expenses"})
     public ResponseEntity<Set<Transaction>> getExpenses(@PathVariable("idEvent") long idEvent) {
         if (idEvent < 0 || !repo.existsById(idEvent)) {
@@ -149,6 +177,12 @@ public class EventController {
         return ResponseEntity.ok(repo.findById(idEvent).get().getTransactions());
     }
 
+    /**
+     * Method for adding a new expense to the event.
+     * @param idEvent - id of the event
+     * @param transaction - transaction to be added
+     * @return - the state of the new event
+     */
     @PostMapping(path = {"/{idEvent}/expenses/create"})
     public ResponseEntity<Event> createNewExpense(@PathVariable("idEvent") long idEvent,
                                                   @RequestBody Transaction transaction) {
@@ -189,6 +223,12 @@ public class EventController {
 
     }
 
+    /**
+     * Method for deleting a person from an event.
+     * @param idEvent - id of the event
+     * @param idTransaction - id of the transaction to be deleted
+     * @return - the current state of the event
+     */
     @DeleteMapping(path = {"/{idEvent}/expenses/delete/{idTransaction}"})
     public ResponseEntity<Event> deleteTransactionById(@PathVariable("idEvent") long idEvent,
                                                        @PathVariable("idTransaction") int idTransaction) {
