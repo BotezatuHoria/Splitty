@@ -149,16 +149,16 @@ public class EventController {
         return ResponseEntity.ok(repo.findById(idEvent).get().getTransactions());
     }
 
-    @PostMapping(path = {"/{idEvent}/expenses/create/{idCreator}"})
+    @PostMapping(path = {"/{idEvent}/expenses/create"})
     public ResponseEntity<Event> createNewExpense(@PathVariable("idEvent") long idEvent,
-                                                  @PathVariable("idCreator") int idCreator,
                                                   @RequestBody Transaction transaction) {
         if (idEvent < 0 || !repo.existsById(idEvent)) {
             return ResponseEntity.badRequest().build();
         }
-        transaction.setCreator(pc.getById(idCreator).getBody());
 
-        Person person = pc.getById(idCreator).getBody();
+        tc.add(transaction);
+
+        Person person = pc.getById(transaction.getCreator().getId()).getBody();
         Set<Transaction> createdTransactions;
         if (person.getCreatedTransactions() == null) {
             person.setCreatedTransactions(Collections.emptySet());
@@ -166,23 +166,19 @@ public class EventController {
         createdTransactions = person.getCreatedTransactions();
         createdTransactions.add(transaction);
         person.setCreatedTransactions(createdTransactions);
+        pc.updateById(person.getId(), person);
 
-        tc.add(transaction);
-
-        Set<Person> participants = transaction.getParticipants();
-        for (Person p : participants) {
-            if (!p.equals(person)) {
-                if (p.getTransactions() == null) {
-                    p.setTransactions(new HashSet<>());
-                }
-                Set<Transaction> transactions = p.getTransactions();
-                transactions.add(transaction);
-                p.setTransactions(transactions);
-                pc.updateById(p.getId(), p);
+        Set<Person> involvedPeople = tc.getById(transaction.getId()).getBody().getParticipants();
+        for (Person p : involvedPeople) {
+            Set<Transaction> transactions;
+            if (p.getTransactions() == null) {
+                p.setTransactions(Collections.emptySet());
             }
+            transactions = p.getTransactions();
+            transactions.add(transaction);
+            p.setTransactions(transactions);
+            pc.updateById(p.getId(), p);
         }
-
-        pc.updateById(idCreator, person);
 
         Event event = getById(idEvent).getBody();
         Set<Transaction> transactions = event.getTransactions();
@@ -190,6 +186,7 @@ public class EventController {
         event.setTransactions(transactions);
         Event saved = repo.save(event);
         return ResponseEntity.ok(saved);
+
     }
 
     @DeleteMapping(path = {"/{idEvent}/expenses/delete/{idTransaction}"})
@@ -206,17 +203,18 @@ public class EventController {
         event.removeTransaction(tr);
 
         Person person = pc.getById(tr.getCreator().getId()).getBody();
-        person.getCreatedTransactions().remove(tr);
+        Set<Transaction> createdTransactions = person.getCreatedTransactions();
+        createdTransactions.remove(tr);
+        pc.updateById(person.getId(), person);
 
         for (Person p : tr.getParticipants()) {
             if (p.getTransactions() != null) {
                 Set<Transaction> transactions = p.getTransactions();
                 transactions.remove(tr);
                 p.setTransactions(transactions);
+                pc.updateById(p.getId(), p);
             }
         }
-
-        pc.updateById(tr.getCreator().getId(), person);
 
         Event saved = repo.save(event);
         ResponseEntity<Event> response = ResponseEntity.ok(saved);
