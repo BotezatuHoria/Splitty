@@ -28,7 +28,7 @@ public class TestEventRepository implements EventRepository {
                 toRemove = event;
             }
         }
-        if (toRemove != null) events.remove(toRemove);
+        if (toRemove != null) {events.remove(toRemove);}
     }
 
     @Override
@@ -50,13 +50,13 @@ public class TestEventRepository implements EventRepository {
     public void deleteAllInBatch() {}
 
     @Override
-    public Event getOne(Long aLong) {return null;}
+    public Event getOne(Long along) {return null;}
 
     @Override
-    public Event getById(Long aLong) {return null;}
+    public Event getById(Long along) {return null;}
 
     @Override
-    public Event getReferenceById(Long aLong) {return null;}
+    public Event getReferenceById(Long along) {return null;}
 
     @Override
     public <S extends Event> Optional<S> findOne(Example<S> example) {return Optional.empty();}
@@ -101,11 +101,11 @@ public class TestEventRepository implements EventRepository {
     public <S extends Event> List<S> saveAll(Iterable<S> entities) {return null;}
 
     @Override
-    public Optional<Event> findById(Long aLong) {
+    public Optional<Event> findById(Long along) {
         Iterator<Event> iterator = events.iterator();
         while (iterator.hasNext()) {
             Event event = iterator.next();
-            if (event.getId() == aLong) {
+            if (event.getId() == along) {
                 return Optional.of(event);
             }
         }
@@ -113,11 +113,11 @@ public class TestEventRepository implements EventRepository {
     }
 
     @Override
-    public boolean existsById(Long aLong) {
+    public boolean existsById(Long along) {
         Iterator<Event> iterator = events.iterator();
         while (iterator.hasNext()) {
             Event event = iterator.next();
-            if (event.getId() == aLong) {
+            if (event.getId() == along) {
                 return true;
             }
         }
@@ -134,7 +134,7 @@ public class TestEventRepository implements EventRepository {
     public long count() {return 0;}
 
     @Override
-    public void deleteById(Long aLong) {}
+    public void deleteById(Long along) {}
 
     @Override
     public void delete(Event entity) {}
