@@ -4,20 +4,25 @@
 
 package client.scenes;
 
+import client.utils.ServerUtils;
 import commons.Event;
 import commons.Person;
+//import commons.Transaction;
+//import javafx.collections.ObservableList;
 import commons.Transaction;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 import com.google.inject.Inject;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 
-public class AddExpenseCtrl {
+import java.net.URL;
+import java.time.LocalDate;
+import java.util.*;
+
+public class AddExpenseCtrl implements Initializable {
 
     @FXML // fx:id="expensePane"
     private AnchorPane expensePane; // Value injected by FXMLLoader
@@ -32,7 +37,7 @@ public class AddExpenseCtrl {
     private Button addEverybody; // Value injected by FXMLLoader
 
     @FXML // fx:id="currencyBox"
-    private ComboBox<?> currencyBox; // Value injected by FXMLLoader
+    private ComboBox<Integer> currencyBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="dateBox"
     private DatePicker dateBox; // Value injected by FXMLLoader
@@ -44,7 +49,7 @@ public class AddExpenseCtrl {
     private TextField expenseField; // Value injected by FXMLLoader
 
     @FXML // fx:id="expenseTypeBox"
-    private ComboBox<Transaction> expenseTypeBox; // Value injected by FXMLLoader
+    private ComboBox<String> expenseTypeBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="payerBox"
     private ComboBox<Person> payerBox; // Value injected by FXMLLoader
@@ -57,6 +62,7 @@ public class AddExpenseCtrl {
 
     //private final ServerUtils server;
 
+    private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
     /**
@@ -64,8 +70,17 @@ public class AddExpenseCtrl {
      * @param mainCtrl - reference to the main controller
      */
     @Inject
-    public AddExpenseCtrl(MainCtrl mainCtrl) {
+    public AddExpenseCtrl(MainCtrl mainCtrl, ServerUtils server) {
         this.mainCtrl = mainCtrl;
+        this.server = server;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        retrievePeopleFromDb();
+        currencyBox.getItems().add(840);
+        expenseTypeBox.getItems().add("Food");
+
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -136,9 +151,49 @@ public class AddExpenseCtrl {
     public void addExpense() {
         showNodes();
         if (checkCompleted()) {
+            createTransaction();
             clearInputs();
+            mainCtrl.showEventPage();
             //send data to server databae
         }
+    }
+
+    public void retrievePeopleFromDb() {
+        Set<Person> people = server.getPeopleInCurrentEvent(1);
+        addPeopleToView(people);
+        addPeopleToPayerBox(people);
+    }
+    public void addPeopleToView(Set<Person> people) {
+        for (Person p : people) {
+            CheckBox checkBox = new CheckBox(p.toString());
+            checkBox.setUserData(p);
+            peopleLIstView.getItems().add(checkBox);
+        }
+    }
+
+    public void addPeopleToPayerBox(Set<Person> people) {
+        for (Person p : people) {
+            payerBox.getItems().add(p);
+        }
+    }
+
+    public void addCurrencies(Set<Currency> currencies) {
+        // to be implemented with all the currencies that will be available in the project;
+    }
+
+    public void createTransaction() {
+        Person payer = payerBox.getValue();
+        String title = expenseField.getText();
+        double value = Double.parseDouble(priceField.getText());
+        LocalDate date = dateBox.getValue();
+        int currency = currencyBox.getValue();
+        Set<Person> participants = new HashSet<>();
+        for (CheckBox checkBox : peopleLIstView.getItems()) {
+            if (checkBox.isSelected()) {
+                participants.add((Person) checkBox.getUserData());
+            }
+        }
+        String expenseType = expenseTypeBox.getValue();
     }
 
     /**
@@ -183,7 +238,6 @@ public class AddExpenseCtrl {
             errorLabel.setText("Please provide the amount of the expense!");
             return false;
         }
-
         try {
             double x = Double.parseDouble(priceField.getText());
         } catch (NumberFormatException e) {
