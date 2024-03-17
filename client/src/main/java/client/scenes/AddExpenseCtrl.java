@@ -194,6 +194,9 @@ public class AddExpenseCtrl implements Initializable {
             }
         }
         String expenseType = expenseTypeBox.getValue();
+        Transaction transaction = new Transaction(title, date, value, currency, expenseType, participants, payer);
+        System.out.println(transaction.toString());
+        server.addTransactionToCurrentEvent(1, transaction);
     }
 
     /**
