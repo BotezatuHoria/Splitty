@@ -5,7 +5,6 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
-import commons.Event;
 import commons.Person;
 //import commons.Transaction;
 //import javafx.collections.ObservableList;
@@ -103,13 +102,6 @@ public class AddExpenseCtrl implements Initializable {
      * Full functionality will be implemented in the future.
      */
     public void addParticipantToView() {
-        Event e = new Event("", "", 1, ""
-                , new HashSet<>(), new HashSet<>());
-        Person p =
-                new Person("idk", "Horia", "Botezatu", "2334", e,
-                        new HashSet<>(), new HashSet<>());
-        CheckBox personCheck = new CheckBox(p.getFirstName() + " " + p.getLastName());
-        peopleLIstView.getItems().add(personCheck);
         addAllParticipants();
     }
 
@@ -195,8 +187,9 @@ public class AddExpenseCtrl implements Initializable {
         }
         String expenseType = expenseTypeBox.getValue();
         Transaction transaction = new Transaction(title, date, value, currency, expenseType, participants, payer);
-        System.out.println(transaction.toString());
-        server.addTransactionToCurrentEvent(1, transaction);
+        System.out.println(transaction.getCreator().toString());
+        Transaction result = server.addTransactionToCurrentEvent(1, transaction);
+        System.out.println(result.toString());
     }
 
     /**

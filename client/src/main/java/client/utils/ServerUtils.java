@@ -34,6 +34,9 @@ import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
 
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class ServerUtils {
 
 	private static final String SERVER = "http://localhost:8080/";
@@ -94,8 +97,13 @@ public class ServerUtils {
 				.get(new GenericType<Set<Person>>() {});
 	}
 
-	public void addTransactionToCurrentEvent(int idEvent, Transaction transaction) {
-		ClientBuilder.newClient(new ClientConfig())
+	public Transaction addTransactionToCurrentEvent(int idEvent, Transaction transaction) {
+
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		objectMapper.registerModule(new JavaTimeModule());
+
+		return ClientBuilder.newClient(new ClientConfig())
 				.target(SERVER).path("api/event/" + idEvent + "/expenses/create")
 				.request(APPLICATION_JSON)
 				.accept(APPLICATION_JSON)
