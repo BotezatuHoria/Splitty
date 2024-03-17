@@ -20,7 +20,17 @@ public class TestEventRepository implements EventRepository {
     public final List<Event> events = new ArrayList<>();
 
     @Override
-    public void deleteById(long id) {}
+    public void deleteById(long id) {
+        Iterator<Event> iterator = events.iterator();
+        Event toRemove = null;
+        while (iterator.hasNext()) {
+            Event event = iterator.next();
+            if (event.getId() == id) {
+                toRemove = event;
+            }
+        }
+        if (toRemove != null) events.remove(toRemove);
+    }
 
     @Override
     public void flush() {}
@@ -115,7 +125,7 @@ public class TestEventRepository implements EventRepository {
     }
 
     @Override
-    public List<Event> findAll() {return null;}
+    public List<Event> findAll() {return events;}
 
     @Override
     public List<Event> findAllById(Iterable<Long> longs) {return null;}

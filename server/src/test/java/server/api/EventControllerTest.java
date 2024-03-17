@@ -6,6 +6,7 @@ import commons.Transaction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -81,21 +82,68 @@ class EventControllerTest {
     }
 
     @Test
-    void updateById() {
-
+    void updateByIdTest() {
+        Event event = new Event("tag", "title",4, "token", new HashSet<>(), new HashSet<>());
+        eventController.add(event);
+        Event eddited = new Event("tag2", "title2",4, "token2", new HashSet<>(), new HashSet<>());
+        var actual = eventController.updateById(4, eddited);
+        assertEquals(eddited, actual.getBody());
     }
+
+    @Test
+    void updateByIDInvalidTest() {
+        Event event = new Event("tag", "title",6, "token", new HashSet<>(), new HashSet<>());
+        eventController.add(event);
+        Event wrongId = new Event("tag2", "title2",45, "token2", new HashSet<>(), new HashSet<>());
+        Event wrongFields = new Event(null, null, 6, null, null, null);
+        var actual1 = eventController.updateById(6, wrongId);
+        var actual2 = eventController.updateById(6, wrongFields);
+        var actual3 = eventController.updateById(45, wrongId);
+        assertEquals(BAD_REQUEST, actual1.getStatusCode());
+        assertEquals(BAD_REQUEST, actual2.getStatusCode());
+        assertEquals(BAD_REQUEST, actual3.getStatusCode());
+    }
+
 
     @Test
     void deleteByIdTest() {
+        Event event = new Event("tag", "title",7, "token", new HashSet<>(), new HashSet<>());
+        eventController.add(event);
+        var actual = eventController.deleteById(7);
+        assertEquals(event, actual.getBody());
+        assertFalse(eventRepository.existsById((long) 7));
     }
 
     @Test
-    void getPeople() {
+    void deleteByInvalidIDTest() {
+        assertEquals(BAD_REQUEST, eventController.deleteById(46).getStatusCode());
+    }
+
+    @Test
+    void getPeopleTest() {
+        Set<Person> people = new HashSet<>();
+        Event event = new Event("tag", "title",8, "token", people, new HashSet<>());
+        people.add(new Person("test@email.com", "First", "Test",
+                "iban33",event, new HashSet<>(), new HashSet<>()));
+        eventController.add(event);
+        var actual = eventController.getPeople(8);
+        assertEquals(actual.getBody(), people);
+    }
+
+    @Test
+    void getPeopleInvalidIDTest() {
+        assertEquals(BAD_REQUEST, eventController.getPeople(47).getStatusCode());
     }
 
 
     @Test
-    void getExpenses() {
+    void getExpensesTest() {
+        Set<Transaction> transactions = new HashSet<>();
+        Event event = new Event("tag", "title",9, "token", new HashSet<>(), transactions);
+        transactions.add(new Transaction("name", LocalDate.now(), 4, 4, new HashSet<>(), new Person()));
+        eventController.add(event);
+        var actual = eventController.getExpenses(9);
+        assertEquals(actual.getBody(), transactions);
     }
 
     @Test

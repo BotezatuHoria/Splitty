@@ -68,7 +68,7 @@ public class EventController {
      */
     @PatchMapping("/{id}")
     public ResponseEntity<Event> updateById(@PathVariable("id") long id, @RequestBody Event event) {
-        if (event.getId() < 0 || !repo.existsById(id) || event.getId() != id || event.getTag() == null || event.getTitle() == null
+        if (event == null || event.getId() < 0 || !repo.existsById(id) || event.getId() != id || event.getTag() == null || event.getTitle() == null
                 || event.getToken() == null ||
                 event.getPeople() == null || event.getTransactions() == null) {
             return ResponseEntity.badRequest().build();
@@ -86,7 +86,7 @@ public class EventController {
     @PostMapping(path = {"", "/"})
     public ResponseEntity<Event> add(@RequestBody Event event) {
 
-        if (event.getId() < 0 || event.getTag() == null || event.getTitle() == null || event.getToken() == null ||
+        if (event == null || repo.existsById((long) event.getId()) || event.getId() < 0 || event.getTag() == null || event.getTitle() == null || event.getToken() == null ||
                 event.getPeople() == null || event.getTransactions() == null) {
             return ResponseEntity.badRequest().build();
         }
