@@ -38,7 +38,7 @@ public class EventController {
     /**
      * Gets all the events as a Jason file.
      *
-     * @return
+     * @return the event
      */
     @GetMapping(path = {"", "/"})
     public List<Event> getAll() {

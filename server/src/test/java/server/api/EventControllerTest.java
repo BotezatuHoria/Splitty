@@ -140,7 +140,8 @@ class EventControllerTest {
     void getExpensesTest() {
         Set<Transaction> transactions = new HashSet<>();
         Event event = new Event("tag", "title",9, "token", new HashSet<>(), transactions);
-        transactions.add(new Transaction("name", LocalDate.now(), 4, 4, new HashSet<>(), new Person()));
+        transactions.add(new Transaction("name", LocalDate.now(), 4, 4,
+                new HashSet<>(), new Person()));
         eventController.add(event);
         var actual = eventController.getExpenses(9);
         assertEquals(actual.getBody(), transactions);
@@ -158,7 +159,8 @@ class EventControllerTest {
 
     @Test
     void createTransactionInvalidIDTest() {
-        Transaction transaction = new Transaction("name", LocalDate.now(), 4, 4, new HashSet<>(), new Person());
+        Transaction transaction = new Transaction("name", LocalDate.now(), 4, 4,
+                new HashSet<>(), new Person());
         assertEquals(BAD_REQUEST, eventController.createNewExpense(49, transaction).getStatusCode());
     }
 

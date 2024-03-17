@@ -1,7 +1,6 @@
 package server.api;
 
 import commons.Event;
-import commons.Person;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -78,7 +77,8 @@ public class TestEventRepository implements EventRepository {
     public <S extends Event> boolean exists(Example<S> example) {return false;}
 
     @Override
-    public <S extends Event, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {return null;}
+    public <S extends Event, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>,
+            R> queryFunction) {return null;}
 
     @Override
     public <S extends Event> S save(S entity) {
