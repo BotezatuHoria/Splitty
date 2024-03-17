@@ -24,6 +24,8 @@ public class Transaction {
 
     protected int currency;
 
+    protected String type;
+
     @ManyToMany
     @JsonIgnoreProperties({"createdTransactions", "transactions"})
     public Set<Person> participants;
@@ -58,6 +60,16 @@ public class Transaction {
         this.creator = creator;
     }
 
+    public Transaction(String name, LocalDate date, double money, int currency, String type,
+                       Set<Person> participants, Person creator) {
+        this.name = name;
+        this.date = date;
+        this.money = money;
+        this.currency = currency;
+        this.type = type;
+        this.participants = participants;
+        this.creator = creator;
+    }
 
     /**
      * Getter for the id of a transaction.
@@ -180,7 +192,16 @@ public class Transaction {
         }
         Transaction that = (Transaction) o;
         return Double.compare(money, that.money) == 0 && Objects.equals(name, that.name) &&
-                Objects.equals(date, that.date) && Objects.equals(currency, that.currency);
+                Objects.equals(date, that.date) && Objects.equals(currency, that.currency)
+                && Objects.equals(type, that.type);
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     /**

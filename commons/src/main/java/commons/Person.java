@@ -205,6 +205,11 @@ public class Person {
         return Objects.equals(email, that.email);
     }
 
+    @Override
+    public String toString() {
+        return firstName + " " + lastName;
+    }
+
     /**
      * Hashcode for the people.
      * @return integer value
