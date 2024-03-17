@@ -25,6 +25,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Set;
 
+import commons.Person;
 import commons.Transaction;
 import org.glassfish.jersey.client.ClientConfig;
 
@@ -84,5 +85,22 @@ public class ServerUtils {
 				.accept(APPLICATION_JSON)
 				.get(new GenericType<Set<Transaction>>() {});
 	}
+
+	public Set<Person> getPeopleInCurrentEvent(int id) {
+		return ClientBuilder.newClient(new ClientConfig())
+				.target(SERVER).path("api/event/" + id + "/people")
+				.request(APPLICATION_JSON)
+				.accept(APPLICATION_JSON)
+				.get(new GenericType<Set<Person>>() {});
+	}
+
+	public void addTransactionToCurrentEvent(int idEvent, Transaction transaction) {
+		ClientBuilder.newClient(new ClientConfig())
+				.target(SERVER).path("api/event/" + idEvent + "/expenses/create")
+				.request(APPLICATION_JSON)
+				.accept(APPLICATION_JSON)
+				.post(Entity.entity(transaction, APPLICATION_JSON), Transaction.class);
+	}
+
 
 }
