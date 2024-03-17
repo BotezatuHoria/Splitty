@@ -4,6 +4,7 @@ import java.util.Objects;
 import java.util.Set;
 //import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -19,8 +20,9 @@ public class Person {
     protected int debt;
 
     //@JsonBackReference
-    //@ManyToOne
-    public int event;
+    @ManyToOne
+    @JsonIgnore
+    public Event event;
 
     @OneToMany
     @JsonIgnoreProperties("creator")
@@ -43,7 +45,7 @@ public class Person {
         this.firstName = firstName;
         this.lastName = lastName;
         this.iban = iban;
-        this.event = event.getId();
+        this.event = event;
         this.debt = 0;
         this.createdTransactions = createdTransactions;
         this.transactions = transactions;
@@ -157,7 +159,7 @@ public class Person {
      * Getter method for the event that this person has been added to.
      * @return the even that this person has been added to
      */
-    public int getEvent() {
+    public Event getEvent() {
         return event;
     }
 
@@ -185,7 +187,7 @@ public class Person {
         return transactions;
     }
 
-    public void setEvent(int event) {
+    public void setEvent(Event event) {
         this.event = event;
     }
 
@@ -203,6 +205,11 @@ public class Person {
         {return false;}
         Person that = (Person) o;
         return Objects.equals(email, that.email);
+    }
+
+    @Override
+    public String toString() {
+        return firstName + " " + lastName;
     }
 
     /**

@@ -24,6 +24,8 @@ public class Transaction {
 
     protected int currency;
 
+    protected String type;
+
     @ManyToMany
     @JsonIgnoreProperties({"createdTransactions", "transactions"})
     public Set<Person> participants;
@@ -58,6 +60,26 @@ public class Transaction {
         this.creator = creator;
     }
 
+    /**
+     * Public class for creating a transaction.
+     * @param name - name of the transaction
+     * @param date - date of the transaction
+     * @param money - value of the transaction
+     * @param currency - the currency in which the transaction is handled
+     * @param type - type of expense
+     * @param participants - all participants in the transaction
+     * @param creator - creator of transaction
+     */
+    public Transaction(String name, LocalDate date, double money, int currency, String type,
+                       Set<Person> participants, Person creator) {
+        this.name = name;
+        this.date = date;
+        this.money = money;
+        this.currency = currency;
+        this.type = type;
+        this.participants = participants;
+        this.creator = creator;
+    }
 
     /**
      * Getter for the id of a transaction.
@@ -180,7 +202,25 @@ public class Transaction {
         }
         Transaction that = (Transaction) o;
         return Double.compare(money, that.money) == 0 && Objects.equals(name, that.name) &&
-                Objects.equals(date, that.date) && Objects.equals(currency, that.currency);
+                Objects.equals(date, that.date) && Objects.equals(currency, that.currency)
+                && Objects.equals(type, that.type);
+    }
+
+
+    /**
+     * Getter for the type of the transaction.
+     * @return - type of the transaction
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * Setter for the type of the transaction.
+     * @param type - type of the transaction
+     */
+    public void setType(String type) {
+        this.type = type;
     }
 
     /**

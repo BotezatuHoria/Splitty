@@ -45,7 +45,7 @@ class PersonTest {
         Person test = new Person("test@email.com", "First", "Test",
                 "iban33", new Event("", "", 1, "", new HashSet<>(),
                 new HashSet<>()), new HashSet<>(), new HashSet<>());
-        int event = test.getEvent();
+        Event event = test.getEvent();
     }
 
     @Test
