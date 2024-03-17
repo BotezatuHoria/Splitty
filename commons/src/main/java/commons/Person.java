@@ -2,22 +2,28 @@ package commons;
 
 import java.util.Objects;
 import java.util.Set;
+//import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
 public class Person {
     @Id
-    private String email;
-    private String firstName;
-    private String lastName;
-    private String iban;
-    private int debt;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected int id;
+    protected String email;
+    protected String firstName;
+    protected String lastName;
+    protected String iban;
+    protected int debt;
 
-    @ManyToOne
-    public Event event;
+    //@JsonBackReference
+    //@ManyToOne
+    public int event;
 
     @OneToMany
+    @JsonIgnoreProperties("creator")
     public Set<Transaction> createdTransactions;
 
     @ManyToMany
@@ -37,7 +43,7 @@ public class Person {
         this.firstName = firstName;
         this.lastName = lastName;
         this.iban = iban;
-        this.event = event;
+        this.event = event.getId();
         this.debt = 0;
         this.createdTransactions = createdTransactions;
         this.transactions = transactions;
@@ -48,6 +54,15 @@ public class Person {
      */
     public Person() {
 
+    }
+
+
+    /**
+     * Getter method for the id of the person.
+     * @return id of said person
+     */
+    public int getId() {
+        return id;
     }
 
     /**
@@ -64,6 +79,62 @@ public class Person {
      */
     public String getFirstName() {
         return firstName;
+    }
+
+    /**
+     * Setter for email.
+     * @param email the email to set to
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * Setter for firstName.
+     * @param firstName the email to set to
+     */
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    /**
+     * Setter for lastName.
+     * @param lastName the email to set to
+     */
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    /**
+     * Setter for iban.
+     * @param iban the email to set to
+     */
+    public void setIban(String iban) {
+        this.iban = iban;
+    }
+
+    /**
+     * Setter for debt.
+     * @param debt the email to set to
+     */
+    public void setDebt(int debt) {
+        this.debt = debt;
+    }
+
+    /**
+     * Setter for createdTransactions.
+     * @param createdTransactions the email to set to
+     */
+    public void setCreatedTransactions(Set<Transaction> createdTransactions) {
+        this.createdTransactions = createdTransactions;
+    }
+
+    /**
+     * Setter for transactions.
+     * @param transactions the email to set to
+     */
+    public void setTransactions(Set<Transaction> transactions) {
+        this.transactions = transactions;
     }
 
     /**
@@ -86,7 +157,7 @@ public class Person {
      * Getter method for the event that this person has been added to.
      * @return the even that this person has been added to
      */
-    public Event getEvent() {
+    public int getEvent() {
         return event;
     }
 
@@ -114,11 +185,17 @@ public class Person {
         return transactions;
     }
 
+    public void setEvent(int event) {
+        this.event = event;
+    }
+
     /**
      * Equals method that returns true if the person is the same else false.
      * @param o object to compare too
      * @return true if the email is the same
      */
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {return true;}

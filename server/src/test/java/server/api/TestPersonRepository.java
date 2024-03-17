@@ -38,7 +38,7 @@ public class TestPersonRepository implements PersonRepository {
         }
 
         @Override
-        public void deleteAllByIdInBatch(Iterable<String> strings) {
+        public void deleteAllByIdInBatch(Iterable<Integer> integers) {
 
         }
 
@@ -48,18 +48,19 @@ public class TestPersonRepository implements PersonRepository {
         }
 
         @Override
-        public Person getOne(String s) {
-            return null;
+        public Person getOne(Integer integer) {
+                return null;
         }
 
         @Override
-        public Person getById(String s) {
-                return find(s).get();
+        public Person getById(Integer integer) {
+                return null;
         }
 
         @Override
-        public Person getReferenceById(String s) {
-                return find(s).get();        }
+        public Person getReferenceById(Integer integer) {
+                return null;
+        }
 
         @Override
         public <S extends Person> List<S> findAll(Example<S> example) {
@@ -76,15 +77,15 @@ public class TestPersonRepository implements PersonRepository {
             return null;
         }
 
-        private Optional<Person> find(String email) {
+        private Optional<Person> find(Integer id) {
                 Iterator<Person> iterator = persons.iterator();
                 while (iterator.hasNext()) {
                         Person person = iterator.next();
-                        if (person.getEmail().equals(email)) {
+                        if (person.getId() == id) {
                                 return Optional.of(person);
                         }
                 }
-                return null;
+                return Optional.empty();
         }
 
         @Override
@@ -93,27 +94,41 @@ public class TestPersonRepository implements PersonRepository {
         }
 
         @Override
-        public List<Person> findAllById(Iterable<String> strings) {
-            return null;
+        public List<Person> findAllById(Iterable<Integer> integers) {
+                return null;
         }
 
         @Override
         public <S extends Person> S save(S entity) {
-                persons.add(entity);
-                return entity;
+                Optional<Person> p = findById(entity.getId());
+                if (p.isPresent()) {
+                        Person person = p.get();
+                        person.setDebt(entity.getDebt());
+                        person.setEmail(entity.getEmail());
+                        person.setIban(entity.getIban());
+                        person.setEvent(entity.getEvent());
+                        person.setFirstName(entity.getFirstName());
+                        person.setLastName(entity.getLastName());
+                        person.setTransactions(entity.getTransactions());
+                        person.setCreatedTransactions(entity.getCreatedTransactions());
+                        return (S) person;
+                } else {
+                        persons.add(entity);
+                        return entity;
+                }
         }
 
         @Override
-        public Optional<Person> findById(String s) {
-                return Optional.of(find(s).get());
+        public Optional<Person> findById(Integer id) {
+                return find(id);
         }
 
         @Override
-        public boolean existsById(String s) {
+        public boolean existsById(Integer i) {
                 Iterator<Person> iterator = persons.iterator();
                 while (iterator.hasNext()) {
                         Person person = iterator.next();
-                        if (person.getEmail().equals(s)) {
+                        if (person.getId() == i) {
                                 return true;
                         }
                 }
@@ -126,11 +141,11 @@ public class TestPersonRepository implements PersonRepository {
         }
 
         @Override
-        public void deleteById(String email) {
+        public void deleteById(Integer id) {
                 Iterator<Person> iterator = persons.iterator();
                 while (iterator.hasNext()) {
                         Person person = iterator.next();
-                        if (person.getEmail().equals(email)) {
+                        if (person.getId() == id) {
                                 iterator.remove();
                                 return;
                         }
@@ -143,7 +158,7 @@ public class TestPersonRepository implements PersonRepository {
         }
 
         @Override
-        public void deleteAllById(Iterable<? extends String> strings) {
+        public void deleteAllById(Iterable<? extends Integer> integers) {
 
         }
 

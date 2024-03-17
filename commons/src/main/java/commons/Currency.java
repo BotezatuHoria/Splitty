@@ -43,8 +43,8 @@ public class Currency {
   }
 
   /**
-   * Getter for ico number.
-   * @return ico
+   * Getter for iso number.
+   * @return iso
    */
   public int getIso() {
     return iso;
@@ -91,7 +91,7 @@ public class Currency {
   */
  @Override
   public String toString() {
-    return "Ico number is: " + iso +
+    return "Iso number is: " + iso +
             ", name of the currency is: " + name;
   }
 

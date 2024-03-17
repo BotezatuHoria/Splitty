@@ -92,6 +92,6 @@ class CurrencyTest {
   @Test
   void testToStringTest() {
     Currency currency = new Currency(75588872, "Dollar");
-    assertEquals(currency.toString(),"Ico number is: 75588872, name of the currency is: Dollar");
+    assertEquals(currency.toString(),"Iso number is: 75588872, name of the currency is: Dollar");
   }
 }

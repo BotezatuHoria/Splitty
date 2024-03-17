@@ -1,5 +1,6 @@
 package commons;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -16,9 +17,11 @@ public class Event {
     protected String token;
 
     @OneToMany
+    @JsonIgnoreProperties({"createdTransactions"})
     protected Set<Person> people;
 
     @OneToMany
+    @JsonIgnoreProperties({"createdTransactions"})
     protected Set<Transaction> transactions;
 
     /**
@@ -146,7 +149,7 @@ public class Event {
      * Removes person from event.
      * @param person person to remove
      */
-    public void removePerson(PersonMock person) {
+    public void removePerson(Person person) {
         this.people.remove(person);
     }
 
