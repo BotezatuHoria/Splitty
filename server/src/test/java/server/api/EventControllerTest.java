@@ -147,10 +147,71 @@ class EventControllerTest {
     }
 
     @Test
-    void createNewExpense() {
+    void getEventInvalidIDTest() {
+        assertEquals(BAD_REQUEST, eventController.getExpenses(48).getStatusCode());
+    }
+
+    // If we want to add it later we can add tests to see if the persons in event also get updated.
+    @Test
+    void createNewExpenseTest() {
     }
 
     @Test
+    void createTransactionInvalidIDTest() {
+        Transaction transaction = new Transaction("name", LocalDate.now(), 4, 4, new HashSet<>(), new Person());
+        assertEquals(BAD_REQUEST, eventController.createNewExpense(49, transaction).getStatusCode());
+    }
+
+
+
+    // If we want we can later add a test to see if the People get updated for transactions.
+    @Test
     void deleteTransactionById() {
+    }
+
+    @Test
+    void addPersonTest() {
+        Event event = new Event("tag", "title",12, "token", new HashSet<>(), new HashSet<>());
+        Person person = new Person("test@email.com", "First", "Test",
+                "iban33",event, new HashSet<>(), new HashSet<>());
+        eventController.add(event);
+        var actual = eventController.add(12, person);
+        assertEquals(actual.getBody(), event);
+        assertTrue(event.getPeople().contains(person));
+    }
+
+    @Test
+    void addPersonInvalidId() {
+        Event event = new Event("tag", "title",12, "token", new HashSet<>(), new HashSet<>());
+        eventController.add(event);
+        Person person = new Person("test@email.com", "First", "Test",
+                "iban33",event, new HashSet<>(), new HashSet<>());
+        assertEquals(BAD_REQUEST, eventController.add(50, person).getStatusCode());
+    }
+
+
+
+    @Test
+    void deleteByIdPersonTest() {
+        Event event = new Event("tag", "title",14, "token", new HashSet<>(), new HashSet<>());
+        Person person = new Person("test@email.com", "First", "Test",
+                "iban33",event, new HashSet<>(), new HashSet<>());
+        eventController.add(event);
+        eventController.add(14, person);
+        var actual = eventController.deleteById(14, person.getId());
+        assertEquals(actual.getBody(), event);
+        assertFalse(event.getPeople().contains(person));
+
+    }
+
+    @Test
+    void deletePersonInvalidId() {
+        Event event = new Event("tag", "title",15, "token", new HashSet<>(), new HashSet<>());
+        eventController.add(event);
+        Person person = new Person("test@email.com", "First", "Test",
+                "iban33",event, new HashSet<>(), new HashSet<>());
+        eventController.add(15, person);
+        assertEquals(BAD_REQUEST, eventController.deleteById(50, person.getId()).getStatusCode());
+        assertEquals(BAD_REQUEST, eventController.deleteById(15, 252).getStatusCode());
     }
 }

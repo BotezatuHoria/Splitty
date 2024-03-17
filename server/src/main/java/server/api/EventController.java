@@ -133,6 +133,9 @@ public class EventController {
      */
     @PostMapping(path = {"/{id}/person"})
     public ResponseEntity<Event> add(@PathVariable("id") long id, @RequestBody Person person) {
+        if (id < 0 || !repo.existsById(id)) {
+            return ResponseEntity.badRequest().build();
+        }
         person.setEvent((int) id);
         pc.add(person);
         Event event = getById(id).getBody();
@@ -150,7 +153,7 @@ public class EventController {
     @DeleteMapping(path = {"/{idEvent}/person/{idPerson}"})
     public ResponseEntity<Event> deleteById(@PathVariable("idEvent") long idEvent,
                                             @PathVariable("idPerson") int idPerson) {
-        if (Objects.equals(pc.getById(idPerson), ResponseEntity.badRequest())) {
+        if (Objects.equals(pc.getById(idPerson), ResponseEntity.badRequest().build())) {
             return ResponseEntity.badRequest().build();
         }
         if ((idEvent < 0 || !repo.existsById(idEvent) || idPerson < 0)) {
@@ -232,7 +235,7 @@ public class EventController {
     @DeleteMapping(path = {"/{idEvent}/expenses/delete/{idTransaction}"})
     public ResponseEntity<Event> deleteTransactionById(@PathVariable("idEvent") long idEvent,
                                                        @PathVariable("idTransaction") int idTransaction) {
-        if (Objects.equals(tc.getById(idTransaction), ResponseEntity.badRequest())) {
+        if (Objects.equals(tc.getById(idTransaction), ResponseEntity.badRequest().build())) {
             return ResponseEntity.badRequest().build();
         }
         if ((idEvent < 0 || !repo.existsById(idEvent) || idTransaction < 0)) {
