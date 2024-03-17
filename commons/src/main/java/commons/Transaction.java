@@ -60,6 +60,16 @@ public class Transaction {
         this.creator = creator;
     }
 
+    /**
+     * Public class for creating a transaction.
+     * @param name - name of the transaction
+     * @param date - date of the transaction
+     * @param money - value of the transaction
+     * @param currency - the currency in which the transaction is handled
+     * @param type - type of expense
+     * @param participants - all participants in the transaction
+     * @param creator - creator of transaction
+     */
     public Transaction(String name, LocalDate date, double money, int currency, String type,
                        Set<Person> participants, Person creator) {
         this.name = name;
@@ -196,10 +206,19 @@ public class Transaction {
                 && Objects.equals(type, that.type);
     }
 
+
+    /**
+     * Getter for the type of the transaction.
+     * @return - type of the transaction
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * Setter for the type of the transaction.
+     * @param type - type of the transaction
+     */
     public void setType(String type) {
         this.type = type;
     }

@@ -74,9 +74,14 @@ public class AddExpenseCtrl implements Initializable {
         this.server = server;
     }
 
+    /**
+     * Initialize method for the page.
+     * @param url -
+     * @param resourceBundle -
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        retrievePeopleFromDb();
+        //retrievePeopleFromDb();
         currencyBox.getItems().add(840);
         expenseTypeBox.getItems().add("Food");
 
@@ -150,11 +155,19 @@ public class AddExpenseCtrl implements Initializable {
         }
     }
 
+    /**
+     * Method that retrieves all the people from an event from the database.
+     */
     public void retrievePeopleFromDb() {
         Set<Person> people = server.getPeopleInCurrentEvent(1);
         addPeopleToView(people);
         addPeopleToPayerBox(people);
     }
+
+    /**
+     * Method that adds all the people in the personView.
+     * @param people - people to be added
+     */
     public void addPeopleToView(Set<Person> people) {
         for (Person p : people) {
             CheckBox checkBox = new CheckBox(p.toString());
@@ -163,16 +176,27 @@ public class AddExpenseCtrl implements Initializable {
         }
     }
 
+    /**
+     * Method that adds all the people in the peoplePlayerBox.
+     * @param people - people to be added
+     */
     public void addPeopleToPayerBox(Set<Person> people) {
         for (Person p : people) {
             payerBox.getItems().add(p);
         }
     }
 
+    /**
+     * Method that will be implemented for the currencies.
+     * @param currencies - set of all currencies
+     */
     public void addCurrencies(Set<Currency> currencies) {
         // to be implemented with all the currencies that will be available in the project;
     }
 
+    /**
+     * Method that creates a new Transaction and adds it to the database.
+     */
     public void createTransaction() {
         Person payer = payerBox.getValue();
         String title = expenseField.getText();
