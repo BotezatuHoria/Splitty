@@ -147,40 +147,45 @@ public class MainCtrl {
     /**
      * Method for showing statistics page.
      */
-    public void showStatisticsPage() {
+    public void showStatisticsPage(int eventID) {
         primaryStage.setTitle("Statistics Page");
+        statisticsCtrl.setEventID(eventID);
         primaryStage.setScene(statistics);
     }
 
     /**
      * Method for showing the add expense page.
      */
-    public void showExpensePage() {
+    public void showExpensePage(int eventID) {
         primaryStage.setTitle("Add Expense");
+        expenseCtrl.setEventID(eventID);
         primaryStage.setScene(expense);
     }
 
     /**
      * Method for showing the add participant page.
      */
-    public void showAddParticipant() {
+    public void showAddParticipant(int eventID) {
         primaryStage.setTitle("Add participant");
+        additionPageCtrl.setEventID(eventID);
         primaryStage.setScene(addParticipant);
     }
 
     /**
      * Method for showing the invite participants page.
      */
-    public void showInviteParticipantPage() {
+    public void showInviteParticipantPage(int eventID) {
         primaryStage.setTitle("Send Invites");
+        inviteSendingCtrl.setEventID(eventID);
         primaryStage.setScene(inviteSend);
     }
 
     /**
      * Method for showing the debt page.
      */
-    public void showDebtPage() {
+    public void showDebtPage(int eventID) {
         primaryStage.setTitle("Open debts");
+        debtSettlementCtrl.setEventID(eventID);
         primaryStage.setScene(debt);
     }
 

@@ -63,28 +63,28 @@ public class EventPageCtrl {
      * Method for accessing the expense page.
      */
     public void showAddExpensePage() {
-        mainCtrl.showExpensePage();
+        mainCtrl.showExpensePage(eventID);
     }
 
     /**
      * Method for accessing the add participants page.
      */
     public void addParticipants() {
-        mainCtrl.showAddParticipant();
+        mainCtrl.showAddParticipant(eventID);
     }
 
     /**
      * Method for accessing the sending invites page.
      */
     public void sendInvites() {
-        mainCtrl.showInviteParticipantPage();
+        mainCtrl.showInviteParticipantPage(eventID);
     }
 
     /**
      * Method for accessing the debts page.
      */
     public void settleDebts() {
-        mainCtrl.showDebtPage();
+        mainCtrl.showDebtPage(eventID);
     }
 
     /**
@@ -98,7 +98,7 @@ public class EventPageCtrl {
      * Method for changing to the statistics page.
      */
     public void showStatistics() {
-        mainCtrl.showStatisticsPage();
+        mainCtrl.showStatisticsPage(eventID);
     }
 
     /**

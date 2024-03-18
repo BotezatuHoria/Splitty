@@ -112,6 +112,11 @@ public class ServerUtils {
 	}
 
 
+	/**
+	 * This method adds the given event
+	 * @param event of the event you want to add
+	 * @return
+	 */
 	public Event addEvent(Event event) {
 		ObjectMapper objectMapper = new ObjectMapper();
 
@@ -124,6 +129,11 @@ public class ServerUtils {
 				.post(Entity.entity(event, APPLICATION_JSON), Event.class);
 	}
 
+	/**
+	 * This method gets and event by id
+	 * @param eventID of the event you want to get
+	 * @return
+	 */
 	public Event getEventByID(int eventID) {
 		return ClientBuilder.newClient(new ClientConfig())
 				.target(SERVER).path("api/event/" + eventID)
