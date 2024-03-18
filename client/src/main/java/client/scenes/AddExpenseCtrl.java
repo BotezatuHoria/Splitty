@@ -64,6 +64,10 @@ public class AddExpenseCtrl implements Initializable {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
+
+
+    private int eventID = -1;
+
     /**
      * Constructor for the add expense controller.
      * @param mainCtrl - reference to the main controller
@@ -150,7 +154,7 @@ public class AddExpenseCtrl implements Initializable {
         if (checkCompleted()) {
             createTransaction();
             clearInputs();
-            mainCtrl.showEventPage();
+            mainCtrl.showEventPage(eventID);
             //send data to server databae
         }
     }
@@ -232,7 +236,7 @@ public class AddExpenseCtrl implements Initializable {
      */
     public void abortExpense() {
         clearInputs();
-        mainCtrl.showEventPage();
+        mainCtrl.showEventPage(eventID);
     }
 
     /**
@@ -314,6 +318,14 @@ public class AddExpenseCtrl implements Initializable {
         }
         errorLabel.setText("Please select at least a person!");
         return false;
+    }
+
+    /**
+     * Setter for eventID
+     * @param eventID of the current event
+     */
+    public void setEventID(int eventID) {
+        this.eventID = eventID;
     }
 
 }

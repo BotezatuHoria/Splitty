@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 
 public class StatisticsCtrl {
     private final MainCtrl mainCtrl;
+    private int eventID = -1;
     @FXML // fx:id="statsPieChart"
     private PieChart statsPieChart;
 
@@ -34,6 +35,14 @@ public class StatisticsCtrl {
      * Method for the go back button in the statistics page.
      */
     public void goBack() {
-        mainCtrl.showEventPage();
+        mainCtrl.showEventPage(eventID);
+    }
+
+    /**
+     * Setter for eventID
+     * @param eventID of the current eent
+     */
+    public void setEventID(int eventID) {
+        this.eventID = eventID;
     }
 }

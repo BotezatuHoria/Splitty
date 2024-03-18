@@ -26,6 +26,7 @@ public class ParticipantAdditionPageCtrl {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private int eventID = -1;
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -108,7 +109,7 @@ public class ParticipantAdditionPageCtrl {
      */
     public void abort(){
         clearFields();
-        mainCtrl.showEventPage();
+        mainCtrl.showEventPage(eventID);
     }
 
     /**
@@ -136,5 +137,13 @@ public class ParticipantAdditionPageCtrl {
             default:
                 break;
         }
+    }
+
+    /**
+     * Setter for EventID
+     * @param eventID eventId of the current event
+     */
+    public void setEventID(int eventID) {
+        this.eventID = eventID;
     }
 }

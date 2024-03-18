@@ -8,6 +8,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 public class DebtCellPaneCtrl extends ListCell<DebtCellData> {
+
+  private int eventID;
   @FXML // fx:id="root"
   private Pane root;
   @FXML // fx:id="loader"
@@ -95,5 +97,14 @@ public class DebtCellPaneCtrl extends ListCell<DebtCellData> {
     generalDebtInfo.append(item.getReceiver().getFirstName());
 
     return generalDebtInfo.toString();
+   }
+
+  /**
+   * Setter for eventID
+   * @param eventID for the current event
+   */
+  public void setEventID(int eventID) {
+    this.eventID = eventID;
   }
+
 }

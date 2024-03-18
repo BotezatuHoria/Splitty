@@ -137,8 +137,10 @@ public class MainCtrl {
     /**
      * Method for showing the event page.
      */
-    public void showEventPage() {
+    public void showEventPage(int eventID) {
         primaryStage.setTitle("Event Page");
+        eventCtrl.setEventID(eventID);
+        eventCtrl.setTitle();
         primaryStage.setScene(event);
     }
 
