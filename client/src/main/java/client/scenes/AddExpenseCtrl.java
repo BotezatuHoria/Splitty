@@ -321,8 +321,8 @@ public class AddExpenseCtrl implements Initializable {
     }
 
     /**
-     * Setter for eventID
-     * @param eventID of the current event
+     * Setter for eventID.
+     * @param eventID of the current event.
      */
     public void setEventID(int eventID) {
         this.eventID = eventID;

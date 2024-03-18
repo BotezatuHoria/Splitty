@@ -113,7 +113,7 @@ public class ServerUtils {
 
 
 	/**
-	 * This method adds the given event
+	 * This method adds the given event.
 	 * @param event of the event you want to add
 	 * @return
 	 */
@@ -130,7 +130,7 @@ public class ServerUtils {
 	}
 
 	/**
-	 * This method gets and event by id
+	 * This method gets and event by id.
 	 * @param eventID of the event you want to get
 	 * @return
 	 */

@@ -102,7 +102,7 @@ public class EventPageCtrl {
     }
 
     /**
-     * Setter for eventID
+     * Setter for eventID.
      * @param eventID of the current event
      */
     public void setEventID(int eventID) {
@@ -110,7 +110,7 @@ public class EventPageCtrl {
     }
 
     /**
-     * Setts the title to the current event
+     * Setts the title to the current event.
      */
     public void setTitle() {
         eventTitle.setText(server.getEventByID(eventID).getTitle());

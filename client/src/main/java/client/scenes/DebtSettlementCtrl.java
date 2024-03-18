@@ -77,7 +77,7 @@ public class DebtSettlementCtrl {
   }
 
   /**
-   * Setter for eventID
+   * Setter for eventID.
    * @param eventID of the current event
    */
   public void setEventID(int eventID) {

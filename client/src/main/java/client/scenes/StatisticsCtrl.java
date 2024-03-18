@@ -39,7 +39,7 @@ public class StatisticsCtrl {
     }
 
     /**
-     * Setter for eventID
+     * Setter for eventID.
      * @param eventID of the current eent
      */
     public void setEventID(int eventID) {

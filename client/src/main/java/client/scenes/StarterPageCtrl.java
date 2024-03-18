@@ -102,7 +102,7 @@ public class StarterPageCtrl {
      */
     public void showEventPage() {
         String name = createTextField.getText();
-        if(name.equals("")) name = "New Event";
+        if(name.equals("")) {name = "New Event";}
         Event event = server.addEvent(new Event("", name, 0, "", new HashSet<>(), new HashSet<>()));
         System.out.println(event);
         mainCtrl.showEventPage(event.getId());

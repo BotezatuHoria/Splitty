@@ -140,8 +140,8 @@ public class ParticipantAdditionPageCtrl {
     }
 
     /**
-     * Setter for EventID
-     * @param eventID eventId of the current event
+     * Setter for EventID.
+     * @param eventID eventId of the current event.
      */
     public void setEventID(int eventID) {
         this.eventID = eventID;

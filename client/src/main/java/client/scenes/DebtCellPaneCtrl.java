@@ -100,7 +100,7 @@ public class DebtCellPaneCtrl extends ListCell<DebtCellData> {
    }
 
   /**
-   * Setter for eventID
+   * Setter for eventID.
    * @param eventID for the current event
    */
   public void setEventID(int eventID) {
