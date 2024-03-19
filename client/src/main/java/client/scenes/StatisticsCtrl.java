@@ -1,9 +1,19 @@
 package client.scenes;
+import client.utils.EventsSingleton;
+import client.utils.SelectedEventSingleton;
 import com.google.inject.Inject;
+import commons.Event;
+import commons.Transaction;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class StatisticsCtrl {
     private final MainCtrl mainCtrl;
@@ -28,7 +38,36 @@ public class StatisticsCtrl {
     void initialize() {
         assert statsPieChart != null : "fx:id=\"statsPieChart\" was not injected: check your FXML file 'Statistics.fxml'.";
         assert statsTotalExpenses != null : "fx:id=\"statsTotalExpenses\" was not injected: check your FXML file 'Statistics.fxml'.";
+
+        SelectedEventSingleton selectedEventInstance = SelectedEventSingleton.getInstance();
+        EventsSingleton eventsInstance = EventsSingleton.getInstance();
+        Event selectedEvent = eventsInstance.getEventById(selectedEventInstance.getEventId());
+
+        if (selectedEvent == null) {
+            statsTotalExpenses.setText("Server error: event not found");
+        } else {
+            Set<Transaction> transactions = selectedEvent.getTransactions();
+
+            double totalExpenses = 0.0;
+            Map<String, Double> expensesData = new HashMap<>();
+
+            for (Transaction transaction : transactions) {
+                totalExpenses += transaction.getMoney();
+                expensesData.put(transaction.getExpenseType(), expensesData.get(transaction.getExpenseType()) + transaction.getMoney());
+            }
+
+            ObservableList<PieChart.Data> chartData = FXCollections.observableArrayList();
+            for (Map.Entry<String, Double> entry : expensesData.entrySet()) {
+                chartData.add(new PieChart.Data(entry.getKey(), entry.getValue()));
+            }
+
+            statsPieChart.setData(chartData);
+
+            statsTotalExpenses.setText("Total Expenses: " + totalExpenses);
+        }
     }
+
+
 
     /**
      * Method for the go back button in the statistics page.

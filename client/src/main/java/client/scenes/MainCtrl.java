@@ -15,12 +15,19 @@
  */
 package client.scenes;
 
+import client.utils.EventsSingleton;
+import commons.Event;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import client.utils.ServerUtils;
+
+import java.util.List;
 
 public class MainCtrl {
+
+    private ServerUtils server;
 
     private Stage primaryStage;
 
@@ -60,6 +67,9 @@ public class MainCtrl {
 
     private LanguageSelectorCtrl languageSelectorCtrl;
 
+    public MainCtrl() {
+    }
+
 
     /**
      * Initialize method for the main controller.
@@ -79,6 +89,12 @@ public class MainCtrl {
                            Pair<InviteSendingCtrl, Parent> inviteSend,
                            Pair<DebtSettlementCtrl, Parent> debt,
                            Pair<LanguageSelectorCtrl, Parent> language) {
+        this.server = new ServerUtils();
+
+        EventsSingleton eventsInstance = EventsSingleton.getInstance();
+        List<Event> events = server.getEvents();
+        eventsInstance.setEvents(events);
+
         this.primaryStage = primaryStage;
         this.starterPageCtrl = starter.getKey();
         this.starter = new Scene(starter.getValue());
@@ -188,5 +204,13 @@ public class MainCtrl {
     public void showLanguage() {
         primaryStage.setTitle("Select language");
         primaryStage.setScene(language);
+    }
+
+    /**
+     * Get current server instance.
+     * @return current server instance.
+     */
+    public ServerUtils getServer() {
+        return this.server;
     }
 }
