@@ -49,10 +49,12 @@ We received an insufficient score for communication. Going forward, let’s ensu
 6. Work Distribution for This Week (5 min)
 - Tom: Make the invite page fully responsive.
 - Tautvydas: Working on the statistics page, resolving merge conflicts with Ilia.
-- Horhia: Sound design for the expense page.
-- Arthur: Revisit the proposed color combination from the first week.
-- Artur and Tom: Complete transaction API tests and endpoints.
-- Summarize action points: Who , what , when? (5 min)
+- Horhia: Design for the expense page + fix API issues.
+- Arthur: Complete transaction API tests and endpoints + revisit the proposed color combination from the first week.
+- Illia: try to do event page fully responsive.
+- Tim: will do the admin page.
+
+Summarize action points: Who , what , when? (5 min)
 
 
 Feedback round: What went well and what can be improved next time? (3 min)
