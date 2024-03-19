@@ -27,8 +27,6 @@ public class InviteSendingCtrl{
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
-    private int eventID = -1;
-
     @FXML // fx:id="CopyInviteCodeButton"
     private Button copyInviteCodeButton; // Value injected by FXMLLoader
 
@@ -96,11 +94,4 @@ public class InviteSendingCtrl{
         mainCtrl.showStarter();
     }
 
-    /**
-     * Setter for eventID.
-     * @param eventID of the current event.
-     */
-    public void setEventID(int eventID) {
-        this.eventID = eventID;
-    }
 }

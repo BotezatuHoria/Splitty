@@ -13,7 +13,6 @@ import javafx.scene.control.Label;
 public class EventPageCtrl {
     private final MainCtrl mainCtrl;
     private final ServerUtils server;
-    private int eventID = -1;
     @FXML // fx:id="addExpense"
     private Button addExpense; // Value injected by FXMLLoader
 
@@ -63,28 +62,28 @@ public class EventPageCtrl {
      * Method for accessing the expense page.
      */
     public void showAddExpensePage() {
-        mainCtrl.showExpensePage(eventID);
+        mainCtrl.showExpensePage();
     }
 
     /**
      * Method for accessing the add participants page.
      */
     public void addParticipants() {
-        mainCtrl.showAddParticipant(eventID);
+        mainCtrl.showAddParticipant();
     }
 
     /**
      * Method for accessing the sending invites page.
      */
     public void sendInvites() {
-        mainCtrl.showInviteParticipantPage(eventID);
+        mainCtrl.showInviteParticipantPage();
     }
 
     /**
      * Method for accessing the debts page.
      */
     public void settleDebts() {
-        mainCtrl.showDebtPage(eventID);
+        mainCtrl.showDebtPage();
     }
 
     /**
@@ -98,22 +97,14 @@ public class EventPageCtrl {
      * Method for changing to the statistics page.
      */
     public void showStatistics() {
-        mainCtrl.showStatisticsPage(eventID);
-    }
-
-    /**
-     * Setter for eventID.
-     * @param eventID of the current event
-     */
-    public void setEventID(int eventID) {
-        this.eventID = eventID;
+        mainCtrl.showStatisticsPage();
     }
 
     /**
      * Setts the title to the current event.
      */
     public void setTitle() {
-        eventTitle.setText(server.getEventByID(eventID).getTitle());
+        eventTitle.setText(server.getEventByID(mainCtrl.getCurrentEventID()).getTitle());
     }
 }
 

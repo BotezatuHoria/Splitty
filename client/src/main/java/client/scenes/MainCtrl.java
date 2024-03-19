@@ -15,12 +15,20 @@
  */
 package client.scenes;
 
+import client.utils.EventsSingleton;
+import client.utils.SelectedEventSingleton;
+import commons.Event;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import client.utils.ServerUtils;
+
+import java.util.List;
 
 public class MainCtrl {
+
+    private ServerUtils server;
 
     private Stage primaryStage;
 
@@ -60,6 +68,9 @@ public class MainCtrl {
 
     private LanguageSelectorCtrl languageSelectorCtrl;
 
+    public MainCtrl() {
+    }
+
 
     /**
      * Initialize method for the main controller.
@@ -79,6 +90,12 @@ public class MainCtrl {
                            Pair<InviteSendingCtrl, Parent> inviteSend,
                            Pair<DebtSettlementCtrl, Parent> debt,
                            Pair<LanguageSelectorCtrl, Parent> language) {
+        this.server = new ServerUtils();
+
+        EventsSingleton eventsInstance = EventsSingleton.getInstance();
+        List<Event> events = server.getEvents();
+        eventsInstance.setEvents(events);
+
         this.primaryStage = primaryStage;
         this.starterPageCtrl = starter.getKey();
         this.starter = new Scene(starter.getValue());
@@ -139,53 +156,50 @@ public class MainCtrl {
      */
     public void showEventPage(int eventID) {
         primaryStage.setTitle("Event Page");
-        eventCtrl.setEventID(eventID);
+        SelectedEventSingleton selectedEventInstance = SelectedEventSingleton.getInstance();
+        selectedEventInstance.setEventId(eventID);
         eventCtrl.setTitle();
+
         primaryStage.setScene(event);
     }
 
     /**
      * Method for showing statistics page.
      */
-    public void showStatisticsPage(int eventID) {
+    public void showStatisticsPage() {
         primaryStage.setTitle("Statistics Page");
-        statisticsCtrl.setEventID(eventID);
         primaryStage.setScene(statistics);
     }
 
     /**
      * Method for showing the add expense page.
      */
-    public void showExpensePage(int eventID) {
+    public void showExpensePage() {
         primaryStage.setTitle("Add Expense");
-        expenseCtrl.setEventID(eventID);
         primaryStage.setScene(expense);
     }
 
     /**
      * Method for showing the add participant page.
      */
-    public void showAddParticipant(int eventID) {
+    public void showAddParticipant() {
         primaryStage.setTitle("Add participant");
-        additionPageCtrl.setEventID(eventID);
         primaryStage.setScene(addParticipant);
     }
 
     /**
      * Method for showing the invite participants page.
      */
-    public void showInviteParticipantPage(int eventID) {
+    public void showInviteParticipantPage() {
         primaryStage.setTitle("Send Invites");
-        inviteSendingCtrl.setEventID(eventID);
         primaryStage.setScene(inviteSend);
     }
 
     /**
      * Method for showing the debt page.
      */
-    public void showDebtPage(int eventID) {
+    public void showDebtPage() {
         primaryStage.setTitle("Open debts");
-        debtSettlementCtrl.setEventID(eventID);
         primaryStage.setScene(debt);
     }
 
@@ -195,5 +209,22 @@ public class MainCtrl {
     public void showLanguage() {
         primaryStage.setTitle("Select language");
         primaryStage.setScene(language);
+    }
+
+    /**
+     * Get current server instance.
+     * @return current server instance.
+     */
+    public ServerUtils getServer() {
+        return this.server;
+    }
+
+    /**
+     * Gets the current EventID.
+     * @return the current EventID.
+     */
+    public int getCurrentEventID() {
+        SelectedEventSingleton selectedEventInstance = SelectedEventSingleton.getInstance();
+        return selectedEventInstance.getEventId();
     }
 }

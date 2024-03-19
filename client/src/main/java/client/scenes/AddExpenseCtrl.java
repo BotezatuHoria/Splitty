@@ -64,10 +64,6 @@ public class AddExpenseCtrl implements Initializable {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
-
-
-    private int eventID = -1;
-
     /**
      * Constructor for the add expense controller.
      * @param mainCtrl - reference to the main controller
@@ -154,7 +150,7 @@ public class AddExpenseCtrl implements Initializable {
         if (checkCompleted()) {
             createTransaction();
             clearInputs();
-            mainCtrl.showEventPage(eventID);
+            mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
             //send data to server databae
         }
     }
@@ -163,7 +159,7 @@ public class AddExpenseCtrl implements Initializable {
      * Method that retrieves all the people from an event from the database.
      */
     public void retrievePeopleFromDb() {
-        Set<Person> people = server.getPeopleInCurrentEvent(1);
+        Set<Person> people = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
         addPeopleToView(people);
         addPeopleToPayerBox(people);
     }
@@ -216,7 +212,7 @@ public class AddExpenseCtrl implements Initializable {
         String expenseType = expenseTypeBox.getValue();
         Transaction transaction = new Transaction(title, date, value, currency, expenseType, participants, payer);
         System.out.println(transaction.getCreator().toString());
-        Transaction result = server.addTransactionToCurrentEvent(1, transaction);
+        Transaction result = server.addTransactionToCurrentEvent(mainCtrl.getCurrentEventID(), transaction);
         System.out.println(result.toString());
     }
 
@@ -236,7 +232,7 @@ public class AddExpenseCtrl implements Initializable {
      */
     public void abortExpense() {
         clearInputs();
-        mainCtrl.showEventPage(eventID);
+        mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
     }
 
     /**
@@ -319,13 +315,4 @@ public class AddExpenseCtrl implements Initializable {
         errorLabel.setText("Please select at least a person!");
         return false;
     }
-
-    /**
-     * Setter for eventID.
-     * @param eventID of the current event.
-     */
-    public void setEventID(int eventID) {
-        this.eventID = eventID;
-    }
-
 }

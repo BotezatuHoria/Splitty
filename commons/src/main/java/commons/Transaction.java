@@ -23,6 +23,7 @@ public class Transaction {
     protected double money;
 
     protected int currency;
+    protected String expenseType;
 
     protected String type;
 
@@ -50,7 +51,7 @@ public class Transaction {
      * @param currency - the currency in which the transaction is handled
      */
     public Transaction(String name, LocalDate date, double money, int currency,
-                       Set<Person> participants, Person creator) {
+                       Set<Person> participants, Person creator, String expenseType) {
         id++;
         this.name = name;
         this.date = date;
@@ -58,6 +59,7 @@ public class Transaction {
         this.currency = currency;
         this.participants = participants;
         this.creator = creator;
+        this.expenseType = Objects.requireNonNullElse(expenseType, "Other");
     }
 
     /**
@@ -119,6 +121,14 @@ public class Transaction {
      */
     public int getCurrency() {
         return currency;
+    }
+
+    /**
+     * Getter for the expense type of the transaction.
+     * @return - Expense type of transaction.
+     */
+    public String getExpenseType() {
+        return expenseType;
     }
 
     /**
