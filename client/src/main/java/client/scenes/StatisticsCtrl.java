@@ -3,7 +3,6 @@ import client.utils.EventsSingleton;
 import client.utils.SelectedEventSingleton;
 import com.google.inject.Inject;
 import commons.Event;
-import commons.Person;
 import commons.Transaction;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,9 +11,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -58,8 +55,12 @@ public class StatisticsCtrl {
                 totalExpenses += transaction.getMoney();
 
                 double currentTotal;
-                if (expensesData.get(transaction.getExpenseType()) == null) currentTotal = 0.0;
-                else currentTotal = expensesData.get(transaction.getExpenseType());
+                if (expensesData.get(transaction.getExpenseType()) == null) {
+                    currentTotal = 0.0;
+                }
+                else {
+                    currentTotal = expensesData.get(transaction.getExpenseType());
+                }
 
                 expensesData.put(transaction.getExpenseType(), currentTotal + transaction.getMoney());
             }
