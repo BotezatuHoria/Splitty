@@ -48,7 +48,6 @@ public class DebtSettlementCtrl {
   private Button goBackButton; // Value injected by FXMLLoader
 
   private final MainCtrl mainCtrl;
-
   /**
    * Constructor for the debt settlement controller.
    * @param mainCtrl - reference to the main controller
@@ -72,7 +71,7 @@ public class DebtSettlementCtrl {
    * Method to go back to the event page.
    */
   public void goBack() {
-    mainCtrl.showEventPage();
+    mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
   }
 
 }

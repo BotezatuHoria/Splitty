@@ -94,6 +94,4 @@ public class InviteSendingCtrl{
         mainCtrl.showStarter();
     }
 
-
-
 }

@@ -4,12 +4,15 @@
 
 package client.scenes;
 
+import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 public class EventPageCtrl {
     private final MainCtrl mainCtrl;
+    private final ServerUtils server;
     @FXML // fx:id="addExpense"
     private Button addExpense; // Value injected by FXMLLoader
 
@@ -40,13 +43,19 @@ public class EventPageCtrl {
     @FXML // fx:id="showStatistics"
     private Button showStatistics; // Value injected by FXMLLoader
 
+    @FXML // fx:id="eventTitle"
+    private Label eventTitle;
+
     /**
      * Constructor for EventPageCtrl.
+     *
      * @param mainCtrl - reference to the main controller
+     * @param server
      */
     @Inject
-    public EventPageCtrl(MainCtrl mainCtrl) {
+    public EventPageCtrl(MainCtrl mainCtrl, ServerUtils server) {
         this.mainCtrl = mainCtrl;
+        this.server = server;
     }
 
     /**
@@ -89,6 +98,13 @@ public class EventPageCtrl {
      */
     public void showStatistics() {
         mainCtrl.showStatisticsPage();
+    }
+
+    /**
+     * Setts the title to the current event.
+     */
+    public void setTitle() {
+        eventTitle.setText(server.getEventByID(mainCtrl.getCurrentEventID()).getTitle());
     }
 }
 

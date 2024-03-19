@@ -95,5 +95,5 @@ public class DebtCellPaneCtrl extends ListCell<DebtCellData> {
     generalDebtInfo.append(item.getReceiver().getFirstName());
 
     return generalDebtInfo.toString();
-  }
+   }
 }

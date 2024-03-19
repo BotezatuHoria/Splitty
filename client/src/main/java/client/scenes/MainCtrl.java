@@ -16,6 +16,7 @@
 package client.scenes;
 
 import client.utils.EventsSingleton;
+import client.utils.SelectedEventSingleton;
 import commons.Event;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -153,8 +154,12 @@ public class MainCtrl {
     /**
      * Method for showing the event page.
      */
-    public void showEventPage() {
+    public void showEventPage(int eventID) {
         primaryStage.setTitle("Event Page");
+        SelectedEventSingleton selectedEventInstance = SelectedEventSingleton.getInstance();
+        selectedEventInstance.setEventId(eventID);
+        eventCtrl.setTitle();
+
         primaryStage.setScene(event);
     }
 
@@ -212,5 +217,14 @@ public class MainCtrl {
      */
     public ServerUtils getServer() {
         return this.server;
+    }
+
+    /**
+     * Gets the current EventID.
+     * @return the current EventID.
+     */
+    public int getCurrentEventID() {
+        SelectedEventSingleton selectedEventInstance = SelectedEventSingleton.getInstance();
+        return selectedEventInstance.getEventId();
     }
 }

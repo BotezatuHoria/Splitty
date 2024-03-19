@@ -82,6 +82,6 @@ public class StatisticsCtrl {
      * Method for the go back button in the statistics page.
      */
     public void goBack() {
-        mainCtrl.showEventPage();
+        mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
     }
 }

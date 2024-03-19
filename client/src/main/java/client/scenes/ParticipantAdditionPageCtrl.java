@@ -108,7 +108,7 @@ public class ParticipantAdditionPageCtrl {
      */
     public void abort(){
         clearFields();
-        mainCtrl.showEventPage();
+        mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
     }
 
     /**
