@@ -25,6 +25,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Set;
 
+import commons.Event;
 import commons.Person;
 import commons.Transaction;
 import org.glassfish.jersey.client.ClientConfig;
@@ -111,4 +112,33 @@ public class ServerUtils {
 	}
 
 
+	/**
+	 * This method adds the given event.
+	 * @param event of the event you want to add
+	 * @return
+	 */
+	public Event addEvent(Event event) {
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		objectMapper.registerModule(new JavaTimeModule());
+
+		return ClientBuilder.newClient(new ClientConfig())
+				.target(SERVER).path("api/event/")
+				.request(APPLICATION_JSON)
+				.accept(APPLICATION_JSON)
+				.post(Entity.entity(event, APPLICATION_JSON), Event.class);
+	}
+
+	/**
+	 * This method gets and event by id.
+	 * @param eventID of the event you want to get
+	 * @return
+	 */
+	public Event getEventByID(int eventID) {
+		return ClientBuilder.newClient(new ClientConfig())
+				.target(SERVER).path("api/event/" + eventID)
+				.request(APPLICATION_JSON)
+				.accept(APPLICATION_JSON)
+				.get(new GenericType<Event>() {});
+	}
 }

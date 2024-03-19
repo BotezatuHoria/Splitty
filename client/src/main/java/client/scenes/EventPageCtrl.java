@@ -4,12 +4,16 @@
 
 package client.scenes;
 
+import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 public class EventPageCtrl {
     private final MainCtrl mainCtrl;
+    private final ServerUtils server;
+    private int eventID = -1;
     @FXML // fx:id="addExpense"
     private Button addExpense; // Value injected by FXMLLoader
 
@@ -40,41 +44,47 @@ public class EventPageCtrl {
     @FXML // fx:id="showStatistics"
     private Button showStatistics; // Value injected by FXMLLoader
 
+    @FXML // fx:id="eventTitle"
+    private Label eventTitle;
+
     /**
      * Constructor for EventPageCtrl.
+     *
      * @param mainCtrl - reference to the main controller
+     * @param server
      */
     @Inject
-    public EventPageCtrl(MainCtrl mainCtrl) {
+    public EventPageCtrl(MainCtrl mainCtrl, ServerUtils server) {
         this.mainCtrl = mainCtrl;
+        this.server = server;
     }
 
     /**
      * Method for accessing the expense page.
      */
     public void showAddExpensePage() {
-        mainCtrl.showExpensePage();
+        mainCtrl.showExpensePage(eventID);
     }
 
     /**
      * Method for accessing the add participants page.
      */
     public void addParticipants() {
-        mainCtrl.showAddParticipant();
+        mainCtrl.showAddParticipant(eventID);
     }
 
     /**
      * Method for accessing the sending invites page.
      */
     public void sendInvites() {
-        mainCtrl.showInviteParticipantPage();
+        mainCtrl.showInviteParticipantPage(eventID);
     }
 
     /**
      * Method for accessing the debts page.
      */
     public void settleDebts() {
-        mainCtrl.showDebtPage();
+        mainCtrl.showDebtPage(eventID);
     }
 
     /**
@@ -88,7 +98,22 @@ public class EventPageCtrl {
      * Method for changing to the statistics page.
      */
     public void showStatistics() {
-        mainCtrl.showStatisticsPage();
+        mainCtrl.showStatisticsPage(eventID);
+    }
+
+    /**
+     * Setter for eventID.
+     * @param eventID of the current event
+     */
+    public void setEventID(int eventID) {
+        this.eventID = eventID;
+    }
+
+    /**
+     * Setts the title to the current event.
+     */
+    public void setTitle() {
+        eventTitle.setText(server.getEventByID(eventID).getTitle());
     }
 }
 

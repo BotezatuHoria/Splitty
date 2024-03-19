@@ -6,9 +6,11 @@ package client.scenes;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import client.utils.ServerUtils;
 import commons.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -20,6 +22,7 @@ import com.google.inject.Inject;
 public class StarterPageCtrl {
 
     private final MainCtrl mainCtrl;
+    private final ServerUtils server;
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -47,11 +50,14 @@ public class StarterPageCtrl {
 
     /**
      * Constructor for the StarterPageCtrl class.
+     *
      * @param mainCtrl - the main controller
+     * @param server
      */
     @Inject
-    public StarterPageCtrl(MainCtrl mainCtrl) {
+    public StarterPageCtrl(MainCtrl mainCtrl, ServerUtils server) {
         this.mainCtrl = mainCtrl;
+        this.server = server;
     }
 
     @FXML
@@ -95,16 +101,11 @@ public class StarterPageCtrl {
      * Method that changes the primary stage to the event page.
      */
     public void showEventPage() {
-        mainCtrl.showEventPage();
+        String name = createTextField.getText();
+        if(name.equals("")) {name = "New Event";}
+        Event event = server.addEvent(new Event("", name, 0, "", new HashSet<>(), new HashSet<>()));
+        System.out.println(event);
+        mainCtrl.showEventPage(event.getId());
     }
 
-    /**
-     * should set the scene to a responsive event page with corresponding title and code etc.
-     */
-    public void showResponsiveEventPage(){
-        String name = createTextField.getText();
-        //here we should eventually make it so the title of our event gets posted.
-        // Wanted to work on this, but then realised it should represent a half-finished, not even made event
-        // with the title that should be just before the create button on the starterpage, maybe something we do later.
-    }
 }
