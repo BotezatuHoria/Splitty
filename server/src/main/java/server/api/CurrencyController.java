@@ -88,6 +88,7 @@ public class CurrencyController {
         if (newCurrency == null || newCurrency.getIso() < 0 || !repo.existsById(iso) || newCurrency.getIso() != iso || newCurrency.getName() == null) {
             return ResponseEntity.badRequest().build();
         }
+        repo.deleteById(iso);
         Currency saved = repo.save(newCurrency);
         return ResponseEntity.ok(saved);
     }
