@@ -51,7 +51,7 @@ public class CurrencyController {
     @PostMapping(path = { "", "/" })
     public ResponseEntity<Currency> add(@RequestBody Currency currency) {
 
-        if (currency.getIso() == 0 || isNullOrEmpty(currency.getName())) {
+        if (currency == null || currency.getIso() == 0 || isNullOrEmpty(currency.getName())) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -84,17 +84,12 @@ public class CurrencyController {
      * @return returns the updated currency
      */
     @PutMapping("/{iso}")
-    public Currency updateById(@RequestBody Currency newCurrency, @PathVariable int iso){
-        return repo.findById(iso)
-                .map(currency -> {
-                    currency.setName(newCurrency.getName());
-                    currency.updateConversion();
-                    return repo.save(currency);
-                })
-                .orElseGet(() -> {
-                    newCurrency.setIso(iso);
-                    return repo.save(newCurrency);
-                });
+    public ResponseEntity<Currency> updateById(@RequestBody Currency newCurrency, @PathVariable int iso){
+        if (newCurrency == null || newCurrency.getIso() < 0 || !repo.existsById(iso) || newCurrency.getIso() != iso || newCurrency.getName() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        Currency saved = repo.save(newCurrency);
+        return ResponseEntity.ok(saved);
     }
 
 
