@@ -9,7 +9,6 @@ import java.util.*;
 
 import client.utils.ServerUtils;
 import commons.Event;
-import jakarta.ws.rs.core.Request;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -107,7 +106,7 @@ public class StarterPageCtrl {
     }
 
     /**
-     * Method that allows you to join an event using a code
+     * Method that allows you to join an event using a code.
      */
     public void joinEvent() {
         String name = joinTextField.getText();
