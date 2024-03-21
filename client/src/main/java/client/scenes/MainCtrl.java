@@ -194,6 +194,7 @@ public class MainCtrl {
      */
     public void showInviteParticipantPage() {
         inviteSendingCtrl.setShareCode();
+        inviteSendingCtrl.setEventTitle();
         primaryStage.setTitle("Send Invites");
         primaryStage.setScene(inviteSend);
 
