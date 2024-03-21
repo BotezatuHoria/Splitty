@@ -48,6 +48,9 @@ public class StarterPageCtrl {
     @FXML // fx:id="listView"
     private ListView<Event> listView;
 
+    @FXML
+    private Button adminbutton;
+
     /**
      * Constructor for the StarterPageCtrl class.
      *
@@ -63,6 +66,11 @@ public class StarterPageCtrl {
     @FXML
     void selectLanguage() {
         mainCtrl.showLanguage();
+    }
+
+    @FXML
+    void adminLogin(){
+        mainCtrl.showAdminLogin();
     }
 
     /**

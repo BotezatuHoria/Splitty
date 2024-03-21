@@ -68,6 +68,12 @@ public class MainCtrl {
 
     private LanguageSelectorCtrl languageSelectorCtrl;
 
+    private Scene adminLogin;
+    private AdminLoginCtrl adminLoginCtrl;
+
+    private Scene adminPage;
+    private AdminPageCtrl adminPageCtrl;
+
     public MainCtrl() {
     }
 
@@ -89,7 +95,9 @@ public class MainCtrl {
                            Pair<ParticipantAdditionPageCtrl, Parent> addParticipant,
                            Pair<InviteSendingCtrl, Parent> inviteSend,
                            Pair<DebtSettlementCtrl, Parent> debt,
-                           Pair<LanguageSelectorCtrl, Parent> language) {
+                           Pair<LanguageSelectorCtrl, Parent> language,
+                           Pair<AdminLoginCtrl, Parent> adminLoginPage,
+                           Pair<AdminPageCtrl, Parent> adminPage) {
         this.server = new ServerUtils();
 
         EventsSingleton eventsInstance = EventsSingleton.getInstance();
@@ -120,6 +128,12 @@ public class MainCtrl {
 
         this.languageSelectorCtrl = language.getKey();
         this.language = new Scene(language.getValue());
+
+        this.adminLoginCtrl = adminLoginPage.getKey();
+        this.adminLogin = new Scene(adminLoginPage.getValue());
+
+        this.adminPageCtrl = adminPage.getKey();
+        this.adminPage = new Scene(adminPage.getValue());
 
         showStarter();
         primaryStage.show();
@@ -209,6 +223,22 @@ public class MainCtrl {
     public void showLanguage() {
         primaryStage.setTitle("Select language");
         primaryStage.setScene(language);
+    }
+
+    /**
+     * Method for showing the admin login.
+     */
+    public void showAdminLogin(){
+        primaryStage.setTitle("Admin Login");
+        primaryStage.setScene(adminLogin);
+    }
+
+    /**
+     * Method for showing the admin page.
+     */
+    public void showAdminPage(){
+        primaryStage.setTitle("Admin Page");
+        primaryStage.setScene(adminPage);
     }
 
     /**

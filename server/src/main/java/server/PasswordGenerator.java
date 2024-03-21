@@ -9,7 +9,7 @@ import java.util.Random;
 @Component
 public class PasswordGenerator {
 
-    Logger logger = LoggerFactory.getLogger(PasswordGenerator.class);
+    static Logger logger = LoggerFactory.getLogger(PasswordGenerator.class);
 
     private static String password;
     /**
@@ -24,15 +24,21 @@ public class PasswordGenerator {
             int charIndex = random.nextInt(allChars.length());
             password += allChars.charAt(charIndex);
         }
-        System.out.println(password);
         logger.info("| Your admin password: " + password + " |");
     }
 
     /**
-     * Getter for the password
+     * Getter for the password.
      * @return returns the password
      */
     public static String getPassword(){
         return password;
+    }
+
+    /**
+     * Log the password to the console.
+     */
+    public static void logPassword(){
+        logger.info("| Your admin password: " + password + " |");
     }
 }

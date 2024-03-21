@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import server.PasswordGenerator;
 
 @RestController
+@RequestMapping("/api/login")
 public class LoginController {
 
     private String password;
@@ -13,21 +14,15 @@ public class LoginController {
         password = PasswordGenerator.getPassword();
     }
 
-//    /**
-//     * Validates if the user password is correct
-//     * @param userPassword the password the user implemented
-//     * @return responseEntity
-//     */
-//    @PostMapping("/login/{pass}")
-//    public ResponseEntity<Void> login(@PathVariable("pass") String userPassword){
-//        if (userPassword.equals(password)){
-//            return ResponseEntity.ok().build();
-//        }
-//        return ResponseEntity.badRequest().build();
-//    }
-
-    @GetMapping("/login")
+    @GetMapping(path = {"/", ""})
     public ResponseEntity<String> getPassword(){
+        password = PasswordGenerator.getPassword();
         return ResponseEntity.ok(password);
+    }
+
+    @GetMapping(path = {"log", "/log"})
+    public ResponseEntity<Void> sendPassword(){
+        PasswordGenerator.logPassword();
+        return ResponseEntity.ok().build();
     }
 }
