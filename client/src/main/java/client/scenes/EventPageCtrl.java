@@ -9,6 +9,7 @@ import com.google.inject.Inject;
 import commons.Person;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
 import java.util.List;
@@ -52,6 +53,9 @@ public class EventPageCtrl {
 
     @FXML // fx:id="participantsList"
     private Label participantsList;
+
+    @FXML // fx:id="participantsScroll"
+    private ComboBox<Person> participantsScroll;
 
     /**
      * Constructor for EventPageCtrl.
@@ -131,11 +135,14 @@ public class EventPageCtrl {
         String display = "";
         Set<Person> people = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
         for (Person person: people) {
-            display += person.getFirstName() + " " + person.getLastName() + ", ";
+            display += person + ", ";
+            participantsScroll.getItems().add(person);
         }
         if (!display.isBlank()) {display = display.substring(0, display.length() - 2);}
         participantsList.setText(display);
     }
+
+
 }
 
 

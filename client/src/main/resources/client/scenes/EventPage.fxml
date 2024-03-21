@@ -37,7 +37,7 @@
             <Font size="20.0" />
          </font>
       </Button>
-      <ComboBox editable="true" layoutX="37.0" layoutY="200.0" prefWidth="150.0" promptText="Participant 1" />
+      <ComboBox fx:id="participantsScroll" editable="true" layoutX="37.0" layoutY="200.0" prefWidth="150.0" promptText="Participant..." />
       <Button fx:id="SettleDebts" layoutX="435.0" layoutY="259.0" mnemonicParsing="false" onAction="#settleDebts" text="Settle Debts">
          <font>
             <Font size="20.0" />
