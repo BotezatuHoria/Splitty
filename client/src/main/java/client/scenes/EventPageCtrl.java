@@ -6,9 +6,13 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import commons.Person;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+
+import java.util.List;
+import java.util.Set;
 
 public class EventPageCtrl {
     private final MainCtrl mainCtrl;
@@ -45,6 +49,9 @@ public class EventPageCtrl {
 
     @FXML // fx:id="eventTitle"
     private Label eventTitle;
+
+    @FXML // fx:id="participantsList"
+    private Label participantsList;
 
     /**
      * Constructor for EventPageCtrl.
@@ -105,6 +112,29 @@ public class EventPageCtrl {
      */
     public void setTitle() {
         eventTitle.setText(server.getEventByID(mainCtrl.getCurrentEventID()).getTitle());
+    }
+
+
+    /**
+     * Method that updates the title, people and transactions on that page.
+     */
+    public void updatePage() {
+        setTitle();
+        displayParticipants();
+
+    }
+
+    /**
+     * Displays participants on that page for the current event
+     */
+    private void displayParticipants() {
+        String display = "";
+        Set<Person> people = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
+        for (Person person: people) {
+            display += person.getFirstName() + " " + person.getLastName() + ", ";
+        }
+        if (!display.isBlank()) {display = display.substring(0, display.length() - 2);}
+        participantsList.setText(display);
     }
 }
 

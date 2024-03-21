@@ -158,8 +158,7 @@ public class MainCtrl {
         primaryStage.setTitle("Event Page");
         SelectedEventSingleton selectedEventInstance = SelectedEventSingleton.getInstance();
         selectedEventInstance.setEventId(eventID);
-        eventCtrl.setTitle();
-
+        eventCtrl.updatePage();
         primaryStage.setScene(event);
     }
 
