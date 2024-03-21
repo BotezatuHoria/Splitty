@@ -76,6 +76,9 @@ public class InviteSendingCtrl{
 
     }
 
+    /**
+     * Sets the share code of the event, an encoded version of the id.
+     */
     public void setShareCode(){
         int eventID = mainCtrl.getCurrentEventID();
         eventID = eventID*3000929;
@@ -92,6 +95,11 @@ public class InviteSendingCtrl{
         inviteCode.setText(result);
     }
 
+    /**
+     * Translates the sharecode back to the id, needed to join an event via sharecode.
+     * @param shareCode the sharecode to translate to the id.
+     * @return the id of the event.
+     */
     public int translateShareCode(String shareCode){
         //String hardCodedShareCode = inviteCode.getText();
         int size = shareCode.length();
@@ -108,7 +116,7 @@ public class InviteSendingCtrl{
     }
 
     /**
-     * Method fot copying code ??.
+     * Method for copying the share code to share with friends.
      */
     public void copyCode() throws InterruptedException {
         setShareCode();
@@ -118,14 +126,13 @@ public class InviteSendingCtrl{
         Clipboard board = Toolkit.getDefaultToolkit().getSystemClipboard(); // get our clipboard.
         board.setContents(selection, selection); //copy the eventinvite code to our clipboard.
         responseCopy.setText("Code copied!");
-
     }
 
     /**
-     * button to go back to starterpage.
+     * button to go back to the corresponding eventpage.
      */
     public void cancelGoBack(){
-        mainCtrl.showStarter();
+        mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
     }
 
 }

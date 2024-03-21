@@ -121,6 +121,11 @@ public class StarterPageCtrl {
         }
     }
 
+    /**
+     * Translates the sharecode back to the id, needed to join an event via sharecode.
+     * @param shareCode the sharecode to translate to the id.
+     * @return the id of the event.
+     */
     public int translateShareCode(String shareCode){
         //String hardCodedShareCode = inviteCode.getText();
         int size = shareCode.length();
