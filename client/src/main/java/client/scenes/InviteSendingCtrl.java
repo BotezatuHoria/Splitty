@@ -57,6 +57,7 @@ public class InviteSendingCtrl{
     public InviteSendingCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.server = server;
         this.mainCtrl = mainCtrl;
+
     }
 
     /**
@@ -75,10 +76,42 @@ public class InviteSendingCtrl{
 
     }
 
+    public void setShareCode(){
+        int eventID = mainCtrl.getCurrentEventID();
+        eventID = eventID*3000929;
+        String expandedID = Integer.toString(eventID);
+        String result = "";
+        int size = expandedID.length();
+        for( int i =0; i < size; i++){
+            int number = Character.getNumericValue(expandedID.charAt(i));
+            number = number + 65;
+            char character = (char) number;
+            result += character;
+        }
+        System.out.println("Invite code of the event ="+ result);
+        inviteCode.setText(result);
+    }
+
+    public void translateShareCode(){
+        String hardCodedShareCode = inviteCode.getText();
+        int size = hardCodedShareCode.length();
+        String result = "";
+        for( int i =0; i < size; i++){
+            int number = hardCodedShareCode.charAt(i);
+            number = number - 65;
+            result += number;
+        }
+        int total = Integer.parseInt(result);
+        total = total/3000929;
+        System.out.println("Translated from the sharecode, eventID = " + total);
+    }
+
     /**
      * Method fot copying code ??.
      */
     public void copyCode() throws InterruptedException {
+        setShareCode();
+        translateShareCode();
         String inviteCode = this.inviteCode.getText(); //the code of the event, pictured on the page (not yet made to be gathered from the database).
         StringSelection selection = new StringSelection(inviteCode); //make it a stringselection so that we can set the clipboard contents to it.
         Clipboard board = Toolkit.getDefaultToolkit().getSystemClipboard(); // get our clipboard.
