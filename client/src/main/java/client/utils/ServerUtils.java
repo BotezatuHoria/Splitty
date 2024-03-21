@@ -101,7 +101,7 @@ public class ServerUtils {
 
 	public Set<Person> getPeopleInCurrentEvent(int id) {
 		return ClientBuilder.newClient(new ClientConfig())
-				.target(SERVER).path("api/event/" + id + "/people")
+				.target(SERVER).path("api/event/" + id + "/person")
 				.request(APPLICATION_JSON)
 				.accept(APPLICATION_JSON)
 				.get(new GenericType<Set<Person>>() {});
@@ -114,7 +114,7 @@ public class ServerUtils {
 		objectMapper.registerModule(new JavaTimeModule());
 
 		return ClientBuilder.newClient(new ClientConfig())
-				.target(SERVER).path("api/event/" + idEvent + "/expenses/create")
+				.target(SERVER).path("api/event/" + idEvent + "/expenses")
 				.request(APPLICATION_JSON)
 				.accept(APPLICATION_JSON)
 				.post(Entity.entity(transaction, APPLICATION_JSON), Transaction.class);

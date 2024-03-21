@@ -51,11 +51,18 @@
       <ComboBox fx:id="payerBox" layoutX="167.0" layoutY="64.0" prefHeight="26.0" prefWidth="197.0" />
       <ComboBox fx:id="currencyBox" layoutX="475.0" layoutY="129.0" prefHeight="26.0" prefWidth="83.0" />
       <DatePicker fx:id="dateBox" layoutX="166.0" layoutY="162.0" prefHeight="26.0" prefWidth="392.0" />
-      <ComboBox fx:id="expenseTypeBox" layoutX="167.0" layoutY="473.0" prefHeight="26.0" prefWidth="392.0" />
+      <ComboBox fx:id="expenseTypeBox" layoutX="167.0" layoutY="473.0" prefHeight="26.0" prefWidth="370.0" />
       <Button fx:id="abortButton" layoutX="376.0" layoutY="524.0" mnemonicParsing="false" onAction="#abortExpense" prefHeight="26.0" prefWidth="83.0" text="Abort" />
       <Button fx:id="addButton" layoutX="474.0" layoutY="524.0" mnemonicParsing="false" onAction="#addExpense" prefHeight="26.0" prefWidth="83.0" text="Add" />
-      <ListView fx:id="peopleLIstView" layoutX="15.0" layoutY="236.0" prefHeight="222.0" prefWidth="561.0" />
+      <ListView fx:id="peopleLIstView" layoutX="16.0" layoutY="234.0" prefHeight="222.0" prefWidth="561.0" />
       <Button fx:id="addEverybody" layoutX="166.0" layoutY="199.0" mnemonicParsing="false" onAction="#addParticipantToView" prefHeight="26.0" prefWidth="150.0" text="Add Everybody" />
       <Label fx:id="errorLabel" layoutX="22.0" layoutY="524.0" text="Label" />
+      <Button fx:id="addTag" layoutX="550.0" layoutY="473.0" mnemonicParsing="false" onAction="#showTagPage" prefHeight="26.0" prefWidth="23.0" text="+" />
+      <AnchorPane fx:id="tagPane" layoutX="181.0" layoutY="301.0" prefHeight="44.0" prefWidth="228.0" style="-fx-background-color: grey;">
+         <children>
+            <TextField fx:id="newTagField" layoutX="10.0" layoutY="10.0" prefHeight="26.0" prefWidth="163.0" />
+            <Button fx:id="addTagButton" layoutX="184.0" layoutY="10.0" mnemonicParsing="false" onAction="#addNewTag" prefHeight="26.0" prefWidth="30.0" text="+" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

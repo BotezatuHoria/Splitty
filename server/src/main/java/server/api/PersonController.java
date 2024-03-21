@@ -81,7 +81,7 @@ public class PersonController {
      * @return person that was updated
      */
     @PatchMapping("/{id}")
-    public ResponseEntity<Person> updateById(@PathVariable("id") int id, Person person) {
+    public ResponseEntity<Person> updateById(@PathVariable("id") int id, @RequestBody Person person) {
         if (id < 0 || !db.existsById(id) || person == null || person.getId() != id
                 || person.getFirstName() == null || person.getLastName() == null) {
             return ResponseEntity.badRequest().build();

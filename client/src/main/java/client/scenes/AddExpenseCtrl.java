@@ -59,6 +59,15 @@ public class AddExpenseCtrl implements Initializable {
     @FXML // fx:id="priceField"
     private TextField priceField; // Value injected by FXMLLoader
 
+    @FXML
+    private AnchorPane tagPane;
+
+    @FXML
+    private TextField newTagField;
+
+    @FXML
+    private Button addTag;
+
     //private final ServerUtils server;
 
     private final ServerUtils server;
@@ -81,10 +90,11 @@ public class AddExpenseCtrl implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //retrievePeopleFromDb();
         currencyBox.getItems().add(840);
         expenseTypeBox.getItems().add("Food");
-
+        expenseTypeBox.getItems().add("Entrance fees");
+        expenseTypeBox.getItems().add("Travel");
+        tagPane.visibleProperty().set(false);
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -192,6 +202,16 @@ public class AddExpenseCtrl implements Initializable {
      */
     public void addCurrencies(Set<Currency> currencies) {
         // to be implemented with all the currencies that will be available in the project;
+    }
+
+    public void showTagPage() {
+        tagPane.visibleProperty().set(true);
+    }
+
+    public void addNewTag() {
+        expenseTypeBox.getItems().add(newTagField.getText());
+        newTagField.clear();
+        tagPane.visibleProperty().set(false);
     }
 
     /**

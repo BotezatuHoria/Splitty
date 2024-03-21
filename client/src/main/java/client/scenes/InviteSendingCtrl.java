@@ -57,6 +57,7 @@ public class InviteSendingCtrl{
     public InviteSendingCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.server = server;
         this.mainCtrl = mainCtrl;
+
     }
 
     /**
@@ -76,22 +77,62 @@ public class InviteSendingCtrl{
     }
 
     /**
-     * Method fot copying code ??.
+     * Sets the share code of the event, an encoded version of the id.
+     */
+    public void setShareCode(){
+        int eventID = mainCtrl.getCurrentEventID();
+        eventID = eventID*3000929;
+        String expandedID = Integer.toString(eventID);
+        String result = "";
+        int size = expandedID.length();
+        for( int i =0; i < size; i++){
+            int number = Character.getNumericValue(expandedID.charAt(i));
+            number = number + 65;
+            char character = (char) number;
+            result += character;
+        }
+        System.out.println("Invite code of the event ="+ result);
+        inviteCode.setText(result);
+    }
+
+    /**
+     * Translates the sharecode back to the id, needed to join an event via sharecode.
+     * @param shareCode the sharecode to translate to the id.
+     * @return the id of the event.
+     */
+    public int translateShareCode(String shareCode){
+        //String hardCodedShareCode = inviteCode.getText();
+        int size = shareCode.length();
+        String result = "";
+        for( int i =0; i < size; i++){
+            int number = shareCode.charAt(i);
+            number = number - 65;
+            result += number;
+        }
+        int total = Integer.parseInt(result);
+        total = total/3000929;
+        System.out.println("Translated from the sharecode, eventID = " + total);
+        return total;
+    }
+
+    /**
+     * Method for copying the share code to share with friends.
      */
     public void copyCode() throws InterruptedException {
+        setShareCode();
+        translateShareCode(inviteCode.getText());
         String inviteCode = this.inviteCode.getText(); //the code of the event, pictured on the page (not yet made to be gathered from the database).
         StringSelection selection = new StringSelection(inviteCode); //make it a stringselection so that we can set the clipboard contents to it.
         Clipboard board = Toolkit.getDefaultToolkit().getSystemClipboard(); // get our clipboard.
         board.setContents(selection, selection); //copy the eventinvite code to our clipboard.
         responseCopy.setText("Code copied!");
-
     }
 
     /**
-     * button to go back to starterpage.
+     * button to go back to the corresponding eventpage.
      */
     public void cancelGoBack(){
-        mainCtrl.showStarter();
+        mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
     }
 
 }

@@ -175,7 +175,9 @@ public class MainCtrl {
      */
     public void showExpensePage() {
         primaryStage.setTitle("Add Expense");
+        expenseCtrl.retrievePeopleFromDb();
         primaryStage.setScene(expense);
+
     }
 
     /**
@@ -190,8 +192,10 @@ public class MainCtrl {
      * Method for showing the invite participants page.
      */
     public void showInviteParticipantPage() {
+        inviteSendingCtrl.setShareCode();
         primaryStage.setTitle("Send Invites");
         primaryStage.setScene(inviteSend);
+
     }
 
     /**
