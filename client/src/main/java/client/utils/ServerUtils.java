@@ -28,6 +28,7 @@ import java.util.Set;
 import commons.Event;
 import commons.Person;
 import commons.Transaction;
+import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientConfig;
 
 import commons.Quote;
@@ -149,5 +150,18 @@ public class ServerUtils {
 				.request(APPLICATION_JSON)
 				.accept(APPLICATION_JSON)
 				.get(new GenericType<Event>() {});
+	}
+
+	/**
+	 * Gets the admin password for the server
+	 * @return returns the currenct andmin password
+	 */
+	public String getPassword(){
+		return ClientBuilder.newClient(new ClientConfig())
+				.target(SERVER).path("login")
+				.request(APPLICATION_JSON)
+				.accept(APPLICATION_JSON)
+				.get(new GenericType<String>() {});
+
 	}
 }

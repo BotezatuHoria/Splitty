@@ -27,4 +27,12 @@ public class PasswordGenerator {
         System.out.println(password);
         logger.info("| Your admin password: " + password + " |");
     }
+
+    /**
+     * Getter for the password
+     * @return returns the password
+     */
+    public static String getPassword(){
+        return password;
+    }
 }
