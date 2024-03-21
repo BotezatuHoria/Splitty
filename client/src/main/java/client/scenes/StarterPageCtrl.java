@@ -111,7 +111,7 @@ public class StarterPageCtrl {
     public void joinEvent() {
         String name = joinTextField.getText();
         // This needs to be decoded in the future use, method by Tom
-        int eventId = Integer.parseInt(name);
+        int eventId = translateShareCode(name);
         try {
             server.getEventByID(eventId);
             mainCtrl.showEventPage(eventId);
@@ -119,6 +119,21 @@ public class StarterPageCtrl {
         catch (Exception e){
             System.out.println("This event doesn't exist");
         }
+    }
+
+    public int translateShareCode(String shareCode){
+        //String hardCodedShareCode = inviteCode.getText();
+        int size = shareCode.length();
+        String result = "";
+        for( int i =0; i < size; i++){
+            int number = shareCode.charAt(i);
+            number = number - 65;
+            result += number;
+        }
+        int total = Integer.parseInt(result);
+        total = total/3000929;
+        System.out.println("Translated from the sharecode, eventID = " + total);
+        return total;
     }
 
 }

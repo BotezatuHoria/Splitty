@@ -92,18 +92,19 @@ public class InviteSendingCtrl{
         inviteCode.setText(result);
     }
 
-    public void translateShareCode(){
-        String hardCodedShareCode = inviteCode.getText();
-        int size = hardCodedShareCode.length();
+    public int translateShareCode(String shareCode){
+        //String hardCodedShareCode = inviteCode.getText();
+        int size = shareCode.length();
         String result = "";
         for( int i =0; i < size; i++){
-            int number = hardCodedShareCode.charAt(i);
+            int number = shareCode.charAt(i);
             number = number - 65;
             result += number;
         }
         int total = Integer.parseInt(result);
         total = total/3000929;
         System.out.println("Translated from the sharecode, eventID = " + total);
+        return total;
     }
 
     /**
@@ -111,7 +112,7 @@ public class InviteSendingCtrl{
      */
     public void copyCode() throws InterruptedException {
         setShareCode();
-        translateShareCode();
+        translateShareCode(inviteCode.getText());
         String inviteCode = this.inviteCode.getText(); //the code of the event, pictured on the page (not yet made to be gathered from the database).
         StringSelection selection = new StringSelection(inviteCode); //make it a stringselection so that we can set the clipboard contents to it.
         Clipboard board = Toolkit.getDefaultToolkit().getSystemClipboard(); // get our clipboard.
