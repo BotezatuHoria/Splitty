@@ -26,7 +26,7 @@
       </Label>
       <Button fx:id="EditParticipants" layoutX="152.0" layoutY="87.0" mnemonicParsing="false" text="Edit" />
       <Button fx:id="AddParticipant" layoutX="208.0" layoutY="87.0" mnemonicParsing="false" onAction="#addParticipants" text="Add participant" />
-      <Label fx:id="participantsList" layoutX="35.0" layoutY="123.0" prefHeight="26.0" prefWidth="154.0" text="Participant 1, Participant 2" />
+      <Label fx:id="participantsList" layoutX="35.0" layoutY="123.0" prefHeight="26.0" prefWidth="400.0" text="Participants..." />
       <Label layoutX="35.0" layoutY="163.0" prefHeight="32.0" prefWidth="143.0" text="Expenses">
          <font>
             <Font size="20.0" />
@@ -37,15 +37,15 @@
             <Font size="20.0" />
          </font>
       </Button>
-      <ComboBox fx:id="participantsScroll" editable="true" layoutX="37.0" layoutY="200.0" prefWidth="150.0" promptText="Participant..." />
+      <ComboBox fx:id="participantsScroll" editable="true" layoutX="37.0" layoutY="200.0" onAction="#selectParticipant" prefWidth="150.0" promptText="Participants..." />
       <Button fx:id="SettleDebts" layoutX="435.0" layoutY="259.0" mnemonicParsing="false" onAction="#settleDebts" text="Settle Debts">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
       <Button fx:id="allExpenses" layoutX="37.0" layoutY="265.0" mnemonicParsing="false" text="All" />
-      <Button fx:id="fromParticipant" layoutX="75.0" layoutY="265.0" mnemonicParsing="false" text="From Participant 1" />
-      <Button fx:id="includingParticipant" layoutX="198.0" layoutY="265.0" mnemonicParsing="false" text="Including Participant 1" />
+      <Button fx:id="fromParticipant" layoutX="74.0" layoutY="264.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="From Participant..." />
+      <Button fx:id="includingParticipant" layoutX="231.0" layoutY="264.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="Including Participant..." />
       <ListView layoutX="33.0" layoutY="299.0" prefHeight="173.0" prefWidth="350.0" />
       <Button fx:id="homeButton" layoutX="514.0" layoutY="426.0" mnemonicParsing="false" onAction="#goHome" prefHeight="46.0" prefWidth="51.0" text="Home" />
       <Button fx:id="showStatistics" layoutX="413.0" layoutY="347.0" mnemonicParsing="false" onAction="#showStatistics" text="Show Statistics">

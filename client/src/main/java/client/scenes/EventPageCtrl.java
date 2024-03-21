@@ -7,12 +7,9 @@ package client.scenes;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Person;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 
-import java.util.List;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
 import java.util.Set;
 
 public class EventPageCtrl {
@@ -56,6 +53,7 @@ public class EventPageCtrl {
 
     @FXML // fx:id="participantsScroll"
     private ComboBox<Person> participantsScroll;
+
 
     /**
      * Constructor for EventPageCtrl.
@@ -107,9 +105,7 @@ public class EventPageCtrl {
     /**
      * Method for changing to the statistics page.
      */
-    public void showStatistics() {
-        mainCtrl.showStatisticsPage();
-    }
+    public void showStatistics() {mainCtrl.showStatisticsPage();}
 
     /**
      * Setts the title to the current event.
@@ -129,11 +125,12 @@ public class EventPageCtrl {
     }
 
     /**
-     * Displays participants on that page for the current event
+     * Displays participants on that page for the current event.
      */
     private void displayParticipants() {
         String display = "";
         Set<Person> people = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
+        participantsScroll.getItems().clear();
         for (Person person: people) {
             display += person + ", ";
             participantsScroll.getItems().add(person);
@@ -142,7 +139,14 @@ public class EventPageCtrl {
         participantsList.setText(display);
     }
 
-
+    /**
+     * Selects the person for which transaction should be displayed.
+     */
+    public void selectParticipant() {
+        Person person = participantsScroll.getValue();
+        fromParticipant.setText("From " + person);
+        includingParticipant.setText("Including " + person);
+    }
 }
 
 
