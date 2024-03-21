@@ -5,10 +5,7 @@
 package client.scenes;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import client.utils.ServerUtils;
 import commons.Event;
@@ -106,6 +103,22 @@ public class StarterPageCtrl {
         Event event = server.addEvent(new Event("", name, 0, "", new HashSet<>(), new HashSet<>()));
         System.out.println(event);
         mainCtrl.showEventPage(event.getId());
+    }
+
+    /**
+     * Method that allows you to join an event using a code.
+     */
+    public void joinEvent() {
+        String name = joinTextField.getText();
+        // This needs to be decoded in the future use, method by Tom
+        int eventId = Integer.parseInt(name);
+        try {
+            server.getEventByID(eventId);
+            mainCtrl.showEventPage(eventId);
+        }
+        catch (Exception e){
+            System.out.println("This event doesn't exist");
+        }
     }
 
 }
