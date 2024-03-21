@@ -23,6 +23,7 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import commons.Event;
@@ -149,5 +150,14 @@ public class ServerUtils {
 				.request(APPLICATION_JSON)
 				.accept(APPLICATION_JSON)
 				.get(new GenericType<Event>() {});
+	}
+
+	public Person addPerson(Person person, int eventID){
+		System.out.println("trying to add a person to the event");
+		return ClientBuilder.newClient(new ClientConfig())
+				.target(SERVER).path("api/event/" + eventID + "/person")
+				.request(APPLICATION_JSON)
+				.accept(APPLICATION_JSON)
+				.post(Entity.entity(person, APPLICATION_JSON), Person.class);
 	}
 }

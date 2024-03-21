@@ -54,7 +54,6 @@ public class PersonController {
                 || person.getLastName() == null) {
             return ResponseEntity.badRequest().build();
         }
-
         Person saved = db.save(person);
         return ResponseEntity.ok(saved);
     }

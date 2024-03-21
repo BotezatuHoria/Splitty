@@ -2,6 +2,7 @@ package client.scenes;
 
 import java.net.URL;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import client.utils.ServerUtils;
@@ -9,14 +10,12 @@ import com.google.inject.Inject;
 import commons.Event;
 import commons.Person;
 import commons.Transaction;
-import jakarta.ws.rs.WebApplicationException;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Modality;
 
 //TODO: Check the user input to be valid before creating a new user. Maybe not in this class?
 //TODO: fix the event id so that it is passed from the event controller.
@@ -50,6 +49,9 @@ public class ParticipantAdditionPageCtrl {
 
     @FXML // fx:id="lastName"
     private TextField lastName; // Value injected by FXMLLoader
+
+    @FXML // fx:id="feedback"
+    private Label feedback; // Value injected by FXMLLoader
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -87,20 +89,24 @@ public class ParticipantAdditionPageCtrl {
      * TODO: Finish this method after the server.utils is created.
      */
     public void create(){
-        //TODO
-        try {
-            // save quote on server
-        } catch (WebApplicationException e) {
+        String nameFirst = firstName.getText();
+        String nameLast = lastName.getText();
+        String mail = email.getText();
+        String iBAN = iban.getText();
+        int eventID = mainCtrl.getCurrentEventID();
 
-            var alert = new Alert(Alert.AlertType.ERROR);
-            alert.initModality(Modality.APPLICATION_MODAL);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
-            return;
+        if(Objects.equals(nameFirst, "")) {
+            feedback.setText("Please fill in the name!");
+            System.out.println("give the name an input");
         }
-
-        clearFields();
-        //mainCtrl.showEvent();  This method still needs to be created
+        else{
+            Person person = new Person(mail,nameFirst,nameLast,iBAN,server.getEventByID(mainCtrl.getCurrentEventID()),new HashSet<>() ,new HashSet<>() );
+            Person result = server.addPerson(person,eventID);
+            System.out.println(result);
+            feedback.setText("");
+            mainCtrl.showEventPage(eventID);
+            clearFields();
+        }
     }
 
     /**

@@ -101,7 +101,7 @@ public class EventPageCtrl {
     }
 
     /**
-     * Setts the title to the current event.
+     * Sets the title to the current event.
      */
     public void setTitle() {
         eventTitle.setText(server.getEventByID(mainCtrl.getCurrentEventID()).getTitle());
