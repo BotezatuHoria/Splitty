@@ -16,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 import com.google.inject.Inject;
+import javafx.stage.Modality;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -271,17 +272,17 @@ public class AddExpenseCtrl implements Initializable {
      */
     public boolean checkFields() {
         if (expenseField.getText() == null || expenseField.getText().equals(" ")) {
-            errorLabel.setText("Please provide the expense!");
+            mainCtrl.showAlert("Please provide the expense!");
             return false;
         }
         if ((priceField.getText() == null)) {
-            errorLabel.setText("Please provide the amount of the expense!");
+            mainCtrl.showAlert("Please provide the amount of the expense!");
             return false;
         }
         try {
             double x = Double.parseDouble(priceField.getText());
         } catch (NumberFormatException e) {
-            errorLabel.setText("Please provide a valid amount.");
+            mainCtrl.showAlert("Please provide a valid amount.");
             return false;
         }
 
@@ -295,22 +296,22 @@ public class AddExpenseCtrl implements Initializable {
      */
     public boolean checkBoxes() {
         if (payerBox.valueProperty().get() == null) {
-            errorLabel.setText("Please provide who paid! ");
+            mainCtrl.showAlert("Please provide who paid! ");
             return false;
         }
 
         if (currencyBox.valueProperty().get() == null) {
-            errorLabel.setText("Please select a currency!");
+            mainCtrl.showAlert("Please select a currency!");
             return false;
         }
 
         if (dateBox.valueProperty().get() == null) {
-            errorLabel.setText("Please select a valid date!");
+            mainCtrl.showAlert("Please select a valid date!");
             return false;
         }
 
         if (expenseTypeBox.valueProperty().get() == null) {
-            errorLabel.setText("Please select a valid type of expense!");
+            mainCtrl.showAlert("Please select a valid type of expense!");
             return false;
         }
         return true;
@@ -332,7 +333,8 @@ public class AddExpenseCtrl implements Initializable {
         if (checked) {
             return true;
         }
-        errorLabel.setText("Please select at least a person!");
+        mainCtrl.showAlert("Please select at least a person!");
         return false;
     }
+
 }

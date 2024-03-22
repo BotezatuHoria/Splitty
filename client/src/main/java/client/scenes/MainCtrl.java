@@ -20,6 +20,8 @@ import client.utils.SelectedEventSingleton;
 import commons.Event;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import client.utils.ServerUtils;
@@ -230,5 +232,12 @@ public class MainCtrl {
     public int getCurrentEventID() {
         SelectedEventSingleton selectedEventInstance = SelectedEventSingleton.getInstance();
         return selectedEventInstance.getEventId();
+    }
+
+    public void showAlert(String error) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.setContentText(error);
+        alert.showAndWait();
     }
 }
