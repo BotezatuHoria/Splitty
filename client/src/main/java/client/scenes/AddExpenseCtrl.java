@@ -6,8 +6,6 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import commons.Person;
-//import commons.Transaction;
-//import javafx.collections.ObservableList;
 import commons.Transaction;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,7 +14,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 import com.google.inject.Inject;
-import javafx.stage.Modality;
 
 import java.net.URL;
 import java.time.LocalDate;
