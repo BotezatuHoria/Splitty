@@ -63,4 +63,8 @@ public class AdminLoginCtrl {
     public void resendPassword(){
         serverUtils.sendPassword();
     }
+
+    public void goBack() {
+        mainCtrl.showStarter();
+    }
 }

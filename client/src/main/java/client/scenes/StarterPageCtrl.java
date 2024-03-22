@@ -15,6 +15,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
 import com.google.inject.Inject;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 public class StarterPageCtrl {
 
@@ -125,7 +127,8 @@ public class StarterPageCtrl {
             mainCtrl.showEventPage(eventId);
         }
         catch (Exception e){
-            System.out.println("This event doesn't exist");
+            // System.out.println("This event doesn't exist");
+            mainCtrl.showAlert("This event doesn't exist.");
         }
     }
 
@@ -147,6 +150,17 @@ public class StarterPageCtrl {
         total = total/3000929;
         System.out.println("Translated from the sharecode, eventID = " + total);
         return total;
+    }
+
+    public void keyPressed(KeyEvent e) {
+        TextField source = (TextField) e.getSource();
+        if (e.getCode() == KeyCode.ENTER) {
+            if (source == createTextField) {
+                showEventPage();
+            } else if (source == joinTextField) {
+                joinEvent();
+            }
+        }
     }
 
 }
