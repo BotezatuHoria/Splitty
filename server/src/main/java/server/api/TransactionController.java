@@ -190,7 +190,7 @@ public class TransactionController {
                     // For example:
                     // existingTransaction.setAmount(newData.getAmount());
                     // ... other property updates
-                    return ResponseEntity.ok(repo.save(existingTransaction));
+                    return ResponseEntity.ok(repo.save(newData));
                 })
                 .orElseGet(() -> {
                     // If the transaction doesn't exist, you can choose to create a new one

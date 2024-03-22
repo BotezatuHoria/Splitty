@@ -153,6 +153,14 @@ public class ServerUtils {
 				.get(new GenericType<Event>() {});
 	}
 
+	public Person addPerson(Person person, int id) {
+		return ClientBuilder.newClient(new ClientConfig()) //
+				.target(SERVER).path("api/event/" + id + "/person") //
+				.request(APPLICATION_JSON) //
+				.accept(APPLICATION_JSON) //
+				.post(Entity.entity(person, APPLICATION_JSON), Person.class);
+	}
+
 	/**
 	 * Gets the admin password for the server.
 	 * @return returns the current admin password

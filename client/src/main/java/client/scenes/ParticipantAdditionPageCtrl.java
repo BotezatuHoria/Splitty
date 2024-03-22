@@ -89,7 +89,7 @@ public class ParticipantAdditionPageCtrl {
     public void create(){
         //TODO
         try {
-            // save quote on server
+            createPerson();
         } catch (WebApplicationException e) {
 
             var alert = new Alert(Alert.AlertType.ERROR);
@@ -100,7 +100,7 @@ public class ParticipantAdditionPageCtrl {
         }
 
         clearFields();
-        //mainCtrl.showEvent();  This method still needs to be created
+        mainCtrl.showEventPage(mainCtrl.getCurrentEventID());  //This method still needs to be created
     }
 
     /**
@@ -136,5 +136,17 @@ public class ParticipantAdditionPageCtrl {
             default:
                 break;
         }
+    }
+
+
+    public void createPerson() {
+        String newFirstName = firstName.getText().trim();
+        String newLastName = lastName.getText().trim();
+        String newEmail = email.getText().trim();
+        String newIban = iban.getText().trim();
+        Person person = new Person(newEmail, newFirstName, newLastName, newIban, null,
+                new HashSet<>(), new HashSet<>());
+        Person thePerson = server.addPerson(person, mainCtrl.getCurrentEventID());
+        System.out.println(thePerson);
     }
 }

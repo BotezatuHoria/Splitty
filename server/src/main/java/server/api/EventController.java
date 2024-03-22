@@ -98,7 +98,8 @@ public class EventController {
     @PostMapping(path = {"", "/"})
     public ResponseEntity<Event> add(@RequestBody Event event) {
 
-        if (event == null || repo.existsById((long) event.getId()) || event.getId() < 0 || event.getTag() == null || event.getTitle() == null || event.getToken() == null ||
+        if (event == null || repo.existsById((long) event.getId()) || event.getId() < 0 || event.getTag() == null
+                || event.getTitle() == null || event.getToken() == null ||
                 event.getPeople() == null || event.getTransactions() == null) {
             return ResponseEntity.badRequest().build();
         }
@@ -144,16 +145,17 @@ public class EventController {
      * @return - current state of the event
      */
     @PostMapping(path = {"/{id}/person"})
-    public ResponseEntity<Event> add(@PathVariable("id") long id, @RequestBody Person person) {
+    public ResponseEntity<Person> add(@PathVariable("id") long id, @RequestBody Person person) {
         if (id < 0 || !repo.existsById(id)) {
             return ResponseEntity.badRequest().build();
         }
-        Event event = getById(id).getBody();
+        Event event = repo.findById(id).get();
         person.setEvent(event);
-        pc.add(person);
-        event.addPerson(person);
-        Event saved = repo.save(event);
-        return ResponseEntity.ok(saved);
+        Person newPerson = pc.add(person).getBody();
+        event.addPerson(newPerson);
+        updateById(id, event);
+        //repo.save(event);
+        return ResponseEntity.ok(pc.getById(newPerson.getId()).getBody());
     }
 
     /**
