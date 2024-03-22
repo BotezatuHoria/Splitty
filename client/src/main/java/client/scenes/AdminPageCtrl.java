@@ -18,4 +18,8 @@ public class AdminPageCtrl {
         this.serverUtils = server;
         this.mainCtrl = mainCtrl;
     }
+
+    public void goBack() {
+        mainCtrl.showAdminLogin();
+    }
 }

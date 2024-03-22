@@ -9,7 +9,8 @@
 
 <AnchorPane prefHeight="487.0" prefWidth="591.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.StarterPageCtrl">
    <children>
-      <Button fx:id="languageSelector" layoutX="454.0" layoutY="14.0" mnemonicParsing="false" onAction="#selectLanguage" prefHeight="40.0" prefWidth="74.0" text="Language" />
+      <Button layoutX="417.0" layoutY="14.0" mnemonicParsing="false" onAction="#adminLogin" prefHeight="40.0" prefWidth="74.0" text="Admin" />
+      <Button fx:id="languageSelector" layoutX="503.0" layoutY="14.0" mnemonicParsing="false" onAction="#selectLanguage" prefHeight="40.0" prefWidth="74.0" text="Language" />
       <Label layoutX="30.0" layoutY="23.0" text="Create New Event">
          <font>
             <Font size="28.0" />
@@ -38,5 +39,6 @@
          </font>
       </Label>
       <ListView fx:id="listView" editable="true" layoutX="30.0" layoutY="267.0" prefHeight="200.0" prefWidth="526.0" style="-fx-background-color: #DCDCDC;" />
+
    </children>
 </AnchorPane>
