@@ -52,10 +52,12 @@ public class Main extends Application {
         var languageSelector = FXML.load(LanguageSelectorCtrl.class, "client", "scenes", "LanguageSelector.fxml");
         var inviteSend = FXML.load(InviteSendingCtrl.class, "client", "scenes", "InviteSending.fxml");
         var debtPage = FXML.load(DebtSettlementCtrl.class, "client", "scenes", "DebtsSettlementPage.fxml");
+        var adminLogin = FXML.load(AdminLoginCtrl.class, "client", "scenes", "AdminLogin.fxml");
+        var adminPage = FXML.load(AdminPageCtrl.class, "client", "scenes", "AdminPage.fxml");
         var addParticipants = FXML.load(ParticipantAdditionPageCtrl.class, "client", "scenes",
                 "ParticipantAdditionPage.fxml");
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
         mainCtrl.initialize(primaryStage, starterPage, eventPage, statisticsPage, expensePage,
-                addParticipants, inviteSend, debtPage, languageSelector);
+                addParticipants, inviteSend, debtPage, languageSelector,adminLogin, adminPage);
     }
 }

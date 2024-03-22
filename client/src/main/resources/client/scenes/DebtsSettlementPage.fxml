@@ -9,6 +9,7 @@
 
 <AnchorPane prefHeight="542.0" prefWidth="811.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.DebtSettlementCtrl">
     <children>
+      <Button fx:id="goBackButton" layoutX="730.0" layoutY="21.0" mnemonicParsing="false" onAction="#goBack" prefHeight="53.0" prefWidth="57.0" text="Back" />
         <Label layoutX="42.0" layoutY="21.0" text="Open Debts">
             <font>
                 <Font size="43.0" />
@@ -16,9 +17,8 @@
         </Label>
         <ListView layoutX="36.0" layoutY="89.0" prefHeight="419.0" prefWidth="740.0" />
         <Pane fx:id="optionPane" layoutX="42.0" layoutY="132.0" prefHeight="224.0" prefWidth="709.0">
-            
-        </Pane>
-      <ListView fx:id="listView" layoutX="67.0" layoutY="111.0" prefHeight="435.0" prefWidth="691.0" />
-      <Button fx:id="goBackButton" layoutX="730.0" layoutY="21.0" mnemonicParsing="false" onAction="#goBack" prefHeight="53.0" prefWidth="57.0" text="Back" />
+         <children>
+            <ListView fx:id="listView" layoutX="11.0" layoutY="-23.0" prefHeight="372.0" prefWidth="698.0" />
+         </children></Pane>
     </children>
 </AnchorPane>
