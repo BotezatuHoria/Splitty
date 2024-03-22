@@ -148,6 +148,7 @@ public class AddExpenseCtrl implements Initializable {
         dateBox.valueProperty().set(null);
         expenseTypeBox.valueProperty().set(null);
         peopleLIstView.getItems().clear();
+        payerBox.getItems().clear();
     }
 
     /**
