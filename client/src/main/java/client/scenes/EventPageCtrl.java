@@ -6,10 +6,13 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import commons.Event;
 import commons.Person;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
+import java.util.HashSet;
 import java.util.Set;
 
 public class EventPageCtrl {
@@ -144,7 +147,7 @@ public class EventPageCtrl {
      */
     public void selectParticipant() {
         Person person = participantsScroll.getValue();
-        fromParticipant.setText("From " + person);
+        fromParticipant.setText("Including" + person);
         includingParticipant.setText("Including " + person);
     }
 }

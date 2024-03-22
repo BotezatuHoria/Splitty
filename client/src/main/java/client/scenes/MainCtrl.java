@@ -175,6 +175,7 @@ public class MainCtrl {
      */
     public void showExpensePage() {
         primaryStage.setTitle("Add Expense");
+        expenseCtrl.clearInputs();
         expenseCtrl.retrievePeopleFromDb();
         primaryStage.setScene(expense);
 
