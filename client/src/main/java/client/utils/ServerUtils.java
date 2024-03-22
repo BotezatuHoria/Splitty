@@ -28,6 +28,8 @@ import java.util.Set;
 import commons.Event;
 import commons.Person;
 import commons.Transaction;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientConfig;
 
 import commons.Quote;
@@ -149,5 +151,22 @@ public class ServerUtils {
 				.request(APPLICATION_JSON)
 				.accept(APPLICATION_JSON)
 				.get(new GenericType<Event>() {});
+	}
+
+	/**
+	 * Gets the admin password for the server.
+	 * @return returns the current admin password
+	 */
+	public String getPassword(){
+		Client client = ClientBuilder.newClient();
+		Response response = client.target(SERVER).path("api/login/").request().get();
+
+		String password = response.readEntity(String.class);
+		return password;
+	}
+
+	public void sendPassword(){
+		Client client = ClientBuilder.newClient();
+		Response response = client.target(SERVER).path("api/login/log").request().get();
 	}
 }
