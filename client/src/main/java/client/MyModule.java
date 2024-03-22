@@ -28,6 +28,7 @@ public class MyModule implements Module {
         binder.bind(StarterPageCtrl.class).in(Scopes.SINGLETON);
         binder.bind(EventPageCtrl.class).in(Scopes.SINGLETON);
         binder.bind(AddExpenseCtrl.class).in(Scopes.SINGLETON);
+        binder.bind(AdminLoginCtrl.class).in(Scopes.SINGLETON);
     }
 
 }

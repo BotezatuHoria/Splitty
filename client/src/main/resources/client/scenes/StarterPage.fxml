@@ -38,5 +38,6 @@
       <TextField fx:id="createTextField" layoutX="30.0" layoutY="76.0" prefHeight="31.0" prefWidth="368.0" promptText="New event..." />
       <TextField fx:id="joinTextField" layoutX="30.0" layoutY="169.0" prefHeight="31.0" prefWidth="368.0" promptText="Join..." />
       <Button fx:id="languageSelector" layoutX="503.0" layoutY="14.0" mnemonicParsing="false" onAction="#selectLanguage" prefHeight="40.0" prefWidth="74.0" text="Button" />
+      <Button fx:id="adminbutton" onAction="#adminLogin" layoutX="396.0" layoutY="14.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="67.0" text="Admin" />
    </children>
 </AnchorPane>
