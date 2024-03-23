@@ -125,7 +125,6 @@ public class EventPageCtrl {
     public void updatePage() {
         setTitle();
         displayParticipants();
-
     }
 
     /**
