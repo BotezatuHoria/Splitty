@@ -12,7 +12,7 @@ public class Event {
     protected String tag;
     protected String title;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     protected int id;
     protected String token;
 

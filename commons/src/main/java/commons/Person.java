@@ -10,7 +10,7 @@ import jakarta.persistence.*;
 @Entity
 public class Person {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     protected int id;
     protected String email;
     protected String firstName;
@@ -191,34 +191,9 @@ public class Person {
         this.event = event;
     }
 
-    /**
-     * Equals method that returns true if the person is the same else false.
-     * @param o object to compare too
-     * @return true if the email is the same
-     */
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {return true;}
-        if (o == null || getClass() != o.getClass())
-        {return false;}
-        Person that = (Person) o;
-        return Objects.equals(id, that.id);
-    }
-
     @Override
     public String toString() {
         return firstName + " " + lastName;
-    }
-
-    /**
-     * Hashcode for the people.
-     * @return integer value
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(email);
     }
 
     /**

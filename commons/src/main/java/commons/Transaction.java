@@ -14,7 +14,7 @@ import java.util.Objects;
 public class Transaction {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     protected int id;
 
     protected String name;
