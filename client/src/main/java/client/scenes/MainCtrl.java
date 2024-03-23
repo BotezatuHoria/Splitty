@@ -174,8 +174,7 @@ public class MainCtrl {
         primaryStage.setTitle("Event Page");
         SelectedEventSingleton selectedEventInstance = SelectedEventSingleton.getInstance();
         selectedEventInstance.setEventId(eventID);
-        eventCtrl.setTitle();
-
+        eventCtrl.updatePage();
         primaryStage.setScene(event);
     }
 
@@ -192,6 +191,7 @@ public class MainCtrl {
      */
     public void showExpensePage() {
         primaryStage.setTitle("Add Expense");
+        expenseCtrl.clearInputs();
         expenseCtrl.retrievePeopleFromDb();
         primaryStage.setScene(expense);
 

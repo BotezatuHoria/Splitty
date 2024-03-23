@@ -6,9 +6,14 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+
+import commons.Person;
+
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+
+
+import java.util.Set;
 
 public class EventPageCtrl {
     private final MainCtrl mainCtrl;
@@ -45,6 +50,13 @@ public class EventPageCtrl {
 
     @FXML // fx:id="eventTitle"
     private Label eventTitle;
+
+    @FXML // fx:id="participantsList"
+    private Label participantsList;
+
+    @FXML // fx:id="participantsScroll"
+    private ComboBox<Person> participantsScroll;
+
 
     /**
      * Constructor for EventPageCtrl.
@@ -96,9 +108,7 @@ public class EventPageCtrl {
     /**
      * Method for changing to the statistics page.
      */
-    public void showStatistics() {
-        mainCtrl.showStatisticsPage();
-    }
+    public void showStatistics() {mainCtrl.showStatisticsPage();}
 
     /**
      * Setts the title to the current event.
@@ -106,6 +116,43 @@ public class EventPageCtrl {
     public void setTitle() {
         eventTitle.setText(server.getEventByID(mainCtrl.getCurrentEventID()).getTitle());
     }
+
+
+    /**
+     * Method that updates the title, people and transactions on that page.
+     */
+    public void updatePage() {
+        setTitle();
+        displayParticipants();
+
+    }
+
+    /**
+     * Displays participants on that page for the current event.
+     */
+    private void displayParticipants() {
+        String display = "";
+        Set<Person> people = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
+        participantsScroll.getItems().clear();
+        for (Person person: people) {
+            display += person + ", ";
+            participantsScroll.getItems().add(person);
+        }
+        if (!display.isBlank()) {display = display.substring(0, display.length() - 2);}
+        participantsList.setText(display);
+    }
+
+    /**
+     * Selects the person for which transaction should be displayed.
+     */
+    public void selectParticipant() {
+        Person person = participantsScroll.getSelectionModel().getSelectedItem();
+        if (person != null) {
+            fromParticipant.setText("From " + person);
+            includingParticipant.setText("Including " + person);
+        }
+    }
+
 }
 
 
