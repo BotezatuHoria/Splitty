@@ -85,40 +85,13 @@ public class AddExpenseCtrl implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        expenseTypeBox.getItems().add("Food");
-        expenseTypeBox.getItems().add("Entrance fees");
-        expenseTypeBox.getItems().add("Travel");
         tagPane.visibleProperty().set(false);
     }
-
-    @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
-        assert abortButton != null : "fx:id=\"abortButton\" was not injected: check your FXML file 'AddExpense.fxml'.";
-        assert addButton != null : "fx:id=\"addButton\" was not injected: check your FXML file 'AddExpense.fxml'.";
-        assert addEverybody != null : "fx:id=\"addEverybody\" was not injected: check your FXML file 'AddExpense.fxml'.";
-        assert currencyBox != null : "fx:id=\"currencyBox\" was not injected: check your FXML file 'AddExpense.fxml'.";
-        assert dateBox != null : "fx:id=\"dateBox\" was not injected: check your FXML file 'AddExpense.fxml'.";
-        assert expensePane != null : "fx:id=\"expensePane\" was not injected: check your FXML file 'AddExpense.fxml'.";
-        assert expenseTypeBox != null : "fx:id=\"expenseTypeBox\" was not injected: check your FXML file 'AddExpense.fxml'.";
-        assert payerBox != null : "fx:id=\"payerBox\" was not injected: check your FXML file 'AddExpense.fxml'.";
-        assert peopleLIstView != null : "fx:id=\"peopleLIstView\" was not injected: check your FXML file 'AddExpense.fxml'.";
-        assert priceField != null : "fx:id=\"priceField\" was not injected: check your FXML file 'AddExpense.fxml'.";
-        assert expenseField != null : "fx:id=\"expenseField\" was not injected: check your FXML file 'AddExpense.fxml'.";
-    }
-
-    /**
-     * Method that adds participants to the listView.
-     * Full functionality will be implemented in the future.
-     */
-    public void addParticipantToView() {
-        addAllParticipants();
-    }
-
 
     /**
      * Method that checks all the checkBoxes for all the participants in the list view.
      */
-    public void addAllParticipants() {
+    public void addParticipantToView() {
         for (CheckBox checkBox : peopleLIstView.getItems()) {
             checkBox.setSelected(true);
         }
@@ -156,6 +129,9 @@ public class AddExpenseCtrl implements Initializable {
         addPeopleToView(people);
         addPeopleToPayerBox(people);
         currencyBox.getItems().add(840);
+        expenseTypeBox.getItems().add("Food");
+        expenseTypeBox.getItems().add("Entrance fees");
+        expenseTypeBox.getItems().add("Travel");
     }
 
     /**
@@ -184,7 +160,7 @@ public class AddExpenseCtrl implements Initializable {
      * Method that will be implemented for the currencies.
      * @param currencies - set of all currencies
      */
-    public void addCurrencies(Set<Currency> currencies) {
+    public void addCurrencies(List<Currency> currencies) {
         // to be implemented with all the currencies that will be available in the project;
     }
 
@@ -219,12 +195,6 @@ public class AddExpenseCtrl implements Initializable {
         Transaction result = server.addTransactionToCurrentEvent(mainCtrl.getCurrentEventID(), transaction);
         System.out.println(result.toString());
     }
-
-    /**
-     * Function that returns every Node in the primary pane of the page.
-     *
-     * @return - a list of all elements in the expensePane
-     */
 
     /**
      * Function for the abort button of the expense page.
@@ -315,4 +285,18 @@ public class AddExpenseCtrl implements Initializable {
         return false;
     }
 
+    @FXML // This method is called by the FXMLLoader when initialization is complete
+    void initialize() {
+        assert abortButton != null : "fx:id=\"abortButton\" was not injected: check your FXML file 'AddExpense.fxml'.";
+        assert addButton != null : "fx:id=\"addButton\" was not injected: check your FXML file 'AddExpense.fxml'.";
+        assert addEverybody != null : "fx:id=\"addEverybody\" was not injected: check your FXML file 'AddExpense.fxml'.";
+        assert currencyBox != null : "fx:id=\"currencyBox\" was not injected: check your FXML file 'AddExpense.fxml'.";
+        assert dateBox != null : "fx:id=\"dateBox\" was not injected: check your FXML file 'AddExpense.fxml'.";
+        assert expensePane != null : "fx:id=\"expensePane\" was not injected: check your FXML file 'AddExpense.fxml'.";
+        assert expenseTypeBox != null : "fx:id=\"expenseTypeBox\" was not injected: check your FXML file 'AddExpense.fxml'.";
+        assert payerBox != null : "fx:id=\"payerBox\" was not injected: check your FXML file 'AddExpense.fxml'.";
+        assert peopleLIstView != null : "fx:id=\"peopleLIstView\" was not injected: check your FXML file 'AddExpense.fxml'.";
+        assert priceField != null : "fx:id=\"priceField\" was not injected: check your FXML file 'AddExpense.fxml'.";
+        assert expenseField != null : "fx:id=\"expenseField\" was not injected: check your FXML file 'AddExpense.fxml'.";
+    }
 }
