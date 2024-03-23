@@ -13,7 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 
-import java.util.Set;
+import java.util.List;
 
 public class EventPageCtrl {
     private final MainCtrl mainCtrl;
@@ -124,7 +124,6 @@ public class EventPageCtrl {
     public void updatePage() {
         setTitle();
         displayParticipants();
-
     }
 
     /**
@@ -132,7 +131,7 @@ public class EventPageCtrl {
      */
     private void displayParticipants() {
         String display = "";
-        Set<Person> people = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
+        List<Person> people = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
         participantsScroll.getItems().clear();
         for (Person person: people) {
             display += person + ", ";
@@ -140,6 +139,7 @@ public class EventPageCtrl {
         }
         if (!display.isBlank()) {display = display.substring(0, display.length() - 2);}
         participantsList.setText(display);
+        System.out.println("This is selected" + participantsScroll.getSelectionModel().getSelectedItem());
     }
 
     /**
@@ -147,6 +147,7 @@ public class EventPageCtrl {
      */
     public void selectParticipant() {
         Person person = participantsScroll.getSelectionModel().getSelectedItem();
+        System.out.println(person);
         if (person != null) {
             fromParticipant.setText("From " + person);
             includingParticipant.setText("Including " + person);

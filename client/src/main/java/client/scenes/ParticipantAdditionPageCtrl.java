@@ -1,14 +1,12 @@
 package client.scenes;
 
 import java.net.URL;
-import java.util.HashSet;
 import java.util.ResourceBundle;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Event;
 import commons.Person;
-import commons.Transaction;
 import jakarta.ws.rs.WebApplicationException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -78,7 +76,8 @@ public class ParticipantAdditionPageCtrl {
      * @return returns the created person
      */
     private Person getPerson(){
-        Person p = new Person(email.getText(), firstName.getText(), lastName.getText(), iban.getText(), new Event(), new HashSet<Transaction>(), new HashSet<Transaction>());
+        Person p = new Person(email.getText(), firstName.getText(), lastName.getText(), iban.getText(), new Event(),
+                null, null);
         return p;
     }
 
@@ -87,9 +86,8 @@ public class ParticipantAdditionPageCtrl {
      * TODO: Finish this method after the server.utils is created.
      */
     public void create(){
-        //TODO
         try {
-            // save quote on server
+            createPerson();
         } catch (WebApplicationException e) {
 
             var alert = new Alert(Alert.AlertType.ERROR);
@@ -100,7 +98,7 @@ public class ParticipantAdditionPageCtrl {
         }
 
         clearFields();
-        //mainCtrl.showEvent();  This method still needs to be created
+        mainCtrl.showEventPage(mainCtrl.getCurrentEventID());  //This method still needs to be created
     }
 
     /**
@@ -136,5 +134,16 @@ public class ParticipantAdditionPageCtrl {
             default:
                 break;
         }
+    }
+
+
+    public void createPerson() {
+        String newFirstName = firstName.getText().trim();
+        String newLastName = lastName.getText().trim();
+        String newEmail = email.getText().trim();
+        String newIban = iban.getText().trim();
+        Person person = new Person(newEmail, newFirstName, newLastName, newIban,
+                null, null, null);
+        Person thePerson = server.addPerson(person, mainCtrl.getCurrentEventID());
     }
 }

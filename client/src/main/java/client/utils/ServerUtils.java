@@ -23,12 +23,12 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Set;
 
 import commons.Event;
 import commons.Person;
 import commons.Transaction;
 import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientConfig;
 
@@ -93,20 +93,20 @@ public class ServerUtils {
 				});
 	}
 
-	public Set<Transaction> getTransactions(int id) {
+	public List<Transaction> getTransactions(int id) {
 		return ClientBuilder.newClient(new ClientConfig())
 				.target(SERVER).path("api/event/" + id + "/expenses")
 				.request(APPLICATION_JSON)
 				.accept(APPLICATION_JSON)
-				.get(new GenericType<Set<Transaction>>() {});
+				.get(new GenericType<List<Transaction>>() {});
 	}
 
-	public Set<Person> getPeopleInCurrentEvent(int id) {
+	public List<Person> getPeopleInCurrentEvent(int id) {
 		return ClientBuilder.newClient(new ClientConfig())
 				.target(SERVER).path("api/event/" + id + "/person")
 				.request(APPLICATION_JSON)
 				.accept(APPLICATION_JSON)
-				.get(new GenericType<Set<Person>>() {});
+				.get(new GenericType<List<Person>>() {});
 	}
 
 	public Transaction addTransactionToCurrentEvent(int idEvent, Transaction transaction) {
@@ -151,6 +151,19 @@ public class ServerUtils {
 				.request(APPLICATION_JSON)
 				.accept(APPLICATION_JSON)
 				.get(new GenericType<Event>() {});
+	}
+
+	public Person addPerson(Person person, int id) {
+		Response response = ClientBuilder.newClient().target(SERVER)
+				.path("api/event/" + id + "/person")
+				.request(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.post(Entity.entity(person, MediaType.APPLICATION_JSON));
+		if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+			return response.readEntity(Person.class);
+		} else {
+			throw new RuntimeException("Failed to add person. Status code: " + response.getStatus());
+		}
 	}
 
 	/**

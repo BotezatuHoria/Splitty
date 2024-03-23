@@ -9,11 +9,11 @@ import commons.Person;
 import commons.Transaction;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 import com.google.inject.Inject;
+import javafx.stage.Modality;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -38,9 +38,6 @@ public class AddExpenseCtrl implements Initializable {
 
     @FXML // fx:id="dateBox"
     private DatePicker dateBox; // Value injected by FXMLLoader
-
-    @FXML // fx:id="errorLabel"
-    private Label errorLabel; // Value injected by FXMLLoader
 
     @FXML // fx:id="expenseField"
     private TextField expenseField; // Value injected by FXMLLoader
@@ -88,50 +85,13 @@ public class AddExpenseCtrl implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        currencyBox.getItems().add(840);
-        expenseTypeBox.getItems().add("Food");
-        expenseTypeBox.getItems().add("Entrance fees");
-        expenseTypeBox.getItems().add("Travel");
         tagPane.visibleProperty().set(false);
-    }
-
-    @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
-        assert abortButton != null : "fx:id=\"abortButton\" was not injected: check your FXML file 'AddExpense.fxml'.";
-        assert addButton != null : "fx:id=\"addButton\" was not injected: check your FXML file 'AddExpense.fxml'.";
-        assert addEverybody != null : "fx:id=\"addEverybody\" was not injected: check your FXML file 'AddExpense.fxml'.";
-        assert currencyBox != null : "fx:id=\"currencyBox\" was not injected: check your FXML file 'AddExpense.fxml'.";
-        assert dateBox != null : "fx:id=\"dateBox\" was not injected: check your FXML file 'AddExpense.fxml'.";
-        assert expensePane != null : "fx:id=\"expensePane\" was not injected: check your FXML file 'AddExpense.fxml'.";
-        assert expenseTypeBox != null : "fx:id=\"expenseTypeBox\" was not injected: check your FXML file 'AddExpense.fxml'.";
-        assert payerBox != null : "fx:id=\"payerBox\" was not injected: check your FXML file 'AddExpense.fxml'.";
-        assert peopleLIstView != null : "fx:id=\"peopleLIstView\" was not injected: check your FXML file 'AddExpense.fxml'.";
-        assert priceField != null : "fx:id=\"priceField\" was not injected: check your FXML file 'AddExpense.fxml'.";
-        assert expenseField != null : "fx:id=\"expenseField\" was not injected: check your FXML file 'AddExpense.fxml'.";
-    }
-
-    /**
-     * Method that adds participants to the listView.
-     * Full functionality will be implemented in the future.
-     */
-    public void addParticipantToView() {
-        addAllParticipants();
-    }
-
-    /**
-     * Method that prints all nodes.
-     */
-    public void showNodes() {
-        List<Node> nodes = getNodes();
-        for (Node node : nodes) {
-            System.out.println(node);
-        }
     }
 
     /**
      * Method that checks all the checkBoxes for all the participants in the list view.
      */
-    public void addAllParticipants() {
+    public void addParticipantToView() {
         for (CheckBox checkBox : peopleLIstView.getItems()) {
             checkBox.setSelected(true);
         }
@@ -141,26 +101,23 @@ public class AddExpenseCtrl implements Initializable {
      * Method for clearing all the inputs after adding a new expense.
      */
     public void clearInputs() {
-        payerBox.valueProperty().set(null);
+        payerBox.getItems().clear();
         expenseField.clear();
         priceField.clear();
-        currencyBox.valueProperty().set(null);
+        currencyBox.getItems().clear();
         dateBox.valueProperty().set(null);
-        expenseTypeBox.valueProperty().set(null);
+        expenseTypeBox.getItems().clear();
         peopleLIstView.getItems().clear();
-        payerBox.getItems().clear();
     }
 
     /**
      * Function for the add button.
      */
     public void addExpense() {
-        showNodes();
         if (checkCompleted()) {
             createTransaction();
             clearInputs();
             mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
-            //send data to server databae
         }
     }
 
@@ -168,16 +125,20 @@ public class AddExpenseCtrl implements Initializable {
      * Method that retrieves all the people from an event from the database.
      */
     public void retrievePeopleFromDb() {
-        Set<Person> people = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
+        List<Person> people = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
         addPeopleToView(people);
         addPeopleToPayerBox(people);
+        currencyBox.getItems().add(840);
+        expenseTypeBox.getItems().add("Food");
+        expenseTypeBox.getItems().add("Entrance fees");
+        expenseTypeBox.getItems().add("Travel");
     }
 
     /**
      * Method that adds all the people in the personView.
      * @param people - people to be added
      */
-    public void addPeopleToView(Set<Person> people) {
+    public void addPeopleToView(List<Person> people) {
         for (Person p : people) {
             CheckBox checkBox = new CheckBox(p.toString());
             checkBox.setUserData(p);
@@ -189,7 +150,8 @@ public class AddExpenseCtrl implements Initializable {
      * Method that adds all the people in the peoplePlayerBox.
      * @param people - people to be added
      */
-    public void addPeopleToPayerBox(Set<Person> people) {
+    public void addPeopleToPayerBox(List<Person> people) {
+        payerBox.getItems().clear();
         for (Person p : people) {
             payerBox.getItems().add(p);
         }
@@ -199,7 +161,7 @@ public class AddExpenseCtrl implements Initializable {
      * Method that will be implemented for the currencies.
      * @param currencies - set of all currencies
      */
-    public void addCurrencies(Set<Currency> currencies) {
+    public void addCurrencies(List<Currency> currencies) {
         // to be implemented with all the currencies that will be available in the project;
     }
 
@@ -217,33 +179,31 @@ public class AddExpenseCtrl implements Initializable {
      * Method that creates a new Transaction and adds it to the database.
      */
     public void createTransaction() {
-        Person payer = payerBox.getValue();
-        String title = expenseField.getText();
-        double value = Double.parseDouble(priceField.getText());
-        LocalDate date = dateBox.getValue();
-        int currency = currencyBox.getValue();
-        Set<Person> participants = new HashSet<>();
-        for (CheckBox checkBox : peopleLIstView.getItems()) {
-            if (checkBox.isSelected()) {
-                participants.add((Person) checkBox.getUserData());
+        try {
+            Person payer = payerBox.getValue();
+            String title = expenseField.getText();
+            double value = Double.parseDouble(priceField.getText());
+            LocalDate date = dateBox.getValue();
+            int currency = currencyBox.getValue();
+            List<Person> participants = new ArrayList<>();
+            for (CheckBox checkBox : peopleLIstView.getItems()) {
+                if (checkBox.isSelected()) {
+                    participants.add((Person) checkBox.getUserData());
+                }
             }
+            String expenseType = expenseTypeBox.getValue();
+            Transaction transaction = new Transaction(title, date, value, currency, expenseType, participants, payer);
+            System.out.println(transaction.getCreator().toString());
+            Transaction result = server.addTransactionToCurrentEvent(mainCtrl.getCurrentEventID(), transaction);
+            System.out.println(result.toString());
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.setContentText("Expense created successfully!");
+            alert.showAndWait();
+        }catch (Exception e) {
+            mainCtrl.showAlert("Transaction was not created");
         }
-        String expenseType = expenseTypeBox.getValue();
-        Transaction transaction = new Transaction(title, date, value, currency, expenseType, participants, payer);
-        System.out.println(transaction.getCreator().toString());
-        Transaction result = server.addTransactionToCurrentEvent(mainCtrl.getCurrentEventID(), transaction);
-        System.out.println(result.toString());
-    }
 
-    /**
-     * Function that returns every Node in the primary pane of the page.
-     *
-     * @return - a list of all elements in the expensePane
-     */
-    public List<Node> getNodes() {
-        List<Node> nodes = new LinkedList<>();
-        nodes.addAll(expensePane.getChildren());
-        return nodes;
     }
 
     /**
@@ -335,4 +295,18 @@ public class AddExpenseCtrl implements Initializable {
         return false;
     }
 
+    @FXML // This method is called by the FXMLLoader when initialization is complete
+    void initialize() {
+        assert abortButton != null : "fx:id=\"abortButton\" was not injected: check your FXML file 'AddExpense.fxml'.";
+        assert addButton != null : "fx:id=\"addButton\" was not injected: check your FXML file 'AddExpense.fxml'.";
+        assert addEverybody != null : "fx:id=\"addEverybody\" was not injected: check your FXML file 'AddExpense.fxml'.";
+        assert currencyBox != null : "fx:id=\"currencyBox\" was not injected: check your FXML file 'AddExpense.fxml'.";
+        assert dateBox != null : "fx:id=\"dateBox\" was not injected: check your FXML file 'AddExpense.fxml'.";
+        assert expensePane != null : "fx:id=\"expensePane\" was not injected: check your FXML file 'AddExpense.fxml'.";
+        assert expenseTypeBox != null : "fx:id=\"expenseTypeBox\" was not injected: check your FXML file 'AddExpense.fxml'.";
+        assert payerBox != null : "fx:id=\"payerBox\" was not injected: check your FXML file 'AddExpense.fxml'.";
+        assert peopleLIstView != null : "fx:id=\"peopleLIstView\" was not injected: check your FXML file 'AddExpense.fxml'.";
+        assert priceField != null : "fx:id=\"priceField\" was not injected: check your FXML file 'AddExpense.fxml'.";
+        assert expenseField != null : "fx:id=\"expenseField\" was not injected: check your FXML file 'AddExpense.fxml'.";
+    }
 }
