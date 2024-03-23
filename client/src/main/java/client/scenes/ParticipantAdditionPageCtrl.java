@@ -78,7 +78,8 @@ public class ParticipantAdditionPageCtrl {
      * @return returns the created person
      */
     private Person getPerson(){
-        Person p = new Person(email.getText(), firstName.getText(), lastName.getText(), iban.getText(), new Event(), new HashSet<Transaction>(), new HashSet<Transaction>());
+        Person p = new Person(email.getText(), firstName.getText(), lastName.getText(), iban.getText(), new Event(),
+                null, null);
         return p;
     }
 
@@ -87,7 +88,6 @@ public class ParticipantAdditionPageCtrl {
      * TODO: Finish this method after the server.utils is created.
      */
     public void create(){
-        //TODO
         try {
             createPerson();
         } catch (WebApplicationException e) {
@@ -144,8 +144,8 @@ public class ParticipantAdditionPageCtrl {
         String newLastName = lastName.getText().trim();
         String newEmail = email.getText().trim();
         String newIban = iban.getText().trim();
-        Person person = new Person(newEmail, newFirstName, newLastName, newIban, null,
-                new HashSet<>(), new HashSet<>());
+        Person person = new Person(newEmail, newFirstName, newLastName, newIban,
+                null, null, null);
         Person thePerson = server.addPerson(person, mainCtrl.getCurrentEventID());
         System.out.println(thePerson);
     }

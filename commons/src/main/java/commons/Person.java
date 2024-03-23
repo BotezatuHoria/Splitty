@@ -1,5 +1,6 @@
 package commons;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 //import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -27,11 +28,11 @@ public class Person {
 
     @OneToMany
     @JsonIgnoreProperties({"name", "date", "money", "currency", "expenseType", "type", "participants", "creator"})
-    public Set<Transaction> createdTransactions;
+    public List<Transaction> createdTransactions;
 
     @ManyToMany
     @JsonIgnoreProperties({"name", "date", "money", "currency", "expenseType", "type", "participants", "creator"})
-    public Set<Transaction> transactions;
+    public List<Transaction> transactions;
 
     /**
      * Constructor for people.
@@ -42,7 +43,7 @@ public class Person {
      * @param event that this person is added to
      */
     public Person(String email, String firstName, String lastName, String iban, Event event,
-                  Set<Transaction> createdTransactions, Set<Transaction> transactions) {
+                  List<Transaction> createdTransactions, List<Transaction> transactions) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -129,7 +130,7 @@ public class Person {
      * Setter for createdTransactions.
      * @param createdTransactions the email to set to
      */
-    public void setCreatedTransactions(Set<Transaction> createdTransactions) {
+    public void setCreatedTransactions(List<Transaction> createdTransactions) {
         this.createdTransactions = createdTransactions;
     }
 
@@ -137,7 +138,7 @@ public class Person {
      * Setter for transactions.
      * @param transactions the email to set to
      */
-    public void setTransactions(Set<Transaction> transactions) {
+    public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
 
@@ -177,7 +178,7 @@ public class Person {
      * Getter method for the transactions created by the user.
      * @return a set of all transactions that were done by the user.
      */
-    public Set<Transaction> getCreatedTransactions() {
+    public List<Transaction> getCreatedTransactions() {
         return createdTransactions;
     }
 
@@ -185,7 +186,7 @@ public class Person {
      * Getter method for the transactions that the person is being into.
      * @return - a set of all the transactions in which the person is a participant.
      */
-    public Set<Transaction> getTransactions() {
+    public List<Transaction> getTransactions() {
         return transactions;
     }
 

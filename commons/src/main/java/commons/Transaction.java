@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -29,7 +30,7 @@ public class Transaction {
 
     @ManyToMany
     @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt", "event", "createdTransactions", "transactions"})
-    public Set<Person> participants;
+    public List<Person> participants;
 
     @ManyToOne
     @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt", "event", "createdTransactions", "transactions"})
@@ -51,7 +52,7 @@ public class Transaction {
      * @param currency - the currency in which the transaction is handled
      */
     public Transaction(String name, LocalDate date, double money, int currency,
-                       Set<Person> participants, Person creator, String expenseType) {
+                       List<Person> participants, Person creator, String expenseType) {
         id++;
         this.name = name;
         this.date = date;
@@ -73,7 +74,7 @@ public class Transaction {
      * @param creator - creator of transaction
      */
     public Transaction(String name, LocalDate date, double money, int currency, String type,
-                       Set<Person> participants, Person creator) {
+                       List<Person> participants, Person creator) {
         this.name = name;
         this.date = date;
         this.money = money;
@@ -135,7 +136,7 @@ public class Transaction {
      * Getter for the people involved in a transaction.
      * @return - a set of all the people involved in the transaction.
      */
-    public Set<Person> getParticipants() {
+    public List<Person> getParticipants() {
         return participants;
     }
 
@@ -183,7 +184,7 @@ public class Transaction {
      * Setter for the set of participants included in the transaction.
      * @param participants set of participant.
      */
-    public void setParticipants(Set<Person> participants){
+    public void setParticipants(List<Person> participants){
         this.participants = participants;
     }
 

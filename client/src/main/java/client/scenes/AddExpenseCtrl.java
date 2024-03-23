@@ -141,12 +141,12 @@ public class AddExpenseCtrl implements Initializable {
      * Method for clearing all the inputs after adding a new expense.
      */
     public void clearInputs() {
-        payerBox.valueProperty().set(null);
+        payerBox.getItems().clear();
         expenseField.clear();
         priceField.clear();
         currencyBox.getItems().clear();
         dateBox.valueProperty().set(null);
-        expenseTypeBox.valueProperty().set(null);
+        expenseTypeBox.getItems().clear();
         peopleLIstView.getItems().clear();
     }
 
@@ -167,7 +167,7 @@ public class AddExpenseCtrl implements Initializable {
      * Method that retrieves all the people from an event from the database.
      */
     public void retrievePeopleFromDb() {
-        Set<Person> people = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
+        List<Person> people = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
         addPeopleToView(people);
         addPeopleToPayerBox(people);
     }
@@ -176,7 +176,7 @@ public class AddExpenseCtrl implements Initializable {
      * Method that adds all the people in the personView.
      * @param people - people to be added
      */
-    public void addPeopleToView(Set<Person> people) {
+    public void addPeopleToView(List<Person> people) {
         for (Person p : people) {
             CheckBox checkBox = new CheckBox(p.toString());
             checkBox.setUserData(p);
@@ -188,7 +188,7 @@ public class AddExpenseCtrl implements Initializable {
      * Method that adds all the people in the peoplePlayerBox.
      * @param people - people to be added
      */
-    public void addPeopleToPayerBox(Set<Person> people) {
+    public void addPeopleToPayerBox(List<Person> people) {
         for (Person p : people) {
             payerBox.getItems().add(p);
         }
@@ -221,7 +221,7 @@ public class AddExpenseCtrl implements Initializable {
         double value = Double.parseDouble(priceField.getText());
         LocalDate date = dateBox.getValue();
         int currency = currencyBox.getValue();
-        Set<Person> participants = new HashSet<>();
+        List<Person> participants = new ArrayList<>();
         for (CheckBox checkBox : peopleLIstView.getItems()) {
             if (checkBox.isSelected()) {
                 participants.add((Person) checkBox.getUserData());

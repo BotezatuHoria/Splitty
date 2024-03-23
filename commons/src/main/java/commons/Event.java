@@ -3,6 +3,7 @@ package commons;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -18,11 +19,11 @@ public class Event {
 
     @OneToMany
     @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt", "event", "createdTransactions", "transactions"})
-    protected Set<Person> people;
+    protected List<Person> people;
 
     @OneToMany
     @JsonIgnoreProperties({"name", "date", "money", "currency", "expenseType", "type", "participants", "creator"})
-    protected Set<Transaction> transactions;
+    protected List<Transaction> transactions;
 
     /**
      * constructor, constructs the event with all these attributes.
@@ -33,7 +34,7 @@ public class Event {
      * @param people people that participate in an event
      * @param transactions transactions of the event
      */
-    public Event(String tag, String title, int id, String token, Set<Person> people, Set<Transaction> transactions) {
+    public Event(String tag, String title, int id, String token, List<Person> people, List<Transaction> transactions) {
         this.tag = tag;
         this.title = title;
         this.id = id;
@@ -85,7 +86,7 @@ public class Event {
      * the getter for the transactions of the event.
      * @return the transactions of the event
      */
-    public Set<Transaction> getTransactions() {
+    public List<Transaction> getTransactions() {
         return transactions;
     }
 
@@ -93,7 +94,7 @@ public class Event {
      * The getter for people that participate in an event.
      * @return people that participate in an event.
      */
-    public Set<Person> getPeople() {
+    public List<Person> getPeople() {
         return people;
     }
 
@@ -125,7 +126,7 @@ public class Event {
      * The setter for the events` people that participate.
      * @param people the new set of people that participate
      */
-    public void setPeople(Set<Person> people) {
+    public void setPeople(List<Person> people) {
         this.people = people;
     }
 
@@ -133,7 +134,7 @@ public class Event {
      * The setter for the events` transactions.
      * @param transactions the new set of transactions of the event
      */
-    public void setTransactions(Set<Transaction> transactions) {
+    public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
 
