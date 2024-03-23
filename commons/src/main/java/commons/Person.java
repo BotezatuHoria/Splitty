@@ -24,7 +24,7 @@ public class Person {
     public Event event;
 
     @OneToMany
-    @JsonIgnoreProperties({"name", "date", "money", "currency", "expenseType", "type", "participants", "creator"})
+    @JsonIgnoreProperties({"name", "date", "money", "currency", "expenseType", "participants", "creator"})
     public List<Transaction> createdTransactions;
 
     @ManyToMany

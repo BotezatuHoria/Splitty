@@ -25,7 +25,6 @@ public class Transaction {
     protected int currency;
     protected String expenseType;
 
-    protected String type;
 
     @ManyToMany
     @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt", "event", "createdTransactions", "transactions"})
@@ -63,22 +62,21 @@ public class Transaction {
     }
 
     /**
-     * Public class for creating a transaction.
+     * Public class for creating a transaction without specified id.
      * @param name - name of the transaction
      * @param date - date of the transaction
      * @param money - value of the transaction
      * @param currency - the currency in which the transaction is handled
-     * @param type - type of expense
-     * @param participants - all participants in the transaction
-     * @param creator - creator of transaction
+     * @param expenseType - type of expense
+     * @param participants - participants
+     * @param creator - creator
      */
-    public Transaction(String name, LocalDate date, double money, int currency, String type,
-                       List<Person> participants, Person creator) {
+    public Transaction(String name, LocalDate date, double money, int currency, String expenseType, List<Person> participants, Person creator) {
         this.name = name;
         this.date = date;
         this.money = money;
         this.currency = currency;
-        this.type = type;
+        this.expenseType = expenseType;
         this.participants = participants;
         this.creator = creator;
     }
@@ -197,22 +195,6 @@ public class Transaction {
 
 
     /**
-     * Getter for the type of the transaction.
-     * @return - type of the transaction
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * Setter for the type of the transaction.
-     * @param type - type of the transaction
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    /**
      * toString method for the Transaction class.
      * @return - string representation of a Transaction with all the data
      */
@@ -233,12 +215,12 @@ public class Transaction {
         Transaction that = (Transaction) o;
         return id == that.id && Double.compare(money, that.money) == 0 && currency == that.currency &&
                 Objects.equals(name, that.name) && Objects.equals(date, that.date) &&
-                Objects.equals(expenseType, that.expenseType) && Objects.equals(type, that.type) &&
+                Objects.equals(expenseType, that.expenseType) &&
                 Objects.equals(participants, that.participants) && Objects.equals(creator, that.creator);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, date, money, currency, expenseType, type, participants, creator);
+        return Objects.hash(id, name, date, money, currency, expenseType, participants, creator);
     }
 }

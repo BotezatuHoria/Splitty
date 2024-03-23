@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 import com.google.inject.Inject;
+import javafx.stage.Modality;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -178,22 +179,31 @@ public class AddExpenseCtrl implements Initializable {
      * Method that creates a new Transaction and adds it to the database.
      */
     public void createTransaction() {
-        Person payer = payerBox.getValue();
-        String title = expenseField.getText();
-        double value = Double.parseDouble(priceField.getText());
-        LocalDate date = dateBox.getValue();
-        int currency = currencyBox.getValue();
-        List<Person> participants = new ArrayList<>();
-        for (CheckBox checkBox : peopleLIstView.getItems()) {
-            if (checkBox.isSelected()) {
-                participants.add((Person) checkBox.getUserData());
+        try {
+            Person payer = payerBox.getValue();
+            String title = expenseField.getText();
+            double value = Double.parseDouble(priceField.getText());
+            LocalDate date = dateBox.getValue();
+            int currency = currencyBox.getValue();
+            List<Person> participants = new ArrayList<>();
+            for (CheckBox checkBox : peopleLIstView.getItems()) {
+                if (checkBox.isSelected()) {
+                    participants.add((Person) checkBox.getUserData());
+                }
             }
+            String expenseType = expenseTypeBox.getValue();
+            Transaction transaction = new Transaction(title, date, value, currency, expenseType, participants, payer);
+            System.out.println(transaction.getCreator().toString());
+            Transaction result = server.addTransactionToCurrentEvent(mainCtrl.getCurrentEventID(), transaction);
+            System.out.println(result.toString());
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.setContentText("Expense created successfully!");
+            alert.showAndWait();
+        }catch (Exception e) {
+            mainCtrl.showAlert("Transaction was not created");
         }
-        String expenseType = expenseTypeBox.getValue();
-        Transaction transaction = new Transaction(title, date, value, currency, expenseType, participants, payer);
-        System.out.println(transaction.getCreator().toString());
-        Transaction result = server.addTransactionToCurrentEvent(mainCtrl.getCurrentEventID(), transaction);
-        System.out.println(result.toString());
+
     }
 
     /**
