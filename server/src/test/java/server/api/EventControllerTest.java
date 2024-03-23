@@ -1,5 +1,6 @@
 package server.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import commons.Event;
 import commons.Person;
 import commons.Transaction;
@@ -7,8 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
@@ -38,7 +39,7 @@ class EventControllerTest {
 
     @Test
     void addTest() {
-        Event event = new Event("tag", "title",1, "token", new HashSet<>(), new HashSet<>());
+        Event event = new Event("tag", "title",1, "token", new ArrayList<>(), new ArrayList<>());
         var actual = eventController.add(event);
         assertEquals(actual.getBody(), event);
     }
@@ -57,7 +58,7 @@ class EventControllerTest {
 
     @Test
     void getById() {
-        Event event = new Event("tag", "title",2, "token", new HashSet<>(), new HashSet<>());
+        Event event = new Event("tag", "title",2, "token",new ArrayList<>(), new ArrayList<>());
         eventController.add(event);
         var actual = eventController.getById(2);
         assertEquals(event, actual.getBody());
@@ -74,7 +75,7 @@ class EventControllerTest {
 
     @Test
     void getAllTest() {
-        Event event = new Event("tag", "title",3, "token", new HashSet<>(), new HashSet<>());
+        Event event = new Event("tag", "title",3, "token", new ArrayList<>(), new ArrayList<>());
         eventController.add(event);
         var actual = eventController.getAll();
         assertNotEquals(0, actual.size());
@@ -83,18 +84,18 @@ class EventControllerTest {
 
     @Test
     void updateByIdTest() {
-        Event event = new Event("tag", "title",4, "token", new HashSet<>(), new HashSet<>());
+        Event event = new Event("tag", "title",4, "token", new ArrayList<>(), new ArrayList<>());
         eventController.add(event);
-        Event eddited = new Event("tag2", "title2",4, "token2", new HashSet<>(), new HashSet<>());
+        Event eddited = new Event("tag2", "title2",4, "token2", new ArrayList<>(), new ArrayList<>());
         var actual = eventController.updateById(4, eddited);
         assertEquals(eddited, actual.getBody());
     }
 
     @Test
     void updateByIDInvalidTest() {
-        Event event = new Event("tag", "title",6, "token", new HashSet<>(), new HashSet<>());
+        Event event = new Event("tag", "title",6, "token", new ArrayList<>(), new ArrayList<>());
         eventController.add(event);
-        Event wrongId = new Event("tag2", "title2",45, "token2", new HashSet<>(), new HashSet<>());
+        Event wrongId = new Event("tag2", "title2",45, "token2", new ArrayList<>(), new ArrayList<>());
         Event wrongFields = new Event(null, null, 6, null, null, null);
         var actual1 = eventController.updateById(6, wrongId);
         var actual2 = eventController.updateById(6, wrongFields);
@@ -107,7 +108,7 @@ class EventControllerTest {
 
     @Test
     void deleteByIdTest() {
-        Event event = new Event("tag", "title",7, "token", new HashSet<>(), new HashSet<>());
+        Event event = new Event("tag", "title",7, "token", new ArrayList<>(), new ArrayList<>());
         eventController.add(event);
         var actual = eventController.deleteById(7);
         assertEquals(event, actual.getBody());
@@ -121,10 +122,10 @@ class EventControllerTest {
 
     @Test
     void getPeopleTest() {
-        Set<Person> people = new HashSet<>();
-        Event event = new Event("tag", "title",8, "token", people, new HashSet<>());
+        List<Person> people = new ArrayList<>();
+        Event event = new Event("tag", "title",8, "token", people, new ArrayList<>());
         people.add(new Person("test@email.com", "First", "Test",
-                "iban33",event, new HashSet<>(), new HashSet<>()));
+                "iban33",event, new ArrayList<>(), new ArrayList<>()));
         eventController.add(event);
         var actual = eventController.getPeople(8);
         assertEquals(actual.getBody(), people);
@@ -138,10 +139,10 @@ class EventControllerTest {
 
     @Test
     void getExpensesTest() {
-        Set<Transaction> transactions = new HashSet<>();
-        Event event = new Event("tag", "title",9, "token", new HashSet<>(), transactions);
+        List<Transaction> transactions = new ArrayList<>();
+        Event event = new Event("tag", "title",9, "token", new ArrayList<>(), transactions);
         transactions.add(new Transaction("name", LocalDate.now(), 4, 4,
-                new HashSet<>(), new Person(), null));
+                new ArrayList<>(), new Person(), null));
         eventController.add(event);
         var actual = eventController.getExpenses(9);
         assertEquals(actual.getBody(), transactions);
@@ -160,7 +161,7 @@ class EventControllerTest {
     @Test
     void createTransactionInvalidIDTest() {
         Transaction transaction = new Transaction("name", LocalDate.now(), 4, 4,
-                new HashSet<>(), new Person(), null);
+                new ArrayList<>(), new Person(), null);
         assertEquals(BAD_REQUEST, eventController.createNewExpense(49, transaction).getStatusCode());
     }
 
@@ -172,46 +173,46 @@ class EventControllerTest {
     }
 
     @Test
-    void addPersonTest() {
-        Event event = new Event("tag", "title",12, "token", new HashSet<>(), new HashSet<>());
+    void addPersonTest() throws JsonProcessingException {
+        Event event = new Event("tag", "title",12, "token", new ArrayList<>(), new ArrayList<>());
         Person person = new Person("test@email.com", "First", "Test",
-                "iban33",event, new HashSet<>(), new HashSet<>());
+                "iban33",event, new ArrayList<>(), new ArrayList<>());
         eventController.add(event);
         var actual = eventController.add(12, person);
-        assertEquals(actual.getBody(), event);
+        assertEquals(actual.getBody().getEvent(), event);
         assertTrue(event.getPeople().contains(person));
     }
 
     @Test
-    void addPersonInvalidId() {
-        Event event = new Event("tag", "title",12, "token", new HashSet<>(), new HashSet<>());
+    void addPersonInvalidId() throws JsonProcessingException {
+        Event event = new Event("tag", "title",12, "token", new ArrayList<>(), new ArrayList<>());
         eventController.add(event);
         Person person = new Person("test@email.com", "First", "Test",
-                "iban33",event, new HashSet<>(), new HashSet<>());
+                "iban33",event, new ArrayList<>(), new ArrayList<>());
         assertEquals(BAD_REQUEST, eventController.add(50, person).getStatusCode());
     }
 
 
 
     @Test
-    void deleteByIdPersonTest() {
-        Event event = new Event("tag", "title",14, "token", new HashSet<>(), new HashSet<>());
+    void deleteByIdPersonTest() throws JsonProcessingException {
+        Event event = new Event("tag", "title",14, "token", new ArrayList<>(), new ArrayList<>());
         Person person = new Person("test@email.com", "First", "Test",
-                "iban33",event, new HashSet<>(), new HashSet<>());
+                "iban33",event, new ArrayList<>(), new ArrayList<>());
         eventController.add(event);
         eventController.add(14, person);
         var actual = eventController.deleteById(14, person.getId());
-        assertEquals(actual.getBody(), event);
+        assertEquals(actual.getBody().getEvent(), event);
         assertFalse(event.getPeople().contains(person));
 
     }
 
     @Test
-    void deletePersonInvalidId() {
-        Event event = new Event("tag", "title",15, "token", new HashSet<>(), new HashSet<>());
+    void deletePersonInvalidId() throws JsonProcessingException {
+        Event event = new Event("tag", "title",15, "token", new ArrayList<>(), new ArrayList<>());
         eventController.add(event);
         Person person = new Person("test@email.com", "First", "Test",
-                "iban33",event, new HashSet<>(), new HashSet<>());
+                "iban33",event, new ArrayList<>(), new ArrayList<>());
         eventController.add(15, person);
         assertEquals(BAD_REQUEST, eventController.deleteById(50, person.getId()).getStatusCode());
         assertEquals(BAD_REQUEST, eventController.deleteById(15, 252).getStatusCode());
