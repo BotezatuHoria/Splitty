@@ -1,14 +1,12 @@
 package client.scenes;
 
 import java.net.URL;
-import java.util.HashSet;
 import java.util.ResourceBundle;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Event;
 import commons.Person;
-import commons.Transaction;
 import jakarta.ws.rs.WebApplicationException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

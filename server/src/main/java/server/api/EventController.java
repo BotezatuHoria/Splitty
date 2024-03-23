@@ -12,10 +12,8 @@ import commons.Person;
 import commons.Transaction;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -181,8 +179,6 @@ public class EventController {
         Event event = getById(idEvent).getBody();
         Person rmv = pc.getById(id).getBody();
         event.removePerson(rmv);
-//        Event saved = repo.save(event);
-//        ResponseEntity<Event> response = ResponseEntity.ok(saved);
         updateById(idEvent, event);
         pc.deleteById(id);
         return ResponseEntity.ok(rmv);
@@ -209,7 +205,7 @@ public class EventController {
      */
     @PostMapping(path = {"/{idEvent}/expenses"})
     public ResponseEntity<Transaction> createNewExpense(@PathVariable("idEvent") long idEvent,
-                                                  @RequestBody Transaction transaction) {
+                                                        @RequestBody Transaction transaction) {
         if (idEvent < 0 || !repo.existsById(idEvent)) {
             return ResponseEntity.badRequest().build();
         }
@@ -252,37 +248,6 @@ public class EventController {
         tc.updateById(transaction.getId(), transaction);
         repo.save(event);
         return ResponseEntity.ok(tc.getById(transaction.getId()).getBody());
-
-//        Transaction tr = tc.add(transaction).getBody();
-//
-//        for (Person participant : tr.getParticipants()) {
-//            if (participant.getTransactions() == null) {
-//                participant.setTransactions(new HashSet<>());
-//            }
-//            Set<Transaction> transactions = participant.getTransactions();
-//            transactions.add(tr);
-//            participant.setTransactions(transactions);
-//            pc.updateById(participant.getId(), participant);
-//        }
-//
-//
-//        Person creator = tr.getCreator();
-//        if (creator.getCreatedTransactions() == null) {
-//            creator.setCreatedTransactions(new HashSet<>());
-//        }
-//        Set<Transaction> createdTransactions = creator.getCreatedTransactions();
-//        createdTransactions.add(tr);
-//        pc.updateById(creator.getId(), creator);
-//
-//        Event event = getById(idEvent).getBody();
-//        if (event.getTransactions() == null) {
-//            event.setTransactions(new HashSet<>());
-//        }
-//        Set<Transaction> transactionSet = event.getTransactions();
-//        transactionSet.add(tr);
-//        updateById(event.getId(), event);
-//
-//        return  ResponseEntity.ok(tr);
     }
 
     /**

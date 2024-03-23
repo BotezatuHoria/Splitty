@@ -23,7 +23,6 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Set;
 
 import commons.Event;
 import commons.Person;

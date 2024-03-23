@@ -9,7 +9,6 @@ import commons.Person;
 import commons.Transaction;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
