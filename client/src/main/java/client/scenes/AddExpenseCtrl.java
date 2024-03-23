@@ -39,9 +39,6 @@ public class AddExpenseCtrl implements Initializable {
     @FXML // fx:id="dateBox"
     private DatePicker dateBox; // Value injected by FXMLLoader
 
-    @FXML // fx:id="errorLabel"
-    private Label errorLabel; // Value injected by FXMLLoader
-
     @FXML // fx:id="expenseField"
     private TextField expenseField; // Value injected by FXMLLoader
 
@@ -88,7 +85,6 @@ public class AddExpenseCtrl implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        currencyBox.getItems().add(840);
         expenseTypeBox.getItems().add("Food");
         expenseTypeBox.getItems().add("Entrance fees");
         expenseTypeBox.getItems().add("Travel");
@@ -118,15 +114,6 @@ public class AddExpenseCtrl implements Initializable {
         addAllParticipants();
     }
 
-    /**
-     * Method that prints all nodes.
-     */
-    public void showNodes() {
-        List<Node> nodes = getNodes();
-        for (Node node : nodes) {
-            System.out.println(node);
-        }
-    }
 
     /**
      * Method that checks all the checkBoxes for all the participants in the list view.
@@ -154,12 +141,10 @@ public class AddExpenseCtrl implements Initializable {
      * Function for the add button.
      */
     public void addExpense() {
-        showNodes();
         if (checkCompleted()) {
             createTransaction();
             clearInputs();
             mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
-            //send data to server databae
         }
     }
 
@@ -170,6 +155,7 @@ public class AddExpenseCtrl implements Initializable {
         List<Person> people = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
         addPeopleToView(people);
         addPeopleToPayerBox(people);
+        currencyBox.getItems().add(840);
     }
 
     /**
@@ -239,11 +225,6 @@ public class AddExpenseCtrl implements Initializable {
      *
      * @return - a list of all elements in the expensePane
      */
-    public List<Node> getNodes() {
-        List<Node> nodes = new LinkedList<>();
-        nodes.addAll(expensePane.getChildren());
-        return nodes;
-    }
 
     /**
      * Function for the abort button of the expense page.
