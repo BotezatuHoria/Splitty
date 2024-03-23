@@ -6,6 +6,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 
 @Entity
@@ -21,14 +22,15 @@ public class Person {
 
     //@JsonBackReference
     @ManyToOne
-    @JsonIgnore
+    @JsonIgnoreProperties({"tag", "title", "token", "people", "transactions"})
     public Event event;
 
     @OneToMany
-    @JsonIgnoreProperties("creator")
+    @JsonIgnoreProperties({"name", "date", "money", "currency", "expenseType", "type", "participants", "creator"})
     public Set<Transaction> createdTransactions;
 
     @ManyToMany
+    @JsonIgnoreProperties({"name", "date", "money", "currency", "expenseType", "type", "participants", "creator"})
     public Set<Transaction> transactions;
 
     /**

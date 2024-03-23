@@ -17,11 +17,11 @@ public class Event {
     protected String token;
 
     @OneToMany
-    @JsonIgnoreProperties({"createdTransactions"})
+    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt", "event", "createdTransactions", "transactions"})
     protected Set<Person> people;
 
     @OneToMany
-    @JsonIgnoreProperties({"createdTransactions"})
+    @JsonIgnoreProperties({"name", "date", "money", "currency", "expenseType", "type", "participants", "creator"})
     protected Set<Transaction> transactions;
 
     /**

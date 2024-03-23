@@ -28,11 +28,11 @@ public class Transaction {
     protected String type;
 
     @ManyToMany
-    @JsonIgnoreProperties({"createdTransactions", "transactions"})
+    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt", "event", "createdTransactions", "transactions"})
     public Set<Person> participants;
 
     @ManyToOne
-    @JsonIgnoreProperties({"createdTransactions", "transactions"})
+    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt", "event", "createdTransactions", "transactions"})
     public Person creator;
 
     /**
