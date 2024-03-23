@@ -179,6 +179,27 @@ public class Person {
         return createdTransactions;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Person person = (Person) o;
+        return id == person.id && debt == person.debt && Objects.equals(email, person.email) &&
+                Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) &&
+                Objects.equals(iban, person.iban) && Objects.equals(event, person.event) &&
+                Objects.equals(createdTransactions, person.createdTransactions) &&
+                Objects.equals(transactions, person.transactions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email, firstName, lastName, iban, debt, event, createdTransactions, transactions);
+    }
+
     /**
      * Getter method for the transactions that the person is being into.
      * @return - a set of all the transactions in which the person is a participant.

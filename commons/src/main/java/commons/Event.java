@@ -183,26 +183,23 @@ public class Event {
                 '}';
     }
 
-    /**
-     * compares two objects, if they are the same.
-     * @param o object to compare.
-     * @return returns wheter two object are the same event.
-     */
     @Override
     public boolean equals(Object o) {
-        if (this == o) { return true; }
-        if (o == null || getClass() != o.getClass()){ return false;}
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Event event = (Event) o;
-        return id == event.id ;
+        return id == event.id && Objects.equals(tag, event.tag) && Objects.equals(title, event.title) &&
+                Objects.equals(token, event.token) && Objects.equals(people, event.people) &&
+                Objects.equals(transactions, event.transactions);
     }
 
-    /**
-     * hashcodes the attributes of the event.
-     * @return returns the hashcode of the event.
-     */
     @Override
     public int hashCode() {
-        return Objects.hash(tag, title, id, token);
+        return Objects.hash(tag, title, id, token, people, transactions);
     }
 }
 

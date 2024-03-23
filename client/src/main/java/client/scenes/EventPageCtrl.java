@@ -14,7 +14,6 @@ import javafx.scene.control.*;
 
 
 import java.util.List;
-import java.util.Set;
 
 public class EventPageCtrl {
     private final MainCtrl mainCtrl;

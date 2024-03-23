@@ -102,7 +102,7 @@ class PersonTest {
         Person test2 = new Person("test@email.com", "First", "Test",
                 "iban33", new Event("", "", 2, "", new ArrayList<>(),
                 new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
-        assertEquals(test, test2);
+        assertNotEquals(test, test2);
     }
 
     @Test
