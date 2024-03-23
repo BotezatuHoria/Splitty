@@ -150,6 +150,7 @@ public class AddExpenseCtrl implements Initializable {
      * @param people - people to be added
      */
     public void addPeopleToPayerBox(List<Person> people) {
+        payerBox.getItems().clear();
         for (Person p : people) {
             payerBox.getItems().add(p);
         }

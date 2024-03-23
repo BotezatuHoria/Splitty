@@ -140,6 +140,7 @@ public class EventPageCtrl {
         }
         if (!display.isBlank()) {display = display.substring(0, display.length() - 2);}
         participantsList.setText(display);
+        System.out.println("This is selected" + participantsScroll.getSelectionModel().getSelectedItem());
     }
 
     /**
@@ -147,6 +148,7 @@ public class EventPageCtrl {
      */
     public void selectParticipant() {
         Person person = participantsScroll.getSelectionModel().getSelectedItem();
+        System.out.println(person);
         if (person != null) {
             fromParticipant.setText("From " + person);
             includingParticipant.setText("Including " + person);

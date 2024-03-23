@@ -204,7 +204,7 @@ public class Person {
         if (o == null || getClass() != o.getClass())
         {return false;}
         Person that = (Person) o;
-        return Objects.equals(email, that.email);
+        return Objects.equals(id, that.id);
     }
 
     @Override

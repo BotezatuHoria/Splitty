@@ -211,9 +211,7 @@ public class Transaction {
             return false;
         }
         Transaction that = (Transaction) o;
-        return Double.compare(money, that.money) == 0 && Objects.equals(name, that.name) &&
-                Objects.equals(date, that.date) && Objects.equals(currency, that.currency)
-                && Objects.equals(type, that.type);
+        return Objects.equals(id, that.id);
     }
 
 

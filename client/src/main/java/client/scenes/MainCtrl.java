@@ -192,6 +192,7 @@ public class MainCtrl {
     public void showExpensePage() {
         primaryStage.setTitle("Add Expense");
         expenseCtrl.retrievePeopleFromDb();
+
         primaryStage.setScene(expense);
 
     }

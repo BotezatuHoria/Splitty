@@ -145,6 +145,5 @@ public class ParticipantAdditionPageCtrl {
         Person person = new Person(newEmail, newFirstName, newLastName, newIban,
                 null, null, null);
         Person thePerson = server.addPerson(person, mainCtrl.getCurrentEventID());
-        System.out.println(thePerson);
     }
 }
