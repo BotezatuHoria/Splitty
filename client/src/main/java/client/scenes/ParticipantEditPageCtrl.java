@@ -110,6 +110,9 @@ public class ParticipantEditPageCtrl {
         System.out.println(participantsScroll.getItems());
     }
 
+    /**
+     * is the selector of the dropdown menu of participants of this event.
+     */
     public void selectParticipant() {
         Person person = participantsScroll.getSelectionModel().getSelectedItem();
         System.out.println("person to edit: " + person);
@@ -121,6 +124,9 @@ public class ParticipantEditPageCtrl {
         }
     }
 
+    /**
+     * should save the adjusted person to the db.
+     */
     public void saveUpdatedParticipant() {
         Person person = participantsScroll.getSelectionModel().getSelectedItem();
 
@@ -137,7 +143,8 @@ public class ParticipantEditPageCtrl {
 
             Person newPerson = new Person(newEmail, newFirstName, newLastName, newIban,
                     null, null, null);
-            server.updatePerson(person.getId(), newPerson);
+            //            server.updatePerson(person.getId(), newPerson);
+            System.out.println("THIS PART NOT YET DONE, FIX API");
             System.out.println("person with id " + person.getId() + " was adjusted to " + newPerson);
             mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
         } else {
@@ -147,6 +154,12 @@ public class ParticipantEditPageCtrl {
 
     }
 
+    /**
+     * checks wheter the edited participant has a first and lastname that already exist in event.
+     * @param firstname the new firstname of person.
+     * @param lastname the new lastname of person.
+     * @return true if another person with same names exist.
+     */
     public boolean personExists(String firstname, String lastname) {
         List<Person> allPersons = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
         boolean personIsDuplicate = false;

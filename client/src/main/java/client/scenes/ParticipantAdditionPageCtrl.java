@@ -114,7 +114,9 @@ public class ParticipantAdditionPageCtrl {
             clearFields();
             mainCtrl.showEventPage(mainCtrl.getCurrentEventID());  //This method still needs to be created
         }
-        else System.out.println("Person not added, fields were empty or person already existed in the event");
+        else {
+        System.out.println("Person not added, fields were empty or person already existed in the event");
+        }
     }
 
     /**
@@ -161,6 +163,7 @@ public class ParticipantAdditionPageCtrl {
         String newLastName = lastName.getText().trim();
         String newEmail = email.getText().trim();
         String newIban = iban.getText().trim();
+        boolean isDuplicate = personExists(newFirstName,newLastName);
 
         List<Person> allPersons = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
 
@@ -171,36 +174,22 @@ public class ParticipantAdditionPageCtrl {
 
         if(newFirstName.isEmpty() && newLastName.isEmpty()){
             return;
-            // maybe if possible color the textfield red when this error occurs?
         }
+        // maybe if possible color the textfield red when this error occurs.
         else if(newFirstName.isEmpty()){
             lastnameResponse.setText("");
         }
         else if(newLastName.isEmpty()){
             firstnameResponse.setText("");
         }
-        else if (!allPersons.isEmpty()){
-            boolean personIsDouble = false;
-            for (Person e:allPersons){
-                if(newFirstName.equals(e.getFirstName()) && (newLastName.equals(e.getLastName()))){
-                    firstnameResponse.setText("Make firstname + lastname a unique combination. ");
-                    lastnameResponse.setText("");
-                    doublePersonResponse.setText("The combination of this first and last name already exists in this event. It is recommended to rename this participant.");
-                    System.out.println("User tried to add a person already existing in this event (by first + lastname");
-                    personIsDouble = true;
-                }
-            }
-            if(!personIsDouble){
-                firstnameResponse.setText("");
-                lastnameResponse.setText("");
-                Person person = new Person(newEmail, newFirstName, newLastName, newIban,
-                        null, null, null);
-                Person thePerson = server.addPerson(person, mainCtrl.getCurrentEventID());
-            }
-
-
+        else if (isDuplicate) {
+            firstnameResponse.setText("Make firstname + lastname a unique combination. ");
+            lastnameResponse.setText("");
+            doublePersonResponse.setText("The combination of this first and last name already exists in this event. It is recommended to rename this participant.");
+            System.out.println("User tried to add a person already existing in this event (by first + lastname");
+            System.out.println();
         }
-        else{
+        else {
             firstnameResponse.setText("");
             lastnameResponse.setText("");
             Person person = new Person(newEmail, newFirstName, newLastName, newIban,
@@ -208,6 +197,26 @@ public class ParticipantAdditionPageCtrl {
             Person thePerson = server.addPerson(person, mainCtrl.getCurrentEventID());
         }
         System.out.println("Person added to the event");
+    }
+
+
+    /**
+     * checks wheter the edited participant has a first and lastname that already exist in event. will be used to shorten the above method to 50< lines.
+     * @param firstname the new firstname of person.
+     * @param lastname the new lastname of person.
+     * @return true if another person with same names exist.
+     */
+    public boolean personExists(String firstname, String lastname) {
+        List<Person> allPersons = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
+        boolean personIsDuplicate = false;
+        for (Person e : allPersons) {
+            if (firstname.equals(e.getFirstName()) && lastname.equals(e.getLastName())) {
+                doublePersonResponse.setText("The combination of this first and last name already exists in this event. It is recommended to rename this participant.");
+                System.out.println("tried to add a combination of firstname and lastname that already exists");
+                personIsDuplicate = true;
+            }
+        }
+        return personIsDuplicate;
     }
 
     /**
