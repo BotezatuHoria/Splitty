@@ -149,7 +149,7 @@ public class TestTransactionRepository implements TransactionRepository {
 
   @Override
   public List<Transaction> findAll() {
-    return null;
+    return transactionList;
   }
 
   @Override

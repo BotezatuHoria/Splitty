@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import server.database.TransactionRepository;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -150,7 +149,10 @@ public class TransactionController {
      */
     @PutMapping(path = {"/{id}"})
     public ResponseEntity<Transaction> updateById(@PathVariable("id") int id, @RequestBody Transaction newData) {
-        if (id < 0 || !repo.existsById(id)) {
+        if (id < 0 || !repo.existsById(id) || newData == null || isNullOrEmpty(newData.getName()) ||
+                newData.getCreator() == null || newData.getParticipants().isEmpty() ||
+                newData.getId() < 0 || newData.getDate() == null ||
+                newData.getMoney() == 0 || newData.getCurrency() == 0) {
             return ResponseEntity.badRequest().build();
         }
         return repo.findById(id)
@@ -174,7 +176,7 @@ public class TransactionController {
      * @return badRequest/ ok + updated Transaction
      */
     @PutMapping(path = {"/{id}/money"})
-    public ResponseEntity<Transaction> updateById(@PathVariable("id") int id, @RequestBody double money){
+    public ResponseEntity<Transaction> updateMoneyById(@PathVariable("id") int id, @RequestBody double money){
         if (id < 0 || !repo.existsById(id) || money == 0.0) {
             return ResponseEntity.badRequest().build();
         }

@@ -11,7 +11,9 @@ import org.springframework.http.ResponseEntity;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
@@ -43,6 +45,7 @@ class TransactionControllerTest {
         var actual = sut.add(test);
         assertEquals(BAD_REQUEST, actual.getStatusCode());
     }
+
     @Test
     public void testGetByInvalidId() {
         int invalidID = -1;
@@ -206,7 +209,7 @@ class TransactionControllerTest {
         // Save the transaction to the database
         sut.add(t);
 
-        // New name for the transaction
+        // New data for the transaction
         String newName = "New Transaction Name";
         LocalDate newDate = LocalDate.of(2004,10,27);
         int newMoney = 70;
@@ -216,40 +219,174 @@ class TransactionControllerTest {
         String newExpenseType = "Dollars";
         Transaction newTransaction = new Transaction(newName, newDate,newMoney, newCurrency, newParticipants, person2, newExpenseType);
 
-        // Act: Update the name of the transaction by ID
+        // Act: Update all the data of the transaction by ID
         ResponseEntity<Transaction> actualResponse = sut.updateById(1, newTransaction);
 
         // Assert
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         assertEquals(newTransaction, actualResponse.getBody());
     }
-
-
+    /**
+     * Tests updating all the values of the transaction at once.
+     */
     @Test
-    void getAll() {
+    public void testUpdateAllValuesOfTransactionByIdIncorrectly() {
+        // Create a sample transaction
+        HashSet<Person> participants = new HashSet<>();
+
+        Person person1 = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+
+        Person person2 = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 2, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+
+        participants.add(person1);
+        participants.add(person2);
+
+        Transaction t = new Transaction("test",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+                100, 947,participants, person1, "Euro");
+
+        // Save the transaction to the database
+        sut.add(t);
+
+        // New data for the transaction
+        String newName = "New Transaction Name";
+        LocalDate newDate = LocalDate.of(2004,10,27);
+        int newMoney = 70;
+        int newCurrency = 1001;
+        HashSet<Person> newParticipants = new HashSet<>();
+        newParticipants.add(person2);
+        Transaction newTransaction = new Transaction(newName, newDate,newMoney, newCurrency, newParticipants, person2, null);
+
+        // Act: Update all the data of the transaction by ID
+        ResponseEntity<Transaction> actualResponse = sut.updateById(1, newTransaction);
+
+        // Assert
+        assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
+        assertEquals(newTransaction, actualResponse.getBody());
+    }
+    /**
+     * Tests updating the participants of already existing Transaction.
+     */
+    @Test
+    public void testUpdateParticipants() {
+        // Create a sample transaction
+        HashSet<Person> participants = new HashSet<>();
+
+        Person person1 = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+
+        Person person2 = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 2, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+
+        participants.add(person1);
+        participants.add(person2);
+
+        Transaction t = new Transaction("test",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+                100, 947,participants, person1, "Euro");
+
+        // Save the transaction to the database
+        sut.add(t);
+
+        // New participants for the transaction
+        Person person3 = new Person("tesshfh@l.com", "BOB", "Kevin",
+                "iban33", new Event("", "", 3, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+
+        participants.add(person3);
+        // Act: Update the participants of the transaction by ID
+        ResponseEntity<Transaction> actualResponse = sut.updateParticipantsById(t.getId(), participants);
+
+        // Assert
+        assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
+        assertEquals(participants, actualResponse.getBody().getParticipants());
     }
 
+    /**
+     * Tests updating the participants of already existing Transaction.
+     */
     @Test
-    void getById() {
+    public void testUpdateMoney() {
+        // Create a sample transaction
+        HashSet<Person> participants = new HashSet<>();
+
+        Person person1 = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+
+        Person person2 = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 2, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+
+        participants.add(person1);
+        participants.add(person2);
+
+        Transaction t = new Transaction("test",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+                100, 947,participants, person1, "Euro");
+
+        // Save the transaction to the database
+        sut.add(t);
+
+        // New participants for the transaction
+        int newMoney = 999999;
+
+        // Act: Update the participants of the transaction by ID
+        ResponseEntity<Transaction> actualResponse = sut.updateMoneyById(t.getId(), newMoney);
+
+        // Assert
+        assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
+        assertEquals(newMoney, actualResponse.getBody().getMoney());
+    }
+    /**
+     * Tests updating the participants of already existing Transaction.
+     */
+    @Test
+    public void testGetAll() {
+        // Create a sample transaction
+        HashSet<Person> participants = new HashSet<>();
+
+        Person person1 = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+
+        Person person2 = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 2, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+
+        participants.add(person1);
+        participants.add(person2);
+
+        Transaction t = new Transaction("test",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+                100, 947,participants, person1, "Euro");
+        Person person3 = new Person("tesshfh@l.com", "BOB", "Kevin",
+                "iban33", new Event("", "", 3, "", new HashSet<>(),
+                new HashSet<>()), new HashSet<>(), new HashSet<>());
+        participants.add(person3);
+        Transaction t1 = new Transaction("test1",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("12"), Integer.parseInt("10")),
+                1055550, 95747,participants, person3, "Egsuro");
+
+        // Save the transaction to the database
+        sut.add(t);
+        sut.add(t1);
+        List<Transaction> expectedList = new ArrayList<>();
+        expectedList.add(t);
+        expectedList.add(t1);
+
+        // Act: Update the participants of the transaction by ID
+        List<Transaction> actualResponse = sut.getAll();
+
+        // Assert
+        assertEquals(expectedList.get(0), actualResponse.get(0));
+        assertEquals(expectedList.get(1), actualResponse.get(1));
     }
 
-    @Test
-    void add() {
-    }
-
-    @Test
-    void deleteById() {
-    }
-
-    @Test
-    void updateNameById() {
-    }
-
-    @Test
-    void updateParticipantsById() {
-    }
-
-    @Test
-    void updateCreatorById() {
-    }
 }
