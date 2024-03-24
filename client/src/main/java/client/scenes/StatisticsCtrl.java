@@ -12,8 +12,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class StatisticsCtrl {
     private final MainCtrl mainCtrl;
@@ -46,7 +46,7 @@ public class StatisticsCtrl {
         if (selectedEvent == null) {
             statsTotalExpenses.setText("Server error: event not found");
         } else {
-            Set<Transaction> transactions = selectedEvent.getTransactions();
+            List<Transaction> transactions = selectedEvent.getTransactions();
 
             double totalExpenses = 0.0;
             Map<String, Double> expensesData = new HashMap<>();

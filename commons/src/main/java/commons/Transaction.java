@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -14,7 +15,7 @@ import java.util.Set;
 public class Transaction {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     protected int id;
 
     protected String name;
@@ -28,11 +29,11 @@ public class Transaction {
     protected String type;
 
     @ManyToMany
-    @JsonIgnoreProperties({"createdTransactions", "transactions"})
-    public Set<Person> participants;
+    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt", "event", "createdTransactions", "transactions"})
+    public List<Person> participants;
 
     @ManyToOne
-    @JsonIgnoreProperties({"createdTransactions", "transactions"})
+    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt", "event", "createdTransactions", "transactions"})
     public Person creator;
 
     /**
@@ -51,7 +52,7 @@ public class Transaction {
      * @param currency - the currency in which the transaction is handled
      */
     public Transaction(String name, LocalDate date, double money, int currency,
-                       Set<Person> participants, Person creator, String expenseType) {
+                       List<Person> participants, Person creator, String expenseType) {
         id++;
         this.name = name;
         this.date = date;
@@ -63,22 +64,21 @@ public class Transaction {
     }
 
     /**
-     * Public class for creating a transaction.
+     * Public class for creating a transaction without specified id.
      * @param name - name of the transaction
      * @param date - date of the transaction
      * @param money - value of the transaction
      * @param currency - the currency in which the transaction is handled
-     * @param type - type of expense
-     * @param participants - all participants in the transaction
-     * @param creator - creator of transaction
+     * @param expenseType - type of expense
+     * @param participants - participants
+     * @param creator - creator
      */
-    public Transaction(String name, LocalDate date, double money, int currency, String type,
-                       Set<Person> participants, Person creator) {
+    public Transaction(String name, LocalDate date, double money, int currency, String expenseType, List<Person> participants, Person creator) {
         this.name = name;
         this.date = date;
         this.money = money;
         this.currency = currency;
-        this.type = type;
+        this.expenseType = expenseType;
         this.participants = participants;
         this.creator = creator;
     }
@@ -135,7 +135,7 @@ public class Transaction {
      * Getter for the people involved in a transaction.
      * @return - a set of all the people involved in the transaction.
      */
-    public Set<Person> getParticipants() {
+    public List<Person> getParticipants() {
         return participants;
     }
 
@@ -183,7 +183,7 @@ public class Transaction {
      * Setter for the set of participants included in the transaction.
      * @param participants set of participant.
      */
-    public void setParticipants(Set<Person> participants){
+    public void setParticipants(List<Person> participants){
         this.participants = participants;
     }
 
@@ -200,51 +200,6 @@ public class Transaction {
     }
 
     /**
-     * Equals method for the transaction class.
-     * @param o - object to be compared to.
-     * @return - if the 2 objects are equal.
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Transaction that = (Transaction) o;
-        return Double.compare(money, that.money) == 0 && Objects.equals(name, that.name) &&
-                Objects.equals(date, that.date) && Objects.equals(currency, that.currency)
-                && Objects.equals(type, that.type);
-    }
-
-
-    /**
-     * Getter for the type of the transaction.
-     * @return - type of the transaction
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * Setter for the type of the transaction.
-     * @param type - type of the transaction
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    /**
-     * Hash code method for the transaction.
-     * @return - hashCode for the transaction.
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, date, money, currency);
-    }
-
-    /**
      * toString method for the Transaction class.
      * @return - string representation of a Transaction with all the data
      */
@@ -254,4 +209,23 @@ public class Transaction {
                 "with the value: " + currency + money + ";";
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Transaction that = (Transaction) o;
+        return id == that.id && Double.compare(money, that.money) == 0 && currency == that.currency &&
+                Objects.equals(name, that.name) && Objects.equals(date, that.date) &&
+                Objects.equals(expenseType, that.expenseType) &&
+                Objects.equals(participants, that.participants) && Objects.equals(creator, that.creator);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, date, money, currency, expenseType, participants, creator);
+    }
 }
