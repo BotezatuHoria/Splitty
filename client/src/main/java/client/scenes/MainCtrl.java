@@ -58,6 +58,10 @@ public class MainCtrl {
 
     private ParticipantAdditionPageCtrl additionPageCtrl;
 
+    private Scene editParticipant;
+
+    private ParticipantEditPageCtrl editPageCtrl;
+
     private Scene inviteSend;
 
     private InviteSendingCtrl inviteSendingCtrl;
@@ -88,6 +92,7 @@ public class MainCtrl {
      * @param statistics - statistics page
      * @param expense - expense page
      * @param addParticipant - add participants page
+     *
      * @param debt - debt page
      * @param language - language page
      */
@@ -95,6 +100,7 @@ public class MainCtrl {
                            Pair<EventPageCtrl, Parent> event, Pair<StatisticsCtrl, Parent> statistics,
                            Pair<AddExpenseCtrl, Parent> expense,
                            Pair<ParticipantAdditionPageCtrl, Parent> addParticipant,
+                           Pair<ParticipantEditPageCtrl, Parent> editParticipant,
                            Pair<InviteSendingCtrl, Parent> inviteSend,
                            Pair<DebtSettlementCtrl, Parent> debt,
                            Pair<LanguageSelectorCtrl, Parent> language,
@@ -121,6 +127,9 @@ public class MainCtrl {
 
         this.additionPageCtrl = addParticipant.getKey();
         this.addParticipant = new Scene(addParticipant.getValue());
+
+        this.editPageCtrl = editParticipant.getKey();
+        this.editParticipant = new Scene(editParticipant.getValue());
 
         this.inviteSendingCtrl = inviteSend.getKey();
         this.inviteSend = new Scene(inviteSend.getValue());
@@ -192,7 +201,6 @@ public class MainCtrl {
     public void showExpensePage() {
         primaryStage.setTitle("Add Expense");
         expenseCtrl.retrievePeopleFromDb();
-
         primaryStage.setScene(expense);
 
     }
@@ -203,6 +211,15 @@ public class MainCtrl {
     public void showAddParticipant() {
         primaryStage.setTitle("Add participant");
         primaryStage.setScene(addParticipant);
+    }
+
+    /**
+     * Method for showing the add participant page.
+     */
+    public void showEditParticipant() {
+        primaryStage.setTitle("Edit participant" );
+        editPageCtrl.updatePage();
+        primaryStage.setScene(editParticipant);
     }
 
     /**

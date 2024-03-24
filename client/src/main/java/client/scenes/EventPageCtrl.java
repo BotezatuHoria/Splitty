@@ -85,6 +85,13 @@ public class EventPageCtrl {
     }
 
     /**
+     * Method for accessing the edit participants page.
+     */
+    public void editParticipants() {
+        mainCtrl.showEditParticipant();
+    }
+
+    /**
      * Method for accessing the sending invites page.
      */
     public void sendInvites() {
