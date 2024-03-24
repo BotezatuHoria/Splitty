@@ -23,6 +23,9 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.function.Consumer;
 
 import commons.Event;
 import commons.Person;
@@ -191,4 +194,28 @@ public class ServerUtils {
 		Client client = ClientBuilder.newClient();
 		Response response = client.target(SERVER).path("api/login/log").request().get();
 	}
+
+	private static final ExecutorService EXECUTOR_SERVER = Executors.newSingleThreadExecutor();
+
+	public void registerForUpdates(Consumer<Event> consumer) {
+		EXECUTOR_SERVER.submit(() -> {
+			while (!Thread.interrupted()) {
+				var res = ClientBuilder.newClient(new ClientConfig()) //
+						.target(SERVER).path("/api/event/updates") //
+						.request(APPLICATION_JSON) //
+						.accept(APPLICATION_JSON) //
+						.get(Response.class);
+				if (res.getStatus() == 204) {
+					continue;
+				}
+				Event e = res.readEntity(Event.class);
+				consumer.accept(e);
+			}
+		});
+	}
+
+	public void stop() {
+		EXECUTOR_SERVER.shutdownNow();
+	}
+
 }
