@@ -20,9 +20,11 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
@@ -42,6 +44,13 @@ import jakarta.ws.rs.core.GenericType;
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.messaging.converter.MappingJackson2MessageConverter;
+import org.springframework.messaging.simp.stomp.StompFrameHandler;
+import org.springframework.messaging.simp.stomp.StompHeaders;
+import org.springframework.messaging.simp.stomp.StompSession;
+import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
+import org.springframework.web.socket.client.standard.StandardWebSocketClient;
+import org.springframework.web.socket.messaging.WebSocketStompClient;
 
 public class ServerUtils {
 
@@ -217,5 +226,44 @@ public class ServerUtils {
 	public void stop() {
 		EXECUTOR_SERVER.shutdownNow();
 	}
+
+	private StompSession session = connect("ws://localhost:8080/websocket");
+
+	private StompSession connect(String url) {
+		StandardWebSocketClient client = new StandardWebSocketClient();
+		WebSocketStompClient stompClient =  new WebSocketStompClient(client);
+		stompClient.setMessageConverter(new MappingJackson2MessageConverter());
+		try {
+			// add stomp adapter error handling
+			return stompClient.connectAsync(url, new StompSessionHandlerAdapter() {}).get();
+		}
+		catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+		catch (ExecutionException executionException) {
+			throw new RuntimeException(executionException);
+		}
+		throw new IllegalStateException();
+	}
+
+	public <T> void registerForMessages(String dest, Class<T> type, Consumer<T> consumer) {
+		session.subscribe(dest, new StompFrameHandler() {
+			@Override
+			public Type getPayloadType(StompHeaders headers) {
+				return type;
+			}
+
+			@Override
+			public void handleFrame(StompHeaders headers, Object payload) {
+				consumer.accept((T) payload);
+			}
+		});
+	}
+
+	public Object send(String dest, Object o) {
+		session.send(dest, o);
+		return o;
+	}
+
 
 }
