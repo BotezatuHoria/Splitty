@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import server.database.TransactionRepository;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/transaction")
@@ -128,7 +127,7 @@ public class TransactionController {
      * @return returns the updated transaction
      */
     @PutMapping(path = {"/{id}/participants"})
-    public ResponseEntity<Transaction> updateParticipantsById(@PathVariable("id") int id, @RequestBody Set<Person> participants){
+    public ResponseEntity<Transaction> updateParticipantsById(@PathVariable("id") int id, @RequestBody List<Person> participants){
         if (id < 0 || !repo.existsById(id) || participants == null) {
             return ResponseEntity.badRequest().build();
         }

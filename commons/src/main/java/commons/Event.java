@@ -3,8 +3,8 @@ package commons;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 public class Event {
@@ -12,17 +12,17 @@ public class Event {
     protected String tag;
     protected String title;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     protected int id;
     protected String token;
 
     @OneToMany
-    @JsonIgnoreProperties({"createdTransactions"})
-    protected Set<Person> people;
+    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt", "event", "createdTransactions", "transactions"})
+    protected List<Person> people;
 
     @OneToMany
-    @JsonIgnoreProperties({"createdTransactions"})
-    protected Set<Transaction> transactions;
+    @JsonIgnoreProperties({"name", "date", "money", "currency", "expenseType", "participants", "creator"})
+    protected List<Transaction> transactions;
 
     /**
      * constructor, constructs the event with all these attributes.
@@ -33,7 +33,7 @@ public class Event {
      * @param people people that participate in an event
      * @param transactions transactions of the event
      */
-    public Event(String tag, String title, int id, String token, Set<Person> people, Set<Transaction> transactions) {
+    public Event(String tag, String title, int id, String token, List<Person> people, List<Transaction> transactions) {
         this.tag = tag;
         this.title = title;
         this.id = id;
@@ -85,7 +85,7 @@ public class Event {
      * the getter for the transactions of the event.
      * @return the transactions of the event
      */
-    public Set<Transaction> getTransactions() {
+    public List<Transaction> getTransactions() {
         return transactions;
     }
 
@@ -93,7 +93,7 @@ public class Event {
      * The getter for people that participate in an event.
      * @return people that participate in an event.
      */
-    public Set<Person> getPeople() {
+    public List<Person> getPeople() {
         return people;
     }
 
@@ -125,7 +125,7 @@ public class Event {
      * The setter for the events` people that participate.
      * @param people the new set of people that participate
      */
-    public void setPeople(Set<Person> people) {
+    public void setPeople(List<Person> people) {
         this.people = people;
     }
 
@@ -133,7 +133,7 @@ public class Event {
      * The setter for the events` transactions.
      * @param transactions the new set of transactions of the event
      */
-    public void setTransactions(Set<Transaction> transactions) {
+    public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
 
@@ -183,26 +183,23 @@ public class Event {
                 '}';
     }
 
-    /**
-     * compares two objects, if they are the same.
-     * @param o object to compare.
-     * @return returns wheter two object are the same event.
-     */
     @Override
     public boolean equals(Object o) {
-        if (this == o) { return true; }
-        if (o == null || getClass() != o.getClass()){ return false;}
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Event event = (Event) o;
-        return id == event.id && Objects.equals(tag, event.tag) && Objects.equals(title, event.title) && Objects.equals(token, event.token) ;
+        return id == event.id && Objects.equals(tag, event.tag) && Objects.equals(title, event.title) &&
+                Objects.equals(token, event.token) && Objects.equals(people, event.people) &&
+                Objects.equals(transactions, event.transactions);
     }
 
-    /**
-     * hashcodes the attributes of the event.
-     * @return returns the hashcode of the event.
-     */
     @Override
     public int hashCode() {
-        return Objects.hash(tag, title, id, token);
+        return Objects.hash(tag, title, id, token, people, transactions);
     }
 }
 

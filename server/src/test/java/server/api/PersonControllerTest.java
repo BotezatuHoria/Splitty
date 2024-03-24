@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class PersonControllerTest {
     private TestPersonRepository db;
@@ -30,8 +29,8 @@ public class PersonControllerTest {
     @Test
     public void addPersonTest() {
         Person test = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
+                "iban33", new Event("", "", 1, "", new ArrayList<>(),
+                new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
         var actual = sut.add(test);
         assertEquals(actual.getBody(), test);
     }
@@ -57,8 +56,8 @@ public class PersonControllerTest {
     @Test
     public void deletePersonTest() {
         Person test = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
+                "iban33", new Event("", "", 1, "", new ArrayList<>(),
+                new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
         sut.add(test);
         var actual = sut.deleteById(0);
         assertEquals(test, actual.getBody());
@@ -68,8 +67,8 @@ public class PersonControllerTest {
     @Test
     public void getPersonTest() {
         Person test = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
+                "iban33", new Event("", "", 1, "", new ArrayList<>(),
+                new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
         sut.add(test);
         var actual = sut.getById(0);
         assertEquals(test, actual.getBody());
@@ -78,8 +77,8 @@ public class PersonControllerTest {
     @Test
     public void updatePersonNegativeTest() {
         Person test = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
+                "iban33", new Event("", "", 1, "", new ArrayList<>(),
+                new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
         var actual = sut.updateById(-1, test);
         assertEquals(BAD_REQUEST, actual.getStatusCode());
     }
@@ -87,8 +86,8 @@ public class PersonControllerTest {
     @Test
     public void updatePersonDoesNotExistTest() {
         Person test = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
+                "iban33", new Event("", "", 1, "", new ArrayList<>(),
+                new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
         sut.add(test);
         var actual = sut.updateById(2, test);
         assertEquals(BAD_REQUEST, actual.getStatusCode());
@@ -97,12 +96,12 @@ public class PersonControllerTest {
     @Test
     public void updatePersonTest() {
         Person test = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
+                "iban33", new Event("", "", 1, "", new ArrayList<>(),
+               new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
 
         Person test2 = new Person("test2@gmail.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
+                "iban33", new Event("", "", 1, "", new ArrayList<>(),
+                new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
         sut.add(test);
         var actual = sut.updateById(0, test2);
         assertEquals(actual.getBody(), test2);
