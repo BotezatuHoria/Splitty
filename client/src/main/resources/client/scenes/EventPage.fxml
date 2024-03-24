@@ -24,7 +24,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="EditParticipants" layoutX="152.0" layoutY="87.0" mnemonicParsing="false" text="Edit" />
+      <Button fx:id="EditParticipants" layoutX="152.0" layoutY="87.0" mnemonicParsing="false" onAction="#editParticipants" text="Edit"  />
       <Button fx:id="AddParticipant" layoutX="208.0" layoutY="87.0" mnemonicParsing="false" onAction="#addParticipants" text="Add participant" />
       <Label fx:id="participantsList" layoutX="35.0" layoutY="123.0" prefHeight="26.0" prefWidth="400.0" text="Participants..." />
       <Label layoutX="35.0" layoutY="163.0" prefHeight="32.0" prefWidth="143.0" text="Expenses">

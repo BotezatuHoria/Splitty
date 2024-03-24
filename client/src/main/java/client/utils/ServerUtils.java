@@ -123,6 +123,15 @@ public class ServerUtils {
 	}
 
 
+	public Person updatePerson(int personID, Person person){
+		return ClientBuilder.newClient(new ClientConfig())
+				.target(SERVER).path("api/person/" + personID)
+				.request(APPLICATION_JSON)
+				.accept(APPLICATION_JSON)
+				.put(Entity.entity(person, APPLICATION_JSON), Person.class);
+	}
+
+
 	/**
 	 * This method adds the given event.
 	 * @param event of the event you want to add

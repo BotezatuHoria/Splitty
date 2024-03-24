@@ -54,7 +54,6 @@ public class PersonController {
                 || person.getLastName() == null) {
             return ResponseEntity.badRequest().build();
         }
-
         Person saved = db.save(person);
         return ResponseEntity.ok(saved);
     }
@@ -80,7 +79,7 @@ public class PersonController {
      * @param id the id to update by
      * @return person that was updated
      */
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Person> updateById(@PathVariable("id") int id, @RequestBody Person person) {
         if (id < 0 || !db.existsById(id) || person == null || person.getId() != id
                 || person.getFirstName() == null || person.getLastName() == null) {

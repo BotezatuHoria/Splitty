@@ -85,6 +85,13 @@ public class EventPageCtrl {
     }
 
     /**
+     * Method for accessing the edit participants page.
+     */
+    public void editParticipants() {
+        mainCtrl.showEditParticipant();
+    }
+
+    /**
      * Method for accessing the sending invites page.
      */
     public void sendInvites() {
@@ -111,7 +118,7 @@ public class EventPageCtrl {
     public void showStatistics() {mainCtrl.showStatisticsPage();}
 
     /**
-     * Setts the title to the current event.
+     * Sets the title to the current event.
      */
     public void setTitle() {
         eventTitle.setText(server.getEventByID(mainCtrl.getCurrentEventID()).getTitle());
