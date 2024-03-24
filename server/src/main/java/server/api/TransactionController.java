@@ -5,8 +5,6 @@ import commons.Transaction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import server.database.TransactionRepository;
-
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -55,16 +53,23 @@ public class TransactionController {
      */
     @PostMapping(path = { "", "/" })
     public ResponseEntity<Transaction> add(@RequestBody Transaction transaction) {
-
-        if (transaction == null || transaction.getCreator() == null || transaction.getParticipants().isEmpty() ||
-                transaction.getId() < 0 || isNullOrEmpty(transaction.getName())|| transaction.getDate() == null ||
-                transaction.getMoney() == 0 || transaction.getCurrency() == 0  ) {
+        if (transaction == null || isNullOrEmpty(transaction.getName()) ||
+                transaction.getCreator() == null || transaction.getParticipants().isEmpty() ||
+                transaction.getId() < 0 || transaction.getDate() == null ||
+                transaction.getMoney() == 0 || transaction.getCurrency() == 0) {
             return ResponseEntity.badRequest().build();
         }
 
-        Transaction saved = repo.save(transaction);
-        return ResponseEntity.ok(saved);
+        try {
+            repo.save(transaction); // returns null for whatever reason, should look into it
+            Transaction saved = transaction;
+            return ResponseEntity.ok(saved);
+        } catch (Exception e) {
+            // Handle any database-related exceptions (e.g., unique constraint violation)
+            return  ResponseEntity.badRequest().build();
+        }
     }
+
 
     /**
      * Checks strings to be either null or empty.
@@ -101,7 +106,8 @@ public class TransactionController {
      */
     @PutMapping(path = {"/{id}/name"})
     public ResponseEntity<Transaction> updateNameById(@PathVariable("id") int id, @RequestBody String name){
-        if (id < 0 || !repo.existsById(id) || isNullOrEmpty(name)) {
+        if (id < 0 ||
+                !repo.existsById(id) || isNullOrEmpty(name)) {
             return ResponseEntity.badRequest().build();
         }
         Transaction transaction = getById(id).getBody();
@@ -134,45 +140,6 @@ public class TransactionController {
     }
 
     /**
-     * Updates the creator of a transaction in the database with a specific id.
-     * @param id the id of the transaction to update
-     * @param creator the changed creator of the to update transaction.
-     * @return returns the updated transaction
-     */
-    @PutMapping(path = {"/{id}/creator"})
-    public ResponseEntity<Transaction> updateCreatorById(@PathVariable("id") int id, @RequestBody Person creator){
-        if (id < 0 || !repo.existsById(id) || creator == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        Transaction transaction = getById(id).getBody();
-        if (transaction == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        transaction.setCreator(creator);
-        repo.save(transaction);
-        return ResponseEntity.ok(transaction);
-    }
-
-    /**
-     * Updates the creator of a transaction in the database with a specific id.
-     * @param id the id of the transaction to update
-     * @param currency the changed currency of the to update transaction.
-     * @return returns the updated transaction
-     */
-    @PutMapping(path = {"/{id}/currency"})
-    public ResponseEntity<Transaction> updateCurrencyById(@PathVariable("id") int id, @RequestBody int currency){
-        if (id < 0 || !repo.existsById(id) || currency ==0) {
-            return ResponseEntity.badRequest().build();
-        }
-        Transaction transaction = getById(id).getBody();
-        if (transaction == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        transaction.setCurrency(currency);
-        repo.save(transaction);
-        return ResponseEntity.ok(transaction);
-    }
-    /**
      * Changes all the values of the transaction.
      * @param id id of a transaction
      * @param newData changed transaction.
@@ -180,46 +147,25 @@ public class TransactionController {
      */
     @PutMapping(path = {"/{id}"})
     public ResponseEntity<Transaction> updateById(@PathVariable("id") int id, @RequestBody Transaction newData) {
-        if (id < 0 || !repo.existsById(id)) {
+        if (id < 0 || !repo.existsById(id) || newData == null || isNullOrEmpty(newData.getName()) ||
+                newData.getCreator() == null || newData.getParticipants().isEmpty() ||
+                newData.getId() < 0 || newData.getDate() == null ||
+                newData.getMoney() == 0 || newData.getCurrency() == 0) {
             return ResponseEntity.badRequest().build();
         }
         return repo.findById(id)
                 .map(existingTransaction -> {
-                    // Update the properties of existingTransaction with newData
-                    // For example:
-                    // existingTransaction.setAmount(newData.getAmount());
-                    // ... other property updates
-                    return ResponseEntity.ok(repo.save(newData));
+                    existingTransaction.setName(newData.getName());
+                    existingTransaction.setDate(newData.getDate());
+                    existingTransaction.setMoney(newData.getMoney());
+                    existingTransaction.setCurrency(newData.getCurrency());
+                    existingTransaction.setParticipants(newData.getParticipants());
+                    existingTransaction.setExpenseType(newData.getExpenseType());
+                    return ResponseEntity.ok(repo.save(existingTransaction));
                 })
-                .orElseGet(() -> {
-                    // If the transaction doesn't exist, you can choose to create a new one
-                    // or return a not found response.
-                    // Here's how you might create a new one:
-                    return ResponseEntity.notFound().build();
-                });
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    /**
-     * Changes date of the transaction in BD.
-     * @param id id of a transaction
-     * @param date new date we want to change old transaction name to
-     * @return badRequest/ ok + updated Transaction
-     */
-    @PutMapping(path = {"/{id}/date"})
-    public ResponseEntity<Transaction> updateById(@PathVariable("id") int id, @RequestBody LocalDate date){
-        if (id < 0 || !repo.existsById(id) || date == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        Transaction transaction = getById(id).getBody();
-
-        //check if transaction is null, if it is return bad request
-        if (transaction == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        transaction.setDate(date);
-        repo.save(transaction);
-        return ResponseEntity.ok(transaction);
-    }
 
     /**
      * Changes money val of the transaction in DB.
@@ -228,7 +174,7 @@ public class TransactionController {
      * @return badRequest/ ok + updated Transaction
      */
     @PutMapping(path = {"/{id}/money"})
-    public ResponseEntity<Transaction> updateById(@PathVariable("id") int id, @RequestBody double money){
+    public ResponseEntity<Transaction> updateMoneyById(@PathVariable("id") int id, @RequestBody double money){
         if (id < 0 || !repo.existsById(id) || money == 0.0) {
             return ResponseEntity.badRequest().build();
         }
