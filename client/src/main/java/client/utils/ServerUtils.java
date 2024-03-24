@@ -187,6 +187,32 @@ public class ServerUtils {
 		}
 	}
 
+	public Event updateEventById(Event event, int id) {
+		Response response = ClientBuilder.newClient().target(SERVER)
+				.path("api/event/" + id)
+				.request(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.put(Entity.entity(event, MediaType.APPLICATION_JSON));
+		if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+			return response.readEntity(Event.class);
+		} else {
+			throw new RuntimeException("Failed to update event. Status code: " + response.getStatus());
+		}
+	}
+
+	public Event deleteEventById(Event event, int id) {
+		Response response = ClientBuilder.newClient().target(SERVER)
+				.path("api/event/" + id)
+				.request(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.delete();
+		if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+			return response.readEntity(Event.class);
+		} else {
+			throw new RuntimeException("Failed to remove event. Status code: " + response.getStatus());
+		}
+	}
+
 	/**
 	 * Gets the admin password for the server.
 	 * @return returns the current admin password
