@@ -143,25 +143,6 @@ public class TransactionController {
     }
 
     /**
-     * Updates the creator of a transaction in the database with a specific id.
-     * @param id the id of the transaction to update
-     * @param currency the changed currency of the to update transaction.
-     * @return returns the updated transaction
-     */
-    @PutMapping(path = {"/{id}/currency"})
-    public ResponseEntity<Transaction> updateCurrencyById(@PathVariable("id") int id, @RequestBody int currency){
-        if (id < 0 || !repo.existsById(id) || currency ==0) {
-            return ResponseEntity.badRequest().build();
-        }
-        Transaction transaction = getById(id).getBody();
-        if (transaction == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        transaction.setCurrency(currency);
-        repo.save(transaction);
-        return ResponseEntity.ok(transaction);
-    }
-    /**
      * Changes all the values of the transaction.
      * @param id id of a transaction
      * @param newData changed transaction.
@@ -185,27 +166,6 @@ public class TransactionController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    /**
-     * Changes date of the transaction in BD.
-     * @param id id of a transaction
-     * @param date new date we want to change old transaction name to
-     * @return badRequest/ ok + updated Transaction
-     */
-    @PutMapping(path = {"/{id}/date"})
-    public ResponseEntity<Transaction> updateById(@PathVariable("id") int id, @RequestBody LocalDate date){
-        if (id < 0 || !repo.existsById(id) || date == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        Transaction transaction = getById(id).getBody();
-
-        //check if transaction is null, if it is return bad request
-        if (transaction == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        transaction.setDate(date);
-        repo.save(transaction);
-        return ResponseEntity.ok(transaction);
-    }
 
     /**
      * Changes money val of the transaction in DB.
