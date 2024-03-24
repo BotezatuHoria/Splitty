@@ -8,7 +8,6 @@ import server.database.TransactionRepository;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/transaction")
@@ -121,7 +120,7 @@ public class TransactionController {
      * @return returns the updated transaction
      */
     @PutMapping(path = {"/{id}/participants"})
-    public ResponseEntity<Transaction> updateParticipantsById(@PathVariable("id") int id, @RequestBody Set<Person> participants){
+    public ResponseEntity<Transaction> updateParticipantsById(@PathVariable("id") int id, @RequestBody List<Person> participants){
         if (id < 0 || !repo.existsById(id) || participants == null) {
             return ResponseEntity.badRequest().build();
         }
@@ -190,7 +189,7 @@ public class TransactionController {
                     // For example:
                     // existingTransaction.setAmount(newData.getAmount());
                     // ... other property updates
-                    return ResponseEntity.ok(repo.save(existingTransaction));
+                    return ResponseEntity.ok(repo.save(newData));
                 })
                 .orElseGet(() -> {
                     // If the transaction doesn't exist, you can choose to create a new one

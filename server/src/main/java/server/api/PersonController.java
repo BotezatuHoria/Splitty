@@ -49,7 +49,7 @@ public class PersonController {
      * @return person that was added
      */
     @PostMapping(path = { "", "/" })
-    public ResponseEntity<Person> add(Person person) {
+    public ResponseEntity<Person> add(@RequestBody Person person) {
         if (person == null || person.getId() < 0 || person.getFirstName() == null
                 || person.getLastName() == null) {
             return ResponseEntity.badRequest().build();

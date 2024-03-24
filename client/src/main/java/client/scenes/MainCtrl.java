@@ -20,6 +20,8 @@ import client.utils.SelectedEventSingleton;
 import commons.Event;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import client.utils.ServerUtils;
@@ -68,6 +70,12 @@ public class MainCtrl {
 
     private LanguageSelectorCtrl languageSelectorCtrl;
 
+    private Scene adminLogin;
+    private AdminLoginCtrl adminLoginCtrl;
+
+    private Scene adminPage;
+    private AdminPageCtrl adminPageCtrl;
+
     public MainCtrl() {
     }
 
@@ -89,7 +97,9 @@ public class MainCtrl {
                            Pair<ParticipantAdditionPageCtrl, Parent> addParticipant,
                            Pair<InviteSendingCtrl, Parent> inviteSend,
                            Pair<DebtSettlementCtrl, Parent> debt,
-                           Pair<LanguageSelectorCtrl, Parent> language) {
+                           Pair<LanguageSelectorCtrl, Parent> language,
+                           Pair<AdminLoginCtrl, Parent> adminLoginPage,
+                           Pair<AdminPageCtrl, Parent> adminPage) {
         this.server = new ServerUtils();
 
         EventsSingleton eventsInstance = EventsSingleton.getInstance();
@@ -120,6 +130,12 @@ public class MainCtrl {
 
         this.languageSelectorCtrl = language.getKey();
         this.language = new Scene(language.getValue());
+
+        this.adminLoginCtrl = adminLoginPage.getKey();
+        this.adminLogin = new Scene(adminLoginPage.getValue());
+
+        this.adminPageCtrl = adminPage.getKey();
+        this.adminPage = new Scene(adminPage.getValue());
 
         showStarter();
         primaryStage.show();
@@ -158,8 +174,7 @@ public class MainCtrl {
         primaryStage.setTitle("Event Page");
         SelectedEventSingleton selectedEventInstance = SelectedEventSingleton.getInstance();
         selectedEventInstance.setEventId(eventID);
-        eventCtrl.setTitle();
-
+        eventCtrl.updatePage();
         primaryStage.setScene(event);
     }
 
@@ -177,6 +192,7 @@ public class MainCtrl {
     public void showExpensePage() {
         primaryStage.setTitle("Add Expense");
         expenseCtrl.retrievePeopleFromDb();
+
         primaryStage.setScene(expense);
 
     }
@@ -217,6 +233,22 @@ public class MainCtrl {
     }
 
     /**
+     * Method for showing the admin login.
+     */
+    public void showAdminLogin(){
+        primaryStage.setTitle("Admin Login");
+        primaryStage.setScene(adminLogin);
+    }
+
+    /**
+     * Method for showing the admin page.
+     */
+    public void showAdminPage(){
+        primaryStage.setTitle("Admin Page");
+        primaryStage.setScene(adminPage);
+    }
+
+    /**
      * Get current server instance.
      * @return current server instance.
      */
@@ -231,5 +263,12 @@ public class MainCtrl {
     public int getCurrentEventID() {
         SelectedEventSingleton selectedEventInstance = SelectedEventSingleton.getInstance();
         return selectedEventInstance.getEventId();
+    }
+
+    public void showAlert(String error) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.setContentText(error);
+        alert.showAndWait();
     }
 }

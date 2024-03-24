@@ -15,6 +15,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
 import com.google.inject.Inject;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 public class StarterPageCtrl {
 
@@ -45,6 +47,9 @@ public class StarterPageCtrl {
     @FXML // fx:id="listView"
     private ListView<Event> listView;
 
+    @FXML
+    private Button adminbutton;
+
     /**
      * Constructor for the StarterPageCtrl class.
      *
@@ -60,6 +65,11 @@ public class StarterPageCtrl {
     @FXML
     void selectLanguage() {
         mainCtrl.showLanguage();
+    }
+
+    @FXML
+    void adminLogin(){
+        mainCtrl.showAdminLogin();
     }
 
     /**
@@ -100,7 +110,7 @@ public class StarterPageCtrl {
     public void showEventPage() {
         String name = createTextField.getText();
         if(name.equals("")) {name = "New Event";}
-        Event event = server.addEvent(new Event("", name, 0, "", new HashSet<>(), new HashSet<>()));
+        Event event = server.addEvent(new Event("", name, 0, "", new ArrayList<>(), new ArrayList<>()));
         System.out.println(event);
         mainCtrl.showEventPage(event.getId());
     }
@@ -117,7 +127,8 @@ public class StarterPageCtrl {
             mainCtrl.showEventPage(eventId);
         }
         catch (Exception e){
-            System.out.println("This event doesn't exist");
+            // System.out.println("This event doesn't exist");
+            mainCtrl.showAlert("This event doesn't exist.");
         }
     }
 
@@ -139,6 +150,17 @@ public class StarterPageCtrl {
         total = total/3000929;
         System.out.println("Translated from the sharecode, eventID = " + total);
         return total;
+    }
+
+    public void keyPressed(KeyEvent e) {
+        TextField source = (TextField) e.getSource();
+        if (e.getCode() == KeyCode.ENTER) {
+            if (source == createTextField) {
+                showEventPage();
+            } else if (source == joinTextField) {
+                joinEvent();
+            }
+        }
     }
 
 }
