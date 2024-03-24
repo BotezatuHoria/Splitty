@@ -12,9 +12,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.PrimitiveIterator;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
@@ -35,12 +33,12 @@ class TransactionControllerTest {
         sut = new TransactionController(db);
 
         // Create a sample transaction
-         participants = new ArrayList<>();
-         person1 = new Person("test@email.com", "First", "Test",
+        participants = new ArrayList<>();
+        person1 = new Person("test@email.com", "First", "Test",
                 "iban33", new Event("", "", 1, "", new ArrayList<>(),
                 new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
 
-         person2 = new Person("test@email.com", "First", "Test",
+        person2 = new Person("test@email.com", "First", "Test",
                 "iban33", new Event("", "", 2, "", new ArrayList<>(),
                 new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
 
