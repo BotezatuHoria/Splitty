@@ -44,5 +44,6 @@
       </Button>
       <Label fx:id="firstnameResponse" layoutX="96.0" layoutY="99.0" />
       <Label fx:id="lastnameResponse" layoutX="96.0" layoutY="152.0" />
+      <Label fx:id="doublePersonResponse" layoutX="438.0" layoutY="65.0" prefHeight="102.0" prefWidth="126.0" wrapText="true" />
    </children>
 </AnchorPane>

@@ -1,6 +1,7 @@
 package client.scenes;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import client.utils.ServerUtils;
@@ -56,6 +57,9 @@ public class ParticipantAdditionPageCtrl {
     @FXML
     private Label lastnameResponse;
 
+    @FXML
+    private Label doublePersonResponse;
+
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -110,6 +114,7 @@ public class ParticipantAdditionPageCtrl {
             clearFields();
             mainCtrl.showEventPage(mainCtrl.getCurrentEventID());  //This method still needs to be created
         }
+        else System.out.println("shit gaat mis");
     }
 
     /**
@@ -152,35 +157,57 @@ public class ParticipantAdditionPageCtrl {
      * creates a person, or when the values are invalid, points out which fields are yet to be filled in (and required to).
      */
     public void createPerson() {
-        String newFirstName = firstName.getText().trim();
+        String newFirstName = firstName.getText().trim();                   //get all the values of the filled-in fields.
         String newLastName = lastName.getText().trim();
         String newEmail = email.getText().trim();
         String newIban = iban.getText().trim();
-        if(newFirstName.equals("") && newLastName.equals("") ){
-            firstnameResponse.setText("Cannot be empty! Fill in this field!");
-            firstnameResponse.setStyle("-fx-font-style: italic");
-//            firstnameResponse.setStyle("-fx-background-color: red");
-//            firstName.setStyle("-fx-background-color: red");
 
-            lastnameResponse.setText("Cannot be empty! Fill in this field!");
-            lastnameResponse.setStyle("-fx-font-style: italic");
-//            lastnameResponse.setStyle("-fx-background-color: red");
-//            lastName.setStyle("--body-background-color: rgba(175,52,52,0.6)");
+        List<Person> allPersons = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
+
+        firstnameResponse.setText("Cannot be empty! Fill in this field!");     //as standard, there are warnings, they go away when not applicable.
+        firstnameResponse.setStyle("-fx-font-style: italic");
+        lastnameResponse.setText("Cannot be empty! Fill in this field!");
+        lastnameResponse.setStyle("-fx-font-style: italic");
+
+        if(newFirstName.isEmpty() && newLastName.isEmpty()){
+            return;
+            // maybe if possible color the textfield red when this error occurs?
         }
-        if(newFirstName.equals("") ){
-            firstnameResponse.setText("Cannot be empty! Fill in this field!");
-            firstName.setStyle("--body-background-color: rgba(175,52,52,0.6)");
+        else if(newFirstName.isEmpty()){
+            lastnameResponse.setText("");
         }
-        else if(newLastName.equals("")){
-            lastnameResponse.setText("Cannot be empty! Fill in this field!");
-            lastName.setStyle("--body-background-color: rgba(175,52,52,0.6)");
+        else if(newLastName.isEmpty()){
+            firstnameResponse.setText("");
+        }
+        else if (!allPersons.isEmpty()){
+            boolean personIsDouble = false;
+            for (Person e:allPersons){
+                if(newFirstName.equals(e.getFirstName()) && (newLastName.equals(e.getLastName()))){
+                    firstnameResponse.setText("");
+                    lastnameResponse.setText("");
+                    doublePersonResponse.setText("The combination of this first and last name already exists in this event. It is recommended to rename this participant.");
+                    System.out.println("shit is double");
+                    personIsDouble = true;
+                }
+            }
+            if(!personIsDouble){
+                firstnameResponse.setText("");
+                lastnameResponse.setText("");
+                Person person = new Person(newEmail, newFirstName, newLastName, newIban,
+                        null, null, null);
+                Person thePerson = server.addPerson(person, mainCtrl.getCurrentEventID());
+            }
+
+
         }
         else{
+            firstnameResponse.setText("");
+            lastnameResponse.setText("");
             Person person = new Person(newEmail, newFirstName, newLastName, newIban,
                     null, null, null);
             Person thePerson = server.addPerson(person, mainCtrl.getCurrentEventID());
         }
-
+        System.out.println("klaar");
     }
 
     /**
@@ -189,6 +216,7 @@ public class ParticipantAdditionPageCtrl {
     public void resetWarnings(){
         firstnameResponse.setText("");
         lastnameResponse.setText("");
+        doublePersonResponse.setText("");
         // also reset the colors of the firstName bars etc if they changed after an error (wanted to implement that).
 
     }
