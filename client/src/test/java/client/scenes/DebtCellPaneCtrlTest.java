@@ -5,7 +5,7 @@ import commons.Event;
 import commons.Person;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 
 class DebtCellPaneCtrlTest{
@@ -16,12 +16,12 @@ class DebtCellPaneCtrlTest{
   @Test
   void getInfoText() {
     Event event = new Event("tag", "BIG EVENT", 1,
-            "fjh-213-fsd-233", new HashSet<>(), new HashSet<>());
+            "fjh-213-fsd-233", new ArrayList<>(), new ArrayList<>());
 
     Person person1 = new Person("bob@gmail.com", "Artur", "Iurasov",
-            "34586", event, new HashSet<>(),new HashSet<>() );
+            "34586", event, new ArrayList<>(),new ArrayList<>() );
     Person person2 = new Person("guboshlep@gmail.com", "Vytaras", "Juzonis",
-            "33245", event, new HashSet<>(),new HashSet<>() );
+            "33245", event, new ArrayList<>(),new ArrayList<>() );
     DebtCellData data = new DebtCellData(person1, person2, 15);
     //DebtCellPaneCtrl test = new DebtCellPaneCtrl();
     String expected = data.getSender().getFirstName()+

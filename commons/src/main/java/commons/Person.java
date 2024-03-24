@@ -1,17 +1,16 @@
 package commons;
 
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 //import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
 public class Person {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     protected int id;
     protected String email;
     protected String firstName;
@@ -21,15 +20,16 @@ public class Person {
 
     //@JsonBackReference
     @ManyToOne
-    @JsonIgnore
+    @JsonIgnoreProperties({"tag", "title", "token", "people", "transactions"})
     public Event event;
 
     @OneToMany
-    @JsonIgnoreProperties("creator")
-    public Set<Transaction> createdTransactions;
+    @JsonIgnoreProperties({"name", "date", "money", "currency", "expenseType", "participants", "creator"})
+    public List<Transaction> createdTransactions;
 
     @ManyToMany
-    public Set<Transaction> transactions;
+    @JsonIgnoreProperties({"name", "date", "money", "currency", "expenseType", "type", "participants", "creator"})
+    public List<Transaction> transactions;
 
     /**
      * Constructor for people.
@@ -40,7 +40,7 @@ public class Person {
      * @param event that this person is added to
      */
     public Person(String email, String firstName, String lastName, String iban, Event event,
-                  Set<Transaction> createdTransactions, Set<Transaction> transactions) {
+                  List<Transaction> createdTransactions, List<Transaction> transactions) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -127,7 +127,7 @@ public class Person {
      * Setter for createdTransactions.
      * @param createdTransactions the email to set to
      */
-    public void setCreatedTransactions(Set<Transaction> createdTransactions) {
+    public void setCreatedTransactions(List<Transaction> createdTransactions) {
         this.createdTransactions = createdTransactions;
     }
 
@@ -135,7 +135,7 @@ public class Person {
      * Setter for transactions.
      * @param transactions the email to set to
      */
-    public void setTransactions(Set<Transaction> transactions) {
+    public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
 
@@ -175,15 +175,36 @@ public class Person {
      * Getter method for the transactions created by the user.
      * @return a set of all transactions that were done by the user.
      */
-    public Set<Transaction> getCreatedTransactions() {
+    public List<Transaction> getCreatedTransactions() {
         return createdTransactions;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Person person = (Person) o;
+        return id == person.id && debt == person.debt && Objects.equals(email, person.email) &&
+                Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) &&
+                Objects.equals(iban, person.iban) && Objects.equals(event, person.event) &&
+                Objects.equals(createdTransactions, person.createdTransactions) &&
+                Objects.equals(transactions, person.transactions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email, firstName, lastName, iban, debt, event, createdTransactions, transactions);
     }
 
     /**
      * Getter method for the transactions that the person is being into.
      * @return - a set of all the transactions in which the person is a participant.
      */
-    public Set<Transaction> getTransactions() {
+    public List<Transaction> getTransactions() {
         return transactions;
     }
 
@@ -191,34 +212,9 @@ public class Person {
         this.event = event;
     }
 
-    /**
-     * Equals method that returns true if the person is the same else false.
-     * @param o object to compare too
-     * @return true if the email is the same
-     */
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {return true;}
-        if (o == null || getClass() != o.getClass())
-        {return false;}
-        Person that = (Person) o;
-        return Objects.equals(email, that.email);
-    }
-
     @Override
     public String toString() {
         return firstName + " " + lastName;
-    }
-
-    /**
-     * Hashcode for the people.
-     * @return integer value
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(email);
     }
 
     /**
