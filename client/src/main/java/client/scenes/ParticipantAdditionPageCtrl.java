@@ -114,7 +114,7 @@ public class ParticipantAdditionPageCtrl {
             clearFields();
             mainCtrl.showEventPage(mainCtrl.getCurrentEventID());  //This method still needs to be created
         }
-        else System.out.println("shit gaat mis");
+        else System.out.println("Person not added, fields were empty or person already existed in the event");
     }
 
     /**
@@ -183,10 +183,10 @@ public class ParticipantAdditionPageCtrl {
             boolean personIsDouble = false;
             for (Person e:allPersons){
                 if(newFirstName.equals(e.getFirstName()) && (newLastName.equals(e.getLastName()))){
-                    firstnameResponse.setText("");
+                    firstnameResponse.setText("Make firstname + lastname a unique combination. ");
                     lastnameResponse.setText("");
                     doublePersonResponse.setText("The combination of this first and last name already exists in this event. It is recommended to rename this participant.");
-                    System.out.println("shit is double");
+                    System.out.println("User tried to add a person already existing in this event (by first + lastname");
                     personIsDouble = true;
                 }
             }
@@ -207,7 +207,7 @@ public class ParticipantAdditionPageCtrl {
                     null, null, null);
             Person thePerson = server.addPerson(person, mainCtrl.getCurrentEventID());
         }
-        System.out.println("klaar");
+        System.out.println("Person added to the event");
     }
 
     /**
