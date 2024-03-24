@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.PrimitiveIterator;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
@@ -23,10 +24,32 @@ class TransactionControllerTest {
 
     private TestTransactionRepository db;
     private TransactionController sut;
+    private Person person1;
+    private Person person2;
+    private List<Person> participants;
+    private Transaction t;
+
     @BeforeEach
     public void setup () {
         db = new TestTransactionRepository();
         sut = new TransactionController(db);
+
+        // Create a sample transaction
+         participants = new ArrayList<>();
+         person1 = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new ArrayList<>(),
+                new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
+
+         person2 = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 2, "", new ArrayList<>(),
+                new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
+
+        participants.add(person1);
+        participants.add(person2);
+
+        t = new Transaction("test",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+                100, 947,participants, person1, "Euro");
     }
     @Test
     public void getTransactionNullTest() {
@@ -53,23 +76,6 @@ class TransactionControllerTest {
     }
     @Test
     public void testAddValidTransaction() {
-        HashSet<Person> participants = new HashSet<>();
-
-        Person person1 = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
-
-        Person person2 = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 2, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
-
-        participants.add(person1);
-        participants.add(person2);
-
-        Transaction t = new Transaction("test",
-                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
-                100, 947,participants, person1, "Euro");
-
         // Act
         ResponseEntity<Transaction> actualResponse = sut.add(t);
 
@@ -83,18 +89,23 @@ class TransactionControllerTest {
      */
     @Test
     public void testAddInvalidTransaction() {
-        HashSet<Person> participants = new HashSet<>();
+        List<Person> list = new ArrayList<>();
+        Person personTest = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 1, "", new ArrayList<>(),
+                new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
 
-        Person person1 = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
+        Person personTest2 = new Person("test@email.com", "First", "Test",
+                "iban33", new Event("", "", 2, "", new ArrayList<>(),
+                new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
 
-        Transaction t = new Transaction("test",
+        list.add(person1);
+        list.add(person2);
+
+        Transaction test = new Transaction("test",
                 LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
-                100, 947,participants, person1, "Euro");
-
+                100, 947,list, null, "Euro");
         // Act
-        ResponseEntity<Transaction> actualResponse = sut.add(t);
+        ResponseEntity<Transaction> actualResponse = sut.add(test);
 
         // Assert
         assertEquals(BAD_REQUEST, actualResponse.getStatusCode());
@@ -117,24 +128,6 @@ class TransactionControllerTest {
      */
     @Test
     public void testDeleteValidTransaction() {
-        // Create a sample transaction
-        HashSet<Person> participants = new HashSet<>();
-
-        Person person1 = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
-
-        Person person2 = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 2, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
-
-        participants.add(person1);
-        participants.add(person2);
-
-        Transaction t = new Transaction("test",
-                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
-                100, 947,participants, person1, "Euro");
-
         // Save the transaction to the repository
         sut.add(t);
 
@@ -151,24 +144,6 @@ class TransactionControllerTest {
      */
     @Test
     public void testUpdateNameValidTransaction() {
-        // Create a sample transaction
-        HashSet<Person> participants = new HashSet<>();
-
-        Person person1 = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
-
-        Person person2 = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 2, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
-
-        participants.add(person1);
-        participants.add(person2);
-
-        Transaction t = new Transaction("test",
-                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
-                100, 947,participants, person1, "Euro");
-
         // Save the transaction to the database
         sut.add(t);
 
@@ -188,23 +163,6 @@ class TransactionControllerTest {
      */
     @Test
     public void testUpdateAllValuesOfTransactionById() {
-        // Create a sample transaction
-        HashSet<Person> participants = new HashSet<>();
-
-        Person person1 = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
-
-        Person person2 = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 2, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
-
-        participants.add(person1);
-        participants.add(person2);
-
-        Transaction t = new Transaction("test",
-                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
-                100, 947,participants, person1, "Euro");
 
         // Save the transaction to the database
         sut.add(t);
@@ -214,7 +172,7 @@ class TransactionControllerTest {
         LocalDate newDate = LocalDate.of(2004,10,27);
         int newMoney = 70;
         int newCurrency = 1001;
-        HashSet<Person> newParticipants = new HashSet<>();
+        List<Person> newParticipants = new ArrayList<>();
         newParticipants.add(person2);
         String newExpenseType = "Dollars";
         Transaction newTransaction = new Transaction(newName, newDate,newMoney, newCurrency, newParticipants, person2, newExpenseType);
@@ -224,31 +182,13 @@ class TransactionControllerTest {
 
         // Assert
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
-        assertEquals(newTransaction, actualResponse.getBody());
+        assertEquals(newTransaction.toString(), actualResponse.getBody().toString());
     }
     /**
      * Tests updating all the values of the transaction at once.
      */
     @Test
     public void testUpdateAllValuesOfTransactionByIdIncorrectly() {
-        // Create a sample transaction
-        HashSet<Person> participants = new HashSet<>();
-
-        Person person1 = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
-
-        Person person2 = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 2, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
-
-        participants.add(person1);
-        participants.add(person2);
-
-        Transaction t = new Transaction("test",
-                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
-                100, 947,participants, person1, "Euro");
-
         // Save the transaction to the database
         sut.add(t);
 
@@ -257,47 +197,30 @@ class TransactionControllerTest {
         LocalDate newDate = LocalDate.of(2004,10,27);
         int newMoney = 70;
         int newCurrency = 1001;
-        HashSet<Person> newParticipants = new HashSet<>();
+        List<Person> newParticipants = new ArrayList<>();
         newParticipants.add(person2);
-        Transaction newTransaction = new Transaction(newName, newDate,newMoney, newCurrency, newParticipants, person2, null);
+        Transaction newTransaction = new Transaction(newName, null ,newMoney, newCurrency, newParticipants, person2, null);
 
         // Act: Update all the data of the transaction by ID
         ResponseEntity<Transaction> actualResponse = sut.updateById(1, newTransaction);
 
         // Assert
-        assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
-        assertEquals(newTransaction, actualResponse.getBody());
+        assertEquals(BAD_REQUEST, actualResponse.getStatusCode());
     }
     /**
      * Tests updating the participants of already existing Transaction.
      */
     @Test
     public void testUpdateParticipants() {
-        // Create a sample transaction
-        HashSet<Person> participants = new HashSet<>();
 
-        Person person1 = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
-
-        Person person2 = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 2, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
-
-        participants.add(person1);
-        participants.add(person2);
-
-        Transaction t = new Transaction("test",
-                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
-                100, 947,participants, person1, "Euro");
 
         // Save the transaction to the database
         sut.add(t);
 
         // New participants for the transaction
         Person person3 = new Person("tesshfh@l.com", "BOB", "Kevin",
-                "iban33", new Event("", "", 3, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
+                "iban33", new Event("", "", 3, "", new ArrayList<>(),
+                new ArrayList<>()), new ArrayList<>(),new ArrayList<>());
 
         participants.add(person3);
         // Act: Update the participants of the transaction by ID
@@ -313,24 +236,6 @@ class TransactionControllerTest {
      */
     @Test
     public void testUpdateMoney() {
-        // Create a sample transaction
-        HashSet<Person> participants = new HashSet<>();
-
-        Person person1 = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
-
-        Person person2 = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 2, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
-
-        participants.add(person1);
-        participants.add(person2);
-
-        Transaction t = new Transaction("test",
-                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
-                100, 947,participants, person1, "Euro");
-
         // Save the transaction to the database
         sut.add(t);
 
@@ -349,26 +254,9 @@ class TransactionControllerTest {
      */
     @Test
     public void testGetAll() {
-        // Create a sample transaction
-        HashSet<Person> participants = new HashSet<>();
-
-        Person person1 = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
-
-        Person person2 = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 2, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
-
-        participants.add(person1);
-        participants.add(person2);
-
-        Transaction t = new Transaction("test",
-                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
-                100, 947,participants, person1, "Euro");
         Person person3 = new Person("tesshfh@l.com", "BOB", "Kevin",
-                "iban33", new Event("", "", 3, "", new HashSet<>(),
-                new HashSet<>()), new HashSet<>(), new HashSet<>());
+                "iban33", new Event("", "", 3, "", new ArrayList<>(),
+                new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
         participants.add(person3);
         Transaction t1 = new Transaction("test1",
                 LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("12"), Integer.parseInt("10")),
