@@ -11,6 +11,7 @@ import jakarta.ws.rs.WebApplicationException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import javafx.scene.input.KeyEvent;
@@ -49,6 +50,13 @@ public class ParticipantAdditionPageCtrl {
     @FXML // fx:id="lastName"
     private TextField lastName; // Value injected by FXMLLoader
 
+    @FXML
+    private Label firstnameResponse;
+
+    @FXML
+    private Label lastnameResponse;
+
+
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert abortButton != null : "fx:id=\"abortButton\" was not injected: check your FXML file 'ParticipantAdditionPage.fxml'.";
@@ -82,10 +90,10 @@ public class ParticipantAdditionPageCtrl {
     }
 
     /**
-     * Method for the create button.
-     * TODO: Finish this method after the server.utils is created.
+     * Method for the create button, to add the person to the participant list.
      */
     public void create(){
+        int amountOfPerson = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID()).size();
         try {
             createPerson();
         } catch (WebApplicationException e) {
@@ -97,8 +105,11 @@ public class ParticipantAdditionPageCtrl {
             return;
         }
 
-        clearFields();
-        mainCtrl.showEventPage(mainCtrl.getCurrentEventID());  //This method still needs to be created
+
+        if( server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID()).size()> amountOfPerson )    {
+            clearFields();
+            mainCtrl.showEventPage(mainCtrl.getCurrentEventID());  //This method still needs to be created
+        }
     }
 
     /**
@@ -137,13 +148,48 @@ public class ParticipantAdditionPageCtrl {
     }
 
 
+    /**
+     * creates a person, or when the values are invalid, points out which fields are yet to be filled in (and required to).
+     */
     public void createPerson() {
         String newFirstName = firstName.getText().trim();
         String newLastName = lastName.getText().trim();
         String newEmail = email.getText().trim();
         String newIban = iban.getText().trim();
-        Person person = new Person(newEmail, newFirstName, newLastName, newIban,
-                null, null, null);
-        Person thePerson = server.addPerson(person, mainCtrl.getCurrentEventID());
+        if(newFirstName.equals("") && newLastName.equals("") ){
+            firstnameResponse.setText("Cannot be empty! Fill in this field!");
+            firstnameResponse.setStyle("-fx-font-style: italic");
+//            firstnameResponse.setStyle("-fx-background-color: red");
+//            firstName.setStyle("-fx-background-color: red");
+
+            lastnameResponse.setText("Cannot be empty! Fill in this field!");
+            lastnameResponse.setStyle("-fx-font-style: italic");
+//            lastnameResponse.setStyle("-fx-background-color: red");
+//            lastName.setStyle("--body-background-color: rgba(175,52,52,0.6)");
+        }
+        if(newFirstName.equals("") ){
+            firstnameResponse.setText("Cannot be empty! Fill in this field!");
+            firstName.setStyle("--body-background-color: rgba(175,52,52,0.6)");
+        }
+        else if(newLastName.equals("")){
+            lastnameResponse.setText("Cannot be empty! Fill in this field!");
+            lastName.setStyle("--body-background-color: rgba(175,52,52,0.6)");
+        }
+        else{
+            Person person = new Person(newEmail, newFirstName, newLastName, newIban,
+                    null, null, null);
+            Person thePerson = server.addPerson(person, mainCtrl.getCurrentEventID());
+        }
+
+    }
+
+    /**
+     * resets the warnings given when someone tries to add a person without a name or a surname.
+     */
+    public void resetWarnings(){
+        firstnameResponse.setText("");
+        lastnameResponse.setText("");
+        // also reset the colors of the firstName bars etc if they changed after an error (wanted to implement that).
+
     }
 }

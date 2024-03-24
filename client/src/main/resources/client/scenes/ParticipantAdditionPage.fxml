@@ -18,8 +18,8 @@
             <Font size="22.0" />
          </font>
       </Label>
-      <TextField fx:id="firstName" layoutX="96.0" layoutY="67.0" prefHeight="32.0" prefWidth="323.0" promptText="First Name" />
-      <TextField fx:id="lastName" layoutX="97.0" layoutY="110.0" prefHeight="32.0" prefWidth="323.0" promptText="Last Name" />
+      <TextField fx:id="firstName" layoutX="96.0" layoutY="67.0" onMouseClicked="#resetWarnings" prefHeight="32.0" prefWidth="323.0" promptText="First Name" />
+      <TextField fx:id="lastName" layoutX="97.0" layoutY="120.0" onMouseClicked="#resetWarnings" prefHeight="32.0" prefWidth="323.0" promptText="Last Name" />
       <Label layoutX="26.0" layoutY="184.0" text="Email">
          <font>
             <Font size="22.0" />
@@ -42,5 +42,7 @@
             <Font size="24.0" />
          </font>
       </Button>
+      <Label fx:id="firstnameResponse" layoutX="96.0" layoutY="99.0" />
+      <Label fx:id="lastnameResponse" layoutX="96.0" layoutY="152.0" />
    </children>
 </AnchorPane>
