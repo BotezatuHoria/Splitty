@@ -56,16 +56,23 @@ public class TransactionController {
      */
     @PostMapping(path = { "", "/" })
     public ResponseEntity<Transaction> add(@RequestBody Transaction transaction) {
-
-        if (transaction == null || transaction.getCreator() == null || transaction.getParticipants().isEmpty() ||
-                transaction.getId() < 0 || isNullOrEmpty(transaction.getName())|| transaction.getDate() == null ||
-                transaction.getMoney() == 0 || transaction.getCurrency() == 0  ) {
+        if (transaction == null || isNullOrEmpty(transaction.getName()) ||
+                transaction.getCreator() == null || transaction.getParticipants().isEmpty() ||
+                transaction.getId() < 0 || transaction.getDate() == null ||
+                transaction.getMoney() == 0 || transaction.getCurrency() == 0) {
             return ResponseEntity.badRequest().build();
         }
 
-        Transaction saved = repo.save(transaction);
-        return ResponseEntity.ok(saved);
+        try {
+            repo.save(transaction); // returns null for whatever reason, should look into it
+            Transaction saved = transaction;
+            return ResponseEntity.ok(saved);
+        } catch (Exception e) {
+            // Handle any database-related exceptions (e.g., unique constraint violation)
+            return  ResponseEntity.badRequest().build();
+        }
     }
+
 
     /**
      * Checks strings to be either null or empty.
@@ -102,7 +109,8 @@ public class TransactionController {
      */
     @PutMapping(path = {"/{id}/name"})
     public ResponseEntity<Transaction> updateNameById(@PathVariable("id") int id, @RequestBody String name){
-        if (id < 0 || !repo.existsById(id) || isNullOrEmpty(name)) {
+        if (id < 0 ||
+                !repo.existsById(id) || isNullOrEmpty(name)) {
             return ResponseEntity.badRequest().build();
         }
         Transaction transaction = getById(id).getBody();
@@ -130,26 +138,6 @@ public class TransactionController {
             return ResponseEntity.badRequest().build();
         }
         transaction.setParticipants(participants);
-        repo.save(transaction);
-        return ResponseEntity.ok(transaction);
-    }
-
-    /**
-     * Updates the creator of a transaction in the database with a specific id.
-     * @param id the id of the transaction to update
-     * @param creator the changed creator of the to update transaction.
-     * @return returns the updated transaction
-     */
-    @PutMapping(path = {"/{id}/creator"})
-    public ResponseEntity<Transaction> updateCreatorById(@PathVariable("id") int id, @RequestBody Person creator){
-        if (id < 0 || !repo.existsById(id) || creator == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        Transaction transaction = getById(id).getBody();
-        if (transaction == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        transaction.setCreator(creator);
         repo.save(transaction);
         return ResponseEntity.ok(transaction);
     }
@@ -186,18 +174,15 @@ public class TransactionController {
         }
         return repo.findById(id)
                 .map(existingTransaction -> {
-                    // Update the properties of existingTransaction with newData
-                    // For example:
-                    // existingTransaction.setAmount(newData.getAmount());
-                    // ... other property updates
+                    existingTransaction.setName(newData.getName());
+                    existingTransaction.setDate(newData.getDate());
+                    existingTransaction.setMoney(newData.getMoney());
+                    existingTransaction.setCurrency(newData.getCurrency());
+                    existingTransaction.setParticipants(newData.getParticipants());
+                    existingTransaction.setExpenseType(newData.getExpenseType());
                     return ResponseEntity.ok(repo.save(existingTransaction));
                 })
-                .orElseGet(() -> {
-                    // If the transaction doesn't exist, you can choose to create a new one
-                    // or return a not found response.
-                    // Here's how you might create a new one:
-                    return ResponseEntity.notFound().build();
-                });
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     /**

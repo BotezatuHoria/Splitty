@@ -1,6 +1,7 @@
 package server.api;
 
 import commons.Transaction;
+import org.hibernate.type.EntityType;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -8,11 +9,20 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 import server.database.TransactionRepository;
 
+import javax.swing.text.html.parser.Entity;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
+
 public class TestTransactionRepository implements TransactionRepository {
+  List<Transaction> transactionList;
+  List<String> methodsUsedList;
+  public TestTransactionRepository(){
+    transactionList = new ArrayList<>();
+    methodsUsedList = new ArrayList<>();
+  }
 
   @Override
   public void flush() {
@@ -96,22 +106,45 @@ public class TestTransactionRepository implements TransactionRepository {
 
   @Override
   public <S extends Transaction> S save(S entity) {
-    return null;
+    methodsUsedList.add("save");
+    for(Transaction t : transactionList){
+      if(t.equals(entity)){
+        return entity;
+      }
+    }
+    transactionList.add(entity);
+    return entity;
   }
 
   @Override
   public <S extends Transaction> List<S> saveAll(Iterable<S> entities) {
-    return null;
+    methodsUsedList.add("saveAll");
+    List<S> listToReturn = new ArrayList<>();
+    for(S entity : entities){
+      listToReturn.add(this.save(entity));
+    }
+    return listToReturn;
   }
 
   @Override
   public Optional<Transaction> findById(Integer integer) {
+    methodsUsedList.add("findById");
+    for(Transaction t : transactionList){
+      if(integer.equals(t.getId())){
+        return Optional.of(t);
+      }
+    }
     return Optional.empty();
   }
 
   @Override
   public boolean existsById(Integer integer) {
-    return false;
+   for(Transaction t : transactionList){
+     if(integer.equals(t.getId())){
+       return true;
+     }
+   }
+   return false;
   }
 
   @Override

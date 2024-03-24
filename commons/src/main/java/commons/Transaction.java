@@ -195,7 +195,9 @@ public class Transaction {
         this.creator = creator;
     }
 
-
+    public void setExpenseType(String expenseType) {
+        this.expenseType = expenseType;
+    }
 
     /**
      * Equals method for the transaction class.
