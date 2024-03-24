@@ -197,50 +197,7 @@ public class Transaction {
         this.expenseType = expenseType;
     }
 
-    /**
-     * Equals method for the transaction class.
-     * @param o - object to be compared to.
-     * @return - if the 2 objects are equal.
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Transaction that = (Transaction) o;
-        return Double.compare(money, that.money) == 0 && Objects.equals(name, that.name) &&
-                Objects.equals(date, that.date) && Objects.equals(currency, that.currency)
-                && Objects.equals(type, that.type);
-    }
 
-
-    /**
-     * Getter for the type of the transaction.
-     * @return - type of the transaction
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * Setter for the type of the transaction.
-     * @param type - type of the transaction
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    /**
-     * Hash code method for the transaction.
-     * @return - hashCode for the transaction.
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, date, money, currency);
-    }
 
     /**
      * toString method for the Transaction class.
