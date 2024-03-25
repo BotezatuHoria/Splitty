@@ -22,6 +22,9 @@ public class FlagListCell extends ListCell<Pair<String, Image>> {
         if (empty || item == null) {
             setGraphic(null);
         } else {
+            LanguageSingleton instance = LanguageSingleton.getInstance();
+            instance.setLanguage(item);
+
             ImageView flagView = new ImageView(item.getValue());
             flagView.setFitHeight(17); // Adjust size as needed
             flagView.setFitWidth(40);

@@ -1,19 +1,27 @@
 package client.utils;
 
 
+import javafx.scene.image.Image;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
 public class LanguageSingleton {
     private static final LanguageSingleton instance = new LanguageSingleton();
-    private String code;
+    private Pair<String, Image> language;
 
     public LanguageSingleton() {
-        this.code = "en";
+        this.language = FlagListCell.getLanguages().get(0);
     }
 
-    public String getCode() {
-        return code;
+    public Pair<String, Image> getLanguage() {
+        return language;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setLanguage(Pair<String, Image> language) {
+        this.language = language;
+    }
+
+    public static LanguageSingleton getInstance() {
+        return instance;
     }
 }

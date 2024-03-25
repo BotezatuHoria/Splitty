@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.*;
 
 import client.utils.FlagListCell;
+import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import commons.Event;
 import javafx.fxml.FXML;
@@ -17,8 +18,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
 import com.google.inject.Inject;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import org.apache.commons.lang3.tuple.Pair;
 
 public class StarterPageCtrl {
 
@@ -68,8 +71,20 @@ public class StarterPageCtrl {
     void initialize() {
         languageSelector.getItems().addAll(FlagListCell.getLanguages());
 
+        // Responsible for setting the flags and changing languages
         languageSelector.setCellFactory(lv -> new FlagListCell());
         languageSelector.setButtonCell(new FlagListCell());
+
+        // Show current language
+        Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
+        languageSelector.getSelectionModel().select(currentLanguage);
+
+        languageSelector.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                LanguageSingleton instance = LanguageSingleton.getInstance();
+                instance.setLanguage((Pair<String, Image>) newValue);
+            }
+        });
     }
 
     @FXML
