@@ -163,8 +163,8 @@ public class EventController {
 
 
 
-    @PutMapping(path = {"/{idEvent}/person"})
-    public ResponseEntity<Person> updatePerson(@PathVariable("idEvent") long idEvent, @RequestParam int id,
+    @PutMapping(path = {"/{idEvent}/person/{id}"})
+    public ResponseEntity<Person> updatePerson(@PathVariable("idEvent") long idEvent, @PathVariable("id") int id,
                                                @RequestBody Person update) {
         if (Objects.equals(pc.getById(id), ResponseEntity.badRequest().build())) {
             return ResponseEntity.badRequest().build();
@@ -172,7 +172,7 @@ public class EventController {
         if ((idEvent < 0 || !repo.existsById(idEvent) || id < 0)) {
             return ResponseEntity.badRequest().build();
         }
-        pc.updateById(id, update);
+        pc.updateByIdTransactions(id, update);
         Event event = getById(idEvent).getBody();
         Person old = pc.getById(id).getBody();
         List<Person> people = event.getPeople();
@@ -183,8 +183,7 @@ public class EventController {
         List<Transaction> transactions = getExpenses(idEvent).getBody();
         event.setPeople(people);
         event.setTransactions(transactions);
-        update.setEvent(event);
-        pc.updateById(id, update);
+        updateById(idEvent, event);
         return ResponseEntity.ok(pc.getById(id).getBody());
     }
 

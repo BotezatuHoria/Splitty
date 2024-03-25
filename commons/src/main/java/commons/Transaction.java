@@ -1,5 +1,6 @@
 package commons;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -235,6 +236,7 @@ public class Transaction {
      * Returns a list of id of the participants.
      * @return
      */
+    @JsonIgnore
     public List<Integer> getParticipantsIds() {
         List<Integer> ret = new LinkedList<>();
         if (participants == null) {return ret;}

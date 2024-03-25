@@ -78,6 +78,8 @@ public class PersonController {
         return person;
     }
 
+
+
     /**
      * Updates person based on their id.
      * @param id the id to update by
@@ -85,6 +87,16 @@ public class PersonController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<Person> updateById(@PathVariable("id") int id, @RequestBody Person person) {
+        if (id < 0 || !db.existsById(id) || person == null || person.getId() != id
+                || person.getFirstName() == null || person.getLastName() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        db.save(person);
+        return ResponseEntity.ok(db.findById(id).get());
+    }
+
+    public ResponseEntity<Person> updateByIdTransactions(@PathVariable("id") int id, @RequestBody Person person) {
         if (id < 0 || !db.existsById(id) || person == null || person.getId() != id
                 || person.getFirstName() == null || person.getLastName() == null) {
             return ResponseEntity.badRequest().build();
