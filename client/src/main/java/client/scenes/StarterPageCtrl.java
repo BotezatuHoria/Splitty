@@ -7,16 +7,21 @@ package client.scenes;
 import java.net.URL;
 import java.util.*;
 
+import client.utils.FlagListCell;
+import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import commons.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
 import com.google.inject.Inject;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import org.apache.commons.lang3.tuple.Pair;
 
 public class StarterPageCtrl {
 
@@ -42,7 +47,7 @@ public class StarterPageCtrl {
     private TextField joinTextField;
 
     @FXML // fx:id="languageSelector"
-    private Button languageSelector; // Value injected by FXMLLoader
+    private ComboBox languageSelector; // Value injected by FXMLLoader
 
     @FXML // fx:id="listView"
     private ListView<Event> listView;
@@ -62,9 +67,13 @@ public class StarterPageCtrl {
         this.server = server;
     }
 
-    @FXML
-    void selectLanguage() {
-        mainCtrl.showLanguage();
+    @FXML // This method is called by the FXMLLoader when initialization is complete
+    void initialize() {
+        languageSelector.getItems().addAll(FlagListCell.getLanguages());
+
+        // Responsible for setting the flags and changing languages
+        languageSelector.setCellFactory(lv -> new FlagListCell());
+        languageSelector.setButtonCell(new FlagListCell());
     }
 
     @FXML
@@ -150,6 +159,12 @@ public class StarterPageCtrl {
         total = total/3000929;
         System.out.println("Translated from the sharecode, eventID = " + total);
         return total;
+    }
+
+    public void updateLanguage() {
+        // Show current language
+        Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
+        languageSelector.getSelectionModel().select(currentLanguage);
     }
 
     public void keyPressed(KeyEvent e) {

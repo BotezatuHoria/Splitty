@@ -80,10 +80,14 @@ public class MainCtrl {
     private Scene adminPage;
     private AdminPageCtrl adminPageCtrl;
 
+    private Scene startSettings;
+    private StartSettingsCtrl startSettingsCtrl;
+
     public MainCtrl() {
     }
 
 
+    @SuppressWarnings("parameterNumber")
     /**
      * Initialize method for the main controller.
      * @param primaryStage - primary stage
@@ -99,6 +103,7 @@ public class MainCtrl {
     public void initialize(Stage primaryStage, Pair<StarterPageCtrl, Parent> starter,
                            Pair<EventPageCtrl, Parent> event, Pair<StatisticsCtrl, Parent> statistics,
                            Pair<AddExpenseCtrl, Parent> expense,
+                           Pair<StartSettingsCtrl, Parent> startSettings,
                            Pair<ParticipantAdditionPageCtrl, Parent> addParticipant,
                            Pair<ParticipantEditPageCtrl, Parent> editParticipant,
                            Pair<InviteSendingCtrl, Parent> inviteSend,
@@ -113,6 +118,10 @@ public class MainCtrl {
         eventsInstance.setEvents(events);
 
         this.primaryStage = primaryStage;
+
+        this.startSettingsCtrl = startSettings.getKey();
+        this.startSettings = new Scene(startSettings.getValue());
+
         this.starterPageCtrl = starter.getKey();
         this.starter = new Scene(starter.getValue());
 
@@ -146,7 +155,7 @@ public class MainCtrl {
         this.adminPageCtrl = adminPage.getKey();
         this.adminPage = new Scene(adminPage.getValue());
 
-        showStarter();
+        showStartSettings();
         primaryStage.show();
     }
 
@@ -173,7 +182,16 @@ public class MainCtrl {
      */
     public void showStarter() {
         primaryStage.setTitle("Starter Page");
+        starterPageCtrl.updateLanguage();
         primaryStage.setScene(starter);
+    }
+
+    /**
+     * Method for showing the start settings page.
+     */
+    public void showStartSettings() {
+        primaryStage.setTitle("Start Settings Page");
+        primaryStage.setScene(startSettings);
     }
 
     /**
