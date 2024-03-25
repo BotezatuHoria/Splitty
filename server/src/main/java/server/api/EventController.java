@@ -161,6 +161,33 @@ public class EventController {
         return ResponseEntity.ok(pc.getById(newPerson.getId()).getBody());
     }
 
+
+
+    @PutMapping(path = {"/{idEvent}/person"})
+    public ResponseEntity<Person> updatePerson(@PathVariable("idEvent") long idEvent, @RequestParam int id,
+                                               @RequestBody Person update) {
+        if (Objects.equals(pc.getById(id), ResponseEntity.badRequest().build())) {
+            return ResponseEntity.badRequest().build();
+        }
+        if ((idEvent < 0 || !repo.existsById(idEvent) || id < 0)) {
+            return ResponseEntity.badRequest().build();
+        }
+        pc.updateById(id, update);
+        Event event = getById(idEvent).getBody();
+        Person old = pc.getById(id).getBody();
+        List<Person> people = event.getPeople();
+        if (people.contains(old)) {
+            people.remove(old);
+            people.add(update);
+        }
+
+        List<Transaction> transactions = event.getTransactions();
+        event.setPeople(people);
+        event.setTransactions(transactions);
+        update.setEvent(event);
+        return null;
+    }
+
     /**
      * Method for deleting a person from the event.
      * @param idEvent - id of the event
