@@ -1,6 +1,7 @@
 package client.scenes;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import client.utils.ServerUtils;
@@ -11,6 +12,7 @@ import jakarta.ws.rs.WebApplicationException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import javafx.scene.input.KeyEvent;
@@ -49,6 +51,16 @@ public class ParticipantAdditionPageCtrl {
     @FXML // fx:id="lastName"
     private TextField lastName; // Value injected by FXMLLoader
 
+    @FXML
+    private Label firstnameResponse;
+
+    @FXML
+    private Label lastnameResponse;
+
+    @FXML
+    private Label doublePersonResponse;
+
+
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert abortButton != null : "fx:id=\"abortButton\" was not injected: check your FXML file 'ParticipantAdditionPage.fxml'.";
@@ -82,10 +94,10 @@ public class ParticipantAdditionPageCtrl {
     }
 
     /**
-     * Method for the create button.
-     * TODO: Finish this method after the server.utils is created.
+     * Method for the create button, to add the person to the participant list.
      */
     public void create(){
+        int amountOfPerson = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID()).size();
         try {
             createPerson();
         } catch (WebApplicationException e) {
@@ -97,8 +109,14 @@ public class ParticipantAdditionPageCtrl {
             return;
         }
 
-        clearFields();
-        mainCtrl.showEventPage(mainCtrl.getCurrentEventID());  //This method still needs to be created
+
+        if( server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID()).size()> amountOfPerson )    {
+            clearFields();
+            mainCtrl.showEventPage(mainCtrl.getCurrentEventID());  //This method still needs to be created
+        }
+        else {
+        System.out.println("Person not added, fields were empty or person already existed in the event");
+        }
     }
 
     /**
@@ -137,13 +155,78 @@ public class ParticipantAdditionPageCtrl {
     }
 
 
+    /**
+     * creates a person, or when the values are invalid, points out which fields are yet to be filled in (and required to).
+     */
     public void createPerson() {
-        String newFirstName = firstName.getText().trim();
+        String newFirstName = firstName.getText().trim();                   //get all the values of the filled-in fields.
         String newLastName = lastName.getText().trim();
         String newEmail = email.getText().trim();
         String newIban = iban.getText().trim();
-        Person person = new Person(newEmail, newFirstName, newLastName, newIban,
-                null, null, null);
-        Person thePerson = server.addPerson(person, mainCtrl.getCurrentEventID());
+        boolean isDuplicate = personExists(newFirstName,newLastName);
+
+        List<Person> allPersons = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
+
+        firstnameResponse.setText("Cannot be empty! Fill in this field!");     //as standard, there are warnings, they go away when not applicable.
+        firstnameResponse.setStyle("-fx-font-style: italic");
+        lastnameResponse.setText("Cannot be empty! Fill in this field!");
+        lastnameResponse.setStyle("-fx-font-style: italic");
+
+        if(newFirstName.isEmpty() && newLastName.isEmpty()){
+            return;
+        }
+        // maybe if possible color the textfield red when this error occurs.
+        else if(newFirstName.isEmpty()){
+            lastnameResponse.setText("");
+        }
+        else if(newLastName.isEmpty()){
+            firstnameResponse.setText("");
+        }
+        else if (isDuplicate) {
+            firstnameResponse.setText("Make firstname + lastname a unique combination. ");
+            lastnameResponse.setText("");
+            doublePersonResponse.setText("The combination of this first and last name already exists in this event. It is recommended to rename this participant.");
+            System.out.println("User tried to add a person already existing in this event (by first + lastname");
+            System.out.println();
+        }
+        else {
+            firstnameResponse.setText("");
+            lastnameResponse.setText("");
+            Person person = new Person(newEmail, newFirstName, newLastName, newIban,
+                    null, null, null);
+            Person thePerson = server.addPerson(person, mainCtrl.getCurrentEventID());
+        }
+        System.out.println("Person added to the event");
+    }
+
+
+    /**
+     * checks wheter the edited participant has a first and lastname that already exist in event. will be used to shorten the above method to 50< lines.
+     * @param firstname the new firstname of person.
+     * @param lastname the new lastname of person.
+     * @return true if another person with same names exist.
+     */
+    public boolean personExists(String firstname, String lastname) {
+        List<Person> allPersons = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
+        boolean personIsDuplicate = false;
+        for (Person e : allPersons) {
+            if (firstname.equals(e.getFirstName()) && lastname.equals(e.getLastName())) {
+                doublePersonResponse.setText("The combination of this first and last name already exists in this event. It is recommended to rename this participant.");
+                System.out.println("tried to add a combination of firstname and lastname that already exists");
+                personIsDuplicate = true;
+            }
+        }
+        return personIsDuplicate;
+    }
+
+    /**
+     * resets the warnings given when someone tries to add a person without a name or a surname.
+     */
+    public void resetWarnings(){
+        firstnameResponse.setText("");
+        lastnameResponse.setText("");
+        doublePersonResponse.setText("");
+        // also reset the colors of the firstName bars etc if they changed after an error (wanted to implement that).
+
     }
 }

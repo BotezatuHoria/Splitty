@@ -2,7 +2,6 @@ package client.utils;
 
 
 import javafx.scene.image.Image;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class LanguageSingleton {

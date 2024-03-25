@@ -11,8 +11,10 @@
 -->
 
 <module name = "Checker">
+    <module name="SuppressWarningsFilter" />
 
     <module name="TreeWalker">
+        <module name="SuppressWarningsHolder" />
 
         <module name="UnusedImports"/>
 
@@ -83,7 +85,6 @@
             <message key="name.invalidPattern"
                      value="Parameter name ''{0}'' must match pattern ''{1}''."/>
         </module>
-
     </module>
 
 

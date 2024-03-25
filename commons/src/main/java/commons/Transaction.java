@@ -193,6 +193,11 @@ public class Transaction {
         this.creator = creator;
     }
 
+    public void setExpenseType(String expenseType) {
+        this.expenseType = expenseType;
+    }
+
+
 
     /**
      * toString method for the Transaction class.

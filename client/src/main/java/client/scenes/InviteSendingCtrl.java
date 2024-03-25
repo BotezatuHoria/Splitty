@@ -77,6 +77,16 @@ public class InviteSendingCtrl{
     }
 
     /**
+     * Sets the title of the event on the invitepage.
+     */
+    public void setEventTitle(){
+        String title = server.getEventByID(mainCtrl.getCurrentEventID()).getTitle();
+        System.out.println(title);
+        eventTitle.setText(title);
+
+    }
+
+    /**
      * Sets the share code of the event, an encoded version of the id.
      */
     public void setShareCode(){

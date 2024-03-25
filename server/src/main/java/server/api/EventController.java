@@ -73,7 +73,7 @@ public class EventController {
      * @param event - the new structure of the event
      * @return - the event as a JSON
      */
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Event> updateById(@PathVariable("id") long id, @RequestBody Event event) {
         if (event == null || event.getId() < 0 || !repo.existsById(id) || event.getId() != id || event.getTag() == null || event.getTitle() == null
                 || event.getToken() == null ||

@@ -57,9 +57,11 @@ public class Main extends Application {
         var addParticipants = FXML.load(ParticipantAdditionPageCtrl.class, "client", "scenes",
                 "ParticipantAdditionPage.fxml");
         var startSettings = FXML.load(StartSettingsCtrl.class, "client", "scenes", "StartSettings.fxml");
+        var editParticipants = FXML.load(ParticipantEditPageCtrl.class, "client", "scenes",
+                "ParticipantEditPage.fxml");
 
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
         mainCtrl.initialize(primaryStage, starterPage, eventPage, statisticsPage, expensePage, startSettings,
-                addParticipants, inviteSend, debtPage, languageSelector,adminLogin, adminPage);
+                addParticipants, editParticipants, inviteSend, debtPage, languageSelector,adminLogin, adminPage);
     }
 }

@@ -6,7 +6,6 @@ import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import javafx.scene.image.Image;
 import org.apache.commons.lang3.tuple.Pair;
 
