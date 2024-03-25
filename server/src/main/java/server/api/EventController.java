@@ -180,12 +180,12 @@ public class EventController {
             people.remove(old);
             people.add(update);
         }
-
-        List<Transaction> transactions = event.getTransactions();
+        List<Transaction> transactions = getExpenses(idEvent).getBody();
         event.setPeople(people);
         event.setTransactions(transactions);
         update.setEvent(event);
-        return null;
+        pc.updateById(id, update);
+        return ResponseEntity.ok(pc.getById(id).getBody());
     }
 
     /**
