@@ -9,10 +9,12 @@ import com.google.inject.Inject;
 
 import commons.Person;
 
+import commons.Transaction;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EventPageCtrl {
@@ -56,6 +58,9 @@ public class EventPageCtrl {
 
     @FXML // fx:id="participantsScroll"
     private ComboBox<Person> participantsScroll;
+
+    @FXML // fx:id="listTransactions"
+    private ListView<Transaction> listTransactions;
 
 
     /**
@@ -129,8 +134,10 @@ public class EventPageCtrl {
      * Method that updates the title, people and transactions on that page.
      */
     public void updatePage() {
+        clear();
         setTitle();
         displayParticipants();
+        displayTransactions();
     }
 
     /**
@@ -160,6 +167,63 @@ public class EventPageCtrl {
             includingParticipant.setText("Including " + person);
         }
     }
+
+    /**
+     * Displays the transactions in the current event.
+     */
+    public void displayTransactions() {
+        listTransactions.getItems().clear();
+        List<Transaction> transactions = server.getTransactions(mainCtrl.getCurrentEventID());
+        for(Transaction transaction: transactions) {
+            listTransactions.getItems().add(transaction);
+        }
+    }
+
+    /**
+     * Method that displays all the transactions from a certain person.
+     */
+    public void displayFrom() {
+        listTransactions.getItems().clear();
+        Person creator = participantsScroll.getValue();
+        if (creator == null) {return;}
+        List<Transaction> transactions = server.getTransactions(mainCtrl.getCurrentEventID());
+
+        for (Transaction transaction: transactions) {
+            if (transaction.getCreator().equals(creator)) {
+                listTransactions.getItems().add(transaction);
+            }
+        }
+    }
+
+    /**
+     * Method that displays all the transactions including a certain person.
+     */
+    public void displayIncluding() {
+        listTransactions.getItems().clear();
+        Person included = participantsScroll.getValue();
+        if (included == null) {return;}
+        List<Transaction> transactions = server.getTransactions(mainCtrl.getCurrentEventID());
+
+        for (Transaction transaction: transactions) {
+            if (transaction.getParticipants().contains(included)) {
+                listTransactions.getItems().add(transaction);
+            }
+        }
+
+    }
+
+    /**
+     * Method that clears the page of all previous inputs.
+     */
+    public void clear() {
+        participantsScroll.getItems().clear();
+        listTransactions.getItems().clear();
+        fromParticipant.setText("From participant...");
+        includingParticipant.setText("Including participant...");
+        participantsScroll.setPromptText("Participants...");
+    }
+
+
 
 }
 

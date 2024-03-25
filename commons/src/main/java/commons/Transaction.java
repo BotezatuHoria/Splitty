@@ -205,9 +205,10 @@ public class Transaction {
      */
     @Override
     public String toString() {
-        return "Transaction " + "#" + id + ", called: " + name + ", issued on: " + date +
-                "with the value: " + currency + money + ";";
+        return name + ", date: " + date +
+                ", " + money + " " + currency + " payed by: " + creator;
     }
+
 
     @Override
     public boolean equals(Object o) {
