@@ -12,10 +12,6 @@ import commons.Person;
 import commons.Transaction;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import net.bytebuddy.dynamic.scaffold.MethodGraph;
-
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class EventPageCtrl {

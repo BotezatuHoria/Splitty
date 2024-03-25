@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -238,7 +237,7 @@ public class Transaction {
      */
     public List<Integer> getParticipantsIds() {
         List<Integer> ret = new LinkedList<>();
-        if (participants == null) return ret;
+        if (participants == null) {return ret;}
         for (Person person: participants) {ret.add(person.getId());}
         return ret;
     }
