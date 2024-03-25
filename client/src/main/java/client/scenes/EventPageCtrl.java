@@ -12,6 +12,7 @@ import commons.Person;
 import commons.Transaction;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import net.bytebuddy.dynamic.scaffold.MethodGraph;
 
 
 import java.util.ArrayList;
@@ -184,12 +185,13 @@ public class EventPageCtrl {
      */
     public void displayFrom() {
         listTransactions.getItems().clear();
-        Person creator = participantsScroll.getValue();
-        if (creator == null) {return;}
+        if (participantsScroll.getValue() == null) {return;}
+        int creator = participantsScroll.getValue().getId();
+
         List<Transaction> transactions = server.getTransactions(mainCtrl.getCurrentEventID());
 
         for (Transaction transaction: transactions) {
-            if (transaction.getCreator().equals(creator)) {
+            if (transaction.getCreator().getId() == creator) {
                 listTransactions.getItems().add(transaction);
             }
         }
@@ -200,12 +202,13 @@ public class EventPageCtrl {
      */
     public void displayIncluding() {
         listTransactions.getItems().clear();
-        Person included = participantsScroll.getValue();
-        if (included == null) {return;}
+        if (participantsScroll.getValue() == null) {return;}
+        int included = participantsScroll.getValue().getId();
+
         List<Transaction> transactions = server.getTransactions(mainCtrl.getCurrentEventID());
 
         for (Transaction transaction: transactions) {
-            if (transaction.getParticipants().contains(included)) {
+            if (transaction.getParticipantsIds().contains(included)) {
                 listTransactions.getItems().add(transaction);
             }
         }
@@ -220,7 +223,6 @@ public class EventPageCtrl {
         listTransactions.getItems().clear();
         fromParticipant.setText("From participant...");
         includingParticipant.setText("Including participant...");
-        participantsScroll.setPromptText("Participants...");
     }
 
 

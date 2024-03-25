@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -206,7 +208,7 @@ public class Transaction {
     @Override
     public String toString() {
         return name + ", date: " + date +
-                ", " + money + " " + currency + " payed by: " + creator;
+                ", " + money + " " + currency;
     }
 
 
@@ -228,5 +230,16 @@ public class Transaction {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, date, money, currency, expenseType, participants, creator);
+    }
+
+    /**
+     * Returns a list of id of the participants.
+     * @return
+     */
+    public List<Integer> getParticipantsIds() {
+        List<Integer> ret = new LinkedList<>();
+        if (participants == null) return ret;
+        for (Person person: participants) {ret.add(person.getId());}
+        return ret;
     }
 }
