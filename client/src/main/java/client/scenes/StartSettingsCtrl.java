@@ -39,19 +39,8 @@ public class StartSettingsCtrl {
         startPageLanguageSelector.setButtonCell(new FlagListCell());
 
         // Show current language
-        Pair<String, Image> currentLanguage = (Pair<String, Image>) startPageLanguageSelector.getItems().stream()
-            .filter(lang ->  lang.equals((Pair<String, Image>) LanguageSingleton.getInstance().getLanguage()))
-            .findFirst()
-            .orElse(null);
-
+        Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
         startPageLanguageSelector.getSelectionModel().select(currentLanguage);
-
-        startPageLanguageSelector.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                LanguageSingleton instance = LanguageSingleton.getInstance();
-                instance.setLanguage((Pair<String, Image>) newValue);
-            }
-        });
     }
 
     @FXML
@@ -62,10 +51,5 @@ public class StartSettingsCtrl {
     @FXML
     void showStart() {
         mainCtrl.showStarter();
-    }
-
-    @FXML
-    void selectLanguage() {
-
     }
 }

@@ -172,6 +172,7 @@ public class MainCtrl {
      */
     public void showStarter() {
         primaryStage.setTitle("Starter Page");
+        starterPageCtrl.updateLanguage();
         primaryStage.setScene(starter);
     }
 

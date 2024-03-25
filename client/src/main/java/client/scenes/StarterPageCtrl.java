@@ -74,22 +74,6 @@ public class StarterPageCtrl {
         // Responsible for setting the flags and changing languages
         languageSelector.setCellFactory(lv -> new FlagListCell());
         languageSelector.setButtonCell(new FlagListCell());
-
-        // Show current language
-        Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
-        languageSelector.getSelectionModel().select(currentLanguage);
-
-        languageSelector.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                LanguageSingleton instance = LanguageSingleton.getInstance();
-                instance.setLanguage((Pair<String, Image>) newValue);
-            }
-        });
-    }
-
-    @FXML
-    void selectLanguage() {
-
     }
 
     @FXML
@@ -175,6 +159,12 @@ public class StarterPageCtrl {
         total = total/3000929;
         System.out.println("Translated from the sharecode, eventID = " + total);
         return total;
+    }
+
+    public void updateLanguage() {
+        // Show current language
+        Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
+        languageSelector.getSelectionModel().select(currentLanguage);
     }
 
     public void keyPressed(KeyEvent e) {

@@ -93,7 +93,7 @@
             </Text>
             <Button fx:id="startPageConfirm" layoutX="253.0" layoutY="200.0" mnemonicParsing="false" onAction="#showStart" prefHeight="26.0" prefWidth="141.0" text="OK" />
             <Button fx:id="startPageAdmin" layoutX="258.0" layoutY="323.0" mnemonicParsing="false" onAction="#adminLogin" prefHeight="26.0" prefWidth="122.0" text="Admin" />
-            <ComboBox fx:id="startPageLanguageSelector" layoutX="282.0" layoutY="150.0" onAction="#selectLanguage" prefHeight="45.0" prefWidth="83.0" />
+            <ComboBox fx:id="startPageLanguageSelector" layoutX="282.0" layoutY="150.0" prefHeight="45.0" prefWidth="83.0" />
       </children>
     </AnchorPane>
   </children>
