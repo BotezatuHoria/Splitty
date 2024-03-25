@@ -7,10 +7,12 @@ package client.scenes;
 import java.net.URL;
 import java.util.*;
 
+import client.utils.FlagListCell;
 import client.utils.ServerUtils;
 import commons.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
@@ -42,7 +44,7 @@ public class StarterPageCtrl {
     private TextField joinTextField;
 
     @FXML // fx:id="languageSelector"
-    private Button languageSelector; // Value injected by FXMLLoader
+    private ComboBox languageSelector; // Value injected by FXMLLoader
 
     @FXML // fx:id="listView"
     private ListView<Event> listView;
@@ -62,9 +64,17 @@ public class StarterPageCtrl {
         this.server = server;
     }
 
+    @FXML // This method is called by the FXMLLoader when initialization is complete
+    void initialize() {
+        languageSelector.getItems().addAll(FlagListCell.getLanguages());
+
+        languageSelector.setCellFactory(lv -> new FlagListCell());
+        languageSelector.setButtonCell(new FlagListCell());
+    }
+
     @FXML
     void selectLanguage() {
-        mainCtrl.showLanguage();
+
     }
 
     @FXML

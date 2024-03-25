@@ -65,6 +65,6 @@ public class AdminLoginCtrl {
     }
 
     public void goBack() {
-        mainCtrl.showStarter();
+        mainCtrl.showStartSettings();
     }
 }
