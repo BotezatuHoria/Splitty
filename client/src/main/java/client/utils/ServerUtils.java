@@ -137,7 +137,8 @@ public class ServerUtils {
 
 	public Person updatePerson(int eventID, int personID, Person person){
 		return ClientBuilder.newClient(new ClientConfig())
-				.target(SERVER).path("api/event/" + eventID + "/person/" + personID)
+				.target(SERVER).path("api/event/" + eventID + "/person")
+				.queryParam("id", personID)
 				.request(APPLICATION_JSON)
 				.accept(APPLICATION_JSON)
 				.put(Entity.entity(person, APPLICATION_JSON), Person.class);

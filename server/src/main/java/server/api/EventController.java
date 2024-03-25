@@ -163,8 +163,8 @@ public class EventController {
 
 
 
-    @PutMapping(path = {"/{idEvent}/person/{id}"})
-    public ResponseEntity<Person> updatePerson(@PathVariable("idEvent") long idEvent, @PathVariable("id") int id,
+    @PutMapping(path = {"/{idEvent}/person"})
+    public ResponseEntity<Person> updatePerson(@PathVariable("idEvent") long idEvent, @RequestParam("id") int id,
                                                @RequestBody Person update) {
         if (Objects.equals(pc.getById(id), ResponseEntity.badRequest().build())) {
             return ResponseEntity.badRequest().build();
