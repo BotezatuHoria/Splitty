@@ -2,6 +2,7 @@ package server.api;
 
 
 import java.util.*;
+import java.util.function.Consumer;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -12,12 +13,14 @@ import commons.Person;
 import commons.Transaction;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 
+import org.springframework.web.context.request.async.DeferredResult;
 import server.database.EventRepository;
 
 
@@ -230,6 +233,22 @@ public class EventController {
         return ResponseEntity.ok(repo.findById(idEvent).get().getTransactions());
     }
 
+    private Map<Object, Consumer<Transaction>> listeners = new HashMap<>();
+    @GetMapping(path = "/transactions")
+    public DeferredResult<ResponseEntity<Transaction>> getUpdates() {
+        var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        DeferredResult<ResponseEntity<Transaction>> deferredResult = new DeferredResult<>(1000L, noContent);
+        Object key = new Object();
+        listeners.put(key, value -> {
+            deferredResult.setResult(ResponseEntity.ok(value));
+        });
+        deferredResult.onCompletion(() -> {
+            listeners.remove(key);
+        });
+
+        return deferredResult;
+    }
+
     /**
      * Method for adding a new expense to the event.
      * @param idEvent - id of the event
@@ -280,8 +299,11 @@ public class EventController {
 
         tc.updateById(transaction.getId(), transaction);
         repo.save(event);
-        messagingTemplate.convertAndSend("/topic/events/transactions/",
-                tc.getById(transaction.getId()).getBody());
+        // messagingTemplate.convertAndSend("/topic/events/transactions/",
+                //tc.getById(transaction.getId()).getBody());
+        listeners.forEach((k, v) -> {
+            v.accept(tc.getById(transaction.getId()).getBody());
+        });
         return ResponseEntity.ok(tc.getById(transaction.getId()).getBody());
     }
 
