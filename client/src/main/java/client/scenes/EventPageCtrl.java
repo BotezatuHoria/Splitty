@@ -10,13 +10,24 @@ import com.google.inject.Inject;
 import commons.Person;
 
 import commons.Transaction;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import java.util.List;
 
-public class EventPageCtrl {
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
+
+public class EventPageCtrl implements Initializable {
     private final MainCtrl mainCtrl;
     private final ServerUtils server;
+
+    private ObservableList<Person> data;
+
+    private ObservableList<Transaction> dataTransactions;
     @FXML // fx:id="addExpense"
     private Button addExpense; // Value injected by FXMLLoader
 
@@ -142,7 +153,7 @@ public class EventPageCtrl {
      */
     private void displayParticipants() {
         String display = "";
-        List<Person> people = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
+        List<Person> people = data;
         participantsScroll.getItems().clear();
         for (Person person: people) {
             display += person + ", ";
@@ -170,9 +181,8 @@ public class EventPageCtrl {
      */
     public void displayTransactions() {
         listTransactions.getItems().clear();
-        List<Transaction> transactions = server.getTransactions(mainCtrl.getCurrentEventID());
-        for(Transaction transaction: transactions) {
-            listTransactions.getItems().add(transaction);
+        for (Transaction t : dataTransactions) {
+            listTransactions.getItems().add(t);
         }
     }
 
@@ -222,7 +232,30 @@ public class EventPageCtrl {
     }
 
 
+    public void refresh() {
+        var people = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
+        var transactions = server.getTransactions(mainCtrl.getCurrentEventID());
+        data = FXCollections.observableList(people);
+        dataTransactions = FXCollections.observableList(transactions);
+    }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        server.registerForMessages("/topic/events/people", Person.class, person -> {
+            Platform.runLater(() -> {
+                data.add(person);
+                refresh();
+                updatePage();
+            });
+        });
+        server.registerForMessages("/topic/events/transactions", Transaction.class, transaction -> {
+            Platform.runLater(() -> {
+                dataTransactions.add(transaction);
+                refresh();
+                updatePage();
+            });
+        });
+    }
 }
 
 
