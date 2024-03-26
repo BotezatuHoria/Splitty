@@ -16,7 +16,7 @@ public class PersonControllerTest {
     @BeforeEach
     public void setup () {
         db = new TestPersonRepository();
-        sut = new PersonController(db);
+        sut = new PersonController(db, new TransactionController(new TestTransactionRepository()));
     }
 
     @Test
