@@ -256,6 +256,10 @@ public class EventPageCtrl implements Initializable {
             });
         });
     }
+
+    public void stop() {
+        server.stop();
+    }
 }
 
 
