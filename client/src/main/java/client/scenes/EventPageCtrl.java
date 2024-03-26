@@ -248,9 +248,16 @@ public class EventPageCtrl implements Initializable {
                 updatePage();
             });
         });
-        server.registerForMessages("/topic/events/transactions", Transaction.class, transaction -> {
+        //server.registerForMessages("/topic/events/transactions", Transaction.class, transaction -> {
+        //    Platform.runLater(() -> {
+        //        dataTransactions.add(transaction);
+        //        refresh();
+        //        updatePage();
+        //    });
+        //});
+        server.registerForUpdates(t -> {
             Platform.runLater(() -> {
-                dataTransactions.add(transaction);
+                dataTransactions.add(t);
                 refresh();
                 updatePage();
             });
