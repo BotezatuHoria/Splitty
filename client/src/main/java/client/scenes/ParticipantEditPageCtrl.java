@@ -140,12 +140,13 @@ public class ParticipantEditPageCtrl {
                     "it is mandatory to give the person a name. Please fill these in.");
         }
         if (!(personExists(newFirstName, newLastName))) {
-
-            Person newPerson = new Person(newEmail, newFirstName, newLastName, newIban,
-                    null, null, null);
-            //            server.updatePerson(person.getId(), newPerson);
+            person.setFirstName(newFirstName);
+            person.setLastName(newLastName);
+            person.setEmail(newEmail);
+            person.setIban(newIban);
+            server.updatePerson(mainCtrl.getCurrentEventID(), person.getId(), person);
             System.out.println("THIS PART NOT YET DONE, FIX API");
-            System.out.println("person with id " + person.getId() + " was adjusted to " + newPerson);
+            System.out.println("person with id " + person.getId() + " was adjusted to " + person);
             mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
         } else {
             warningLabel.setText("Something went wrong. Please contact t.p.p.vanleest@student.tudelft.nl");

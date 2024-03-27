@@ -6,6 +6,9 @@ import commons.Person;
 import commons.Transaction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,16 +27,24 @@ class EventControllerTest {
     private TransactionController transactionController;
     private TestTransactionRepository transactionRepository;
 
+    private SimpMessagingTemplate messagingTemplate;
+
     @BeforeEach
     public void setup() {
         personRepository = new TestPersonRepository();
-        personController = new PersonController(personRepository);
+        personController = new PersonController(personRepository, transactionController);
 
         transactionRepository = new TestTransactionRepository();
         transactionController = new TransactionController(transactionRepository);
 
         eventRepository = new TestEventRepository();
-        eventController = new EventController(eventRepository, personController, transactionController);
+        eventController = new EventController(eventRepository, personController, transactionController,
+                new SimpMessagingTemplate(new MessageChannel() {
+                    @Override
+                    public boolean send(Message<?> message, long timeout) {
+                        return true;
+                    }
+                }));
     }
 
 

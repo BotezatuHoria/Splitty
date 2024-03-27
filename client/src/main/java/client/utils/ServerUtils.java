@@ -135,9 +135,10 @@ public class ServerUtils {
 	}
 
 
-	public Person updatePerson(int personID, Person person){
+	public Person updatePerson(int eventID, int personID, Person person){
 		return ClientBuilder.newClient(new ClientConfig())
-				.target(SERVER).path("api/person/" + personID)
+				.target(SERVER).path("api/event/" + eventID + "/person")
+				.queryParam("id", personID)
 				.request(APPLICATION_JSON)
 				.accept(APPLICATION_JSON)
 				.put(Entity.entity(person, APPLICATION_JSON), Person.class);
@@ -232,18 +233,18 @@ public class ServerUtils {
 
 	private static final ExecutorService EXECUTOR_SERVER = Executors.newSingleThreadExecutor();
 
-	public void registerForUpdates(Consumer<Event> consumer) {
+	public void registerForUpdates(Consumer<Transaction> consumer) {
 		EXECUTOR_SERVER.submit(() -> {
 			while (!Thread.interrupted()) {
 				var res = ClientBuilder.newClient(new ClientConfig()) //
-						.target(SERVER).path("/api/event/updates") //
+						.target(SERVER).path("/api/event/transactions") //
 						.request(APPLICATION_JSON) //
 						.accept(APPLICATION_JSON) //
 						.get(Response.class);
 				if (res.getStatus() == 204) {
 					continue;
 				}
-				Event e = res.readEntity(Event.class);
+				Transaction e = res.readEntity(Transaction.class);
 				consumer.accept(e);
 			}
 		});
