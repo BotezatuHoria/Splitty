@@ -144,7 +144,7 @@ public class ParticipantEditPageCtrl {
             person.setLastName(newLastName);
             person.setEmail(newEmail);
             person.setIban(newIban);
-            server.updatePerson(mainCtrl.getCurrentEventID(), person.getId(), person);
+            server.updatePerson(person.getId(), person);
             System.out.println("THIS PART NOT YET DONE, FIX API");
             System.out.println("person with id " + person.getId() + " was adjusted to " + person);
             mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
