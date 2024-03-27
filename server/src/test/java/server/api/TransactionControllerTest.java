@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import server.database.TransactionRepository;
+import server.services.implementations.TransactionServiceImplementation;
 
 
 import java.time.LocalDate;
@@ -16,12 +18,13 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 
 class TransactionControllerTest {
 
     private TestTransactionRepository db;
-    private TransactionController sut;
+    private TransactionServiceImplementation sut;
     private Person person1;
     private Person person2;
     private List<Person> participants;
@@ -30,7 +33,7 @@ class TransactionControllerTest {
     @BeforeEach
     public void setup () {
         db = new TestTransactionRepository();
-        sut = new TransactionController(db);
+        sut = new TransactionServiceImplementation(db);
 
         // Create a sample transaction
         participants = new ArrayList<>();
@@ -52,7 +55,7 @@ class TransactionControllerTest {
     @Test
     public void getTransactionNullTest() {
         var actual = sut.getById(-14);
-        assertEquals(BAD_REQUEST, actual.getStatusCode());
+        assertEquals(NOT_FOUND, actual.getStatusCode());
     }
     @Test
     public void deleteTransactionNullTest() {
@@ -70,7 +73,7 @@ class TransactionControllerTest {
     @Test
     public void testGetByInvalidId() {
         int invalidID = -1;
-        assertEquals(sut.getById(invalidID), ResponseEntity.badRequest().build());
+        assertEquals(sut.getById(invalidID), ResponseEntity.notFound().build());
     }
     @Test
     public void testAddValidTransaction() {
@@ -268,7 +271,7 @@ class TransactionControllerTest {
         expectedList.add(t1);
 
         // Act: Update the participants of the transaction by ID
-        List<Transaction> actualResponse = sut.getAll();
+        List<Transaction> actualResponse = sut.getAll().getBody();
 
         // Assert
         assertEquals(expectedList.get(0), actualResponse.get(0));
