@@ -127,6 +127,11 @@ public class TransactionServiceImplementation implements TransactionService {
         return ResponseEntity.ok(transaction);
     }
 
+    /**
+     * Checks strings to be either null or empty.
+     * @param s string to check
+     * @return returns true if the string is empty or null
+     */
     private static boolean isNullOrEmpty(String s) {
         return s == null || s.isEmpty();
     }
