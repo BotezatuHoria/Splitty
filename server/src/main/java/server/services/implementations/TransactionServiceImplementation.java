@@ -4,9 +4,7 @@ import commons.Person;
 import commons.Transaction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.context.request.async.DeferredResult;
 import server.database.TransactionRepository;
 import server.services.interfaces.TransactionService;
@@ -49,7 +47,6 @@ public class TransactionServiceImplementation implements TransactionService {
         }
         try {
             Transaction saved = repo.save(transaction); // returns null for whatever reason, should look into it
-//            messagingTemplate.convertAndSend("/api/event/transactions", saved);
             listeners.forEach((k, v) -> {
                 v.accept(saved);
             });
