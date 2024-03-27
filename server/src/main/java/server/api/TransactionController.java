@@ -4,6 +4,7 @@ import commons.Person;
 import commons.Transaction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.async.DeferredResult;
 import server.services.implementations.TransactionServiceImplementation;
 
 import java.util.List;
@@ -104,6 +105,11 @@ public class TransactionController {
     @PutMapping(path = {"/{id}/money"})
     public ResponseEntity<Transaction> updateMoneyById(@PathVariable("id") int id, @RequestBody double money){
        return tsi.updateMoneyById(id, money);
+    }
+
+    @GetMapping(path = "/transactions")
+    public DeferredResult<ResponseEntity<Transaction>> getUpdates() {
+        return tsi.getUpdates();
     }
 
 }

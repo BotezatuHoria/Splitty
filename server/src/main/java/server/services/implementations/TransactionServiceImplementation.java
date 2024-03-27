@@ -20,10 +20,8 @@ import java.util.function.Consumer;
 public class TransactionServiceImplementation implements TransactionService {
 
     private final TransactionRepository repo;
-    private final SimpMessagingTemplate messagingTemplate;
-    public TransactionServiceImplementation(TransactionRepository repo, SimpMessagingTemplate messagingTemplate){
+    public TransactionServiceImplementation(TransactionRepository repo){
         this.repo = repo;
-        this.messagingTemplate = messagingTemplate;
     }
     @Override
     public ResponseEntity<List<Transaction>> getAll() {
@@ -154,7 +152,6 @@ public class TransactionServiceImplementation implements TransactionService {
 
 
     private final Map<Object, Consumer<Transaction>> listeners = new HashMap<>();
-    @GetMapping(path = "/transactions")
     public DeferredResult<ResponseEntity<Transaction>> getUpdates() {
         var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         DeferredResult<ResponseEntity<Transaction>> deferredResult = new DeferredResult<>(1000L, noContent);
@@ -165,7 +162,6 @@ public class TransactionServiceImplementation implements TransactionService {
         deferredResult.onCompletion(() -> {
             listeners.remove(key);
         });
-
         return deferredResult;
     }
 }
