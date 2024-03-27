@@ -12,9 +12,13 @@ import java.util.List;
 public class EventServiceImplementation implements EventService {
 
     private final EventRepository repo;
+    private final TransactionServiceImplementation tsi;
+    private final PersonServiceImplementation psi;
 
-    public EventServiceImplementation(EventRepository repo) {
+    public EventServiceImplementation(EventRepository repo, TransactionServiceImplementation tsi, PersonServiceImplementation psi) {
         this.repo = repo;
+        this.tsi = tsi;
+        this.psi = psi;
     }
 
     @Override
@@ -90,10 +94,11 @@ public class EventServiceImplementation implements EventService {
             return ResponseEntity.badRequest().build();
         }
         if (repo.findById(id).isPresent()) {
+            Person savedPerson = psi.add(person).getBody();
             Event event = repo.findById(id).get();
-            event.addPerson(person);
+            event.addPerson(savedPerson);
             repo.save(event);
-            return ResponseEntity.ok(person);
+            return ResponseEntity.ok(savedPerson);
         }
         return ResponseEntity.internalServerError().build();
     }
@@ -116,10 +121,11 @@ public class EventServiceImplementation implements EventService {
             return ResponseEntity.badRequest().build();
         }
         if (repo.findById(idEvent).isPresent()) {
+            Transaction savedTransaction = tsi.add(transaction).getBody();
             Event event = repo.findById(idEvent).get();
-            event.addTransaction(transaction);
+            event.addTransaction(savedTransaction);
             repo.save(event);
-            return ResponseEntity.ok(transaction);
+            return ResponseEntity.ok(savedTransaction);
         }
         return ResponseEntity.internalServerError().build();
     }

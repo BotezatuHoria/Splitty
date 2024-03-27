@@ -41,8 +41,8 @@ public class TransactionServiceImplementation implements TransactionService {
             return ResponseEntity.badRequest().build();
         }
         try {
-            repo.save(transaction); // returns null for whatever reason, should look into it
-            return ResponseEntity.ok(transaction);
+            Transaction saved = repo.save(transaction); // returns null for whatever reason, should look into it
+            return ResponseEntity.ok(saved);
         } catch (Exception e) {
             // Handle any database-related exceptions (e.g., unique constraint violation)
             return  ResponseEntity.badRequest().build();
