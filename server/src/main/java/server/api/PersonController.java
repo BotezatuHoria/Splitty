@@ -1,27 +1,23 @@
 package server.api;
 
 import commons.Person;
-import commons.Transaction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import server.database.PersonRepository;
+import server.services.implementations.PersonServiceImplementation;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/person")
 public class PersonController {
-    private final PersonRepository db;
-
-    private final TransactionController tc;
+    private final PersonServiceImplementation psi;
 
     /**
      * Constructor for the PersonController.
-     * @param db repository for the personRepository
+     * @param psi service implementation
      */
-    public PersonController(PersonRepository db, TransactionController tc) {
-        this.db = db;
-        this.tc = tc;
+    public PersonController(PersonServiceImplementation psi) {
+        this.psi = psi;
     }
 
     /**
@@ -29,8 +25,8 @@ public class PersonController {
      * @return list of people
      */
     @GetMapping(path = { "", "/" })
-    public List<Person> getAll() {
-        return db.findAll();
+    public ResponseEntity<List<Person>> getAll() {
+        return psi.getAll();
     }
 
     /**
@@ -40,11 +36,7 @@ public class PersonController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Person> getById(@PathVariable("id") int id) {
-        if (id < 0 || !db.existsById(id)) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        return ResponseEntity.ok(db.findById(id).get());
+        return psi.getById(id);
     }
 
     /**
@@ -54,12 +46,7 @@ public class PersonController {
      */
     @PostMapping(path = { "", "/" })
     public ResponseEntity<Person> add(@RequestBody Person person) {
-        if (person == null || person.getId() < 0 || person.getFirstName() == null
-                || person.getLastName() == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        Person saved = db.save(person);
-        return ResponseEntity.ok(saved);
+        return psi.add(person);
     }
 
     /**
@@ -69,13 +56,7 @@ public class PersonController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Person> deleteById(@PathVariable("id") int id) {
-        if (id < 0 || !db.existsById(id)) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        ResponseEntity<Person> person = ResponseEntity.ok(db.findById(id).get());
-        db.deleteById(id);
-        return person;
+        return psi.deleteById(id);
     }
 
 
@@ -87,41 +68,7 @@ public class PersonController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<Person> updateById(@PathVariable("id") int id, @RequestBody Person person) {
-        if (id < 0 || !db.existsById(id) || person == null || person.getId() != id
-                || person.getFirstName() == null || person.getLastName() == null) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        db.save(person);
-        return ResponseEntity.ok(db.findById(id).get());
+        return psi.updateById(id, person);
     }
 
-    public ResponseEntity<Person> updateByIdTransactions(@PathVariable("id") int id, @RequestBody Person person) {
-        if (id < 0 || !db.existsById(id) || person == null || person.getId() != id
-                || person.getFirstName() == null || person.getLastName() == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        Person old = getById(id).getBody();
-        List<Transaction> created = old.getCreatedTransactions();
-        for (Transaction t : created) {
-            t.setCreator(person);
-            tc.updateById(t.getId(), t);
-        }
-        person.setCreatedTransactions(created);
-
-        List<Transaction> participates = old.getTransactions();
-        for (Transaction t : participates) {
-            if (t.getParticipants().contains(old)) {
-                List<Person> personList = t.getParticipants();
-                personList.remove(old);
-                personList.add(person);
-                t.setParticipants(personList);
-                tc.updateById(t.getId(), t);
-            }
-        }
-        person.setTransactions(participates);
-
-        db.save(person);
-        return ResponseEntity.ok(db.findById(id).get());
-    }
 }

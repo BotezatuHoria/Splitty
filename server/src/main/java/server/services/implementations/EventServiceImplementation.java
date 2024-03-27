@@ -4,18 +4,21 @@ import commons.Event;
 import commons.Person;
 import commons.Transaction;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import server.database.EventRepository;
 import server.services.interfaces.EventService;
 
 import java.util.List;
 
+@Service
 public class EventServiceImplementation implements EventService {
 
     private final EventRepository repo;
     private final TransactionServiceImplementation tsi;
     private final PersonServiceImplementation psi;
 
-    public EventServiceImplementation(EventRepository repo, TransactionServiceImplementation tsi, PersonServiceImplementation psi) {
+    public EventServiceImplementation(EventRepository repo, TransactionServiceImplementation tsi,
+                                      PersonServiceImplementation psi) {
         this.repo = repo;
         this.tsi = tsi;
         this.psi = psi;

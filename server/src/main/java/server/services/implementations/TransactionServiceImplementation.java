@@ -2,19 +2,28 @@ package server.services.implementations;
 
 import commons.Person;
 import commons.Transaction;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.context.request.async.DeferredResult;
 import server.database.TransactionRepository;
 import server.services.interfaces.TransactionService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 
 @Service
 public class TransactionServiceImplementation implements TransactionService {
 
-    TransactionRepository repo;
-    public TransactionServiceImplementation(TransactionRepository repo){
+    private final TransactionRepository repo;
+    private final SimpMessagingTemplate messagingTemplate;
+    public TransactionServiceImplementation(TransactionRepository repo, SimpMessagingTemplate messagingTemplate){
         this.repo = repo;
+        this.messagingTemplate = messagingTemplate;
     }
     @Override
     public ResponseEntity<List<Transaction>> getAll() {
@@ -42,6 +51,10 @@ public class TransactionServiceImplementation implements TransactionService {
         }
         try {
             Transaction saved = repo.save(transaction); // returns null for whatever reason, should look into it
+//            messagingTemplate.convertAndSend("/api/event/transactions", saved);
+            listeners.forEach((k, v) -> {
+                v.accept(saved);
+            });
             return ResponseEntity.ok(saved);
         } catch (Exception e) {
             // Handle any database-related exceptions (e.g., unique constraint violation)
@@ -57,7 +70,7 @@ public class TransactionServiceImplementation implements TransactionService {
         if(!repo.findById(id).isPresent()){
             return ResponseEntity.badRequest().build();
         }
-        ResponseEntity<commons.Transaction> response =  ResponseEntity.ok(repo.findById(id).get());
+        ResponseEntity<Transaction> response =  ResponseEntity.ok(repo.findById(id).get());
         repo.deleteById(id);
         return response;
     }
@@ -106,6 +119,9 @@ public class TransactionServiceImplementation implements TransactionService {
                     existingTransaction.setCurrency(newData.getCurrency());
                     existingTransaction.setParticipants(newData.getParticipants());
                     existingTransaction.setExpenseType(newData.getExpenseType());
+                    listeners.forEach((k, v) -> {
+                        v.accept(existingTransaction);
+                    });
                     return ResponseEntity.ok(repo.save(existingTransaction));
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -134,5 +150,22 @@ public class TransactionServiceImplementation implements TransactionService {
      */
     private static boolean isNullOrEmpty(String s) {
         return s == null || s.isEmpty();
+    }
+
+
+    private final Map<Object, Consumer<Transaction>> listeners = new HashMap<>();
+    @GetMapping(path = "/transactions")
+    public DeferredResult<ResponseEntity<Transaction>> getUpdates() {
+        var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        DeferredResult<ResponseEntity<Transaction>> deferredResult = new DeferredResult<>(1000L, noContent);
+        Object key = new Object();
+        listeners.put(key, value -> {
+            deferredResult.setResult(ResponseEntity.ok(value));
+        });
+        deferredResult.onCompletion(() -> {
+            listeners.remove(key);
+        });
+
+        return deferredResult;
     }
 }

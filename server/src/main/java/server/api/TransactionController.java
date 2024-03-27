@@ -4,7 +4,6 @@ import commons.Person;
 import commons.Transaction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import server.database.TransactionRepository;
 import server.services.implementations.TransactionServiceImplementation;
 
 import java.util.List;

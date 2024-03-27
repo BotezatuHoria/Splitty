@@ -2,6 +2,7 @@ package server.services.implementations;
 
 import commons.Person;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import server.database.PersonRepository;
 import server.services.interfaces.PersonService;
@@ -12,8 +13,10 @@ import java.util.List;
 public class PersonServiceImplementation implements PersonService {
 
     private final PersonRepository db;
-    public PersonServiceImplementation(PersonRepository db) {
+    private final SimpMessagingTemplate messagingTemplate;
+    public PersonServiceImplementation(PersonRepository db, SimpMessagingTemplate messagingTemplate) {
         this.db = db;
+        this.messagingTemplate = messagingTemplate;
     }
     @Override
     public ResponseEntity<List<Person>> getAll() {
@@ -38,6 +41,7 @@ public class PersonServiceImplementation implements PersonService {
             return ResponseEntity.badRequest().build();
         }
         Person saved = db.save(person);
+        messagingTemplate.convertAndSend("/topic/events/people", saved);
         return ResponseEntity.ok(saved);
     }
 
@@ -49,5 +53,16 @@ public class PersonServiceImplementation implements PersonService {
         ResponseEntity<Person> person = ResponseEntity.ok(db.findById(id).get());
         db.deleteById(id);
         return person;
+    }
+
+    @Override
+    public ResponseEntity<Person> updateById(int id, Person person) {
+        if (id < 0 || !db.existsById(id) || person == null || person.getId() != id
+                || person.getFirstName() == null || person.getLastName() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        Person saved = db.save(person);
+        messagingTemplate.convertAndSend("/topic/events/people", saved);
+        return ResponseEntity.ok(saved);
     }
 }

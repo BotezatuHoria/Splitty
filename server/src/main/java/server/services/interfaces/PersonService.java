@@ -10,4 +10,5 @@ public interface PersonService {
     public ResponseEntity<Person> getById(int id);
     public ResponseEntity<Person> add(Person person);
     public ResponseEntity<Person> deleteById(int id);
+    public ResponseEntity<Person> updateById(int id, Person person);
 }
