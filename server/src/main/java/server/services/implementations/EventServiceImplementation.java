@@ -1,0 +1,126 @@
+package server.services.implementations;
+
+import commons.Event;
+import commons.Person;
+import commons.Transaction;
+import org.springframework.http.ResponseEntity;
+import server.database.EventRepository;
+import server.services.interfaces.EventService;
+
+import java.util.List;
+
+public class EventServiceImplementation implements EventService {
+
+    private final EventRepository repo;
+
+    public EventServiceImplementation(EventRepository repo) {
+        this.repo = repo;
+    }
+
+    @Override
+    public ResponseEntity<List<Event>> getAll() {
+        List<Event> events = repo.findAll();
+        if (events.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(events);
+        }
+    }
+
+    @Override
+    public ResponseEntity<Event> getById(long id) {
+        var res = repo.findById(id);
+        return res.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @Override
+    public ResponseEntity<Event> updateById(long id, Event event) {
+        if (event == null || event.getId() < 0 || !repo.existsById(id) || event.getId() != id ||
+                event.getTag() == null || event.getTitle() == null || event.getToken() == null ||
+                event.getPeople() == null || event.getTransactions() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return repo.findById(id)
+                .map(existingEvent -> {
+                    existingEvent.setTitle(event.getTitle());
+                    existingEvent.setTag(event.getTag());
+                    existingEvent.setToken(event.getToken());
+                    existingEvent.setPeople(event.getPeople());
+                    existingEvent.setTransactions(event.getTransactions());
+                    return ResponseEntity.ok(repo.save(existingEvent));
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @Override
+    public ResponseEntity<Event> add(Event event) {
+        if (event == null || repo.existsById((long) event.getId()) || event.getId() < 0 || event.getTag() == null
+                || event.getTitle() == null || event.getToken() == null ||
+                event.getPeople() == null || event.getTransactions() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        Event saved = repo.save(event);
+        return ResponseEntity.ok(saved);
+    }
+
+    @Override
+    public ResponseEntity<Event> deleteById(long id) {
+        if (id < 0 || !repo.existsById(id)) {
+            return ResponseEntity.badRequest().build();
+        }
+        ResponseEntity<commons.Event> response = ResponseEntity.ok(repo.findById(id).get());
+        repo.deleteById(id);
+        return response;
+    }
+
+    @Override
+    public ResponseEntity<List<Person>> getPeople(long id) {
+        if (id < 0 || !repo.existsById(id)) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (repo.findById(id).isPresent()) {
+            return ResponseEntity.ok(repo.findById(id).get().getPeople());
+        }
+        return ResponseEntity.internalServerError().build();
+    }
+
+    @Override
+    public ResponseEntity<Person> add(long id, Person person) {
+        if (id < 0 || !repo.existsById(id)) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (repo.findById(id).isPresent()) {
+            Event event = repo.findById(id).get();
+            event.addPerson(person);
+            repo.save(event);
+            return ResponseEntity.ok(person);
+        }
+        return ResponseEntity.internalServerError().build();
+    }
+
+
+    @Override
+    public ResponseEntity<List<Transaction>> getExpenses(long idEvent) {
+        if (idEvent < 0 || !repo.existsById(idEvent)) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (repo.findById(idEvent).isPresent()) {
+            return ResponseEntity.ok(repo.findById(idEvent).get().getTransactions());
+        }
+        return ResponseEntity.internalServerError().build();
+    }
+
+    @Override
+    public ResponseEntity<Transaction> createNewExpense(long idEvent, Transaction transaction) {
+        if (idEvent < 0 || !repo.existsById(idEvent)) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (repo.findById(idEvent).isPresent()) {
+            Event event = repo.findById(idEvent).get();
+            event.addTransaction(transaction);
+            repo.save(event);
+            return ResponseEntity.ok(transaction);
+        }
+        return ResponseEntity.internalServerError().build();
+    }
+}
