@@ -1,53 +1,30 @@
 package server.api;
 
-
 import java.util.*;
-import java.util.function.Consumer;
-
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import commons.Event;
 
 import commons.Person;
 import commons.Transaction;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
-
-
-import org.springframework.web.context.request.async.DeferredResult;
-import server.database.EventRepository;
+import server.services.implementations.EventServiceImplementation;
 
 
 @RestController
 @RequestMapping("/api/event")
 public class EventController {
-    @PersistenceContext
-    private EntityManager entityManager;
 
-    private final EventRepository repo;
-    private PersonController pc;
-
-    private TransactionController tc;
-
-    private SimpMessagingTemplate messagingTemplate;
+    private final EventServiceImplementation esi;
 
     /**
      * Constructor for the EventController.
      *
-     * @param repo repository for the eventRepository
+     * @param esi repository for the eventRepository
      */
-    public EventController(EventRepository repo, PersonController pc, TransactionController tc,
-                           SimpMessagingTemplate messagingTemplate) {
-        this.repo = repo;
-        this.pc = pc;
-        this.tc = tc;
-        this.messagingTemplate = messagingTemplate;
+    public EventController(EventServiceImplementation esi) {
+        this.esi = esi;
     }
 
     /**
@@ -56,8 +33,8 @@ public class EventController {
      * @return the event
      */
     @GetMapping(path = {"", "/"})
-    public List<Event> getAll() {
-        return repo.findAll();
+    public ResponseEntity<List<Event>> getAll() {
+        return esi.getAll();
     }
 
 
@@ -69,10 +46,7 @@ public class EventController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Event> getById(@PathVariable("id") long id) {
-        if (id < 0 || !repo.existsById(id)) {
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok(repo.findById(id).get());
+        return esi.getById(id);
     }
 
     /**
@@ -83,17 +57,7 @@ public class EventController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<Event> updateById(@PathVariable("id") long id, @RequestBody Event event) {
-        if (event == null || event.getId() < 0 || !repo.existsById(id) || event.getId() != id || event.getTag() == null || event.getTitle() == null
-                || event.getToken() == null ||
-                event.getPeople() == null || event.getTransactions() == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        for (Person person : event.getPeople()) {
-            person.setEvent(event);
-            pc.updateById(person.getId(), person);
-        }
-        Event saved = repo.save(event);
-        return ResponseEntity.ok(saved);
+        return esi.updateById(id, event);
     }
 
     /**
@@ -104,14 +68,7 @@ public class EventController {
      */
     @PostMapping(path = {"", "/"})
     public ResponseEntity<Event> add(@RequestBody Event event) {
-
-        if (event == null || repo.existsById((long) event.getId()) || event.getId() < 0 || event.getTag() == null
-                || event.getTitle() == null || event.getToken() == null ||
-                event.getPeople() == null || event.getTransactions() == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        Event saved = repo.save(event);
-        return ResponseEntity.ok(saved);
+        return esi.add(event);
     }
 
 
@@ -123,12 +80,7 @@ public class EventController {
      */
     @DeleteMapping(path = {"/{id}"})
     public ResponseEntity<Event> deleteById(@PathVariable("id") long id) {
-        if (id < 0 || !repo.existsById(id)) {
-            return ResponseEntity.badRequest().build();
-        }
-        ResponseEntity<commons.Event> response = ResponseEntity.ok(repo.findById(id).get());
-        repo.deleteById(id);
-        return response;
+       return esi.deleteById(id);
     }
 
     /**
@@ -138,10 +90,7 @@ public class EventController {
      */
     @GetMapping("/{id}/person")
     public ResponseEntity<List<Person>> getPeople(@PathVariable("id") long id) {
-        if (id < 0 || !repo.existsById(id)) {
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok(repo.findById(id).get().getPeople());
+        return esi.getPeople(id);
     }
 
     /**
@@ -152,72 +101,7 @@ public class EventController {
      */
     @PostMapping(path = {"/{id}/person"})
     public ResponseEntity<Person> add(@PathVariable("id") long id, @RequestBody Person person) throws JsonProcessingException {
-        if (id < 0 || !repo.existsById(id)) {
-            return ResponseEntity.badRequest().build();
-        }
-        ObjectMapper objectMapper = new Jackson2ObjectMapperBuilder().json().build();
-        String result = objectMapper.writeValueAsString(person);
-        System.out.println(result);
-
-        person.setEvent(getById(id).getBody());
-        person.setTransactions(new ArrayList<>());
-        person.setCreatedTransactions(new ArrayList<>());
-        Person newPerson = pc.add(person).getBody();
-        Event event = getById(id).getBody();
-        event.addPerson(newPerson);
-        repo.save(event);
-        messagingTemplate.convertAndSend("/topic/events/people", pc.getById(newPerson.getId()).getBody());
-        return ResponseEntity.ok(pc.getById(newPerson.getId()).getBody());
-    }
-
-
-
-    @PutMapping(path = {"/{idEvent}/person"})
-    public ResponseEntity<Person> updatePerson(@PathVariable("idEvent") long idEvent, @RequestParam("id") int id,
-                                               @RequestBody Person update) {
-        if (Objects.equals(pc.getById(id), ResponseEntity.badRequest().build())) {
-            return ResponseEntity.badRequest().build();
-        }
-        if ((idEvent < 0 || !repo.existsById(idEvent) || id < 0)) {
-            return ResponseEntity.badRequest().build();
-        }
-        pc.updateByIdTransactions(id, update);
-        Event event = getById(idEvent).getBody();
-        Person old = pc.getById(id).getBody();
-        List<Person> people = event.getPeople();
-        if (people.contains(old)) {
-            people.remove(old);
-            people.add(update);
-        }
-        List<Transaction> transactions = getExpenses(idEvent).getBody();
-        event.setPeople(people);
-        event.setTransactions(transactions);
-        updateById(idEvent, event);
-        messagingTemplate.convertAndSend("/topic/events/people", pc.getById(id).getBody());
-        return ResponseEntity.ok(pc.getById(id).getBody());
-    }
-
-    /**
-     * Method for deleting a person from the event.
-     * @param idEvent - id of the event
-     * @param id - id of the person to be deleted
-     * @return - the new state of the event
-     */
-    @DeleteMapping(path = {"/{idEvent}/person"})
-    public ResponseEntity<Person> deleteById(@PathVariable("idEvent") long idEvent,
-                                           @RequestParam("id") int id) {
-        if (Objects.equals(pc.getById(id), ResponseEntity.badRequest().build())) {
-            return ResponseEntity.badRequest().build();
-        }
-        if ((idEvent < 0 || !repo.existsById(idEvent) || id < 0)) {
-            return ResponseEntity.badRequest().build();
-        }
-        Event event = getById(idEvent).getBody();
-        Person rmv = pc.getById(id).getBody();
-        event.removePerson(rmv);
-        updateById(idEvent, event);
-        pc.deleteById(id);
-        return ResponseEntity.ok(rmv);
+       return esi.add(id, person);
     }
 
     /**
@@ -227,26 +111,7 @@ public class EventController {
      */
     @GetMapping(path = {"/{idEvent}/expenses"})
     public ResponseEntity<List<Transaction>> getExpenses(@PathVariable("idEvent") long idEvent) {
-        if (idEvent < 0 || !repo.existsById(idEvent)) {
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok(repo.findById(idEvent).get().getTransactions());
-    }
-
-    private Map<Object, Consumer<Transaction>> listeners = new HashMap<>();
-    @GetMapping(path = "/transactions")
-    public DeferredResult<ResponseEntity<Transaction>> getUpdates() {
-        var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        DeferredResult<ResponseEntity<Transaction>> deferredResult = new DeferredResult<>(1000L, noContent);
-        Object key = new Object();
-        listeners.put(key, value -> {
-            deferredResult.setResult(ResponseEntity.ok(value));
-        });
-        deferredResult.onCompletion(() -> {
-            listeners.remove(key);
-        });
-
-        return deferredResult;
+        return esi.getExpenses(idEvent);
     }
 
     /**
@@ -258,97 +123,14 @@ public class EventController {
     @PostMapping(path = {"/{idEvent}/expenses"})
     public ResponseEntity<Transaction> createNewExpense(@PathVariable("idEvent") long idEvent,
                                                         @RequestBody Transaction transaction) {
-        if (idEvent < 0 || !repo.existsById(idEvent)) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        tc.add(transaction);
-
-        Person person = pc.getById(transaction.getCreator().getId()).getBody();
-        List<Transaction> createdTransactions;
-        if (person.getCreatedTransactions() == null) {
-            person.setCreatedTransactions(Collections.emptyList());
-        }
-        createdTransactions = person.getCreatedTransactions();
-        createdTransactions.add(transaction);
-        person.setCreatedTransactions(createdTransactions);
-        pc.updateById(person.getId(), person);
-        transaction.setCreator(person);
-
-        tc.updateById(transaction.getId(), transaction);
-
-        List<Person> involvedPeople = tc.getById(transaction.getId()).getBody().getParticipants();
-        for (Person p : involvedPeople) {
-            List<Transaction> transactions;
-            if (p.getTransactions() == null) {
-                p.setTransactions(new ArrayList<>());
-            }
-            transactions = p.getTransactions();
-            transactions.add(transaction);
-            p.setTransactions(transactions);
-            pc.updateById(p.getId(), p);
-        }
-        transaction.setParticipants(involvedPeople);
-
-        tc.updateById(transaction.getId(), transaction);
-
-        Event event = getById(idEvent).getBody();
-        List<Transaction> transactions = event.getTransactions();
-        transactions.add(transaction);
-        event.setTransactions(transactions);
-
-        tc.updateById(transaction.getId(), transaction);
-        repo.save(event);
-        // messagingTemplate.convertAndSend("/topic/events/transactions/",
-        //        tc.getById(transaction.getId()).getBody());
-        listeners.forEach((k, v) -> {
-            v.accept(tc.getById(transaction.getId()).getBody());
-        });
-        return ResponseEntity.ok(tc.getById(transaction.getId()).getBody());
+        return esi.createNewExpense(idEvent, transaction);
     }
 
-    @PutMapping(path = {"{idEvent}/expenses"})
-    public ResponseEntity<Transaction> updateTransaction(@PathVariable("idEvent") long idEvent,
-                                                         @RequestParam("id") int id, @RequestBody Transaction update) {
-        Transaction old = tc.getById(id).getBody();
-        return ResponseEntity.ok(old);
-    }
     /**
      * Method for deleting a person from an event.
      * @param idEvent - id of the event
      * @param idTransaction - id of the transaction to be deleted
      * @return - the current state of the event
      */
-    @DeleteMapping(path = {"/{idEvent}/expenses"})
-    public ResponseEntity<Event> deleteTransactionById(@PathVariable("idEvent") long idEvent,
-                                                       @RequestParam int idTransaction) {
-        if (Objects.equals(tc.getById(idTransaction), ResponseEntity.badRequest().build())) {
-            return ResponseEntity.badRequest().build();
-        }
-        if ((idEvent < 0 || !repo.existsById(idEvent) || idTransaction < 0)) {
-            return ResponseEntity.badRequest().build();
-        }
-        Transaction tr = tc.getById(idTransaction).getBody();
-        Event event = getById(idEvent).getBody();
-        event.removeTransaction(tr);
 
-        Person person = pc.getById(tr.getCreator().getId()).getBody();
-        List<Transaction> createdTransactions = person.getCreatedTransactions();
-        createdTransactions.remove(tr);
-        pc.updateById(person.getId(), person);
-
-        for (Person p : tr.getParticipants()) {
-            if (p.getTransactions() != null) {
-                List<Transaction> transactions = p.getTransactions();
-                transactions.remove(tr);
-                p.setTransactions(transactions);
-                pc.updateById(p.getId(), p);
-            }
-        }
-
-        Event saved = repo.save(event);
-        ResponseEntity<Event> response = ResponseEntity.ok(saved);
-        tc.deleteById(idTransaction);
-        return response;
-    }
 }
