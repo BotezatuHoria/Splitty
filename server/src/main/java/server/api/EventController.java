@@ -205,7 +205,7 @@ public class EventController {
      */
     @DeleteMapping(path = {"/{idEvent}/person"})
     public ResponseEntity<Person> deleteById(@PathVariable("idEvent") long idEvent,
-                                           @RequestParam int id) {
+                                           @RequestParam("id") int id) {
         if (Objects.equals(pc.getById(id), ResponseEntity.badRequest().build())) {
             return ResponseEntity.badRequest().build();
         }

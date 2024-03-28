@@ -147,9 +147,12 @@ public class ParticipantEditPageCtrl {
             server.updatePerson(mainCtrl.getCurrentEventID(), person.getId(), person);
             System.out.println("THIS PART NOT YET DONE, FIX API");
             System.out.println("person with id " + person.getId() + " was adjusted to " + person);
+            clearFields();
             mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
         } else {
-            warningLabel.setText("Something went wrong. Please contact t.p.p.vanleest@student.tudelft.nl");
+            if(!(personExists(newFirstName,newLastName))){
+                warningLabel.setText("Something went wrong. Please contact t.p.p.vanleest@student.tudelft.nl");
+            }
         }
 
 
@@ -178,27 +181,35 @@ public class ParticipantEditPageCtrl {
     }
 
 
-        /**
-         * Method for the abort button.
-         */
-        public void abort () {
-            clearFields();
-            mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
-        }
+    public void removePerson(){
+        Person person = participantsScroll.getSelectionModel().getSelectedItem();
+        int personID = person.getId();
+        int serverID = mainCtrl.getCurrentEventID();
+        Person removedPerson = server.removePerson(personID, serverID);
+        System.out.println(removedPerson);
+    }
 
-        /**
-         * Clears all the input fields.
-         */
-        private void clearFields () {
-            email.clear();
-            firstName.clear();
-            lastName.clear();
-            iban.clear();
-            originalIBAN.setText("");
-            originalEmail.setText("");
-            originalFName.setText("");
-            originalLName.setText("");
-        }
+    /**
+     * Method for the abort button.
+     */
+    public void abort () {
+        clearFields();
+        mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
+    }
+
+    /**
+     * Clears all the input fields.
+     */
+    private void clearFields () {
+        email.clear();
+        firstName.clear();
+        lastName.clear();
+        iban.clear();
+        originalIBAN.setText("");
+        originalEmail.setText("");
+        originalFName.setText("");
+        originalLName.setText("");
+    }
 
 
     }

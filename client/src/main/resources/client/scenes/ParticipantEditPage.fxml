@@ -36,7 +36,7 @@
          </font>
       </Button>
       <Label layoutX="23.0" layoutY="57.0" text="Select participant:" />
-      <Button layoutX="347.0" layoutY="335.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="119.0" text="Remove Participant" />
+      <Button layoutX="347.0" layoutY="335.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="119.0" text="Remove Participant" onAction="#removePerson"/>
       <Label layoutX="17.0" layoutY="221.0" prefHeight="20.0" prefWidth="71.0" text="Last name">
          <font>
             <Font size="14.0" />
