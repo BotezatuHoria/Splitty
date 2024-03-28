@@ -1,22 +1,34 @@
 package server.api;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.*;
 
 import commons.Event;
 import commons.Person;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import server.services.implementations.PersonServiceImplementation;
 
 import java.util.ArrayList;
 
 public class PersonControllerTest {
     private TestPersonRepository db;
 
-    private PersonController sut;
+    private PersonServiceImplementation sut;
+
+    private SimpMessagingTemplate messagingTemplate;
     @BeforeEach
     public void setup () {
         db = new TestPersonRepository();
-        sut = new PersonController(db, new TransactionController(new TestTransactionRepository()));
+        messagingTemplate = new SimpMessagingTemplate(new MessageChannel() {
+            @Override
+            public boolean send(Message<?> message, long timeout) {
+                return true;
+            }
+        });
+        sut = new PersonServiceImplementation(db, messagingTemplate);
     }
 
     @Test
@@ -38,13 +50,13 @@ public class PersonControllerTest {
     @Test
     public void getPersonNegativeTest() {
         var actual = sut.getById(-1);
-        assertEquals(BAD_REQUEST, actual.getStatusCode());
+        assertEquals(NOT_FOUND, actual.getStatusCode());
     }
 
     @Test
     public void getPersonDoesNotExistTest() {
         var actual = sut.getById(5);
-        assertEquals(BAD_REQUEST, actual.getStatusCode());
+        assertEquals(NOT_FOUND, actual.getStatusCode());
     }
 
     @Test
@@ -61,7 +73,7 @@ public class PersonControllerTest {
         sut.add(test);
         var actual = sut.deleteById(0);
         assertEquals(test, actual.getBody());
-        assertEquals(new ArrayList<>(), sut.getAll());
+        assertEquals(NO_CONTENT, sut.getAll().getStatusCode());
     }
 
     @Test
