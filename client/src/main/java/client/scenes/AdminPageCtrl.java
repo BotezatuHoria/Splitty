@@ -1,6 +1,9 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import commons.Event;
 import jakarta.inject.Inject;
 import javafx.beans.value.ChangeListener;
@@ -11,8 +14,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
-import java.util.Optional;
 
 public class AdminPageCtrl {
 
@@ -72,7 +77,7 @@ public class AdminPageCtrl {
     }
 
     /**
-     * Changes the selected event label to the event title
+     * Changes the selected event label to the event title.
      */
     void changeSelectedEvent(){
         events.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Event>() {
@@ -102,6 +107,34 @@ public class AdminPageCtrl {
 
     public void goBack() {
         mainCtrl.showAdminLogin();
+    }
+
+    public void downloadEvent(){
+        Event event = events.getSelectionModel().getSelectedItem();
+        if (event == null){
+            return;
+        }
+        //object mapper to write object to json
+        ObjectMapper obj = new ObjectMapper();
+        ObjectWriter writer = obj.writer(new DefaultPrettyPrinter());
+
+        //file chooser to let user choose download destination
+        JFrame parent = new JFrame();
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setSelectedFile(new File(event.getTitle()+".json"));
+
+        try{
+
+            int returnValue = fileChooser.showOpenDialog(parent);
+            if (returnValue == JFileChooser.APPROVE_OPTION){
+                File saveFile = fileChooser.getSelectedFile();
+                String jsonStr = obj.writeValueAsString(event);
+                writer.writeValue(saveFile, jsonStr);
+            }
+
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
 
