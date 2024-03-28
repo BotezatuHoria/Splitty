@@ -88,8 +88,7 @@ public class ParticipantAdditionPageCtrl {
      * @return returns the created person
      */
     private Person getPerson(){
-        Person p = new Person(email.getText(), firstName.getText(), lastName.getText(), iban.getText(), new Event(),
-                null, null);
+        Person p = new Person(email.getText(), firstName.getText(), lastName.getText(), iban.getText());
         return p;
     }
 
@@ -192,8 +191,7 @@ public class ParticipantAdditionPageCtrl {
         else {
             firstnameResponse.setText("");
             lastnameResponse.setText("");
-            Person person = new Person(newEmail, newFirstName, newLastName, newIban,
-                    null, null, null);
+            Person person = new Person(newEmail, newFirstName, newLastName, newIban);
             Person thePerson = server.addPerson(person, mainCtrl.getCurrentEventID());
         }
         System.out.println("Person added to the event");

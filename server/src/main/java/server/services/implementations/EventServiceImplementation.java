@@ -132,4 +132,53 @@ public class EventServiceImplementation implements EventService {
         }
         return ResponseEntity.internalServerError().build();
     }
+
+    public ResponseEntity<Person> deletePerson(long idEvent, int idPerson) {
+        if (idEvent < 0 || !repo.existsById(idEvent)) {
+            return ResponseEntity.badRequest().build();
+        }
+        try {
+            Event event = getById(idEvent).getBody();
+            Person person = psi.getById(idPerson).getBody();
+            if (event != null) {
+                List<Transaction> transactions = event.getTransactions();
+                transactions.removeIf(t -> t.getCreator().getId() == idPerson);
+                transactions = event.getTransactions();
+                for (Transaction t : transactions) {
+                    if (t.getParticipants().contains(person)) {
+                        List<Person> participants = t.getParticipants();
+                        participants.remove(person);
+                        t.setParticipants(participants);
+                    }
+                }
+                event.setTransactions(transactions);
+                event.removePerson(person);
+                updateById(idEvent, event);
+                return ResponseEntity.ok(psi.deleteById(idPerson).getBody());
+            }
+            return ResponseEntity.internalServerError().build();
+        }
+        catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    public ResponseEntity<Transaction> deleteTransaction(long idEvent, int idTransaction) {
+        if (idEvent < 0 || !repo.existsById(idEvent) || tsi.getById(idTransaction) == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        try {
+            Event event = getById(idEvent).getBody();
+            Transaction t = tsi.getById(idTransaction).getBody();
+            if (event != null) {
+                event.removeTransaction(t);
+                updateById(idEvent, event);
+                return ResponseEntity.ok(tsi.deleteById(idTransaction).getBody());
+            }
+            return ResponseEntity.internalServerError().build();
+        }
+        catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }

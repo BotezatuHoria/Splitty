@@ -29,11 +29,11 @@ public class Transaction {
 
 
     @ManyToMany
-    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt", "event", "createdTransactions", "transactions"})
+    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt"})
     public List<Person> participants;
 
     @ManyToOne
-    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt", "event", "createdTransactions", "transactions"})
+    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt"})
     public Person creator;
 
     /**

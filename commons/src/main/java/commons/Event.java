@@ -16,11 +16,11 @@ public class Event {
     protected int id;
     protected String token;
 
-    @OneToMany
-    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt", "event", "createdTransactions", "transactions"})
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt"})
     protected List<Person> people;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties({"name", "date", "money", "currency", "expenseType", "participants", "creator"})
     protected List<Transaction> transactions;
 
@@ -192,14 +192,12 @@ public class Event {
             return false;
         }
         Event event = (Event) o;
-        return id == event.id && Objects.equals(tag, event.tag) && Objects.equals(title, event.title) &&
-                Objects.equals(token, event.token) && Objects.equals(people, event.people) &&
-                Objects.equals(transactions, event.transactions);
+        return id == event.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(tag, title, id, token, people, transactions);
+        return Objects.hash(tag, title, id, token, people);
     }
 }
 
