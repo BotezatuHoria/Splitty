@@ -2,6 +2,8 @@ package commons;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.util.Date;
 import java.util.List;
@@ -17,8 +19,10 @@ public class Event {
     protected int id;
     protected String token;
 
-    private Date creationDate = new Date();
-    private Date lastModified = new Date();
+    @CreatedDate
+    private Date creationDate;
+    @LastModifiedDate
+    private Date lastModified;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"event"})
@@ -107,7 +111,6 @@ public class Event {
      */
     public void setTag(String tag) {
         this.tag = tag;
-        lastModified = new Date();
     }
 
     /**
@@ -116,7 +119,6 @@ public class Event {
      */
     public void setTitle(String title) {
         this.title = title;
-        lastModified = new Date();
     }
 
     /**
@@ -125,7 +127,6 @@ public class Event {
      */
     public void setToken(String token) {
         this.token = token;
-        lastModified = new Date();
     }
 
     /**
@@ -134,7 +135,6 @@ public class Event {
      */
     public void setPeople(List<Person> people) {
         this.people = people;
-        lastModified = new Date();
     }
 
     /**
@@ -143,7 +143,6 @@ public class Event {
      */
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
-        lastModified = new Date();
     }
 
     /**
@@ -152,7 +151,6 @@ public class Event {
      */
     public void addPerson(Person person) {
         this.people.add(person);
-        lastModified = new Date();
     }
 
     /**
@@ -161,7 +159,6 @@ public class Event {
      */
     public void removePerson(Person person) {
         this.people.remove(person);
-        lastModified = new Date();
     }
 
     /**
@@ -170,7 +167,6 @@ public class Event {
      */
     public void addTransaction(Transaction transaction) {
         this.transactions.add(transaction);
-        lastModified = new Date();
     }
 
     /**
@@ -179,7 +175,6 @@ public class Event {
      */
     public void removeTransaction(Transaction transaction) {
         this.transactions.remove(transaction);
-        lastModified = new Date();
     }
 
     /**
