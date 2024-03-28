@@ -21,7 +21,7 @@ public class Event {
     private Date lastModified = new Date();
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties({"debt", "event", "createdTransactions", "transactions"})
+    @JsonIgnoreProperties({"event"})
     protected List<Person> people;
 
     @OneToMany(cascade = CascadeType.ALL)
