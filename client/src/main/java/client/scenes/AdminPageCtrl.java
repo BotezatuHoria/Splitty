@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.Date;
+import java.util.Optional;
 
 public class AdminPageCtrl {
 
@@ -82,6 +83,21 @@ public class AdminPageCtrl {
                 }
             }
         });
+    }
+
+    public void delete(){
+        Event event = events.getSelectionModel().getSelectedItem();
+        if (event == null){
+            return;
+        }
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete");
+        alert.setContentText("Are you sure you want to delete event: " + event.getTitle());
+        alert.showAndWait().filter(ButtonType.OK::equals).ifPresent(b -> {
+            server.deleteEventById(event, event.getId());
+            showEvents();
+        });
+        alert.close();
     }
 
     public void goBack() {
