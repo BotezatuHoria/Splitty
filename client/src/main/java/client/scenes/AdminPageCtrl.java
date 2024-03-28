@@ -62,6 +62,7 @@ public class AdminPageCtrl {
     void initialize(){
         //set up the columns in the table
         titleColumn.setCellValueFactory(new PropertyValueFactory<Event, String>("title"));
+        creationDateColumn.setCellValueFactory(new PropertyValueFactory<Event, Date>("creationDate"));
         showEvents();
     }
 

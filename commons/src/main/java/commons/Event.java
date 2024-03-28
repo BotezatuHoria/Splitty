@@ -3,6 +3,7 @@ package commons;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,6 +16,9 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     protected int id;
     protected String token;
+
+    private Date creationDate = new Date();
+    private Date lastModified = new Date();
 
     @OneToMany
     @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt", "event", "createdTransactions", "transactions"})
@@ -103,6 +107,7 @@ public class Event {
      */
     public void setTag(String tag) {
         this.tag = tag;
+        lastModified = new Date();
     }
 
     /**
@@ -111,6 +116,7 @@ public class Event {
      */
     public void setTitle(String title) {
         this.title = title;
+        lastModified = new Date();
     }
 
     /**
@@ -119,6 +125,7 @@ public class Event {
      */
     public void setToken(String token) {
         this.token = token;
+        lastModified = new Date();
     }
 
     /**
@@ -127,6 +134,7 @@ public class Event {
      */
     public void setPeople(List<Person> people) {
         this.people = people;
+        lastModified = new Date();
     }
 
     /**
@@ -135,6 +143,7 @@ public class Event {
      */
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
+        lastModified = new Date();
     }
 
     /**
@@ -143,6 +152,7 @@ public class Event {
      */
     public void addPerson(Person person) {
         this.people.add(person);
+        lastModified = new Date();
     }
 
     /**
@@ -151,6 +161,7 @@ public class Event {
      */
     public void removePerson(Person person) {
         this.people.remove(person);
+        lastModified = new Date();
     }
 
     /**
@@ -159,6 +170,7 @@ public class Event {
      */
     public void addTransaction(Transaction transaction) {
         this.transactions.add(transaction);
+        lastModified = new Date();
     }
 
     /**
@@ -167,6 +179,7 @@ public class Event {
      */
     public void removeTransaction(Transaction transaction) {
         this.transactions.remove(transaction);
+        lastModified = new Date();
     }
 
     /**
@@ -200,6 +213,14 @@ public class Event {
     @Override
     public int hashCode() {
         return Objects.hash(tag, title, id, token, people, transactions);
+    }
+
+    /**
+     * Returns the creation date of the event.
+     * @return returns the creation date
+     */
+    public Date getCreationDate(){
+        return this.creationDate;
     }
 }
 
