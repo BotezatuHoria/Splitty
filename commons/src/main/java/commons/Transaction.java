@@ -61,6 +61,7 @@ public class Transaction {
         this.participants = participants;
         this.creator = creator;
         this.expenseType = Objects.requireNonNullElse(expenseType, "Other");
+        calculateDebts();
     }
 
     /**
@@ -81,6 +82,23 @@ public class Transaction {
         this.expenseType = expenseType;
         this.participants = participants;
         this.creator = creator;
+        calculateDebts();
+
+    }
+
+    /**
+     * Calculates debts for everybody involved in the transaction.
+     */
+    public void calculateDebts(){
+        double singlePersonToPay = money / participants.size();
+        //WHY DO WE HAVE DEBT AS INTEGER?
+        for(Person person :  participants){
+            if(person.equals(creator)){
+                person.setDebt((int) (person.getDebt() + money - singlePersonToPay));
+            }else{
+                person.setDebt((int) (person.getDebt() - singlePersonToPay));
+            }
+        }
     }
 
     /**
