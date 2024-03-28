@@ -144,9 +144,8 @@ public class ParticipantEditPageCtrl {
             person.setLastName(newLastName);
             person.setEmail(newEmail);
             person.setIban(newIban);
-            server.updatePerson(person.getId(), person);
-            System.out.println("THIS PART NOT YET DONE, FIX API");
-            System.out.println("person with id " + person.getId() + " was adjusted to " + person);
+            Person updatedperson = server.updatePerson(person.getId(), person);
+            System.out.println("person with id " + person.getId() + " was adjusted to " + updatedperson);
             clearFields();
             mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
         } else {
@@ -159,7 +158,7 @@ public class ParticipantEditPageCtrl {
     }
 
     /**
-     * checks wheter the edited participant has a first and lastname that already exist in event.
+     * checks whether the edited participant has a first and lastname that already exist in event.
      * @param firstname the new firstname of person.
      * @param lastname the new lastname of person.
      * @return true if another person with same names exist.
@@ -169,12 +168,14 @@ public class ParticipantEditPageCtrl {
         boolean personIsDuplicate = false;
         for (Person e : allPersons) {
             if (firstname.equals(e.getFirstName()) && lastname.equals(e.getLastName())) {
-                warningLabel.setText("A person with this combination of first and last name already exists. " +
-                        "Please rename this, or the other equally named person.");
-                System.out.println("tried to add a combination of firstname and lastname that already exists");
-                if (!(participantsScroll.getSelectionModel().getSelectedItem() == e)) {
+                if (!(participantsScroll.getSelectionModel().getSelectedItem().equals(e))) {
                     personIsDuplicate = true;
+                    warningLabel.setText("A person with this combination of first and last name already exists. " +
+                            "Please rename this, or the other equally named person.");
+                    System.out.println("tried to add a combination of firstname and lastname that already exists");
+                    return personIsDuplicate;
                 }
+
             }
         }
         return personIsDuplicate;
