@@ -224,7 +224,7 @@ public class Event {
     }
 
     /**
-     * Return the date the event was last modified
+     * Return the date the event was last modified.
      * @return returns the date
      */
     public Date getLastModified(){
