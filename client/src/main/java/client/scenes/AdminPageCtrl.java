@@ -3,6 +3,8 @@ package client.scenes;
 import client.utils.ServerUtils;
 import commons.Event;
 import jakarta.inject.Inject;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -63,7 +65,23 @@ public class AdminPageCtrl {
         //set up the columns in the table
         titleColumn.setCellValueFactory(new PropertyValueFactory<Event, String>("title"));
         creationDateColumn.setCellValueFactory(new PropertyValueFactory<Event, Date>("creationDate"));
+        lastModifiedColumn.setCellValueFactory(new PropertyValueFactory<Event, Date>("lastModified"));
         showEvents();
+        changeSelectedEvent();
+    }
+
+    /**
+     * Changes the selected event label to the event title
+     */
+    void changeSelectedEvent(){
+        events.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Event>() {
+            @Override
+            public void changed(ObservableValue<? extends Event> observable, Event oldValue, Event newValue) {
+                if (newValue != null){
+                    selectedEvent.setText(newValue.getTitle());
+                }
+            }
+        });
     }
 
     public void goBack() {

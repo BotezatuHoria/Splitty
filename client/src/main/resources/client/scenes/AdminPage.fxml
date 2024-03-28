@@ -23,7 +23,7 @@
       <Button fx:id="downloadEvent" layoutX="425.0" layoutY="99.0" mnemonicParsing="false" text="Download" />
       <Button fx:id="deleteEvent" layoutX="425.0" layoutY="273.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Delete" />
       <Button fx:id="importEvent" layoutX="425.0" layoutY="187.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Import" />
-      <Label fx:id="selectedEvent" layoutX="36.0" layoutY="342.0" prefHeight="30.0" prefWidth="364.0" text="Selected Event:">
+      <Label layoutX="36.0" layoutY="342.0" prefHeight="30.0" prefWidth="141.0" text="Selected Event:">
          <font>
             <Font size="20.0" />
          </font>
@@ -35,5 +35,10 @@
             <TableColumn fx:id="lastModifiedColumn" prefWidth="148.0" text="Last Activity" />
         </columns>
       </TableView>
+      <Label fx:id="selectedEvent" layoutX="178.0" layoutY="342.0" prefHeight="30.0" prefWidth="189.0" text="None">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

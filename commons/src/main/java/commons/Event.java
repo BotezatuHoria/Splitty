@@ -222,5 +222,13 @@ public class Event {
     public Date getCreationDate(){
         return this.creationDate;
     }
+
+    /**
+     * Return the date the event was last modified
+     * @return returns the date
+     */
+    public Date getLastModified(){
+        return this.lastModified;
+    }
 }
 
