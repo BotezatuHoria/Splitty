@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import server.database.EventRepository;
 import server.services.interfaces.EventService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -131,5 +132,31 @@ public class EventServiceImplementation implements EventService {
             return ResponseEntity.ok(savedTransaction);
         }
         return ResponseEntity.internalServerError().build();
+    }
+
+
+
+    public ResponseEntity<Person> deletePersonFromEvent(Long idEvent, int personID){
+        Person personToDelete = psi.getById(personID).getBody();
+        boolean isPersonIn = false;
+        List<Person> newPersons = new ArrayList<>();
+        for(Person e: getById(idEvent).getBody().getPeople()){
+            if (e.equals(personToDelete)){
+                isPersonIn = true;
+            }
+            else{
+                newPersons.add(e);
+            }
+        }
+        if (!(isPersonIn)){
+            System.out.println("Person that was to be deleted is not in the event?");
+            return null;
+        }
+        else{
+
+            getById(idEvent).getBody().setPeople(newPersons);
+            return psi.deleteById(personID);
+        }
+
     }
 }

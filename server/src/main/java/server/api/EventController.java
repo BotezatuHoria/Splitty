@@ -129,8 +129,11 @@ public class EventController {
     /**
      * Method for deleting a person from an event.
      * @param idEvent - id of the event
-     * @param idTransaction - id of the transaction to be deleted
+     * @param personID - id of the transaction to be deleted
      * @return - the current state of the event
      */
-
+    @DeleteMapping(path= {"/{idEvent}/person/{personID}"})
+    public ResponseEntity<Person> deletePersonFromEvent(@PathVariable("idEvent") long idEvent, @PathVariable("personID") int personID){
+        return esi.deletePersonFromEvent(idEvent,personID);
+    }
 }
