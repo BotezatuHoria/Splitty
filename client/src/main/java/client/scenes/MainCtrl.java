@@ -225,6 +225,13 @@ public class MainCtrl {
     }
 
     /**
+     * Method for showing the Debt settlement page.
+     */
+    public void showDebtSettlementPage(){
+
+    }
+
+    /**
      * Method for showing the add participant page.
      */
     public void showAddParticipant() {
@@ -257,6 +264,7 @@ public class MainCtrl {
      */
     public void showDebtPage() {
         primaryStage.setTitle("Open debts");
+        debtSettlementCtrl. populateOpenDebts();
         primaryStage.setScene(debt);
     }
 
