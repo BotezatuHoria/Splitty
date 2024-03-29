@@ -136,10 +136,10 @@ public class ParticipantEditPageCtrl {
         String newIban = iban.getText();
 
         if (newFirstName.isEmpty() || newLastName.isEmpty()) {
-            warningLabel.setText("The firstname and/or lastname column are empty; " +
+            warningLabel.setText("The firstname and/or lastname column is/are empty; " +
                     "it is mandatory to give the person a name. Please fill these in.");
         }
-        if (!(personExists(newFirstName, newLastName))) {
+        else if (!(personExists(newFirstName, newLastName))) {
             person.setFirstName(newFirstName);
             person.setLastName(newLastName);
             person.setEmail(newEmail);
