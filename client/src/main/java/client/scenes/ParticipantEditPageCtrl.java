@@ -182,7 +182,10 @@ public class ParticipantEditPageCtrl {
     }
 
 
-    public void removePerson(){
+    /**
+     *removes a person from the event.
+     */
+    public void removePerson(){ //this method isnt complete yet because of the api call in line 192 which i cannot get to work.
         Person person = participantsScroll.getSelectionModel().getSelectedItem();
         int personID = person.getId();
         int serverID = mainCtrl.getCurrentEventID();
