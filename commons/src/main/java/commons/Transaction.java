@@ -91,12 +91,11 @@ public class Transaction {
      */
     public void calculateDebts(){
         double singlePersonToPay = money / participants.size();
-        //WHY DO WE HAVE DEBT AS INTEGER?
         for(Person person :  participants){
             if(person.equals(creator)){
-                person.setDebt((int) (person.getDebt() + money - singlePersonToPay));
+                person.setDebt(person.getDebt() + money - singlePersonToPay);
             }else{
-                person.setDebt((int) (person.getDebt() - singlePersonToPay));
+                person.setDebt(person.getDebt() - singlePersonToPay);
             }
         }
     }
