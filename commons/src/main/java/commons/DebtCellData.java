@@ -4,7 +4,7 @@ public class DebtCellData {
 
   protected Person sender;
   protected Person receiver;
-  protected int debt;
+  protected double debt;
 
   /**
    * constructor which initializes all attributes.
@@ -12,7 +12,7 @@ public class DebtCellData {
    * @param receiver
    * @param debt
    */
-  public DebtCellData(Person sender, Person receiver, int debt){
+  public DebtCellData(Person sender, Person receiver, double debt){
     this.sender = sender;
     this.receiver = receiver;
     this.debt = debt;
@@ -22,7 +22,7 @@ public class DebtCellData {
    * Getter for the amount of debt.
    * @return
    */
-  public int getDebt() {
+  public double getDebt() {
     return debt;
   }
 
