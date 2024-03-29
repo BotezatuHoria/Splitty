@@ -16,11 +16,11 @@ public class Event {
     protected int id;
     protected String token;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
     @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt"})
     protected List<Person> people;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
     @JsonIgnoreProperties({"name", "date", "money", "currency", "expenseType", "participants", "creator"})
     protected List<Transaction> transactions;
 
@@ -167,6 +167,18 @@ public class Event {
      */
     public void removeTransaction(Transaction transaction) {
         this.transactions.remove(transaction);
+    }
+
+    public void removeTransactions() {
+        if (transactions != null) {
+            transactions.clear();
+        }
+    }
+
+    public void removeParticipants() {
+        if (people != null) {
+            people.clear();
+        }
     }
 
     /**

@@ -3,6 +3,7 @@ package server.services.implementations;
 import commons.Event;
 import commons.Person;
 import commons.Transaction;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import server.database.EventRepository;
@@ -75,7 +76,10 @@ public class EventServiceImplementation implements EventService {
         if (id < 0 || !repo.existsById(id)) {
             return ResponseEntity.badRequest().build();
         }
-        ResponseEntity<commons.Event> response = ResponseEntity.ok(repo.findById(id).get());
+        Event event = repo.findById(id).get();
+        event.removeTransactions();
+        event.removeParticipants();
+        ResponseEntity<commons.Event> response = ResponseEntity.ok(event);
         repo.deleteById(id);
         return response;
     }
@@ -127,7 +131,7 @@ public class EventServiceImplementation implements EventService {
             Transaction savedTransaction = tsi.add(transaction).getBody();
             Event event = repo.findById(idEvent).get();
             event.addTransaction(savedTransaction);
-            repo.save(event);
+            updateById(idEvent, event);
             return ResponseEntity.ok(savedTransaction);
         }
         return ResponseEntity.internalServerError().build();
@@ -154,7 +158,7 @@ public class EventServiceImplementation implements EventService {
                 event.setTransactions(transactions);
                 event.removePerson(person);
                 updateById(idEvent, event);
-                return ResponseEntity.ok(psi.deleteById(idPerson).getBody());
+                return ResponseEntity.ok(person);
             }
             return ResponseEntity.internalServerError().build();
         }
@@ -173,7 +177,8 @@ public class EventServiceImplementation implements EventService {
             if (event != null) {
                 event.removeTransaction(t);
                 updateById(idEvent, event);
-                return ResponseEntity.ok(tsi.deleteById(idTransaction).getBody());
+                System.out.println(t);
+                return ResponseEntity.ok(t);
             }
             return ResponseEntity.internalServerError().build();
         }

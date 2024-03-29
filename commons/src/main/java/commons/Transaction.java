@@ -28,7 +28,7 @@ public class Transaction {
     protected String expenseType;
 
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt"})
     public List<Person> participants;
 
