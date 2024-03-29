@@ -2,7 +2,10 @@ package commons;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,12 +19,17 @@ public class Event {
     protected int id;
     protected String token;
 
-    @OneToMany
-    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt", "event", "createdTransactions", "transactions"})
+    @CreatedDate
+    private Date creationDate;
+    @LastModifiedDate
+    private Date lastModified;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"event"})
     protected List<Person> people;
 
-    @OneToMany
-    @JsonIgnoreProperties({"name", "date", "money", "currency", "expenseType", "participants", "creator"})
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"date"})
     protected List<Transaction> transactions;
 
     /**
@@ -200,6 +208,22 @@ public class Event {
     @Override
     public int hashCode() {
         return Objects.hash(tag, title, id, token, people, transactions);
+    }
+
+    /**
+     * Returns the creation date of the event.
+     * @return returns the creation date
+     */
+    public Date getCreationDate(){
+        return this.creationDate;
+    }
+
+    /**
+     * Return the date the event was last modified.
+     * @return returns the date
+     */
+    public Date getLastModified(){
+        return this.lastModified;
     }
 }
 
