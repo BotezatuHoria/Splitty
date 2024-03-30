@@ -1,6 +1,5 @@
 package server.api;
 
-import commons.Event;
 import commons.Person;
 import commons.Transaction;
 
@@ -37,12 +36,10 @@ class TransactionControllerTest {
         // Create a sample transaction
         participants = new ArrayList<>();
         person1 = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new ArrayList<>(),
-                new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
+                "iban33");
 
         person2 = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 2, "", new ArrayList<>(),
-                new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
+                "iban33");
 
         participants.add(person1);
         participants.add(person2);
@@ -91,12 +88,10 @@ class TransactionControllerTest {
     public void testAddInvalidTransaction() {
         List<Person> list = new ArrayList<>();
         Person personTest = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new ArrayList<>(),
-                new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
+                "iban33");
 
         Person personTest2 = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 2, "", new ArrayList<>(),
-                new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
+                "iban33");
 
         list.add(person1);
         list.add(person2);
@@ -219,8 +214,7 @@ class TransactionControllerTest {
 
         // New participants for the transaction
         Person person3 = new Person("tesshfh@l.com", "BOB", "Kevin",
-                "iban33", new Event("", "", 3, "", new ArrayList<>(),
-                new ArrayList<>()), new ArrayList<>(),new ArrayList<>());
+                "iban33");
 
         participants.add(person3);
         // Act: Update the participants of the transaction by ID
@@ -255,8 +249,7 @@ class TransactionControllerTest {
     @Test
     public void testGetAll() {
         Person person3 = new Person("tesshfh@l.com", "BOB", "Kevin",
-                "iban33", new Event("", "", 3, "", new ArrayList<>(),
-                new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
+                "iban33");
         participants.add(person3);
         Transaction t1 = new Transaction("test1",
                 LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("12"), Integer.parseInt("10")),

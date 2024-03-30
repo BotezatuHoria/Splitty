@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 
 import com.google.inject.Inject;
 import javafx.scene.layout.VBox;
@@ -17,7 +16,7 @@ import javafx.scene.text.Text;
 
 public class DebtSettlementCtrl {
   @FXML
-  public Pane openDebtPane;
+  private ListView<TitledPane> debtListView;
   @FXML
   private Text aboveCellText;
   @FXML
@@ -68,10 +67,8 @@ public class DebtSettlementCtrl {
               "Account holder: " + debt.getReceiver().getFirstName() + " " + debt.getReceiver().getLastName() + "\n"
                       + "IBAN: " + debt.getReceiver().getIban() + "\n");
       TitledPane titledPane = getTitledPane(debt, textArea);
-      openDebtPane.getChildren().add(titledPane);
+      debtListView.getItems().add(titledPane);
     }
-
-
   }
 
   private static TitledPane getTitledPane(DebtCellData debt, TextArea textArea) {

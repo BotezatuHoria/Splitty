@@ -297,6 +297,8 @@ public class MainCtrl {
     public void showAdminPage(){
         primaryStage.setTitle("Admin Page");
         primaryStage.setScene(adminPage);
+        adminPageCtrl.showEvents();
+        adminPageCtrl.changeSelectedEvent();
     }
 
     /**

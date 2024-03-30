@@ -107,7 +107,7 @@ public class TransactionController {
        return tsi.updateMoneyById(id, money);
     }
 
-    @GetMapping(path = "/transactions")
+    @GetMapping(path = "/channel")
     public DeferredResult<ResponseEntity<Transaction>> getUpdates() {
         return tsi.getUpdates();
     }
