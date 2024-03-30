@@ -53,7 +53,7 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 
 public class ServerUtils {
 
-	private static String SERVER = "http://localhost:8080/";
+	private static String server = "http://localhost:8080/";
 
 	/**
 	 * Method for getting the quotes the hard way.
@@ -70,8 +70,8 @@ public class ServerUtils {
 		}
 	}
 
-	public static void setSERVER(String SERVER) {
-		ServerUtils.SERVER = SERVER;
+	public static void setServer(String server) {
+		ServerUtils.server = server;
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class ServerUtils {
 	 */
 	public List<Quote> getQuotes() {
 		return ClientBuilder.newClient(new ClientConfig()) //
-				.target(SERVER).path("api/event") //
+				.target(server).path("api/event") //
 				.request(APPLICATION_JSON) //
 				.accept(APPLICATION_JSON) //
                 .get(new GenericType<List<Quote>>() {});
@@ -93,7 +93,7 @@ public class ServerUtils {
 	 */
 	public Quote addQuote(Quote quote) {
 		return ClientBuilder.newClient(new ClientConfig()) //
-				.target(SERVER).path("api/quotes") //
+				.target(server).path("api/quotes") //
 				.request(APPLICATION_JSON) //
 				.accept(APPLICATION_JSON) //
 				.post(Entity.entity(quote, APPLICATION_JSON), Quote.class);
@@ -101,7 +101,7 @@ public class ServerUtils {
 
 	public List<Event> getEvents() {
 		return ClientBuilder.newClient(new ClientConfig()) //
-				.target(SERVER).path("/api/event") //
+				.target(server).path("/api/event") //
 				.request(APPLICATION_JSON) //
 				.accept(APPLICATION_JSON) //
 				.get(new GenericType<>() {
@@ -155,7 +155,7 @@ public class ServerUtils {
 
 	public List<Transaction> getTransactions(int id) {
 		return ClientBuilder.newClient(new ClientConfig())
-				.target(SERVER).path("api/event/" + id + "/expenses")
+				.target(server).path("api/event/" + id + "/expenses")
 				.request(APPLICATION_JSON)
 				.accept(APPLICATION_JSON)
 				.get(new GenericType<List<Transaction>>() {});
@@ -163,7 +163,7 @@ public class ServerUtils {
 
 	public List<Person> getPeopleInCurrentEvent(int id) {
 		return ClientBuilder.newClient(new ClientConfig())
-				.target(SERVER).path("api/event/" + id + "/person")
+				.target(server).path("api/event/" + id + "/person")
 				.request(APPLICATION_JSON)
 				.accept(APPLICATION_JSON)
 				.get(new GenericType<List<Person>>() {});
@@ -176,7 +176,7 @@ public class ServerUtils {
 		objectMapper.registerModule(new JavaTimeModule());
 
 		return ClientBuilder.newClient(new ClientConfig())
-				.target(SERVER).path("api/event/" + idEvent + "/expenses")
+				.target(server).path("api/event/" + idEvent + "/expenses")
 				.request(APPLICATION_JSON)
 				.accept(APPLICATION_JSON)
 				.post(Entity.entity(transaction, APPLICATION_JSON), Transaction.class);
@@ -185,7 +185,7 @@ public class ServerUtils {
 
 	public Person updatePerson(int personID, Person person){
 		return ClientBuilder.newClient(new ClientConfig())
-				.target(SERVER).path("api/person/" + personID)
+				.target(server).path("api/person/" + personID)
 				.request(APPLICATION_JSON)
 				.accept(APPLICATION_JSON)
 				.put(Entity.entity(person, APPLICATION_JSON), Person.class);
@@ -203,7 +203,7 @@ public class ServerUtils {
 		objectMapper.registerModule(new JavaTimeModule());
 
 		return ClientBuilder.newClient(new ClientConfig())
-				.target(SERVER).path("api/event/")
+				.target(server).path("api/event/")
 				.request(APPLICATION_JSON)
 				.accept(APPLICATION_JSON)
 				.post(Entity.entity(event, APPLICATION_JSON), Event.class);
@@ -216,14 +216,14 @@ public class ServerUtils {
 	 */
 	public Event getEventByID(int eventID) {
 		return ClientBuilder.newClient(new ClientConfig())
-				.target(SERVER).path("api/event/" + eventID)
+				.target(server).path("api/event/" + eventID)
 				.request(APPLICATION_JSON)
 				.accept(APPLICATION_JSON)
 				.get(new GenericType<Event>() {});
 	}
 
 	public Person addPerson(Person person, int id) {
-		Response response = ClientBuilder.newClient().target(SERVER)
+		Response response = ClientBuilder.newClient().target(server)
 				.path("api/event/" + id + "/person")
 				.request(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
@@ -236,7 +236,7 @@ public class ServerUtils {
 	}
 
 	public Event updateEventById(Event event, int id) {
-		Response response = ClientBuilder.newClient().target(SERVER)
+		Response response = ClientBuilder.newClient().target(server)
 				.path("api/event/" + id)
 				.request(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
@@ -249,7 +249,7 @@ public class ServerUtils {
 	}
 
 	public Event deleteEventById(Event event, int id) {
-		Response response = ClientBuilder.newClient().target(SERVER)
+		Response response = ClientBuilder.newClient().target(server)
 				.path("api/event/" + id)
 				.request(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
@@ -267,7 +267,7 @@ public class ServerUtils {
 	 */
 	public String getPassword(){
 		Client client = ClientBuilder.newClient();
-		Response response = client.target(SERVER).path("api/login/").request().get();
+		Response response = client.target(server).path("api/login/").request().get();
 
 		String password = response.readEntity(String.class);
 		return password;
@@ -275,7 +275,7 @@ public class ServerUtils {
 
 	public void sendPassword(){
 		Client client = ClientBuilder.newClient();
-		Response response = client.target(SERVER).path("api/login/log").request().get();
+		Response response = client.target(server).path("api/login/log").request().get();
 	}
 
 	private static final ExecutorService EXECUTOR_SERVER = Executors.newSingleThreadExecutor();
@@ -284,7 +284,7 @@ public class ServerUtils {
 		EXECUTOR_SERVER.submit(() -> {
 			while (!Thread.interrupted()) {
 				var res = ClientBuilder.newClient(new ClientConfig()) //
-						.target(SERVER).path("/api/transaction/transactions") //
+						.target(server).path("/api/transaction/transactions") //
 						.request(APPLICATION_JSON) //
 						.accept(APPLICATION_JSON) //
 						.get(Response.class);

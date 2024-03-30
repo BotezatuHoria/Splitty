@@ -105,10 +105,8 @@ public class Main extends Application {
         ObjectMapper objectMapper = new ObjectMapper();
         config = objectMapper.readValue(fileReader,Config.class);
 
-        ServerUtils.setSERVER(config.getClientsServer());
-        System.out.println("server = " + config.getClientsServer());
-        System.out.println("email = " + config.getClientsEmailAddress());
-        System.out.println("language = " + config.getClientsLanguage());
+        ServerUtils.setServer(config.getClientsServer());
+
     }
 
     /**
@@ -117,7 +115,6 @@ public class Main extends Application {
      */
     public boolean checkConnection(){
         String uri = config.getClientsServer() + "/api/events";
-        System.out.println(uri);
         URL url;
         try {
             url = new URI(uri).toURL();
@@ -133,12 +130,10 @@ public class Main extends Application {
             return true;
         }
         catch (ConnectException e) {
-            System.out.println("2"+ e);
             //no connection, wrong port.
             return false;
         }
         catch (Exception e) {
-            System.out.println("3"+ e);
             //connection but file not found, does not matter, so still true.
             return true;
         }
