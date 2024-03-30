@@ -130,7 +130,7 @@ public class EventServiceImplementation implements EventService {
         if (repo.findById(idEvent).isPresent()) {
             Transaction savedTransaction = tsi.add(transaction).getBody();
             if (savedTransaction != null) {
-                debtCalc(savedTransaction);
+                debtCalc(savedTransaction, "addition");
             }
             Event event = repo.findById(idEvent).get();
             event.addTransaction(savedTransaction);
@@ -177,6 +177,7 @@ public class EventServiceImplementation implements EventService {
         try {
             Event event = getById(idEvent).getBody();
             Transaction t = tsi.getById(idTransaction).getBody();
+            debtCalc(t, "removal");
             if (event != null) {
                 event.removeTransaction(t);
                 updateById(idEvent, event);
@@ -190,8 +191,11 @@ public class EventServiceImplementation implements EventService {
         }
     }
 
-    public void debtCalc(Transaction transaction) {
+    public void debtCalc(Transaction transaction, String type) {
         double money = transaction.getMoney();
+        if (type.equals("removal")) {
+            money *= -1;
+        }
         int people = transaction.getParticipants().size();
         Person creator = transaction.getCreator();
         double debt = 0;

@@ -236,7 +236,7 @@ public class ServerUtils {
 		EXECUTOR_SERVER.submit(() -> {
 			while (!Thread.interrupted()) {
 				var res = ClientBuilder.newClient(new ClientConfig()) //
-						.target(SERVER).path("/api/transaction/transactions") //
+						.target(SERVER).path("/api/transaction/channel") //
 						.request(APPLICATION_JSON) //
 						.accept(APPLICATION_JSON) //
 						.get(Response.class);
