@@ -72,8 +72,6 @@ public class AdminPageCtrl {
         titleColumn.setCellValueFactory(new PropertyValueFactory<Event, String>("title"));
         creationDateColumn.setCellValueFactory(new PropertyValueFactory<Event, Date>("creationDate"));
         lastModifiedColumn.setCellValueFactory(new PropertyValueFactory<Event, Date>("lastModified"));
-        showEvents();
-        changeSelectedEvent();
     }
 
     /**
