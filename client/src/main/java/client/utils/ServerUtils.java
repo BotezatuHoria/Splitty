@@ -330,6 +330,48 @@ public class ServerUtils {
 		});
 	}
 
+	/**
+	 * Method that deletes te transaction from the current event
+	 * @param idEvent
+	 * @param idTransaction
+	 * @return
+	 */
+	public Transaction deleteTransactionFromCurrentEvent(int idEvent, int idTransaction) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.registerModule(new JavaTimeModule());
+
+		Event event = getEventByID(idEvent);
+		Transaction transaction = getTransactionByID(idTransaction);
+		event.getTransactions().remove(getTransactionByID(idTransaction));
+		updateEventById(event, idEvent);
+
+
+		return transaction;
+
+		/**Response response = ClientBuilder.newClient().target(SERVER)
+				.path("api/transaction/" + idTransaction)
+				.request(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.delete();
+		if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+			return response.readEntity(Transaction.class);
+		} else {
+			throw new RuntimeException("Failed to remove event. Status code: " + response.getStatus());
+		}*/
+
+	}
+
+	public Transaction getTransactionByID(int idTransaction) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.registerModule(new JavaTimeModule());
+
+		return ClientBuilder.newClient(new ClientConfig())
+				.target(SERVER).path("api/transaction/" + idTransaction)
+				.request(APPLICATION_JSON)
+				.accept(APPLICATION_JSON)
+				.get(new GenericType<Transaction>() {});
+	}
+
 	public Object send(String dest, Object o) {
 		session.send(dest, o);
 		return o;

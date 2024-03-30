@@ -70,6 +70,9 @@ public class EventPageCtrl implements Initializable {
     @FXML // fx:id="listTransactions"
     private ListView<Transaction> listTransactions;
 
+    @FXML // fx:id="editExpense"
+    private Button editExpense;
+
 
     /**
      * Constructor for EventPageCtrl.
@@ -262,6 +265,13 @@ public class EventPageCtrl implements Initializable {
                 updatePage();
             });
         });
+    }
+
+    /**
+     * Method that opens the Edit event page.
+     */
+    public void showEditExpensePage() {
+        mainCtrl.showEditExpensePage();
     }
 
     public void stop() {

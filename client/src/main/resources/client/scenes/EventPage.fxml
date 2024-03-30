@@ -53,5 +53,10 @@
          </font>
       </Button>
       <Button fx:id="homeButton" layoutX="514.0" layoutY="426.0" mnemonicParsing="false" onAction="#goHome" prefHeight="46.0" prefWidth="51.0" text="Home" />
+      <Button fx:id="editExpense" layoutX="432.0" layoutY="101.0" mnemonicParsing="false" onAction="#showEditExpensePage" text="Edit Expense">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
