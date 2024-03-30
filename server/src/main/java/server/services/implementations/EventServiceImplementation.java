@@ -161,6 +161,7 @@ public class EventServiceImplementation implements EventService {
                 event.setTransactions(transactions);
                 event.removePerson(person);
                 updateById(idEvent, event);
+                recalculateDebts(idEvent);
                 return ResponseEntity.ok(person);
             }
             return ResponseEntity.internalServerError().build();
@@ -206,6 +207,18 @@ public class EventServiceImplementation implements EventService {
             Person person = psi.getById(p.getId()).getBody();
             person.setDebt(person.getDebt() - debt);
             psi.updateById(p.getId(), person);
+        }
+    }
+
+    public void recalculateDebts(long idEvent) {
+        Event event = getById(idEvent).getBody();
+        for (Person p : event.getPeople()) {
+            Person person = psi.getById(p.getId()).getBody();
+            person.setDebt(0);
+            psi.updateById(p.getId(), person);
+        }
+        for (Transaction t : event.getTransactions()) {
+            debtCalc(t, "addition");
         }
     }
 }
