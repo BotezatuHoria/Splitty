@@ -17,21 +17,35 @@ package client;
 
 import static com.google.inject.Guice.createInjector;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Properties;
+import java.util.stream.Stream;
 
 import client.scenes.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.fasterxml.jackson.databind.util.JSONWrappedObject;
 import com.google.inject.Injector;
 
 //import client.scenes.AddQuoteCtrl;
 //import client.scenes.QuoteOverviewCtrl;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import org.apache.tomcat.util.json.JSONParser;
 
 public class Main extends Application {
 
     private static final Injector INJECTOR = createInjector(new MyModule());
     private static final MyFXML FXML = new MyFXML(INJECTOR);
+    private static final Config configFile = new Config();
+
 
     /**
      * Main function for the Main class.
@@ -44,7 +58,32 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage) throws IOException, URISyntaxException {
+        String location = Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath() + "java/client/config.json";
+        System.out.println(Paths.get("").toAbsolutePath());
+        System.out.println(location);
+        var file = new File("C:/Users/Tom/Delft/Year 1/Semester 3/OOPP/oopp-team-53/client/src/main/java/client/config.json");
+        var fileReader = new FileReader(file);
+        var jSONfile = new JSONParser(fileReader);
+
+
+
+        Properties properties = new Properties();
+        properties.load(fileReader);
+
+        System.out.println(properties);
+        String server = (String) properties.get("server");
+        String email = (String) properties.get("emailAddress");
+        String language = (String) properties.get("lastLanguage");
+        System.out.println(server + email + language);
+        fileReader.close();
+
+
+
+
+
+
+
         var starterPage = FXML.load(StarterPageCtrl.class, "client", "scenes", "StarterPage.fxml");
         var eventPage = FXML.load(EventPageCtrl.class, "client", "scenes", "EventPage.fxml");
         var statisticsPage = FXML.load(StatisticsCtrl.class, "client", "scenes", "Statistics.fxml");
