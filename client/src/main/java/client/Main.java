@@ -22,18 +22,13 @@ import java.net.ConnectException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Properties;
-import java.util.Scanner;
-import java.util.stream.Stream;
+
 
 import client.scenes.*;
 import client.utils.ServerUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.fasterxml.jackson.databind.util.JSONWrappedObject;
 import com.google.inject.Injector;
 
 //import client.scenes.AddQuoteCtrl;
@@ -133,17 +128,18 @@ public class Main extends Application {
                 System.out.println(line);
             }
         }  catch (BadRequestException e) {
-            System.out.println("1" + e);
+            //if it is a bad request, then apparently there is a connection with the server (because they responded this)
+            // therefore connection is true.
             return true;
         }
         catch (ConnectException e) {
             System.out.println("2"+ e);
-            //no connection
+            //no connection, wrong port.
             return false;
         }
         catch (Exception e) {
             System.out.println("3"+ e);
-            //connection but file not found, does not matter
+            //connection but file not found, does not matter, so still true.
             return true;
         }
         return true;
