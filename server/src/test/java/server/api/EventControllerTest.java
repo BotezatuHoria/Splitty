@@ -50,7 +50,13 @@ class EventControllerTest {
         transactionService = new TransactionServiceImplementation(transactionRepository);
 
         eventRepository = new TestEventRepository();
-        eventService = new EventServiceImplementation(eventRepository, transactionService, personService);
+        eventService = new EventServiceImplementation(eventRepository, transactionService, personService,
+                new SimpMessagingTemplate(new MessageChannel() {
+            @Override
+            public boolean send(Message<?> message, long timeout) {
+                return true;
+            }
+        }));
     }
 
 

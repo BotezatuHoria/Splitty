@@ -4,6 +4,7 @@ import commons.Event;
 import commons.Person;
 import commons.Transaction;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import server.database.EventRepository;
 import server.services.interfaces.EventService;
@@ -17,12 +18,14 @@ public class EventServiceImplementation implements EventService {
     private final EventRepository repo;
     private final TransactionServiceImplementation tsi;
     private final PersonServiceImplementation psi;
+    private final SimpMessagingTemplate messagingTemplate;
 
     public EventServiceImplementation(EventRepository repo, TransactionServiceImplementation tsi,
-                                      PersonServiceImplementation psi) {
+                                      PersonServiceImplementation psi, SimpMessagingTemplate messagingTemplate) {
         this.repo = repo;
         this.tsi = tsi;
         this.psi = psi;
+        this.messagingTemplate = messagingTemplate;
     }
 
     @Override
@@ -56,6 +59,7 @@ public class EventServiceImplementation implements EventService {
                     existingEvent.setPeople(event.getPeople());
                     existingEvent.setTransactions(event.getTransactions());
                     existingEvent.setLastModified(LocalDate.now());
+                    messagingTemplate.convertAndSend("/topic/event", existingEvent);
                     return ResponseEntity.ok(repo.save(existingEvent));
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -69,6 +73,7 @@ public class EventServiceImplementation implements EventService {
             return ResponseEntity.badRequest().build();
         }
         Event saved = repo.save(event);
+        messagingTemplate.convertAndSend("/topic/event", saved);
         return ResponseEntity.ok(saved);
     }
 

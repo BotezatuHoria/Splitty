@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import commons.Event;
 import jakarta.inject.Inject;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -17,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class AdminPageCtrl {
@@ -24,6 +26,7 @@ public class AdminPageCtrl {
     private final MainCtrl mainCtrl;
     private final ServerUtils server;
 
+    private ObservableList<Event> data;
 
     @FXML
     private TableView<Event> events;
@@ -56,15 +59,16 @@ public class AdminPageCtrl {
     public AdminPageCtrl(ServerUtils server, MainCtrl mainCtrl){
         this.server = server;
         this.mainCtrl = mainCtrl;
+        data = FXCollections.observableList(new ArrayList<>());
     }
 
     /**
      * Gets all the events from the server and adds them to the tableview.
      */
     public void showEvents(){
-        ObservableList<Event> items = FXCollections.observableArrayList();
-        items.addAll(server.getEvents());
-        events.setItems(items);
+        var e = server.getEvents();
+        data = FXCollections.observableList(e);
+        events.setItems(data);
     }
     @FXML
     void initialize(){
@@ -72,6 +76,12 @@ public class AdminPageCtrl {
         titleColumn.setCellValueFactory(new PropertyValueFactory<Event, String>("title"));
         creationDateColumn.setCellValueFactory(new PropertyValueFactory<Event, Date>("creationDate"));
         lastModifiedColumn.setCellValueFactory(new PropertyValueFactory<Event, Date>("lastModified"));
+        server.registerForMessages("/topic/event", Event.class, event -> {
+            Platform.runLater(() -> {
+                data.add(event);
+                showEvents();
+            });
+        });
     }
 
     /**
@@ -98,6 +108,7 @@ public class AdminPageCtrl {
         alert.setContentText("Are you sure you want to delete event: " + event.getTitle());
         alert.showAndWait().filter(ButtonType.OK::equals).ifPresent(b -> {
             server.deleteEventById(event, event.getId());
+            clear();
             showEvents();
         });
         alert.close();
@@ -135,5 +146,8 @@ public class AdminPageCtrl {
         }
     }
 
+    public void clear() {
+        events.getItems().clear();
+    }
 
 }
