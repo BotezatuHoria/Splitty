@@ -53,7 +53,7 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 
 public class ServerUtils {
 
-	private static final String SERVER = "http://localhost:8080/";
+	private static String SERVER = "http://localhost:8080/";
 
 	/**
 	 * Method for getting the quotes the hard way.
@@ -68,6 +68,10 @@ public class ServerUtils {
 		while ((line = br.readLine()) != null) {
 			System.out.println(line);
 		}
+	}
+
+	public static void setSERVER(String SERVER) {
+		ServerUtils.SERVER = SERVER;
 	}
 
 	/**

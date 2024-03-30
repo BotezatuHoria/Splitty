@@ -17,18 +17,20 @@ package client;
 
 import static com.google.inject.Guice.createInjector;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.net.ConnectException;
+import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
+import java.util.Scanner;
 import java.util.stream.Stream;
 
 import client.scenes.*;
+import client.utils.ServerUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.fasterxml.jackson.databind.util.JSONWrappedObject;
@@ -36,15 +38,17 @@ import com.google.inject.Injector;
 
 //import client.scenes.AddQuoteCtrl;
 //import client.scenes.QuoteOverviewCtrl;
+
+import jakarta.ws.rs.BadRequestException;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import org.apache.tomcat.util.json.JSONParser;
 
 public class Main extends Application {
 
     private static final Injector INJECTOR = createInjector(new MyModule());
     private static final MyFXML FXML = new MyFXML(INJECTOR);
-    private static final Config configFile = new Config();
+
+    private static Config config = new Config();
 
 
     /**
@@ -58,31 +62,11 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException, URISyntaxException {
-        String location = Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath() + "java/client/config.json";
-        System.out.println(Paths.get("").toAbsolutePath());
-        System.out.println(location);
-        var file = new File("C:/Users/Tom/Delft/Year 1/Semester 3/OOPP/oopp-team-53/client/src/main/java/client/config.json");
-        var fileReader = new FileReader(file);
-        var jSONfile = new JSONParser(fileReader);
+    public void start(Stage primaryStage) throws IOException {
 
-
-
-        Properties properties = new Properties();
-        properties.load(fileReader);
-
-        System.out.println(properties);
-        String server = (String) properties.get("server");
-        String email = (String) properties.get("emailAddress");
-        String language = (String) properties.get("lastLanguage");
-        System.out.println(server + email + language);
-        fileReader.close();
-
-
-
-
-
-
+        getConfigFile();
+        boolean result = checkConnection(); //if this is false, the client is trying to connect to a server that is not running.
+        // we can choose to have ui for this or not...
 
         var starterPage = FXML.load(StarterPageCtrl.class, "client", "scenes", "StarterPage.fxml");
         var eventPage = FXML.load(EventPageCtrl.class, "client", "scenes", "EventPage.fxml");
@@ -106,5 +90,64 @@ public class Main extends Application {
         primaryStage.setOnCloseRequest(e -> {
             eventPage.getKey().stop();
         });
+    }
+
+    /**
+     * gets the values from the config file, and sets the server the client wants to connect to.
+     * this is the server that the client put in the config file.
+     * future use; language remembering? email sending?.
+     * @throws IOException
+     */
+    public void getConfigFile() throws IOException {
+        Path currRelativePath = Paths.get("");
+        String currAbsolutePathString = currRelativePath.toAbsolutePath().toString();
+        String result = currAbsolutePathString + "/client/src/main/java/client/config.json";
+        result = result.replace("\\", "/");
+
+        var file = new File(result);
+        var fileReader = new FileReader(file);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        config = objectMapper.readValue(fileReader,Config.class);
+
+        ServerUtils.setSERVER(config.getClientsServer());
+        System.out.println("server = " + config.getClientsServer());
+        System.out.println("email = " + config.getClientsEmailAddress());
+        System.out.println("language = " + config.getClientsLanguage());
+    }
+
+    /**
+     * checks whether the server the client wants to connect to is running (tested with an api call).
+     * @return true when client connects to running server, false otherwise.
+     */
+    public boolean checkConnection(){
+        String uri = config.getClientsServer() + "/api/events";
+        System.out.println(uri);
+        URL url;
+        try {
+            url = new URI(uri).toURL();
+            var is = url.openConnection().getInputStream();
+            var br = new BufferedReader(new InputStreamReader(is));
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        }  catch (BadRequestException e) {
+            System.out.println("1" + e);
+            return true;
+        }
+        catch (ConnectException e) {
+            System.out.println("2"+ e);
+            //no connection
+            return false;
+        }
+        catch (Exception e) {
+            System.out.println("3"+ e);
+            //connection but file not found, does not matter
+            return true;
+        }
+        return true;
+
+
     }
 }

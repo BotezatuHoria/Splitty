@@ -11,9 +11,9 @@ import java.nio.file.Path;
 public class Config {
 
 
-    private String server = "http://localhost:8080/";
-    private String emailAddress = "example@gmail.com";
-    private String language = "LanguagePreference?";
+    private String server;
+    private String emailAddress;
+    private String language;
 
     public String getClientsServer() {
         return server;
