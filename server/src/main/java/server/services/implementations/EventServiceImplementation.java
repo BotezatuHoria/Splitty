@@ -3,7 +3,6 @@ package server.services.implementations;
 import commons.Event;
 import commons.Person;
 import commons.Transaction;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import server.database.EventRepository;

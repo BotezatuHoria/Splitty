@@ -2,7 +2,6 @@ package server.api;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.http.HttpStatus.*;
 
-import commons.Event;
 import commons.Person;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,8 +9,6 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import server.services.implementations.PersonServiceImplementation;
-
-import java.util.ArrayList;
 
 public class PersonControllerTest {
     private TestPersonRepository db;
@@ -41,8 +38,7 @@ public class PersonControllerTest {
     @Test
     public void addPersonTest() {
         Person test = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new ArrayList<>(),
-                new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
+                "iban33");
         var actual = sut.add(test);
         assertEquals(actual.getBody(), test);
     }
@@ -68,8 +64,7 @@ public class PersonControllerTest {
     @Test
     public void deletePersonTest() {
         Person test = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new ArrayList<>(),
-                new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
+                "iban33");
         sut.add(test);
         var actual = sut.deleteById(0);
         assertEquals(test, actual.getBody());
@@ -79,8 +74,7 @@ public class PersonControllerTest {
     @Test
     public void getPersonTest() {
         Person test = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new ArrayList<>(),
-                new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
+                "iban33");
         sut.add(test);
         var actual = sut.getById(0);
         assertEquals(test, actual.getBody());
@@ -89,8 +83,7 @@ public class PersonControllerTest {
     @Test
     public void updatePersonNegativeTest() {
         Person test = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new ArrayList<>(),
-                new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
+                "iban33");
         var actual = sut.updateById(-1, test);
         assertEquals(BAD_REQUEST, actual.getStatusCode());
     }
@@ -98,8 +91,7 @@ public class PersonControllerTest {
     @Test
     public void updatePersonDoesNotExistTest() {
         Person test = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new ArrayList<>(),
-                new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
+                "iban33");
         sut.add(test);
         var actual = sut.updateById(2, test);
         assertEquals(BAD_REQUEST, actual.getStatusCode());
@@ -108,12 +100,10 @@ public class PersonControllerTest {
     @Test
     public void updatePersonTest() {
         Person test = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new ArrayList<>(),
-               new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
+                "iban33");
 
         Person test2 = new Person("test2@gmail.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new ArrayList<>(),
-                new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
+                "iban33");
         sut.add(test);
         var actual = sut.updateById(0, test2);
         assertEquals(actual.getBody(), test2);

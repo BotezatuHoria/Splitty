@@ -19,9 +19,9 @@ class DebtCellPaneCtrlTest{
             "fjh-213-fsd-233", new ArrayList<>(), new ArrayList<>());
 
     Person person1 = new Person("bob@gmail.com", "Artur", "Iurasov",
-            "34586", event, new ArrayList<>(),new ArrayList<>() );
+            "34586");
     Person person2 = new Person("guboshlep@gmail.com", "Vytaras", "Juzonis",
-            "33245", event, new ArrayList<>(),new ArrayList<>() );
+            "33245");
     DebtCellData data = new DebtCellData(person1, person2, 15);
     //DebtCellPaneCtrl test = new DebtCellPaneCtrl();
     String expected = data.getSender().getFirstName()+

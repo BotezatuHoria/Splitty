@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
-import commons.Event;
 import commons.Person;
 import jakarta.ws.rs.WebApplicationException;
 import javafx.fxml.FXML;
