@@ -129,6 +129,9 @@ public class EventServiceImplementation implements EventService {
         }
         if (repo.findById(idEvent).isPresent()) {
             Transaction savedTransaction = tsi.add(transaction).getBody();
+            if (savedTransaction != null) {
+                debtCalc(savedTransaction);
+            }
             Event event = repo.findById(idEvent).get();
             event.addTransaction(savedTransaction);
             updateById(idEvent, event);
@@ -184,6 +187,21 @@ public class EventServiceImplementation implements EventService {
         }
         catch (Exception e) {
             return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    public void debtCalc(Transaction transaction) {
+        double money = transaction.getMoney();
+        int people = transaction.getParticipants().size();
+        Person creator = transaction.getCreator();
+        double debt = 0;
+        debt = money / people;
+        Person crt = psi.getById(creator.getId()).getBody();
+        crt.setDebt(crt.getDebt() + money);
+        for (Person p : transaction.getParticipants()) {
+            Person person = psi.getById(p.getId()).getBody();
+            person.setDebt(person.getDebt() - debt);
+            psi.updateById(p.getId(), person);
         }
     }
 }

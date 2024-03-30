@@ -14,7 +14,7 @@ public class Person {
     protected String firstName;
     protected String lastName;
     protected String iban;
-    protected int debt;
+    protected double debt;
 
     /**
      * Constructor for people.
@@ -99,7 +99,7 @@ public class Person {
      * Setter for debt.
      * @param debt the email to set to
      */
-    public void setDebt(int debt) {
+    public void setDebt(double debt) {
         this.debt = debt;
     }
 
@@ -123,7 +123,7 @@ public class Person {
      * Returns the money that this person owes.
      * @return the ammount of money this person owes
      */
-    public int getDebt() {
+    public double getDebt() {
         return debt;
     }
 
@@ -153,7 +153,7 @@ public class Person {
      * Method that adds or substract to dept.
      * @param add the amount to add to the dept
      */
-    public void addDept(int add) {
+    public void addDept(double add) {
         debt+=add;
     }
 }
