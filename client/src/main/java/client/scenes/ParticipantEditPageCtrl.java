@@ -191,6 +191,7 @@ public class ParticipantEditPageCtrl {
         int serverID = mainCtrl.getCurrentEventID();
         Person removedPerson = server.removePerson(personID, serverID);
         System.out.println(removedPerson);
+        abort();
     }
 
     /**
