@@ -1,10 +1,8 @@
 package commons;
 
-import java.util.List;
 import java.util.Objects;
 //import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
@@ -18,37 +16,19 @@ public class Person {
     protected String iban;
     protected double debt;
 
-    //@JsonBackReference
-    @ManyToOne
-    @JsonIgnoreProperties({"tag", "title", "token", "people", "transactions"})
-    public Event event;
-
-    @OneToMany
-    @JsonIgnoreProperties({"name", "date", "money", "currency", "expenseType", "participants", "creator"})
-    public List<Transaction> createdTransactions;
-
-    @ManyToMany
-    @JsonIgnoreProperties({"name", "date", "money", "currency", "expenseType", "type", "participants", "creator"})
-    public List<Transaction> transactions;
-
     /**
      * Constructor for people.
      * @param email individual for each person
      * @param firstName of the person
      * @param lastName of the person
      * @param iban of the bank account of the person
-     * @param event that this person is added to
      */
-    public Person(String email, String firstName, String lastName, String iban, Event event,
-                  List<Transaction> createdTransactions, List<Transaction> transactions) {
+    public Person(String email, String firstName, String lastName, String iban) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.iban = iban;
-        this.event = event;
         this.debt = 0;
-        this.createdTransactions = createdTransactions;
-        this.transactions = transactions;
     }
 
     /**
@@ -124,22 +104,6 @@ public class Person {
     }
 
     /**
-     * Setter for createdTransactions.
-     * @param createdTransactions the email to set to
-     */
-    public void setCreatedTransactions(List<Transaction> createdTransactions) {
-        this.createdTransactions = createdTransactions;
-    }
-
-    /**
-     * Setter for transactions.
-     * @param transactions the email to set to
-     */
-    public void setTransactions(List<Transaction> transactions) {
-        this.transactions = transactions;
-    }
-
-    /**
      * Getter method for the last name of the person.
      * @return last name of the person
      */
@@ -156,27 +120,11 @@ public class Person {
     }
 
     /**
-     * Getter method for the event that this person has been added to.
-     * @return the even that this person has been added to
-     */
-    public Event getEvent() {
-        return event;
-    }
-
-    /**
      * Returns the money that this person owes.
      * @return the ammount of money this person owes
      */
     public double getDebt() {
         return debt;
-    }
-
-    /**
-     * Getter method for the transactions created by the user.
-     * @return a set of all transactions that were done by the user.
-     */
-    public List<Transaction> getCreatedTransactions() {
-        return createdTransactions;
     }
 
     @Override
@@ -188,28 +136,12 @@ public class Person {
             return false;
         }
         Person person = (Person) o;
-        return id == person.id && debt == person.debt && Objects.equals(email, person.email) &&
-                Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) &&
-                Objects.equals(iban, person.iban) && Objects.equals(event, person.event) &&
-                Objects.equals(createdTransactions, person.createdTransactions) &&
-                Objects.equals(transactions, person.transactions);
+        return id == person.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, firstName, lastName, iban, debt, event, createdTransactions, transactions);
-    }
-
-    /**
-     * Getter method for the transactions that the person is being into.
-     * @return - a set of all the transactions in which the person is a participant.
-     */
-    public List<Transaction> getTransactions() {
-        return transactions;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
+        return Objects.hash(id, email, firstName, lastName, iban, debt);
     }
 
     @Override
@@ -221,8 +153,7 @@ public class Person {
      * Method that adds or substract to dept.
      * @param add the amount to add to the dept
      */
-    public void addDept(int add) {
-        debt += add;
+    public void addDept(double add) {
+        debt+=add;
     }
-
 }
