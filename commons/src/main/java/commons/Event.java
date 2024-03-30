@@ -2,7 +2,10 @@ package commons;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,6 +18,12 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     protected int id;
     protected String token;
+
+    @CreatedDate
+    private Date creationDate;
+    @LastModifiedDate
+    private Date lastModified;
+
 
     @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
     @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt"})

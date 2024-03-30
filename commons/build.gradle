@@ -7,4 +7,6 @@ java {
 dependencies {
 	implementation group: 'jakarta.persistence', name: 'jakarta.persistence-api', version: '3.1.0'
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.0.1'
+	implementation group: 'org.springframework.data', name: 'spring-data-commons', version: '3.2.4'
+
 }
