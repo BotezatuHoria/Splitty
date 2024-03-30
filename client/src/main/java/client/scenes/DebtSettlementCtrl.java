@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 
 import com.google.inject.Inject;
 import javafx.scene.layout.VBox;
