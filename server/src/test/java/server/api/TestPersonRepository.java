@@ -106,11 +106,8 @@ public class TestPersonRepository implements PersonRepository {
                         person.setDebt(entity.getDebt());
                         person.setEmail(entity.getEmail());
                         person.setIban(entity.getIban());
-                        person.setEvent(entity.getEvent());
                         person.setFirstName(entity.getFirstName());
                         person.setLastName(entity.getLastName());
-                        person.setTransactions(entity.getTransactions());
-                        person.setCreatedTransactions(entity.getCreatedTransactions());
                         return (S) person;
                 } else {
                         persons.add(entity);

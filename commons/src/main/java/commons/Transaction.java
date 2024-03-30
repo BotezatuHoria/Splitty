@@ -28,12 +28,12 @@ public class Transaction {
     protected String expenseType;
 
 
-    @ManyToMany
-    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt", "event", "createdTransactions", "transactions"})
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt"})
     public List<Person> participants;
 
     @ManyToOne
-    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt", "event", "createdTransactions", "transactions"})
+    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt"})
     public Person creator;
 
     /**
@@ -61,6 +61,7 @@ public class Transaction {
         this.participants = participants;
         this.creator = creator;
         this.expenseType = Objects.requireNonNullElse(expenseType, "Other");
+        calculateDebts();
     }
 
     /**
@@ -81,6 +82,22 @@ public class Transaction {
         this.expenseType = expenseType;
         this.participants = participants;
         this.creator = creator;
+        // calculateDebts();
+    }
+
+    /**
+     * Calculates debts for everybody involved in the transaction.
+     */
+    @JsonIgnore
+    public void calculateDebts(){
+        double singlePersonToPay = money / participants.size();
+        for(Person person :  participants){
+            if(person.equals(creator)){
+                person.setDebt(person.getDebt() + money - singlePersonToPay);
+            }else{
+                person.setDebt(person.getDebt() - singlePersonToPay);
+            }
+        }
     }
 
     /**

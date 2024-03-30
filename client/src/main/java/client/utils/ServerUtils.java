@@ -23,21 +23,20 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
-import commons.Event;
-import commons.Person;
-import commons.Transaction;
+import commons.*;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import javafx.util.Pair;
 import org.glassfish.jersey.client.ClientConfig;
 
-import commons.Quote;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
@@ -103,6 +102,51 @@ public class ServerUtils {
 				.accept(APPLICATION_JSON) //
 				.get(new GenericType<>() {
 				});
+	}
+
+	/**
+	 * Should return list of DebtCellData that represents how much people owe to each other.
+	 * @param id id of the event
+	 * @return list with debts to be displayed on DebtSettlementPage
+	 */
+	public List<DebtCellData> getOpenDebts(int id){
+		List<Person> people = getPeopleInCurrentEvent(id);
+		List<Pair<Person, Double>> peoplesToPay = peopleWithPositiveDebt(people);
+		List<DebtCellData> debtsList = new ArrayList<>();
+      for (Person person : people) {
+        if (person.getDebt() < 0) {
+			double debt = person.getDebt();
+          	while(debt < 0 && !peoplesToPay.isEmpty()){
+				  if(Math.abs(peoplesToPay.getLast().getValue()) <= Math.abs(debt)){
+					  debt += peoplesToPay.getLast().getValue();
+					  debtsList.add(new DebtCellData(person, peoplesToPay.getLast().getKey(), peoplesToPay.getLast().getValue()));
+					  peoplesToPay.removeLast();
+				  }else{
+					  Pair<Person, Double> pair = peoplesToPay.getLast();
+					  debtsList.add(new DebtCellData(person, peoplesToPay.getLast().getKey(), debt));
+					  peoplesToPay.removeLast();
+					  peoplesToPay.addLast(new Pair<>(pair.getKey(), pair.getValue() + debt));
+					  debt = 0;
+				  }
+		  	}
+        }
+      }
+		return debtsList;
+	}
+
+	/**
+	 * Helper method for the getOpenDebts, returns list of pairs with Person and Integer how much he should be paid.
+	 * @param people
+	 * @return
+	 */
+	private static List<Pair<Person, Double>>  peopleWithPositiveDebt(List<Person> people) {
+		List<Pair<Person, Double>> peoplesToPay = new  ArrayList<>();
+		for (Person person : people) {
+		  if (person.getDebt() > 0) {
+			peoplesToPay.add(new Pair<>(person, person.getDebt()));
+		  }
+		}
+		return peoplesToPay;
 	}
 
 	public List<Transaction> getTransactions(int id) {
@@ -250,7 +294,7 @@ public class ServerUtils {
 		EXECUTOR_SERVER.submit(() -> {
 			while (!Thread.interrupted()) {
 				var res = ClientBuilder.newClient(new ClientConfig()) //
-						.target(SERVER).path("/api/transaction/transactions") //
+						.target(SERVER).path("/api/transaction/channel") //
 						.request(APPLICATION_JSON) //
 						.accept(APPLICATION_JSON) //
 						.get(Response.class);

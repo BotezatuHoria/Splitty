@@ -1,42 +1,36 @@
-/**
- * Sample Skeleton for 'OpenDebts.fxml' Controller Class
- */
 
 package client.scenes;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.List;
 
+import client.utils.ServerUtils;
+import commons.DebtCellData;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 
 import com.google.inject.Inject;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 public class DebtSettlementCtrl {
-
-
-  @FXML // ResourceBundle that was given to the FXMLLoader
-  private ResourceBundle resources;
-
-  @FXML // URL location of the FXML file that was given to the FXMLLoader
-  private URL location;
-  @FXML // fx:id="openDebtsList"
-  private ListView<String> openDebtsList;
-
-  @FXML // fx:id="detailsButton"
-  private Label detailsButton; // Value injected by FXMLLoader
-
-  @FXML // fx:id="dropDownButton"
-  private Button dropDownButton; // Value injected by FXMLLoader
+  @FXML
+  private ListView<TitledPane> debtListView;
+  @FXML
+  private Text aboveCellText;
+  @FXML
+  private TitledPane debtCell;
+  @FXML
+  private Button sendEmailButton;
+  @FXML
+  private Button settleDebtButton;
 
   @FXML // fx:id="markReceivedButton"
   private Button markReceivedButton; // Value injected by FXMLLoader
 
   @FXML // fx:id="optionPane"
-  private Pane optionPane; // Value injected by FXMLLoader
+  private ListView<TitledPane> openDebts; // Value injected by FXMLLoader
 
   @FXML // fx:id="sendReminderButton"
   private Button sendReminderButton; // Value injected by FXMLLoader
@@ -46,27 +40,56 @@ public class DebtSettlementCtrl {
 
   @FXML // fx:id="goBackButton"
   private Button goBackButton; // Value injected by FXMLLoader
-
+  private final ServerUtils server;
   private final MainCtrl mainCtrl;
   /**
    * Constructor for the debt settlement controller.
    * @param mainCtrl - reference to the main controller
    */
   @Inject
-  public DebtSettlementCtrl(MainCtrl mainCtrl) {
+  public DebtSettlementCtrl(MainCtrl mainCtrl, ServerUtils server) {
     this.mainCtrl = mainCtrl;
+    this.server = server;
+
   }
   @FXML // This method is called by the FXMLLoader when initialization is complete
   void initialize() {
-    assert detailsButton != null : "fx:id=\"detailsButton\" was not injected: check your FXML file 'OpenDebts.fxml'.";
-    assert dropDownButton != null : "fx:id=\"dropDownButton\" was not injected: check your FXML file 'OpenDebts.fxml'.";
+    assert sendEmailButton != null : "fx:id=\"sendEmailButton\" was not injected: check your FXML file 'OpenDebts.fxml'.";
+    assert settleDebtButton != null : "fx:id=\"settleDebtButton\" was not injected: check your FXML file 'OpenDebts.fxml'.";
     assert markReceivedButton != null : "fx:id=\"markReceivedButton\" was not injected: check your FXML file 'OpenDebts.fxml'.";
-    assert optionPane != null : "fx:id=\"optionPane\" was not injected: check your FXML file 'OpenDebts.fxml'.";
     assert sendReminderButton != null : "fx:id=\"sendReminderButton\" was not injected: check your FXML file 'OpenDebts.fxml'.";
     assert titleLabel != null : "fx:id=\"titleLabel\" was not injected: check your FXML file 'OpenDebts.fxml'.";
-
+  }
+  public void populateOpenDebts(){
+    List<DebtCellData> debts = server.getOpenDebts(mainCtrl.getCurrentEventID());
+    for(DebtCellData debt : debts){
+      TextArea textArea = new TextArea(
+              "Account holder: " + debt.getReceiver().getFirstName() + " " + debt.getReceiver().getLastName() + "\n"
+                      + "IBAN: " + debt.getReceiver().getIban() + "\n");
+      TitledPane titledPane = getTitledPane(debt, textArea);
+      debtListView.getItems().add(titledPane);
+    }
   }
 
+  private static TitledPane getTitledPane(DebtCellData debt, TextArea textArea) {
+    Button markReceived = new Button("Mark Received");
+    Button sendEmail = new Button("Send Email");
+    Button settleDebt = new Button("Settle Debt");
+    HBox hBox = new HBox(markReceived, sendEmail, settleDebt);
+    VBox vBox = new VBox(hBox, textArea);
+    String text = new String(
+            debt.getSender() + "should give "  + debt.getDebt() + "€"
+            + "to " + debt.getReceiver());
+    AnchorPane anchorPane = new AnchorPane(vBox);
+    return new TitledPane(text, anchorPane);
+  }
+
+  /**
+   * Settles debt.
+   */
+  private void settleDebt(DebtCellData debtToSettle){
+
+  }
   /**
    * Method to go back to the event page.
    */

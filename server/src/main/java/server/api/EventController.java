@@ -126,14 +126,16 @@ public class EventController {
         return esi.createNewExpense(idEvent, transaction);
     }
 
-    /**
-     * Method for deleting a person from an event.
-     * @param idEvent - id of the event
-     * @param personID - id of the transaction to be deleted
-     * @return - the current state of the event
-     */
-    @DeleteMapping(path= {"/{idEvent}/person/{personID}"})
-    public ResponseEntity<Person> deletePersonFromEvent(@PathVariable("idEvent") long idEvent, @PathVariable("personID") int personID){
-        return esi.deletePersonFromEvent(idEvent,personID);
+    @DeleteMapping(path = "/{idEvent}/expenses")
+    public ResponseEntity<Transaction> deleteTransaction(@PathVariable("idEvent") long idEvent,
+                                                         @RequestParam("id") int idTransaction) {
+        return esi.deleteTransaction(idEvent, idTransaction);
     }
+
+    @DeleteMapping(path = {"/{idEvent}/person"})
+    public ResponseEntity<Person> deletePerson(@PathVariable("idEvent") long idEvent,
+                                               @RequestParam("id") int idPerson) {
+        return esi.deletePerson(idEvent, idPerson);
+    }
+
 }

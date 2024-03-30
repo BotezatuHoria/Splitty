@@ -4,11 +4,12 @@ import commons.Event;
 import commons.Person;
 import commons.Transaction;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import server.database.EventRepository;
 import server.services.interfaces.EventService;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -17,12 +18,14 @@ public class EventServiceImplementation implements EventService {
     private final EventRepository repo;
     private final TransactionServiceImplementation tsi;
     private final PersonServiceImplementation psi;
+    private final SimpMessagingTemplate messagingTemplate;
 
     public EventServiceImplementation(EventRepository repo, TransactionServiceImplementation tsi,
-                                      PersonServiceImplementation psi) {
+                                      PersonServiceImplementation psi, SimpMessagingTemplate messagingTemplate) {
         this.repo = repo;
         this.tsi = tsi;
         this.psi = psi;
+        this.messagingTemplate = messagingTemplate;
     }
 
     @Override
@@ -55,6 +58,8 @@ public class EventServiceImplementation implements EventService {
                     existingEvent.setToken(event.getToken());
                     existingEvent.setPeople(event.getPeople());
                     existingEvent.setTransactions(event.getTransactions());
+                    existingEvent.setLastModified(LocalDate.now());
+                    messagingTemplate.convertAndSend("/topic/event", existingEvent);
                     return ResponseEntity.ok(repo.save(existingEvent));
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -68,6 +73,7 @@ public class EventServiceImplementation implements EventService {
             return ResponseEntity.badRequest().build();
         }
         Event saved = repo.save(event);
+        messagingTemplate.convertAndSend("/topic/event", saved);
         return ResponseEntity.ok(saved);
     }
 
@@ -76,7 +82,10 @@ public class EventServiceImplementation implements EventService {
         if (id < 0 || !repo.existsById(id)) {
             return ResponseEntity.badRequest().build();
         }
-        ResponseEntity<commons.Event> response = ResponseEntity.ok(repo.findById(id).get());
+        Event event = repo.findById(id).get();
+        event.removeTransactions();
+        event.removeParticipants();
+        ResponseEntity<commons.Event> response = ResponseEntity.ok(event);
         repo.deleteById(id);
         return response;
     }
@@ -126,37 +135,96 @@ public class EventServiceImplementation implements EventService {
         }
         if (repo.findById(idEvent).isPresent()) {
             Transaction savedTransaction = tsi.add(transaction).getBody();
+            if (savedTransaction != null) {
+                debtCalc(savedTransaction, "addition");
+            }
             Event event = repo.findById(idEvent).get();
             event.addTransaction(savedTransaction);
-            repo.save(event);
+            updateById(idEvent, event);
             return ResponseEntity.ok(savedTransaction);
         }
         return ResponseEntity.internalServerError().build();
     }
 
-
-
-    public ResponseEntity<Person> deletePersonFromEvent(Long idEvent, int personID){
-        Person personToDelete = psi.getById(personID).getBody();
-        boolean isPersonIn = false;
-        List<Person> newPersons = new ArrayList<>();
-        for(Person e: getById(idEvent).getBody().getPeople()){
-            if (e.equals(personToDelete)){
-                isPersonIn = true;
+    public ResponseEntity<Person> deletePerson(long idEvent, int idPerson) {
+        if (idEvent < 0 || !repo.existsById(idEvent)) {
+            return ResponseEntity.badRequest().build();
+        }
+        try {
+            Event event = getById(idEvent).getBody();
+            Person person = psi.getById(idPerson).getBody();
+            if (event != null) {
+                List<Transaction> transactions = event.getTransactions();
+                transactions.removeIf(t -> t.getCreator().getId() == idPerson);
+                transactions = event.getTransactions();
+                for (Transaction t : transactions) {
+                    if (t.getParticipants().contains(person)) {
+                        List<Person> participants = t.getParticipants();
+                        participants.remove(person);
+                        t.setParticipants(participants);
+                    }
+                }
+                event.setTransactions(transactions);
+                event.removePerson(person);
+                updateById(idEvent, event);
+                recalculateDebts(idEvent);
+                return ResponseEntity.ok(person);
             }
-            else{
-                newPersons.add(e);
+            return ResponseEntity.internalServerError().build();
+        }
+        catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    public ResponseEntity<Transaction> deleteTransaction(long idEvent, int idTransaction) {
+        if (idEvent < 0 || !repo.existsById(idEvent) || tsi.getById(idTransaction) == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        try {
+            Event event = getById(idEvent).getBody();
+            Transaction t = tsi.getById(idTransaction).getBody();
+            debtCalc(t, "removal");
+            if (event != null) {
+                event.removeTransaction(t);
+                updateById(idEvent, event);
+                System.out.println(t);
+                return ResponseEntity.ok(t);
             }
+            return ResponseEntity.internalServerError().build();
         }
-        if (!(isPersonIn)){
-            System.out.println("Person that was to be deleted is not in the event?");
-            return null;
+        catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
         }
-        else{
+    }
 
-            getById(idEvent).getBody().setPeople(newPersons);
-            return psi.deleteById(personID);
+    public void debtCalc(Transaction transaction, String type) {
+        double money = transaction.getMoney();
+        if (type.equals("removal")) {
+            money *= -1;
         }
+        int people = transaction.getParticipants().size();
+        Person creator = transaction.getCreator();
+        double debt = 0;
+        debt = money / people;
+        Person crt = psi.getById(creator.getId()).getBody();
+        crt.setDebt(crt.getDebt() + money);
+        for (Person p : transaction.getParticipants()) {
+            Person person = psi.getById(p.getId()).getBody();
+            person.setDebt(person.getDebt() - debt);
+            psi.updateById(p.getId(), person);
+        }
+    }
 
+    public void recalculateDebts(long idEvent) {
+        Event event = getById(idEvent).getBody();
+        for (Person p : event.getPeople()) {
+            Person person = psi.getById(p.getId()).getBody();
+            person.setDebt(0);
+            psi.updateById(p.getId(), person);
+        }
+        for (Transaction t : event.getTransactions()) {
+            debtCalc(t, "addition");
+        }
     }
 }

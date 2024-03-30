@@ -9,9 +9,9 @@ import org.springframework.web.context.request.async.DeferredResult;
 import server.database.TransactionRepository;
 import server.services.interfaces.TransactionService;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 @Service
@@ -66,6 +66,11 @@ public class TransactionServiceImplementation implements TransactionService {
             return ResponseEntity.badRequest().build();
         }
         ResponseEntity<Transaction> response =  ResponseEntity.ok(repo.findById(id).get());
+        for (Map.Entry<Object, Consumer<Transaction>> entry : listeners.entrySet()) {
+            if (entry.getValue() == response) {
+                listeners.remove(entry.getKey(), entry.getValue());
+            }
+        }
         repo.deleteById(id);
         return response;
     }
@@ -148,7 +153,7 @@ public class TransactionServiceImplementation implements TransactionService {
     }
 
 
-    private final Map<Object, Consumer<Transaction>> listeners = new HashMap<>();
+    private final Map<Object, Consumer<Transaction>> listeners = new ConcurrentHashMap<>();
     public DeferredResult<ResponseEntity<Transaction>> getUpdates() {
         var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         DeferredResult<ResponseEntity<Transaction>> deferredResult = new DeferredResult<>(1000L, noContent);

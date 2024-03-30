@@ -2,7 +2,10 @@ package commons;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,11 +19,17 @@ public class Event {
     protected int id;
     protected String token;
 
-    @OneToMany
-    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt", "event", "createdTransactions", "transactions"})
+    @CreatedDate
+    private LocalDate creationDate;
+    @LastModifiedDate
+    private LocalDate lastModified;
+
+
+    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt"})
     protected List<Person> people;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
     @JsonIgnoreProperties({"name", "date", "money", "currency", "expenseType", "participants", "creator"})
     protected List<Transaction> transactions;
 
@@ -40,6 +49,8 @@ public class Event {
         this.token = token;
         this.people = people;
         this.transactions = transactions;
+        creationDate = LocalDate.now();
+        lastModified = LocalDate.now();
     }
 
     /**
@@ -169,6 +180,18 @@ public class Event {
         this.transactions.remove(transaction);
     }
 
+    public void removeTransactions() {
+        if (transactions != null) {
+            transactions.clear();
+        }
+    }
+
+    public void removeParticipants() {
+        if (people != null) {
+            people.clear();
+        }
+    }
+
     /**
      * makes the event into a readable string.
      * @return returns a string of the event.
@@ -192,14 +215,24 @@ public class Event {
             return false;
         }
         Event event = (Event) o;
-        return id == event.id && Objects.equals(tag, event.tag) && Objects.equals(title, event.title) &&
-                Objects.equals(token, event.token) && Objects.equals(people, event.people) &&
-                Objects.equals(transactions, event.transactions);
+        return id == event.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(tag, title, id, token, people, transactions);
+        return Objects.hash(tag, title, id, token, people);
+    }
+
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public LocalDate getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(LocalDate lastModified) {
+        this.lastModified = lastModified;
     }
 }
 
