@@ -61,7 +61,7 @@ public class Transaction {
         this.participants = participants;
         this.creator = creator;
         this.expenseType = Objects.requireNonNullElse(expenseType, "Other");
-        // calculateDebts();
+        calculateDebts();
     }
 
     /**
@@ -82,13 +82,13 @@ public class Transaction {
         this.expenseType = expenseType;
         this.participants = participants;
         this.creator = creator;
-        calculateDebts();
-
+        // calculateDebts();
     }
 
     /**
      * Calculates debts for everybody involved in the transaction.
      */
+    @JsonIgnore
     public void calculateDebts(){
         double singlePersonToPay = money / participants.size();
         for(Person person :  participants){
