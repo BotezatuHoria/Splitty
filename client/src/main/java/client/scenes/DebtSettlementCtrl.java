@@ -17,7 +17,7 @@ import javafx.scene.text.Text;
 
 public class DebtSettlementCtrl {
   @FXML
-  public Pane openDebtPane;
+  private ListView<TitledPane> debtListView;
   @FXML
   private Text aboveCellText;
   @FXML
@@ -68,10 +68,8 @@ public class DebtSettlementCtrl {
               "Account holder: " + debt.getReceiver().getFirstName() + " " + debt.getReceiver().getLastName() + "\n"
                       + "IBAN: " + debt.getReceiver().getIban() + "\n");
       TitledPane titledPane = getTitledPane(debt, textArea);
-      openDebtPane.getChildren().add(titledPane);
+      debtListView.getItems().add(titledPane);
     }
-
-
   }
 
   private static TitledPane getTitledPane(DebtCellData debt, TextArea textArea) {
