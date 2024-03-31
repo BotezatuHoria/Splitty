@@ -219,6 +219,10 @@ public class ParticipantAdditionPageCtrl {
         return personIsDuplicate;
     }
 
+    public void setLanguageText(ResourceBundle resourceBundle) {
+
+    }
+
     /**
      * resets the warnings given when someone tries to add a person without a name or a surname.
      */

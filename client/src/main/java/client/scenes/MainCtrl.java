@@ -16,6 +16,7 @@
 package client.scenes;
 
 import client.utils.EventsSingleton;
+import client.utils.LanguageSingleton;
 import client.utils.SelectedEventSingleton;
 import commons.Event;
 import javafx.scene.Parent;
@@ -27,6 +28,7 @@ import javafx.util.Pair;
 import client.utils.ServerUtils;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class MainCtrl {
 
@@ -161,6 +163,10 @@ public class MainCtrl {
 
         this.editExpenseCtrl = editExpensePage.getKey();
         this.editExpensePage = new Scene(editExpensePage.getValue());
+
+        LanguageSingleton languageSingleton = LanguageSingleton.getInstance();
+        languageSingleton.setMainCtrl(this);
+        languageSingleton.setLanguageText();
 
         showStartSettings();
         primaryStage.show();
@@ -333,5 +339,9 @@ public class MainCtrl {
         editExpenseCtrl.clear();
         editExpenseCtrl.updatePage();
         primaryStage.setScene(editExpensePage);
+    }
+
+    public void setLanguageText(ResourceBundle resourceBundle) {
+        startSettingsCtrl.setLanguageText(resourceBundle);
     }
 }

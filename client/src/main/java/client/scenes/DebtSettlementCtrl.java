@@ -2,6 +2,7 @@
 package client.scenes;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import client.utils.ServerUtils;
 import commons.DebtCellData;
@@ -92,6 +93,10 @@ public class DebtSettlementCtrl {
             + "to " + debt.getReceiver());
     AnchorPane anchorPane = new AnchorPane(vBox);
     return new TitledPane(text, anchorPane);
+  }
+
+  public void setLanguageText(ResourceBundle resourceBundle) {
+
   }
 
   /**

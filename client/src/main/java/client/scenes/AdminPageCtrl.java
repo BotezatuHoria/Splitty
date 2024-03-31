@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.ResourceBundle;
 
 public class AdminPageCtrl {
 
@@ -116,6 +117,10 @@ public class AdminPageCtrl {
 
     public void goBack() {
         mainCtrl.showAdminLogin();
+    }
+
+    public void setLanguageText(ResourceBundle resourceBundle) {
+
     }
 
     public void downloadEvent(){

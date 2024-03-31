@@ -215,6 +215,10 @@ public class ParticipantEditPageCtrl {
         mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
     }
 
+    public void setLanguageText(ResourceBundle resourceBundle) {
+
+    }
+
     /**
      * Clears all the input fields.
      */

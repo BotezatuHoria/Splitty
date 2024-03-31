@@ -5,14 +5,20 @@ import client.utils.LanguageSingleton;
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.text.Text;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.ResourceBundle;
 
 public class StartSettingsCtrl {
     private final MainCtrl mainCtrl;
     @FXML // fx:id="startPageConfirmButton"
     private Button startPageConfirmButton;
+
+    @FXML // fx:id="startSettingsLabel"
+    private Text startSettingsLabel;
 
     @FXML // fx:id="startPageAdmin"
     private Button startPageAdmin;
@@ -40,6 +46,10 @@ public class StartSettingsCtrl {
         // Show current language
         Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
         startPageLanguageSelector.getSelectionModel().select(currentLanguage);
+    }
+
+    public void setLanguageText(ResourceBundle resourceBundle) {
+        startSettingsLabel.setText(resourceBundle.getString("select.language"));
     }
 
     @FXML

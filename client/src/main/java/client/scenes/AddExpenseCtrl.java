@@ -301,6 +301,10 @@ public class AddExpenseCtrl implements Initializable {
         return false;
     }
 
+    public void setLanguageText(ResourceBundle resourceBundle) {
+
+    }
+
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert abortButton != null : "fx:id=\"abortButton\" was not injected: check your FXML file 'AddExpense.fxml'.";
