@@ -331,7 +331,7 @@ public class ServerUtils {
 	}
 
 	/**
-	 * Method that deletes te transaction from the current event
+	 * Method that deletes te transaction from the current event.
 	 * @param idEvent
 	 * @param idTransaction
 	 * @return

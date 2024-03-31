@@ -90,7 +90,7 @@ public class MainCtrl {
     }
 
 
-    @SuppressWarnings("parameterNumber")
+    @SuppressWarnings({"parameterNumber", "MethodLength"})
     /**
      * Initialize method for the main controller.
      * @param primaryStage - primary stage
@@ -326,7 +326,7 @@ public class MainCtrl {
     }
 
     /**
-     * Shows the edit expense
+     * Shows the edit expense.
      */
     public void showEditExpensePage() {
         primaryStage.setTitle("Edit Expense Page");
