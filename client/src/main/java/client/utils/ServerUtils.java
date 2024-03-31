@@ -358,7 +358,7 @@ public class ServerUtils {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.registerModule(new JavaTimeModule());
 
-		Response response = ClientBuilder.newClient().target(SERVER)
+		Response response = ClientBuilder.newClient().target(server)
 				.path("api/event/" + idEvent + "/expenses")
 				.queryParam("id", idTransaction)
 				.request(MediaType.APPLICATION_JSON)
@@ -382,7 +382,7 @@ public class ServerUtils {
 		objectMapper.registerModule(new JavaTimeModule());
 
 		return ClientBuilder.newClient(new ClientConfig())
-				.target(SERVER).path("api/transaction/" + idTransaction)
+				.target(server).path("api/transaction/" + idTransaction)
 				.request(APPLICATION_JSON)
 				.accept(APPLICATION_JSON)
 				.get(new GenericType<Transaction>() {});
@@ -392,7 +392,7 @@ public class ServerUtils {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.registerModule(new JavaTimeModule());
 
-		Response response = ClientBuilder.newClient().target(SERVER)
+		Response response = ClientBuilder.newClient().target(server)
 				.path("api/transaction/" + idTransaction)
 				.request(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)

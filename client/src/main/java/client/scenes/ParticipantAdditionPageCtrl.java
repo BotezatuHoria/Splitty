@@ -109,6 +109,9 @@ public class ParticipantAdditionPageCtrl {
 
 
         if( server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID()).size()> amountOfPerson )    {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Participant added successfully!");
+            alert.show();
             clearFields();
             mainCtrl.showEventPage(mainCtrl.getCurrentEventID());  //This method still needs to be created
         }

@@ -97,7 +97,7 @@ public class Main extends Application {
     public void getConfigFile() throws IOException {
         Path currRelativePath = Paths.get("");
         String currAbsolutePathString = currRelativePath.toAbsolutePath().toString();
-        String result = currAbsolutePathString + "/client/src/main/java/client/config.json";
+        String result = currAbsolutePathString + "/src/main/java/client/config.json";
         result = result.replace("\\", "/");
 
         var file = new File(result);
