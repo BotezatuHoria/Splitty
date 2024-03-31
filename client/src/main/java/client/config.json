@@ -1,5 +1,5 @@
 {
-  "server": "http://localhost:8090/",
+  "server": "http://localhost:8080/",
   "emailAddress": "example@gmail.com",
   "language": "English"
 }

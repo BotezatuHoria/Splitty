@@ -64,26 +64,6 @@ class EventTest {
     }
 
     /**
-     * Test equals method with two events with different tags.
-     */
-    @Test
-    void differentTagTest(){
-        Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
-        Event test2 = new Event("Event two", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
-        assertNotEquals(test, test2);
-    }
-
-    /**
-     * Test equals method with two events with different titles.
-     */
-    @Test
-    void differentTitleTest(){
-        Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
-        Event test2 = new Event("Event one", "BBQ", 1, "1234", new ArrayList<>(), new ArrayList<>());
-        assertNotEquals(test, test2);
-    }
-
-    /**
      * Test equals method with two events with different id's.
      */
     @Test
@@ -96,11 +76,9 @@ class EventTest {
     @Test
     void differentPeopleTest(){
         Person p1 = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new ArrayList<>(),
-                new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
+                "iban33");
         Person p2 = new Person("test@email.com", "First", "Test",
-                "iban33", new Event("", "", 1, "", new ArrayList<>(),
-                new ArrayList<>()), new ArrayList<>(), new ArrayList<>());
+                "iban33");
 
         List<Person> people1 = new ArrayList<>();
         people1.add(p1);
@@ -128,16 +106,6 @@ class EventTest {
 
         Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), transactions1);
         Event test2 = new Event("Event one", "Party", 2, "1234", new ArrayList<>(), transactions2);
-        assertNotEquals(test, test2);
-    }
-
-    /**
-     * Test equals method with two events with different tokens.
-     */
-    @Test
-    void differentTokenTest(){
-        Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
-        Event test2 = new Event("Event one", "Party", 1, "4321", new ArrayList<>(), new ArrayList<>());
         assertNotEquals(test, test2);
     }
 

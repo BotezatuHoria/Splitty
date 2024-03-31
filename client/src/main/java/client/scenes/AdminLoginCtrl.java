@@ -26,6 +26,9 @@ public class AdminLoginCtrl {
     Alert a = new Alert(Alert.AlertType.NONE);
 
 
+    /**
+     * initializes and checks whether the fields are not null.
+     */
     void initialize(){
         assert backButton != null;
         assert loginButton != null;
@@ -44,6 +47,10 @@ public class AdminLoginCtrl {
         this.mainCtrl = mainCtrl;
     }
 
+    /**
+     * makes it so that when the 'login' button is clicked the program continues .
+     * it checks whether the password is correct, and if so sends the admin through to the page.
+     */
     public void loginButton_onClick(){
         String password = passwordField.getText();
         String correctPassword = serverUtils.getPassword();

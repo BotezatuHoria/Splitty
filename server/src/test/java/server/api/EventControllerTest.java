@@ -50,7 +50,13 @@ class EventControllerTest {
         transactionService = new TransactionServiceImplementation(transactionRepository);
 
         eventRepository = new TestEventRepository();
-        eventService = new EventServiceImplementation(eventRepository, transactionService, personService);
+        eventService = new EventServiceImplementation(eventRepository, transactionService, personService,
+                new SimpMessagingTemplate(new MessageChannel() {
+            @Override
+            public boolean send(Message<?> message, long timeout) {
+                return true;
+            }
+        }));
     }
 
 
@@ -142,7 +148,7 @@ class EventControllerTest {
         List<Person> people = new ArrayList<>();
         Event event = new Event("tag", "title",8, "token", people, new ArrayList<>());
         people.add(new Person("test@email.com", "First", "Test",
-                "iban33",event, new ArrayList<>(), new ArrayList<>()));
+                "iban33"));
         eventService.add(event);
         var actual = eventService.getPeople(8);
         assertEquals(actual.getBody(), people);
@@ -193,10 +199,9 @@ class EventControllerTest {
     void addPersonTest() throws JsonProcessingException {
         Event event = new Event("tag", "title",12, "token", new ArrayList<>(), new ArrayList<>());
         Person person = new Person("test@email.com", "First", "Test",
-                "iban33",event, new ArrayList<>(), new ArrayList<>());
+                "iban33");
         eventService.add(event);
         var actual = eventService.add(12, person);
-        assertEquals(actual.getBody().getEvent(), event);
         assertTrue(event.getPeople().contains(person));
     }
 
@@ -205,7 +210,7 @@ class EventControllerTest {
         Event event = new Event("tag", "title",12, "token", new ArrayList<>(), new ArrayList<>());
         eventService.add(event);
         Person person = new Person("test@email.com", "First", "Test",
-                "iban33",event, new ArrayList<>(), new ArrayList<>());
+                "iban33");
         assertEquals(BAD_REQUEST, eventService.add(50, person).getStatusCode());
     }
 

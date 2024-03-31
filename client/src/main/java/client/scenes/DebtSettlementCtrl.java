@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 
 import com.google.inject.Inject;
 import javafx.scene.layout.VBox;
@@ -17,7 +16,7 @@ import javafx.scene.text.Text;
 
 public class DebtSettlementCtrl {
   @FXML
-  public Pane openDebtPane;
+  private ListView<TitledPane> debtListView;
   @FXML
   private Text aboveCellText;
   @FXML
@@ -61,6 +60,10 @@ public class DebtSettlementCtrl {
     assert sendReminderButton != null : "fx:id=\"sendReminderButton\" was not injected: check your FXML file 'OpenDebts.fxml'.";
     assert titleLabel != null : "fx:id=\"titleLabel\" was not injected: check your FXML file 'OpenDebts.fxml'.";
   }
+
+  /**
+   * depicts the debts that are still open on the debt list View in the debt-overview.
+   */
   public void populateOpenDebts(){
     List<DebtCellData> debts = server.getOpenDebts(mainCtrl.getCurrentEventID());
     for(DebtCellData debt : debts){
@@ -68,12 +71,16 @@ public class DebtSettlementCtrl {
               "Account holder: " + debt.getReceiver().getFirstName() + " " + debt.getReceiver().getLastName() + "\n"
                       + "IBAN: " + debt.getReceiver().getIban() + "\n");
       TitledPane titledPane = getTitledPane(debt, textArea);
-      openDebtPane.getChildren().add(titledPane);
+      debtListView.getItems().add(titledPane);
     }
-
-
   }
 
+  /**
+   * returns the debtCellPane but titled with the correct text/body.
+   * @param debt debtcellData filled with the debt of a person.
+   * @param textArea textArea of the debt cell.
+   * @return return a titledPane with the correct text/naming and debt amount
+   */
   private static TitledPane getTitledPane(DebtCellData debt, TextArea textArea) {
     Button markReceived = new Button("Mark Received");
     Button sendEmail = new Button("Send Email");
