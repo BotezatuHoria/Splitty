@@ -17,14 +17,24 @@ package client;
 
 import static com.google.inject.Guice.createInjector;
 
-import java.io.IOException;
+import java.io.*;
+import java.net.ConnectException;
+import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 
 import client.scenes.*;
+import client.utils.ServerUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Injector;
 
 //import client.scenes.AddQuoteCtrl;
 //import client.scenes.QuoteOverviewCtrl;
+
+import jakarta.ws.rs.BadRequestException;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -32,6 +42,9 @@ public class Main extends Application {
 
     private static final Injector INJECTOR = createInjector(new MyModule());
     private static final MyFXML FXML = new MyFXML(INJECTOR);
+
+    private static Config config = new Config();
+
 
     /**
      * Main function for the Main class.
@@ -45,6 +58,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+
+        getConfigFile();
+        boolean result = checkConnection(); //if this is false, the client is trying to connect to a server that is not running.
+        // we can choose to have ui for this or not...
+
         var starterPage = FXML.load(StarterPageCtrl.class, "client", "scenes", "StarterPage.fxml");
         var eventPage = FXML.load(EventPageCtrl.class, "client", "scenes", "EventPage.fxml");
         var statisticsPage = FXML.load(StatisticsCtrl.class, "client", "scenes", "Statistics.fxml");
@@ -67,5 +85,60 @@ public class Main extends Application {
         primaryStage.setOnCloseRequest(e -> {
             eventPage.getKey().stop();
         });
+    }
+
+    /**
+     * gets the values from the config file, and sets the server the client wants to connect to.
+     * this is the server that the client put in the config file.
+     * future use; language remembering? email sending?.
+     * @throws IOException
+     */
+    public void getConfigFile() throws IOException {
+        Path currRelativePath = Paths.get("");
+        String currAbsolutePathString = currRelativePath.toAbsolutePath().toString();
+        String result = currAbsolutePathString + "/client/src/main/java/client/config.json";
+        result = result.replace("\\", "/");
+
+        var file = new File(result);
+        var fileReader = new FileReader(file);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        config = objectMapper.readValue(fileReader,Config.class);
+
+        ServerUtils.setServer(config.getClientsServer());
+
+    }
+
+    /**
+     * checks whether the server the client wants to connect to is running (tested with an api call).
+     * @return true when client connects to running server, false otherwise.
+     */
+    public boolean checkConnection(){
+        String uri = config.getClientsServer() + "/api/events";
+        URL url;
+        try {
+            url = new URI(uri).toURL();
+            var is = url.openConnection().getInputStream();
+            var br = new BufferedReader(new InputStreamReader(is));
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        }  catch (BadRequestException e) {
+            //if it is a bad request, then apparently there is a connection with the server (because they responded this)
+            // therefore connection is true.
+            return true;
+        }
+        catch (ConnectException e) {
+            //no connection, wrong port.
+            return false;
+        }
+        catch (Exception e) {
+            //connection but file not found, does not matter, so still true.
+            return true;
+        }
+        return true;
+
+
     }
 }
