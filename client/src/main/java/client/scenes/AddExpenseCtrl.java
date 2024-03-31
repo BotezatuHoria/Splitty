@@ -165,10 +165,16 @@ public class AddExpenseCtrl implements Initializable {
         // to be implemented with all the currencies that will be available in the project;
     }
 
+    /**
+     * shows the tags, set to a true visibility.
+     */
     public void showTagPage() {
         tagPane.visibleProperty().set(true);
     }
 
+    /**
+     * adds new tag to the expense.
+     */
     public void addNewTag() {
         expenseTypeBox.getItems().add(newTagField.getText());
         newTagField.clear();
