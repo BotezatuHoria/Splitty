@@ -85,11 +85,14 @@ public class MainCtrl {
     private Scene startSettings;
     private StartSettingsCtrl startSettingsCtrl;
 
+    private Scene editExpensePage;
+    private EditExpenseCtrl editExpenseCtrl;
+
     public MainCtrl() {
     }
 
 
-    @SuppressWarnings({"parameterNumber", "methodLength"})
+    @SuppressWarnings({"parameterNumber", "MethodLength"})
     /**
      * Initialize method for the main controller.
      * @param primaryStage - primary stage
@@ -112,7 +115,8 @@ public class MainCtrl {
                            Pair<DebtSettlementCtrl, Parent> debt,
                            Pair<LanguageSelectorCtrl, Parent> language,
                            Pair<AdminLoginCtrl, Parent> adminLoginPage,
-                           Pair<AdminPageCtrl, Parent> adminPage) {
+                           Pair<AdminPageCtrl, Parent> adminPage,
+                           Pair<EditExpenseCtrl, Parent> editExpensePage) {
         this.server = new ServerUtils();
 
         EventsSingleton eventsInstance = EventsSingleton.getInstance();
@@ -156,6 +160,9 @@ public class MainCtrl {
 
         this.adminPageCtrl = adminPage.getKey();
         this.adminPage = new Scene(adminPage.getValue());
+
+        this.editExpenseCtrl = editExpensePage.getKey();
+        this.editExpensePage = new Scene(editExpensePage.getValue());
 
         LanguageSingleton languageSingleton = LanguageSingleton.getInstance();
         languageSingleton.setMainCtrl(this);
@@ -322,6 +329,16 @@ public class MainCtrl {
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.setContentText(error);
         alert.showAndWait();
+    }
+
+    /**
+     * Shows the edit expense.
+     */
+    public void showEditExpensePage() {
+        primaryStage.setTitle("Edit Expense Page");
+        editExpenseCtrl.clear();
+        editExpenseCtrl.updatePage();
+        primaryStage.setScene(editExpensePage);
     }
 
     public void setLanguageText(ResourceBundle resourceBundle) {
