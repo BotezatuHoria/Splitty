@@ -141,7 +141,7 @@ public class Person {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, firstName, lastName, iban, debt);
+        return Objects.hash(id);
     }
 
     @Override

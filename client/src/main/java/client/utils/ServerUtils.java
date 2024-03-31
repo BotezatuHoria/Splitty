@@ -340,15 +340,14 @@ public class ServerUtils {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.registerModule(new JavaTimeModule());
 
-		Event event = getEventByID(idEvent);
-		Transaction transaction = getTransactionByID(idTransaction);
-		event.getTransactions().remove(getTransactionByID(idTransaction));
+		/**Transaction ret = getTransactionByID(idTransaction);
+		Event event =  getEventByID(idEvent);
+		event.getTransactions().remove(ret);
 		updateEventById(event, idEvent);
 
+		return ret;*/
 
-		return transaction;
-
-		/**Response response = ClientBuilder.newClient().target(SERVER)
+		Response response = ClientBuilder.newClient().target(SERVER)
 				.path("api/transaction/" + idTransaction)
 				.request(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
@@ -357,7 +356,7 @@ public class ServerUtils {
 			return response.readEntity(Transaction.class);
 		} else {
 			throw new RuntimeException("Failed to remove event. Status code: " + response.getStatus());
-		}*/
+		}
 
 	}
 
