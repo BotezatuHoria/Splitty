@@ -6,9 +6,7 @@ import java.util.Objects;
 import client.utils.ServerUtils;
 import commons.DebtCellData;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 
 import com.google.inject.Inject;
