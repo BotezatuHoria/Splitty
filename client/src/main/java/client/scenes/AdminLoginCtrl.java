@@ -7,6 +7,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 
+import java.util.ResourceBundle;
+
 public class AdminLoginCtrl {
     private final MainCtrl mainCtrl;
     private final ServerUtils serverUtils;
@@ -62,6 +64,10 @@ public class AdminLoginCtrl {
             a.show();
         }
         passwordField.clear();
+    }
+
+    public void setLanguageText(ResourceBundle resourceBundle) {
+
     }
 
     /**

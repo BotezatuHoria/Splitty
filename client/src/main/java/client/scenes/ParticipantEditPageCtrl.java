@@ -2,16 +2,15 @@ package client.scenes;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Person;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.stage.Modality;
 
 public class ParticipantEditPageCtrl {
 
@@ -146,6 +145,9 @@ public class ParticipantEditPageCtrl {
             person.setIban(newIban);
             Person updatedperson = server.updatePerson(person.getId(), person);
             System.out.println("person with id " + person.getId() + " was adjusted to " + updatedperson);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Person edited succesfully!");
+            alert.show();
             clearFields();
             mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
         } else {
@@ -185,13 +187,24 @@ public class ParticipantEditPageCtrl {
     /**
      *removes a person from the event.
      */
-    public void removePerson(){ //this method isnt complete yet because of the api call in line 192 which i cannot get to work.
+    public void removePerson(){
         Person person = participantsScroll.getSelectionModel().getSelectedItem();
         int personID = person.getId();
         int serverID = mainCtrl.getCurrentEventID();
-        Person removedPerson = server.removePerson(personID, serverID);
-        System.out.println(removedPerson);
-        abort();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.setContentText("Are you sure you want to delete this person?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.isPresent() && result.get() == ButtonType.OK){
+            Person removedPerson = server.removePerson(personID, serverID);
+            System.out.println(removedPerson);
+            abort();
+        }
+        else{
+            Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+            alert2.setContentText("Person not deleted!");
+            alert2.show();
+        }
     }
 
     /**
@@ -200,6 +213,10 @@ public class ParticipantEditPageCtrl {
     public void abort () {
         clearFields();
         mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
+    }
+
+    public void setLanguageText(ResourceBundle resourceBundle) {
+
     }
 
     /**

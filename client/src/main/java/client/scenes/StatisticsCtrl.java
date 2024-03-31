@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public class StatisticsCtrl {
     private final MainCtrl mainCtrl;
@@ -76,7 +77,9 @@ public class StatisticsCtrl {
         }
     }
 
+    public void setLanguageText(ResourceBundle resourceBundle) {
 
+    }
 
     /**
      * Method for the go back button in the statistics page.

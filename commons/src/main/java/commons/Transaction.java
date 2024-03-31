@@ -223,15 +223,17 @@ public class Transaction {
             return false;
         }
         Transaction that = (Transaction) o;
-        return id == that.id && Double.compare(money, that.money) == 0 && currency == that.currency &&
+        return id == that.id ;
+        /** && Double.compare(money, that.money) == 0 && currency == that.currency &&
                 Objects.equals(name, that.name) && Objects.equals(date, that.date) &&
                 Objects.equals(expenseType, that.expenseType) &&
                 Objects.equals(participants, that.participants) && Objects.equals(creator, that.creator);
+         */
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, date, money, currency, expenseType, participants, creator);
+        return Objects.hash(id);
     }
 
     /**

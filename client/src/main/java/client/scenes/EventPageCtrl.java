@@ -16,6 +16,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.util.List;
@@ -28,8 +29,39 @@ public class EventPageCtrl implements Initializable {
     private ObservableList<Person> data;
 
     private ObservableList<Transaction> dataTransactions;
+
+    @FXML // fx:id="namePane"
+    private AnchorPane namePane;
+
+    @FXML // fx:id="nameField"
+    private TextField nameField;
+
+    @FXML // fx:id="saveName"
+    private Button saveName;
+
     @FXML // fx:id="addExpense"
     private Button addExpense; // Value injected by FXMLLoader
+
+    @FXML // fx:id="SendInvites"
+    private Button SendInvites; // Value injected by FXMLLoader
+
+    @FXML // fx:id="participantsLabel"
+    private Label participantsLabel; // Value injected by FXMLLoader
+
+    @FXML // fx:id="expensesLabel"
+    private Label expensesLabel; // Value injected by FXMLLoader
+
+    @FXML // fx:id="EditParticipant"
+    private Button EditParticipant; // Value injected by FXMLLoader
+
+    @FXML // fx:id="AddParticipant"
+    private Button AddParticipant; // Value injected by FXMLLoader
+
+    @FXML // fx:id="AddExpense"
+    private Button AddExpense; // Value injected by FXMLLoader
+
+    @FXML // fx:id="SettleDebts"
+    private Button SettleDebts; // Value injected by FXMLLoader
 
     @FXML // fx:id="addParticipant"
     private Button addParticipant; // Value injected by FXMLLoader
@@ -70,6 +102,12 @@ public class EventPageCtrl implements Initializable {
     @FXML // fx:id="listTransactions"
     private ListView<Transaction> listTransactions;
 
+    @FXML // fx:id="editExpense"
+    private Button editExpense;
+
+    @FXML // fx:id="editName"
+    private Button editName;
+
 
     /**
      * Constructor for EventPageCtrl.
@@ -82,6 +120,8 @@ public class EventPageCtrl implements Initializable {
         this.mainCtrl = mainCtrl;
         this.server = server;
     }
+
+
 
     /**
      * Method for accessing the expense page.
@@ -137,6 +177,16 @@ public class EventPageCtrl implements Initializable {
         eventTitle.setText(server.getEventByID(mainCtrl.getCurrentEventID()).getTitle());
     }
 
+
+    public void editName() {
+        namePane.setVisible(true);
+    }
+
+    public void saveName() {
+        String name = nameField.getText();
+        eventTitle.setText(name);
+        namePane.setVisible(false);
+    }
 
     /**
      * Method that updates the title, people and transactions on that page.
@@ -241,6 +291,7 @@ public class EventPageCtrl implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        namePane.setVisible(false);
         server.registerForMessages("/topic/events/people", Person.class, person -> {
             Platform.runLater(() -> {
                 data.add(person);
@@ -262,6 +313,27 @@ public class EventPageCtrl implements Initializable {
                 updatePage();
             });
         });
+    }
+
+    /**
+     * Method that opens the Edit event page.
+     */
+    public void showEditExpensePage() {
+        mainCtrl.showEditExpensePage();
+    }
+
+    public void setLanguageText(ResourceBundle resourceBundle) {
+        SendInvites.setText(resourceBundle.getString("sendInvites.button"));
+        participantsLabel.setText(resourceBundle.getString("participants"));
+        EditParticipant.setText(resourceBundle.getString("edit.button"));
+        AddParticipant.setText(resourceBundle.getString("addParticipant.button"));
+        expensesLabel.setText(resourceBundle.getString("expenses"));
+        allExpenses.setText(resourceBundle.getString("all.button"));
+        fromParticipant.setText(resourceBundle.getString("from.button"));
+        includingParticipant.setText(resourceBundle.getString("including.button"));
+        AddExpense.setText(resourceBundle.getString("addExpense.button"));
+        SettleDebts.setText(resourceBundle.getString("settleDebts.button"));
+        showStatistics.setText(resourceBundle.getString("showStats.button"));
     }
 
     public void stop() {

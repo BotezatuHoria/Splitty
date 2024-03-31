@@ -109,6 +109,10 @@ public class DebtSettlementCtrl {
     return hBox;
   }
 
+  public void setLanguageText(ResourceBundle resourceBundle) {
+
+  }
+
   /**
    * Settles debt.
    */

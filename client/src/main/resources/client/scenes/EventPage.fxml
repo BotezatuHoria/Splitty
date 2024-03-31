@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -19,14 +20,14 @@
             <Font size="20.0" />
          </font>
       </Button>
-      <Label layoutX="35.0" layoutY="84.0" prefHeight="32.0" prefWidth="143.0" text="Participants">
+      <Label layoutX="35.0" layoutY="94.0" prefHeight="32.0" prefWidth="143.0" text="Participants">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="EditParticipants" layoutX="152.0" layoutY="87.0" mnemonicParsing="false" onAction="#editParticipants" text="Edit" />
-      <Button fx:id="AddParticipant" layoutX="208.0" layoutY="87.0" mnemonicParsing="false" onAction="#addParticipants" text="Add participant" />
-      <Label fx:id="participantsList" layoutX="35.0" layoutY="123.0" prefHeight="26.0" prefWidth="400.0" text="Participants..." />
+      <Button fx:id="EditParticipants" layoutX="160.0" layoutY="97.0" mnemonicParsing="false" onAction="#editParticipants" text="Edit" />
+      <Button fx:id="AddParticipant" layoutX="212.0" layoutY="97.0" mnemonicParsing="false" onAction="#addParticipants" text="Add" />
+      <Label fx:id="participantsList" layoutX="37.0" layoutY="123.0" prefHeight="26.0" prefWidth="400.0" text="Participants..." />
       <Label layoutX="35.0" layoutY="163.0" prefHeight="32.0" prefWidth="143.0" text="Expenses">
          <font>
             <Font size="20.0" />
@@ -53,5 +54,17 @@
          </font>
       </Button>
       <Button fx:id="homeButton" layoutX="514.0" layoutY="426.0" mnemonicParsing="false" onAction="#goHome" prefHeight="46.0" prefWidth="51.0" text="Home" />
+      <Button fx:id="editExpense" layoutX="432.0" layoutY="101.0" mnemonicParsing="false" onAction="#showEditExpensePage" text="Edit Expense">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="editName" layoutX="239.0" layoutY="36.0" mnemonicParsing="false" onAction="#editName" text="Edit" />
+      <AnchorPane fx:id="namePane" layoutX="35.0" layoutY="40.0" prefHeight="58.0" prefWidth="175.0">
+         <children>
+            <TextField fx:id="nameField" layoutY="28.0" prefHeight="26.0" prefWidth="109.0" />
+            <Button fx:id="saveName" layoutX="127.0" layoutY="28.0" mnemonicParsing="false" onAction="#saveName" text="Save" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
