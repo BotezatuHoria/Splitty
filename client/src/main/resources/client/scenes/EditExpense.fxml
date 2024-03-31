@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="expensePane" prefHeight="570.0" prefWidth="590.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.EditExpenseCtrl">
+   <children>
+      <Label layoutX="22.0" layoutY="14.0" text="Edit Expense">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="89.0" prefHeight="26.0" prefWidth="119.0" text="Who paid?">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="15.0" layoutY="121.0" prefHeight="26.0" prefWidth="119.0" text="What for?">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="154.0" prefHeight="26.0" prefWidth="119.0" text="How much?">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="187.0" prefHeight="26.0" prefWidth="119.0" text="When?">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="15.0" layoutY="224.0" prefHeight="26.0" prefWidth="119.0" text="How to Split?">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="15.0" layoutY="473.0" prefHeight="26.0" prefWidth="119.0" text="Expense Type">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="payerBox" layoutX="167.0" layoutY="89.0" prefHeight="26.0" prefWidth="197.0" promptText="Payer" />
+      <TextField fx:id="expenseField" layoutX="166.0" layoutY="121.0" prefHeight="26.0" prefWidth="392.0" promptText="Please provide the expense..." />
+      <TextField fx:id="priceField" layoutX="166.0" layoutY="154.0" prefHeight="26.0" prefWidth="273.0" promptText="Value of the expense..." />
+      <ComboBox fx:id="currencyBox" layoutX="447.0" layoutY="154.0" prefHeight="26.0" prefWidth="111.0" promptText="Currency" />
+      <DatePicker fx:id="dateBox" layoutX="166.0" layoutY="187.0" prefHeight="26.0" prefWidth="392.0" promptText="Please select the date..." />
+      <Button fx:id="addEverybody" layoutX="166.0" layoutY="224.0" mnemonicParsing="false" onAction="#addParticipantToView" prefHeight="26.0" prefWidth="150.0" text="Add Everybody" />
+      <ListView fx:id="peopleLIstView" layoutX="16.0" layoutY="277.0" prefHeight="179.0" prefWidth="562.0" />
+      <ComboBox fx:id="expenseTypeBox" layoutX="167.0" layoutY="473.0" prefHeight="26.0" prefWidth="370.0" promptText="Select the expense type" />
+      <Button fx:id="addTag" layoutX="550.0" layoutY="473.0" mnemonicParsing="false" onAction="#showTagPage" prefHeight="26.0" prefWidth="23.0" text="+" />
+      <Button fx:id="abortButton" layoutX="376.0" layoutY="524.0" mnemonicParsing="false" onAction="#abortExpense" prefHeight="26.0" prefWidth="83.0" text="Abort" />
+      <Button fx:id="saveButton" layoutX="474.0" layoutY="524.0" mnemonicParsing="false" onAction="#saveExpense" prefHeight="26.0" prefWidth="83.0" text="Save" />
+      <Label fx:id="errorLabel" layoutX="16.0" layoutY="525.0" prefHeight="24.0" prefWidth="344.0" textFill="#da1616">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <AnchorPane fx:id="tagPane" layoutX="166.0" layoutY="503.0" prefHeight="45.0" prefWidth="197.0">
+         <children>
+            <TextField fx:id="newTagField" layoutX="8.0" layoutY="10.0" prefHeight="26.0" prefWidth="142.0" promptText="New epxense type..." />
+            <Button fx:id="addTagButton" layoutX="161.0" layoutY="10.0" mnemonicParsing="false" onAction="#addNewTag" prefHeight="26.0" prefWidth="30.0" text="+" />
+         </children>
+      </AnchorPane>
+      <Button fx:id="remove" layoutX="33.0" layoutY="524.0" mnemonicParsing="false" onAction="#removeExpense" prefHeight="26.0" prefWidth="83.0" text="Remove" />
+      <ComboBox fx:id="expenseScroll" layoutX="17.0" layoutY="54.0" onAction="#expenseScroll" prefHeight="26.0" prefWidth="197.0" promptText="Expense" />
+   </children>
+</AnchorPane>

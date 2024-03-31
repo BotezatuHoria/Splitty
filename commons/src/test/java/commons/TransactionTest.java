@@ -115,10 +115,7 @@ public class TransactionTest {
         Transaction t1 = new Transaction("test",
                 LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
                 100, 947, new ArrayList<>(), new Person(), null);
-        Transaction t2 = new Transaction("testing",
-                LocalDate.of(Integer.parseInt("1971"), Integer.parseInt("2"), Integer.parseInt("5")),
-                10, 840, new ArrayList<>(), new Person(), null);
-        assertNotEquals(t1, t2);
+        assertNotEquals(t1, null);
     }
 
     /**

@@ -348,6 +348,63 @@ public class ServerUtils {
 		});
 	}
 
+	/**
+	 * Method that deletes te transaction from the current event.
+	 * @param idEvent
+	 * @param idTransaction
+	 * @return
+	 */
+	public Transaction deleteTransactionFromCurrentEvent(int idEvent, int idTransaction) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.registerModule(new JavaTimeModule());
+
+		Response response = ClientBuilder.newClient().target(SERVER)
+				.path("api/event/" + idEvent + "/expenses")
+				.queryParam("id", idTransaction)
+				.request(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.delete();
+		if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+			return response.readEntity(Transaction.class);
+		} else {
+			throw new RuntimeException("Failed to remove event. Status code: " + response.getStatus());
+		}
+
+	}
+
+	/**
+	 * Gets the transaction with the following id.
+	 * @param idTransaction of the transaction you want.
+	 * @return a transaciton
+	 */
+	public Transaction getTransactionByID(int idTransaction) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.registerModule(new JavaTimeModule());
+
+		return ClientBuilder.newClient(new ClientConfig())
+				.target(SERVER).path("api/transaction/" + idTransaction)
+				.request(APPLICATION_JSON)
+				.accept(APPLICATION_JSON)
+				.get(new GenericType<Transaction>() {});
+	}
+
+	public Transaction updateTransactionByID(Transaction transaction, int idTransaction) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.registerModule(new JavaTimeModule());
+
+		Response response = ClientBuilder.newClient().target(SERVER)
+				.path("api/transaction/" + idTransaction)
+				.request(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.put(Entity.entity(transaction, MediaType.APPLICATION_JSON));
+		if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+			return response.readEntity(Transaction.class);
+		} else {
+			throw new RuntimeException("Failed to update event. Status code: " + response.getStatus());
+		}
+
+	}
+
 	public Object send(String dest, Object o) {
 		session.send(dest, o);
 		return o;
