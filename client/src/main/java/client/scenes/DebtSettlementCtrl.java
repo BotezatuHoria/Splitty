@@ -60,6 +60,10 @@ public class DebtSettlementCtrl {
     assert sendReminderButton != null : "fx:id=\"sendReminderButton\" was not injected: check your FXML file 'OpenDebts.fxml'.";
     assert titleLabel != null : "fx:id=\"titleLabel\" was not injected: check your FXML file 'OpenDebts.fxml'.";
   }
+
+  /**
+   * depicts the debts that are still open on the debt list View in the debt-overview.
+   */
   public void populateOpenDebts(){
     List<DebtCellData> debts = server.getOpenDebts(mainCtrl.getCurrentEventID());
     for(DebtCellData debt : debts){
@@ -71,6 +75,12 @@ public class DebtSettlementCtrl {
     }
   }
 
+  /**
+   * returns the debtCellPane but titled with the correct text/body.
+   * @param debt debtcellData filled with the debt of a person.
+   * @param textArea textArea of the debt cell.
+   * @return return a titledPane with the correct text/naming and debt amount
+   */
   private static TitledPane getTitledPane(DebtCellData debt, TextArea textArea) {
     Button markReceived = new Button("Mark Received");
     Button sendEmail = new Button("Send Email");

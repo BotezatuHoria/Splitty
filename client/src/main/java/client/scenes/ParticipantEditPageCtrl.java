@@ -136,27 +136,29 @@ public class ParticipantEditPageCtrl {
         String newIban = iban.getText();
 
         if (newFirstName.isEmpty() || newLastName.isEmpty()) {
-            warningLabel.setText("The firstname and/or lastname column are empty; " +
+            warningLabel.setText("The firstname and/or lastname column is/are empty; " +
                     "it is mandatory to give the person a name. Please fill these in.");
         }
-        if (!(personExists(newFirstName, newLastName))) {
+        else if (!(personExists(newFirstName, newLastName))) {
             person.setFirstName(newFirstName);
             person.setLastName(newLastName);
             person.setEmail(newEmail);
             person.setIban(newIban);
-            server.updatePerson(person.getId(), person);
-            System.out.println("THIS PART NOT YET DONE, FIX API");
-            System.out.println("person with id " + person.getId() + " was adjusted to " + person);
+            Person updatedperson = server.updatePerson(person.getId(), person);
+            System.out.println("person with id " + person.getId() + " was adjusted to " + updatedperson);
+            clearFields();
             mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
         } else {
-            warningLabel.setText("Something went wrong. Please contact t.p.p.vanleest@student.tudelft.nl");
+            if(!(personExists(newFirstName,newLastName))){
+                warningLabel.setText("Something went wrong. Please contact t.p.p.vanleest@student.tudelft.nl");
+            }
         }
 
 
     }
 
     /**
-     * checks wheter the edited participant has a first and lastname that already exist in event.
+     * checks whether the edited participant has a first and lastname that already exist in event.
      * @param firstname the new firstname of person.
      * @param lastname the new lastname of person.
      * @return true if another person with same names exist.
@@ -166,39 +168,53 @@ public class ParticipantEditPageCtrl {
         boolean personIsDuplicate = false;
         for (Person e : allPersons) {
             if (firstname.equals(e.getFirstName()) && lastname.equals(e.getLastName())) {
-                warningLabel.setText("A person with this combination of first and last name already exists. " +
-                        "Please rename this, or the other equally named person.");
-                System.out.println("tried to add a combination of firstname and lastname that already exists");
-                if (!(participantsScroll.getSelectionModel().getSelectedItem() == e)) {
+                if (!(participantsScroll.getSelectionModel().getSelectedItem().equals(e))) {
                     personIsDuplicate = true;
+                    warningLabel.setText("A person with this combination of first and last name already exists. " +
+                            "Please rename this, or the other equally named person.");
+                    System.out.println("tried to add a combination of firstname and lastname that already exists");
+                    return personIsDuplicate;
                 }
+
             }
         }
         return personIsDuplicate;
     }
 
 
-        /**
-         * Method for the abort button.
-         */
-        public void abort () {
-            clearFields();
-            mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
-        }
+    /**
+     *removes a person from the event.
+     */
+    public void removePerson(){ //this method isnt complete yet because of the api call in line 192 which i cannot get to work.
+        Person person = participantsScroll.getSelectionModel().getSelectedItem();
+        int personID = person.getId();
+        int serverID = mainCtrl.getCurrentEventID();
+        Person removedPerson = server.removePerson(personID, serverID);
+        System.out.println(removedPerson);
+        abort();
+    }
 
-        /**
-         * Clears all the input fields.
-         */
-        private void clearFields () {
-            email.clear();
-            firstName.clear();
-            lastName.clear();
-            iban.clear();
-            originalIBAN.setText("");
-            originalEmail.setText("");
-            originalFName.setText("");
-            originalLName.setText("");
-        }
+    /**
+     * Method for the abort button.
+     */
+    public void abort () {
+        clearFields();
+        mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
+    }
+
+    /**
+     * Clears all the input fields.
+     */
+    private void clearFields () {
+        email.clear();
+        firstName.clear();
+        lastName.clear();
+        iban.clear();
+        originalIBAN.setText("");
+        originalEmail.setText("");
+        originalFName.setText("");
+        originalLName.setText("");
+    }
 
 
     }

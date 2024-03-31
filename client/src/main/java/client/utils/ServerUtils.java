@@ -231,6 +231,20 @@ public class ServerUtils {
 		}
 	}
 
+	public Person removePerson(int personID, int eventID){
+		Response response = ClientBuilder.newClient().target(SERVER)
+				.path("api/event/" + eventID + "/person")
+				.queryParam("id", personID)
+				.request(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.delete();
+		if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+			return response.readEntity(Person.class);
+		} else {
+			throw new RuntimeException("Failed to remove person. Status code: " + response.getStatus());
+		}
+	}
+
 	public Event updateEventById(Event event, int id) {
 		Response response = ClientBuilder.newClient().target(SERVER)
 				.path("api/event/" + id)
@@ -334,6 +348,8 @@ public class ServerUtils {
 		session.send(dest, o);
 		return o;
 	}
+
+
 
 
 }
