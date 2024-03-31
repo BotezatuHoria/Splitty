@@ -1,17 +1,17 @@
-
 package client.scenes;
 
 import java.util.List;
+import java.util.Objects;
 
 import client.utils.ServerUtils;
 import commons.DebtCellData;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 
 import com.google.inject.Inject;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 public class DebtSettlementCtrl {
@@ -34,7 +34,8 @@ public class DebtSettlementCtrl {
 
   @FXML // fx:id="sendReminderButton"
   private Button sendReminderButton; // Value injected by FXMLLoader
-
+  @FXML
+  private AnchorPane rootPane;
   @FXML // fx:id="titleLabel"
   private Label titleLabel; // Value injected by FXMLLoader
 
@@ -59,6 +60,7 @@ public class DebtSettlementCtrl {
     assert markReceivedButton != null : "fx:id=\"markReceivedButton\" was not injected: check your FXML file 'OpenDebts.fxml'.";
     assert sendReminderButton != null : "fx:id=\"sendReminderButton\" was not injected: check your FXML file 'OpenDebts.fxml'.";
     assert titleLabel != null : "fx:id=\"titleLabel\" was not injected: check your FXML file 'OpenDebts.fxml'.";
+    rootPane.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/DebtSettlementStyle.css")).toExternalForm());
   }
 
   /**
@@ -67,9 +69,15 @@ public class DebtSettlementCtrl {
   public void populateOpenDebts(){
     List<DebtCellData> debts = server.getOpenDebts(mainCtrl.getCurrentEventID());
     for(DebtCellData debt : debts){
+      String iban = debt.getReceiver().getIban();
+      if (iban == null || iban.isEmpty()) {
+        iban = "User did not provide IBAN";
+      }else{
+        iban = "IBAN: " + iban;
+      }
       TextArea textArea = new TextArea(
               "Account holder: " + debt.getReceiver().getFirstName() + " " + debt.getReceiver().getLastName() + "\n"
-                      + "IBAN: " + debt.getReceiver().getIban() + "\n");
+                       + iban + "\n");
       TitledPane titledPane = getTitledPane(debt, textArea);
       debtListView.getItems().add(titledPane);
     }
@@ -82,16 +90,25 @@ public class DebtSettlementCtrl {
    * @return return a titledPane with the correct text/naming and debt amount
    */
   private static TitledPane getTitledPane(DebtCellData debt, TextArea textArea) {
-    Button markReceived = new Button("Mark Received");
-    Button sendEmail = new Button("Send Email");
-    Button settleDebt = new Button("Settle Debt");
-    HBox hBox = new HBox(markReceived, sendEmail, settleDebt);
-    VBox vBox = new VBox(hBox, textArea);
-    String text = new String(
-            debt.getSender() + "should give "  + debt.getDebt() + "€"
-            + "to " + debt.getReceiver());
+    HBox hBox = createButtonBox();
+    VBox vBox = new VBox(10, hBox, textArea); // 10 is the spacing between elements
+    vBox.getStyleClass().add("debt-vbox");
+    String title = String.format("%s should give %.2f euros to %s", debt.getSender(), debt.getDebt(), debt.getReceiver());
     AnchorPane anchorPane = new AnchorPane(vBox);
-    return new TitledPane(text, anchorPane);
+    anchorPane.getStyleClass().add("debt-anchor-pane");
+    return new TitledPane(title, anchorPane);
+  }
+
+  private static HBox createButtonBox() {
+    Button markReceived = new Button("Mark Received");
+    markReceived.getStyleClass().add("debt-button");
+    Button sendEmail = new Button("Send Email");
+    sendEmail.getStyleClass().add("debt-button");
+    Button settleDebt = new Button("Settle Debt");
+    settleDebt.getStyleClass().add("debt-button");
+    HBox hBox = new HBox(10, markReceived, sendEmail, settleDebt); // 10 is the spacing between buttons
+    hBox.getStyleClass().add("debt-hbox");
+    return hBox;
   }
 
   /**

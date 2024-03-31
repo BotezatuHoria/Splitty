@@ -1,0 +1,44 @@
+/* Styles for the text areas */
+.debt-text-area {
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+}
+
+/* Styles for the titled panes */
+.debt-titled-pane {
+    -fx-font-family: "Arial";
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+/* Styles for the VBoxes */
+.debt-vbox {
+    -fx-spacing: 10px;
+}
+
+/* Styles for the anchor panes */
+.debt-anchor-pane {
+    -fx-padding: 10px;
+}
+
+/* Styles for the buttons */
+.debt-button {
+    -fx-background-color: #007bff;
+    -fx-text-fill: #ffffff;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px 10px;
+}
+
+/* Styles for the HBoxes */
+.debt-hbox {
+    -fx-spacing: 10px;
+}
+
+.title {
+    -fx-font-family: "Arial";
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-collor: #007bff;
+}
