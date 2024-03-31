@@ -17,6 +17,7 @@ import java.awt.datatransfer.Clipboard; //to set the clipboard of the user when 
 import java.awt.datatransfer.StringSelection; // Also in method CopyCode.
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 
@@ -136,6 +137,10 @@ public class InviteSendingCtrl{
         Clipboard board = Toolkit.getDefaultToolkit().getSystemClipboard(); // get our clipboard.
         board.setContents(selection, selection); //copy the eventinvite code to our clipboard.
         responseCopy.setText("Code copied!");
+    }
+
+    public void setLanguageText(ResourceBundle resourceBundle) {
+
     }
 
     /**

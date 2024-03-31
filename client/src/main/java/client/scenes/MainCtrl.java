@@ -16,6 +16,7 @@
 package client.scenes;
 
 import client.utils.EventsSingleton;
+import client.utils.LanguageSingleton;
 import client.utils.SelectedEventSingleton;
 import commons.Event;
 import javafx.scene.Parent;
@@ -27,6 +28,7 @@ import javafx.util.Pair;
 import client.utils.ServerUtils;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class MainCtrl {
 
@@ -87,7 +89,7 @@ public class MainCtrl {
     }
 
 
-    @SuppressWarnings("parameterNumber")
+    @SuppressWarnings({"parameterNumber", "methodLength"})
     /**
      * Initialize method for the main controller.
      * @param primaryStage - primary stage
@@ -154,6 +156,10 @@ public class MainCtrl {
 
         this.adminPageCtrl = adminPage.getKey();
         this.adminPage = new Scene(adminPage.getValue());
+
+        LanguageSingleton languageSingleton = LanguageSingleton.getInstance();
+        languageSingleton.setMainCtrl(this);
+        languageSingleton.setLanguageText();
 
         showStartSettings();
         primaryStage.show();
@@ -316,5 +322,9 @@ public class MainCtrl {
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.setContentText(error);
         alert.showAndWait();
+    }
+
+    public void setLanguageText(ResourceBundle resourceBundle) {
+        startSettingsCtrl.setLanguageText(resourceBundle);
     }
 }

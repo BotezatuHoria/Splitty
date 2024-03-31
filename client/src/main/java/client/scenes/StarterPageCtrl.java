@@ -12,10 +12,7 @@ import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import commons.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import com.google.inject.Inject;
 import javafx.scene.image.Image;
@@ -37,14 +34,23 @@ public class StarterPageCtrl {
     @FXML // fx:id="createButton"
     private Button createButton;
 
+    @FXML // fx:id="createTextLabel"
+    private Label createTextLabel;
+
     @FXML // fx:id="createTextField"
     private TextField createTextField;
+
+    @FXML // fx:id="joinEventText"
+    private Label joinEventText;
 
     @FXML // fx:id="joinButton"
     private Button joinButton;
 
     @FXML // fx:id="joinTextField"
     private TextField joinTextField;
+
+    @FXML // fx:id="recentlyViewedText"
+    private Label recentlyViewedText;
 
     @FXML // fx:id="languageSelector"
     private ComboBox languageSelector; // Value injected by FXMLLoader
@@ -165,6 +171,14 @@ public class StarterPageCtrl {
         // Show current language
         Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
         languageSelector.getSelectionModel().select(currentLanguage);
+    }
+
+    public void setLanguageText(ResourceBundle resourceBundle) {
+        createTextLabel.setText(resourceBundle.getString("create.event"));
+        createButton.setText(resourceBundle.getString("create.button"));
+        joinButton.setText(resourceBundle.getString("join.button"));
+        joinEventText.setText(resourceBundle.getString("join.event"));
+        recentlyViewedText.setText(resourceBundle.getString("recently.viewed"));
     }
 
     public void keyPressed(KeyEvent e) {
