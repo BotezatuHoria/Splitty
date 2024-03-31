@@ -6,8 +6,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="542.0" prefWidth="811.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.DebtSettlementCtrl">    <children>
-    <Button fx:id="goBackButton" layoutX="730.0" layoutY="21.0" mnemonicParsing="false" onAction="#goBack" prefHeight="53.0" prefWidth="57.0" text="Back" />        <Label layoutX="42.0" layoutY="21.0" text="Open Debts">
+<AnchorPane styleClass="root" fx:id="rootPane" prefHeight="542.0" prefWidth="811.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.DebtSettlementCtrl">    <children>
+    <Button fx:id="goBackButton" layoutX="730.0" layoutY="21.0" mnemonicParsing="false" onAction="#goBack" prefHeight="53.0" prefWidth="57.0" text="Back" />        <Label styleClass="title" layoutX="42.0" layoutY="21.0" text="Open Debts">
     <font>                <Font size="43.0" />
     </font>        </Label>
       <ListView fx:id="debtListView" layoutX="38.0" layoutY="88.0" prefHeight="426.0" prefWidth="736.0" />

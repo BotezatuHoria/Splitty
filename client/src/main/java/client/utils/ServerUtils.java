@@ -16,7 +16,8 @@
 package client.utils;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
-
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -114,20 +115,22 @@ public class ServerUtils {
 	 * @return list with debts to be displayed on DebtSettlementPage
 	 */
 	public List<DebtCellData> getOpenDebts(int id){
+
 		List<Person> people = getPeopleInCurrentEvent(id);
 		List<Pair<Person, Double>> peoplesToPay = peopleWithPositiveDebt(people);
 		List<DebtCellData> debtsList = new ArrayList<>();
+
       for (Person person : people) {
         if (person.getDebt() < 0) {
 			double debt = person.getDebt();
           	while(debt < 0 && !peoplesToPay.isEmpty()){
 				  if(Math.abs(peoplesToPay.getLast().getValue()) <= Math.abs(debt)){
 					  debt += peoplesToPay.getLast().getValue();
-					  debtsList.add(new DebtCellData(person, peoplesToPay.getLast().getKey(), peoplesToPay.getLast().getValue()));
+					  debtsList.add(new DebtCellData(person, peoplesToPay.getLast().getKey(), round(Math.abs(peoplesToPay.getLast().getValue()), 2)));
 					  peoplesToPay.removeLast();
 				  }else{
 					  Pair<Person, Double> pair = peoplesToPay.getLast();
-					  debtsList.add(new DebtCellData(person, peoplesToPay.getLast().getKey(), debt));
+					  debtsList.add(new DebtCellData(person, peoplesToPay.getLast().getKey(),round(Math.abs(debt), 2)));
 					  peoplesToPay.removeLast();
 					  peoplesToPay.addLast(new Pair<>(pair.getKey(), pair.getValue() + debt));
 					  debt = 0;
@@ -153,6 +156,11 @@ public class ServerUtils {
 		return peoplesToPay;
 	}
 
+	/**
+	 * This method returns the transactions of the event with the given id.
+	 * @param id of the event
+	 * @return list of transactions
+	 */
 	public List<Transaction> getTransactions(int id) {
 		return ClientBuilder.newClient(new ClientConfig())
 				.target(server).path("api/event/" + id + "/expenses")
@@ -334,6 +342,13 @@ public class ServerUtils {
 		throw new IllegalStateException();
 	}
 
+	/**
+	 * Register for messages.
+	 * @param dest
+	 * @param type
+	 * @param consumer
+	 * @param <T>
+	 */
 	public <T> void registerForMessages(String dest, Class<T> type, Consumer<T> consumer) {
 		session.subscribe(dest, new StompFrameHandler() {
 			@Override
@@ -410,5 +425,19 @@ public class ServerUtils {
 		return o;
 	}
 
+	/**
+	 * Method for rounding a double to a certain amount of places.
+	 * @param value - the value to round
+	 * @param places - the amount of places to round to
+	 * @return - the rounded value
+	 */
+	public static double round(double value, int places) {
+		if (places < 0) {
+			throw new IllegalArgumentException();
+		}
 
+		BigDecimal bd = BigDecimal.valueOf(value);
+		bd = bd.setScale(places, RoundingMode.HALF_UP);
+		return bd.doubleValue();
+	}
 }

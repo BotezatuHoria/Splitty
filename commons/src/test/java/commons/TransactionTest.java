@@ -7,30 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 public class TransactionTest {
-    /**
-     * Tests calculation of debts for everybody involved in transaction.
-     */
-    @Test
-    public void calculateDebtsTest(){
-        List<Person> participants = new ArrayList<>();
-       Person  person1 = new Person("test@email.com", "First", "Test",
-                "iban33");
-
-       Person person2 = new Person("test@email.com", "First", "Test",
-                "iban33");
-
-        participants.add(person1);
-        participants.add(person2);
-
-       Transaction t = new Transaction("test",
-                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
-                100, 947,participants, person1, "Euro");
-       // assertEquals(50, person1.getDebt());
-       // assertEquals(-50, person2.getDebt());
-    }
     /**
      * Test.
      */
