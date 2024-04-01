@@ -46,7 +46,9 @@ public class EventServiceImplementation implements EventService {
 
     @Override
     public ResponseEntity<Event> updateById(long id, Event event) {
-        if (event == null || event.getId() < 0 || !repo.existsById(id) || event.getId() != id) {
+        if (event == null || event.getId() < 0 || !repo.existsById(id) || event.getId() != id ||
+                event.getTag() == null || event.getTitle() == null || event.getToken() == null ||
+                event.getPeople() == null || event.getTransactions() == null) {
             return ResponseEntity.badRequest().build();
         }
         return repo.findById(id)
