@@ -12,6 +12,7 @@ public interface EventService {
     public ResponseEntity<Event> getById(long id);
     public ResponseEntity<Event> updateById(long id, Event event);
     public ResponseEntity<Event> add(Event event);
+    public ResponseEntity<Event> updateTitleById(long id, Event newEventTitle);
     public ResponseEntity<Event> deleteById(long id);
     public ResponseEntity<List<Person>> getPeople(long id);
     public ResponseEntity<Person> add(long id, Person person);

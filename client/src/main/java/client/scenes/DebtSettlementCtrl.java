@@ -7,8 +7,6 @@ import java.util.ResourceBundle;
 import client.utils.ServerUtils;
 import commons.DebtCellData;
 import commons.Person;
-import commons.Transaction;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;

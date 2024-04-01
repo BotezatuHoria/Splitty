@@ -234,5 +234,9 @@ public class Event {
     public void setLastModified(LocalDate lastModified) {
         this.lastModified = lastModified;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
 
