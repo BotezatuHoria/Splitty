@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,9 +20,9 @@ public class Event {
     protected String token;
 
     @CreatedDate
-    private LocalDate creationDate;
+    private Date creationDate;
     @LastModifiedDate
-    private LocalDate lastModified;
+    private Date lastModified;
 
 
     @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
@@ -49,8 +49,6 @@ public class Event {
         this.token = token;
         this.people = people;
         this.transactions = transactions;
-        creationDate = LocalDate.now();
-        lastModified = LocalDate.now();
     }
 
     /**
@@ -223,16 +221,12 @@ public class Event {
         return Objects.hash(tag, title, id, token, people);
     }
 
-    public LocalDate getCreationDate() {
+    public Date getCreationDate() {
         return creationDate;
     }
 
-    public LocalDate getLastModified() {
+    public Date getLastModified() {
         return lastModified;
-    }
-
-    public void setLastModified(LocalDate lastModified) {
-        this.lastModified = lastModified;
     }
 }
 
