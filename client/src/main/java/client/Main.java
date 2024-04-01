@@ -22,8 +22,7 @@ import java.net.ConnectException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 
 
 import client.scenes.*;
@@ -92,20 +91,27 @@ public class Main extends Application {
      * gets the values from the config file, and sets the server the client wants to connect to.
      * this is the server that the client put in the config file.
      * future use; language remembering? email sending?.
-     * @throws IOException
+     * @throws IOException when file path is incorrect.
      */
     public void getConfigFile() throws IOException {
-        Path currRelativePath = Paths.get("");
-        String currAbsolutePathString = currRelativePath.toAbsolutePath().toString();
-        String result = currAbsolutePathString + "/src/main/java/client/config.json";
-        result = result.replace("\\", "/");
+        String path= "";
+        try {
+            path = Main.class
+                    .getProtectionDomain()
+                    .getCodeSource()
+                    .getLocation()
+                    .toURI()
+                    .getPath();
+            path = path + "/client/config.json";
+        }catch(URISyntaxException ex) {
+            System.out.println("URISyntaxException");
+        }
 
-        var file = new File(result);
+        var file = new File(path);
         var fileReader = new FileReader(file);
 
         ObjectMapper objectMapper = new ObjectMapper();
         config = objectMapper.readValue(fileReader,Config.class);
-
         ServerUtils.setServer(config.getClientsServer());
 
     }
