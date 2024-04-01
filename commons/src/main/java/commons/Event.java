@@ -1,15 +1,21 @@
 package commons;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
+
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Event {
 
     protected String tag;
@@ -20,17 +26,18 @@ public class Event {
     protected String token;
 
     @CreatedDate
-    private LocalDate creationDate;
+    private Date creationDate;
     @LastModifiedDate
-    private LocalDate lastModified;
+    private Date lastModified;
 
 
     @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
-    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt"})
+    @Audited(targetAuditMode = NOT_AUDITED)
     protected List<Person> people;
 
     @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
-    @JsonIgnoreProperties({"name", "date", "money", "currency", "expenseType", "participants", "creator"})
+    @JsonIgnoreProperties({"date"})
+    @Audited(targetAuditMode = NOT_AUDITED)
     protected List<Transaction> transactions;
 
     /**
@@ -49,8 +56,6 @@ public class Event {
         this.token = token;
         this.people = people;
         this.transactions = transactions;
-        creationDate = LocalDate.now();
-        lastModified = LocalDate.now();
     }
 
     /**
@@ -223,16 +228,12 @@ public class Event {
         return Objects.hash(tag, title, id, token, people);
     }
 
-    public LocalDate getCreationDate() {
+    public Date getCreationDate() {
         return creationDate;
     }
 
-    public LocalDate getLastModified() {
+    public Date getLastModified() {
         return lastModified;
-    }
-
-    public void setLastModified(LocalDate lastModified) {
-        this.lastModified = lastModified;
     }
 }
 

@@ -8,8 +8,6 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import server.database.EventRepository;
 import server.services.interfaces.EventService;
-
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -58,7 +56,6 @@ public class EventServiceImplementation implements EventService {
                     existingEvent.setToken(event.getToken());
                     existingEvent.setPeople(event.getPeople());
                     existingEvent.setTransactions(event.getTransactions());
-                    existingEvent.setLastModified(LocalDate.now());
                     messagingTemplate.convertAndSend("/topic/event", existingEvent);
                     return ResponseEntity.ok(repo.save(existingEvent));
                 })
