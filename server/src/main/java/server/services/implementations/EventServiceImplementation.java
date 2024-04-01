@@ -8,8 +8,6 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import server.database.EventRepository;
 import server.services.interfaces.EventService;
-
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
