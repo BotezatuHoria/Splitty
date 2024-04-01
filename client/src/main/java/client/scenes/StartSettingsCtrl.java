@@ -5,6 +5,8 @@ import client.utils.LanguageSingleton;
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
@@ -14,8 +16,12 @@ import java.util.ResourceBundle;
 
 public class StartSettingsCtrl {
     private final MainCtrl mainCtrl;
-    @FXML // fx:id="startPageConfirmButton"
-    private Button startPageConfirmButton;
+    @FXML
+    public Label serverLabel;
+    @FXML
+    public TextField serverTextField;
+    @FXML
+    public Button startPageConfirm;
 
     @FXML // fx:id="startSettingsLabel"
     private Text startSettingsLabel;
@@ -24,6 +30,12 @@ public class StartSettingsCtrl {
     private Button startPageAdmin;
     @FXML // fx:id="startPageLanguageSelector"
     private ComboBox startPageLanguageSelector; // Value injected by FXMLLoader
+
+    @FXML
+    private Button changeButton;
+
+    @FXML
+    private Button okButton;
 
     /**
      * Constructor for the statistics controller.
@@ -60,5 +72,22 @@ public class StartSettingsCtrl {
     @FXML
     void showStart() {
         mainCtrl.showStarter();
+    }
+
+
+    public void changeServer() {
+        serverLabel.visibleProperty().set(false);
+        serverTextField.visibleProperty().set(true);
+        serverTextField.setText(serverLabel.getText());
+        changeButton.visibleProperty().set(false);
+        okButton.visibleProperty().set(true);
+    }
+
+    public void confirmServer() {
+        serverLabel.setText(serverTextField.getText());
+        serverTextField.visibleProperty().set(false);
+        serverLabel.visibleProperty().set(true);
+        changeButton.visibleProperty().set(true);
+        okButton.visibleProperty().set(false);
     }
 }

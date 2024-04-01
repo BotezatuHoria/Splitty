@@ -53,17 +53,18 @@
             <Button fx:id="startPageConfirm" layoutX="253.0" layoutY="200.0" mnemonicParsing="false" onAction="#showStart" prefHeight="26.0" prefWidth="141.0" text="OK" />
             <Button fx:id="startPageAdmin" layoutX="257.0" layoutY="311.0" mnemonicParsing="false" onAction="#adminLogin" prefHeight="26.0" prefWidth="122.0" text="Admin" />
             <ComboBox fx:id="startPageLanguageSelector" layoutX="282.0" layoutY="150.0" prefHeight="45.0" prefWidth="83.0" />
-            <TextField fx:id="serverTextField" disable="true" editable="false" layoutX="59.0" layoutY="350.0" prefHeight="36.0" prefWidth="397.0" visible="false">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </TextField>
-            <Button fx:id="changeButton" layoutX="490.0" layoutY="350.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="83.0" text="Change" />
-            <Label fx:id="serverLabel" layoutX="65.0" layoutY="350.0" prefHeight="39.0" prefWidth="407.0" text="Label">
+            <Button fx:id="changeButton" layoutX="490.0" layoutY="350.0" mnemonicParsing="false" onAction="#changeServer" prefHeight="36.0" prefWidth="83.0" text="Change" />
+            <Label fx:id="serverLabel" layoutX="65.0" layoutY="349.0" prefHeight="39.0" prefWidth="407.0" text="http://localhost:8080/">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
+            <Button fx:id="okButton" layoutX="490.0" layoutY="350.0" mnemonicParsing="false" onAction="#confirmServer" prefHeight="36.0" prefWidth="83.0" text="Ok" visible="false" />
+            <TextField fx:id="serverTextField" layoutX="65.0" layoutY="349.0" prefHeight="36.0" prefWidth="407.0" visible="false">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
       </children>
     </AnchorPane>
   </children>
