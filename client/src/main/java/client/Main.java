@@ -22,8 +22,7 @@ import java.net.ConnectException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 
 
 import client.scenes.*;
@@ -92,7 +91,7 @@ public class Main extends Application {
      * gets the values from the config file, and sets the server the client wants to connect to.
      * this is the server that the client put in the config file.
      * future use; language remembering? email sending?.
-     * @throws IOException
+     * @throws IOException when file path is incorrect.
      */
     public void getConfigFile() throws IOException {
         String path= "";
