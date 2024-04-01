@@ -2,6 +2,7 @@ package client.scenes;
 
 import client.utils.FlagListCell;
 import client.utils.LanguageSingleton;
+import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -84,7 +85,8 @@ public class StartSettingsCtrl {
     }
 
     public void confirmServer() {
-        serverLabel.setText(serverTextField.getText());
+        serverLabel.setText(serverTextField.getText().trim());
+        ServerUtils.setServer(serverLabel.getText().trim());
         serverTextField.visibleProperty().set(false);
         serverLabel.visibleProperty().set(true);
         changeButton.visibleProperty().set(true);
