@@ -7,6 +7,7 @@ package client.scenes;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 
+import commons.Event;
 import commons.Person;
 
 import commons.Transaction;
@@ -19,6 +20,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -183,7 +185,7 @@ public class EventPageCtrl implements Initializable {
     }
 
     public void saveName() {
-        String name = nameField.getText();
+        String name = nameField.getText().trim();
         eventTitle.setText(name);
         namePane.setVisible(false);
     }
