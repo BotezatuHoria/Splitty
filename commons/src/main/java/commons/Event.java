@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Event {
 
     protected String tag;
@@ -28,11 +29,10 @@ public class Event {
 
 
     @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
-    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt"})
     protected List<Person> people;
 
     @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
-    @JsonIgnoreProperties({"name", "date", "money", "currency", "expenseType", "participants", "creator"})
+    @JsonIgnoreProperties({"date"})
     protected List<Transaction> transactions;
 
     /**

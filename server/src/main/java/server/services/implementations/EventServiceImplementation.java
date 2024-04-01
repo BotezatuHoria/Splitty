@@ -58,7 +58,6 @@ public class EventServiceImplementation implements EventService {
                     existingEvent.setToken(event.getToken());
                     existingEvent.setPeople(event.getPeople());
                     existingEvent.setTransactions(event.getTransactions());
-                    existingEvent.setLastModified(LocalDate.now());
                     messagingTemplate.convertAndSend("/topic/event", existingEvent);
                     return ResponseEntity.ok(repo.save(existingEvent));
                 })
