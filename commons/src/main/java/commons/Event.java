@@ -1,15 +1,20 @@
 package commons;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import org.hibernate.envers.Audited;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+
+import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -29,10 +34,12 @@ public class Event {
 
 
     @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @Audited(targetAuditMode = NOT_AUDITED)
     protected List<Person> people;
 
     @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
     @JsonIgnoreProperties({"date"})
+    @Audited(targetAuditMode = NOT_AUDITED)
     protected List<Transaction> transactions;
 
     /**
