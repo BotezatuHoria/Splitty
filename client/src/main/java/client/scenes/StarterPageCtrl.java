@@ -11,6 +11,7 @@ import client.utils.FlagListCell;
 import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import commons.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -18,6 +19,8 @@ import com.google.inject.Inject;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class StarterPageCtrl {
@@ -127,6 +130,7 @@ public class StarterPageCtrl {
         if(name.equals("")) {name = "New Event";}
         Event event = server.addEvent(new Event("", name, 0, "", new ArrayList<>(), new ArrayList<>()));
         System.out.println(event);
+        listView.getItems().add(event);
         mainCtrl.showEventPage(event.getId());
     }
 
@@ -139,6 +143,9 @@ public class StarterPageCtrl {
         int eventId = translateShareCode(name);
         try {
             server.getEventByID(eventId);
+            if (!listView.getItems().contains(server.getEventByID(eventId))) {
+                listView.getItems().add(server.getEventByID(eventId));
+            }
             mainCtrl.showEventPage(eventId);
         }
         catch (Exception e){
@@ -165,6 +172,24 @@ public class StarterPageCtrl {
         total = total/3000929;
         System.out.println("Translated from the sharecode, eventID = " + total);
         return total;
+    }
+
+    public void joinEventsList() {
+        listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2) {
+                    try {
+                        int eventId = listView.getSelectionModel().getSelectedItem().getId();
+                        server.getEventByID(eventId);
+                        mainCtrl.showEventPage(eventId);
+                    }
+                    catch (Error e) {
+                        mainCtrl.showAlert("This event doesn't exist anymore!");
+                    }
+                }
+            }
+        });
     }
 
     public void updateLanguage() {
