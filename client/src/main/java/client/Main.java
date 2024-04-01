@@ -97,14 +97,36 @@ public class Main extends Application {
     public void getConfigFile() throws IOException {
         Path currRelativePath = Paths.get("");
         String currAbsolutePathString = currRelativePath.toAbsolutePath().toString();
-        String result = currAbsolutePathString + "/src/main/java/client/config.json";
+        String result = currAbsolutePathString + "/client/src/main/java/client/config.json";
         result = result.replace("\\", "/");
 
-        var file = new File(result);
+//        var file = new File(result);
+//        var fileReader = new FileReader(file);
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        config = objectMapper.readValue(fileReader,Config.class);
+        String path= "";
+        try {
+            path = Main.class
+                    .getProtectionDomain()
+                    .getCodeSource()
+                    .getLocation()
+                    .toURI()
+                    .getPath();
+            System.out.println(path);
+            path = path + "/client/config.json";
+        }catch(URISyntaxException ex) {
+            System.out.println("URISyntaxException");
+        }
+
+        var file = new File(path);
         var fileReader = new FileReader(file);
 
         ObjectMapper objectMapper = new ObjectMapper();
         config = objectMapper.readValue(fileReader,Config.class);
+
+
+
+
 
         ServerUtils.setServer(config.getClientsServer());
 
