@@ -68,8 +68,10 @@ public class AdminPageCtrl {
      */
     public void showEvents(){
         var e = server.getEvents();
-        data = FXCollections.observableList(e);
-        events.setItems(data);
+        if (e != null){
+            data = FXCollections.observableList(e);
+            events.setItems(data);
+        }
     }
     @FXML
     void initialize(){

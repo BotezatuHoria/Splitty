@@ -2,14 +2,19 @@ package commons;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
+import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
+
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Event {
 
     protected String tag;
@@ -27,10 +32,12 @@ public class Event {
 
     @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
     @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt"})
+    @Audited(targetAuditMode = NOT_AUDITED)
     protected List<Person> people;
 
     @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
     @JsonIgnoreProperties({"name", "date", "money", "currency", "expenseType", "participants", "creator"})
+    @Audited(targetAuditMode = NOT_AUDITED)
     protected List<Transaction> transactions;
 
     /**
