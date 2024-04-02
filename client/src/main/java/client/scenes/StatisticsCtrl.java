@@ -44,7 +44,6 @@ public class StatisticsCtrl {
         EventsSingleton eventsInstance = EventsSingleton.getInstance();
         Event selectedEvent = eventsInstance.getEventById(selectedEventInstance.getEventId());
 
-        System.out.println(selectedEventInstance.getEventId());
         if (selectedEvent == null) {
             statsTotalExpenses.setText("Server error: event not found");
         } else {
