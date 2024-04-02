@@ -199,6 +199,16 @@ public class ServerUtils {
 				.put(Entity.entity(person, APPLICATION_JSON), Person.class);
 	}
 
+	public Event updateTitleEvent(int id, String title) {
+		Event updatedEvent = new Event();
+		updatedEvent.setTitle(title);
+		System.out.println("To change event # " + id + "with new title " + title);
+		return ClientBuilder.newClient(new ClientConfig())
+				.target(server).path("api/event/" + id + "/title")
+				.request(APPLICATION_JSON)
+				.accept(APPLICATION_JSON)
+				.put(Entity.entity(updatedEvent, APPLICATION_JSON), Event.class);
+	}
 
 	/**
 	 * This method adds the given event.

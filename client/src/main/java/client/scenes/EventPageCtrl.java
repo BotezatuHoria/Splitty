@@ -183,9 +183,10 @@ public class EventPageCtrl implements Initializable {
     }
 
     public void saveName() {
-        String name = nameField.getText();
+        String name = nameField.getText().trim();
         eventTitle.setText(name);
         namePane.setVisible(false);
+        server.updateTitleEvent(mainCtrl.getCurrentEventID(), name);
     }
 
     /**

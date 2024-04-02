@@ -269,7 +269,6 @@ public class MainCtrl {
         inviteSendingCtrl.setEventTitle();
         primaryStage.setTitle("Send Invites");
         primaryStage.setScene(inviteSend);
-
     }
 
     /**
@@ -277,7 +276,8 @@ public class MainCtrl {
      */
     public void showDebtPage() {
         primaryStage.setTitle("Open debts");
-        debtSettlementCtrl. populateOpenDebts();
+        debtSettlementCtrl.clear();
+        debtSettlementCtrl.populateOpenDebts();
         primaryStage.setScene(debt);
     }
 

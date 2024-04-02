@@ -60,6 +60,11 @@ public class EventController {
         return esi.updateById(id, event);
     }
 
+    @PutMapping(path = {"/{id}/title"})
+    public ResponseEntity<Event> updateTitleById(@PathVariable("id") long id, @RequestBody Event event){
+        return esi.updateTitleById(id, event);
+    }
+
     /**
      * Method for adding the event to a repository.
      *

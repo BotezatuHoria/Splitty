@@ -38,7 +38,7 @@
             <Font size="28.0" />
          </font>
       </Label>
-      <ListView fx:id="listView" editable="true" layoutX="30.0" layoutY="267.0" prefHeight="200.0" prefWidth="526.0" style="-fx-background-color: #DCDCDC;" />
+      <ListView fx:id="listView" editable="true" layoutX="30.0" layoutY="267.0" onMouseClicked="#joinEventsList" prefHeight="200.0" prefWidth="526.0" style="-fx-background-color: #DCDCDC;" />
 
    </children>
 </AnchorPane>

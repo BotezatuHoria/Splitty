@@ -103,17 +103,31 @@ public class Main extends Application {
                     .toURI()
                     .getPath();
             path = path + "/client/config.json";
-        }catch(URISyntaxException ex) {
-            System.out.println("URISyntaxException");
+        } catch (URISyntaxException ex) {
+            System.out.println("URISyntaxException: " + ex.getMessage());
         }
 
-        var file = new File(path);
-        var fileReader = new FileReader(file);
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        config = objectMapper.readValue(fileReader,Config.class);
-        ServerUtils.setServer(config.getClientsServer());
-
+        try {
+            var file = new File(path);
+            if (file.createNewFile()) {
+                System.out.println("File created successfully!");
+                FileWriter writer = new FileWriter(path);
+                writer.write("{\n" +
+                        "  \"server\": \"http://localhost:8080/\",\n" +
+                        "  \"emailAddress\": \"example@gmail.com\",\n" +
+                        "  \"language\": \"en\"\n" +
+                        "}");
+                writer.close();
+            } else {
+                System.out.println("File already exists at the specified location.");
+            }
+            var fileReader = new FileReader(file);
+            ObjectMapper objectMapper = new ObjectMapper();
+            config = objectMapper.readValue(fileReader,Config.class);
+            ServerUtils.setServer(config.getClientsServer());
+        } catch (IOException e) {
+            System.out.println("An error occurred while creating the file: " + e.getMessage());
+        }
     }
 
     /**

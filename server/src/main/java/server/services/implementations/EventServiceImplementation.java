@@ -63,6 +63,24 @@ public class EventServiceImplementation implements EventService {
     }
 
     @Override
+    public ResponseEntity<Event> updateTitleById(long id, Event newEventTitle) {
+        if (id < 0 || !repo.existsById(id) || isNullOrEmpty(newEventTitle.getTitle())) {
+            return ResponseEntity.badRequest().build();
+        }
+        Event event = getById(id).getBody();
+        if (event == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        event.setTitle(newEventTitle.getTitle());
+        repo.save(event);
+        return ResponseEntity.ok(event);
+    }
+
+    private static boolean isNullOrEmpty(String s) {
+        return s == null || s.isEmpty();
+    }
+
+    @Override
     public ResponseEntity<Event> add(Event event) {
         if (event == null || repo.existsById((long) event.getId()) || event.getId() < 0 || event.getTag() == null
                 || event.getTitle() == null || event.getToken() == null ||

@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import client.utils.ServerUtils;
 import commons.DebtCellData;
+import commons.Person;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -60,6 +61,10 @@ public class DebtSettlementCtrl {
     assert sendReminderButton != null : "fx:id=\"sendReminderButton\" was not injected: check your FXML file 'OpenDebts.fxml'.";
     assert titleLabel != null : "fx:id=\"titleLabel\" was not injected: check your FXML file 'OpenDebts.fxml'.";
     rootPane.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/DebtSettlementStyle.css")).toExternalForm());
+    server.registerForMessages("/topic/events/people", Person.class, person -> {
+      clear();
+      populateOpenDebts();
+    });
   }
 
   /**
@@ -108,6 +113,10 @@ public class DebtSettlementCtrl {
     HBox hBox = new HBox(10, markReceived, sendEmail, settleDebt); // 10 is the spacing between buttons
     hBox.getStyleClass().add("debt-hbox");
     return hBox;
+  }
+
+  public void clear() {
+    debtListView.getItems().clear();
   }
 
   public void setLanguageText(ResourceBundle resourceBundle) {

@@ -1,6 +1,5 @@
 package commons;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import org.hibernate.envers.Audited;
@@ -8,7 +7,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,17 +25,18 @@ public class Event {
     protected String token;
 
     @CreatedDate
-    private Date creationDate;
+    private LocalDate creationDate;
     @LastModifiedDate
-    private Date lastModified;
+    private LocalDate lastModified;
 
 
     @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt"})
     @Audited(targetAuditMode = NOT_AUDITED)
     protected List<Person> people;
 
     @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
-    @JsonIgnoreProperties({"date"})
+    @JsonIgnoreProperties({"name", "date", "money", "currency", "expenseType", "participants", "creator"})
     @Audited(targetAuditMode = NOT_AUDITED)
     protected List<Transaction> transactions;
 
@@ -56,6 +56,8 @@ public class Event {
         this.token = token;
         this.people = people;
         this.transactions = transactions;
+        creationDate = LocalDate.now();
+        lastModified = LocalDate.now();
     }
 
     /**
@@ -228,12 +230,20 @@ public class Event {
         return Objects.hash(tag, title, id, token, people);
     }
 
-    public Date getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public Date getLastModified() {
+    public LocalDate getLastModified() {
         return lastModified;
+    }
+
+    public void setLastModified(LocalDate lastModified) {
+        this.lastModified = lastModified;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
 
