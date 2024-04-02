@@ -36,8 +36,11 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -53,8 +56,8 @@
             <Button fx:id="startPageConfirm" layoutX="253.0" layoutY="200.0" mnemonicParsing="false" onAction="#showStart" prefHeight="26.0" prefWidth="141.0" text="OK" />
             <Button fx:id="startPageAdmin" layoutX="257.0" layoutY="311.0" mnemonicParsing="false" onAction="#adminLogin" prefHeight="26.0" prefWidth="122.0" text="Admin" />
             <ComboBox fx:id="startPageLanguageSelector" layoutX="282.0" layoutY="150.0" prefHeight="45.0" prefWidth="83.0" />
-            <Button fx:id="changeButton" layoutX="490.0" layoutY="350.0" mnemonicParsing="false" onAction="#changeServer" prefHeight="36.0" prefWidth="83.0" text="Change" />
-            <Label fx:id="serverLabel" layoutX="65.0" layoutY="349.0" prefHeight="39.0" prefWidth="407.0" text="http://localhost:8080/">
+            <Button fx:id="changeButton" layoutX="490.0" layoutY="353.0" mnemonicParsing="false" onAction="#changeServer" prefHeight="36.0" prefWidth="83.0" text="Change" />
+            <Label fx:id="serverLabel" layoutX="100.0" layoutY="348.0" prefHeight="39.0" prefWidth="382.0" text="http://localhost:8080/">
                <font>
                   <Font size="20.0" />
                </font>
@@ -65,6 +68,17 @@
                   <Font size="20.0" />
                </font>
             </TextField>
+            <ImageView fitHeight="15.0" fitWidth="17.0" layoutX="274.0" layoutY="317.0">
+               <image>
+                  <Image url="@/images/setting.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="34.0" layoutY="350.0" prefHeight="36.0" prefWidth="62.0" text="Server:">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Line endX="464.199951171875" layoutX="135.0" layoutY="348.0" startX="-100.0" />
       </children>
     </AnchorPane>
   </children>
