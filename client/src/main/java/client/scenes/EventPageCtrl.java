@@ -108,6 +108,9 @@ public class EventPageCtrl implements Initializable {
     @FXML // fx:id="editName"
     private Button editName;
 
+    @FXML
+    private Button settingButton;
+
 
     /**
      * Constructor for EventPageCtrl.
@@ -339,6 +342,10 @@ public class EventPageCtrl implements Initializable {
 
     public void stop() {
         server.stop();
+    }
+
+    public void showSettingsPage(){
+        mainCtrl.showStartSettings();
     }
 }
 
