@@ -36,7 +36,7 @@ public class StatisticsCtrl {
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
+    public void initializeStatistics() {
         assert statsPieChart != null : "fx:id=\"statsPieChart\" was not injected: check your FXML file 'Statistics.fxml'.";
         assert statsTotalExpenses != null : "fx:id=\"statsTotalExpenses\" was not injected: check your FXML file 'Statistics.fxml'.";
 
@@ -44,6 +44,7 @@ public class StatisticsCtrl {
         EventsSingleton eventsInstance = EventsSingleton.getInstance();
         Event selectedEvent = eventsInstance.getEventById(selectedEventInstance.getEventId());
 
+        System.out.println(selectedEventInstance.getEventId());
         if (selectedEvent == null) {
             statsTotalExpenses.setText("Server error: event not found");
         } else {
