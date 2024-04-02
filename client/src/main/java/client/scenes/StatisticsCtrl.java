@@ -74,7 +74,7 @@ public class StatisticsCtrl {
 
             statsPieChart.setData(chartData);
 
-            statsTotalExpenses.setText("Total Expenses: " + totalExpenses);
+            statsTotalExpenses.setText("Total Expenses: " + totalExpenses + " Eur");
         }
     }
 
