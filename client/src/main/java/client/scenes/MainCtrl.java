@@ -231,6 +231,7 @@ public class MainCtrl {
      * Method for showing statistics page.
      */
     public void showStatisticsPage() {
+        statisticsCtrl.initializeStatistics();
         primaryStage.setTitle("Statistics Page");
         primaryStage.setScene(statistics);
     }
