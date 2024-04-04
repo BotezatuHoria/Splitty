@@ -17,7 +17,6 @@ package client.scenes;
 
 import client.utils.LanguageSingleton;
 import client.utils.SelectedEventSingleton;
-import commons.Event;
 import commons.Person;
 import commons.Transaction;
 import javafx.scene.Parent;
@@ -28,7 +27,6 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 import client.utils.ServerUtils;
 
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainCtrl {
@@ -344,8 +342,8 @@ public class MainCtrl {
     }
 
     /**
-     * Method that builds the string representation of a transaction with all the people inside it
-     * @param id of the transaction you want to display
+     * Method that builds the string representation of a transaction with all the people inside it.
+     * @param id of the transaction you want to display.
      * @return
      */
     public String transactionString(int id) {
