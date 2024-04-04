@@ -28,6 +28,7 @@ public class StartSettingsCtrl {
 
     @FXML // fx:id="startPageAdmin"
     private Button startPageAdmin;
+
     @FXML // fx:id="startPageLanguageSelector"
     private ComboBox startPageLanguageSelector; // Value injected by FXMLLoader
 
@@ -114,7 +115,7 @@ public class StartSettingsCtrl {
      * imports the template to a location the user can choose.
      * @throws IOException When the file to download is not found.
      */
-    public void importTemplate() throws IOException {
+    public void importTemplate(){
         File file = new File("client/src/main/resources/messages_en.properties"); // needs to be edited to correct template!!!!
         JFrame parent = new JFrame();
         JFileChooser fileChooser = new JFileChooser();
@@ -125,9 +126,7 @@ public class StartSettingsCtrl {
             int returnValue = fileChooser.showOpenDialog(parent);
             if (returnValue == JFileChooser.APPROVE_OPTION) {
                 File saveFile = fileChooser.getSelectedFile();
-                FileInputStream in = new FileInputStream(file);
-                FileOutputStream out = new FileOutputStream(saveFile);
-                try {
+                try (FileInputStream in = new FileInputStream(file); FileOutputStream out = new FileOutputStream(saveFile)) {
 
                     int n;
 
@@ -139,17 +138,10 @@ public class StartSettingsCtrl {
                         out.write(n);
                     }
                 } finally {
-                    if (in != null) {
-
-                        // close() function to close the
-                        // stream
-                        in.close();
-                    }
+                    // close() function to close the
+                    // stream
                     // close() function to close
                     // the stream
-                    if (out != null) {
-                        out.close();
-                    }
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setContentText("Downloading of the template file succeeded!");
                     alert.showAndWait();
