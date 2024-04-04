@@ -47,7 +47,7 @@ class EventControllerTest {
 
 
         transactionRepository = new TestTransactionRepository();
-        transactionService = new TransactionServiceImplementation(transactionRepository);
+        transactionService = new TransactionServiceImplementation(transactionRepository, personService);
 
         eventRepository = new TestEventRepository();
         eventService = new EventServiceImplementation(eventRepository, transactionService, personService,
