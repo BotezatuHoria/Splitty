@@ -108,6 +108,9 @@ public class EventPageCtrl implements Initializable {
     @FXML // fx:id="editName"
     private Button editName;
 
+    @FXML
+    private Button settingButton;
+
 
     /**
      * Constructor for EventPageCtrl.
@@ -152,10 +155,10 @@ public class EventPageCtrl implements Initializable {
     }
 
     /**
-     * Method for accessing the debts page.
+     * Method for accessing the debt overview page.
      */
     public void settleDebts() {
-        mainCtrl.showDebtPage();
+        mainCtrl.showDebtOverviewPage();
     }
 
     /**
@@ -212,7 +215,10 @@ public class EventPageCtrl implements Initializable {
         }
         if (!display.isBlank()) {display = display.substring(0, display.length() - 2);}
         participantsList.setText(display);
-        System.out.println("This is selected" + participantsScroll.getSelectionModel().getSelectedItem());
+        if(participantsScroll.getSelectionModel().getSelectedItem()!= null){
+            System.out.println("This participant added to the event: " + participantsScroll.getSelectionModel().getSelectedItem());
+        }
+
     }
 
     /**
@@ -220,7 +226,10 @@ public class EventPageCtrl implements Initializable {
      */
     public void selectParticipant() {
         Person person = participantsScroll.getSelectionModel().getSelectedItem();
-        System.out.println(person);
+        if(person != null){
+            System.out.println("This participant is selected: " + person);
+        }
+
         if (person != null) {
             fromParticipant.setText("From " + person);
             includingParticipant.setText("Including " + person);
@@ -344,6 +353,10 @@ public class EventPageCtrl implements Initializable {
 
     public void stop() {
         server.stop();
+    }
+
+    public void showSettingsPage(){
+        mainCtrl.showStartSettings();
     }
 }
 

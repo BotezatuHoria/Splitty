@@ -5,66 +5,101 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="487.0" prefWidth="591.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.EventPageCtrl">
+<AnchorPane prefHeight="500.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.EventPageCtrl">
    <children>
       <Label fx:id="eventTitle" layoutX="35.0" layoutY="23.0" prefHeight="46.0" prefWidth="231.0" text="New Year Party">
          <font>
             <Font size="28.0" />
          </font>
       </Label>
-      <Button fx:id="SendInvites" layoutX="436.0" layoutY="27.0" mnemonicParsing="false" onAction="#sendInvites" text="Send invites">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Button>
-      <Label layoutX="35.0" layoutY="94.0" prefHeight="32.0" prefWidth="143.0" text="Participants">
+      <Button fx:id="editName" layoutX="239.0" layoutY="36.0" mnemonicParsing="false" onAction="#editName" prefHeight="26.0" prefWidth="24.0" />
+      <Label layoutX="35.0" layoutY="107.0" prefHeight="32.0" prefWidth="143.0" text="Participants">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="EditParticipants" layoutX="160.0" layoutY="97.0" mnemonicParsing="false" onAction="#editParticipants" text="Edit" />
-      <Button fx:id="AddParticipant" layoutX="212.0" layoutY="97.0" mnemonicParsing="false" onAction="#addParticipants" text="Add" />
-      <Label fx:id="participantsList" layoutX="37.0" layoutY="123.0" prefHeight="26.0" prefWidth="400.0" text="Participants..." />
-      <Label layoutX="35.0" layoutY="163.0" prefHeight="32.0" prefWidth="143.0" text="Expenses">
+      <Button fx:id="editParticipants" layoutX="160.0" layoutY="110.0" mnemonicParsing="false" onAction="#editParticipants" prefHeight="26.0" prefWidth="24.0" />
+      <Button fx:id="AddParticipant" layoutX="212.0" layoutY="110.0" mnemonicParsing="false" onAction="#addParticipants" prefHeight="26.0" prefWidth="24.0" />
+      <Label fx:id="participantsList" layoutX="39.0" layoutY="136.0" prefHeight="26.0" prefWidth="358.0" text="Participants..." />
+      <Label layoutX="35.0" layoutY="176.0" prefHeight="32.0" prefWidth="143.0" text="Expenses">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="AddExpense" layoutX="431.0" layoutY="160.0" mnemonicParsing="false" onAction="#showAddExpensePage" text="Add Expense">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Button>
-      <ComboBox fx:id="participantsScroll" layoutX="37.0" layoutY="200.0" onAction="#selectParticipant" prefWidth="150.0" promptText="Participants..." />
-      <Button fx:id="SettleDebts" layoutX="435.0" layoutY="259.0" mnemonicParsing="false" onAction="#settleDebts" text="Settle Debts">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Button>
-      <Button fx:id="allExpenses" layoutX="37.0" layoutY="265.0" mnemonicParsing="false" onAction="#displayTransactions" text="All" />
+      <ComboBox fx:id="participantsScroll" layoutX="32.0" layoutY="226.0" onAction="#selectParticipant" prefHeight="26.0" prefWidth="165.0" promptText="Participants..." />
+      <Button fx:id="allExpenses" layoutX="33.0" layoutY="264.0" mnemonicParsing="false" onAction="#displayTransactions" text="All" />
       <Button fx:id="fromParticipant" layoutX="74.0" layoutY="264.0" mnemonicParsing="false" onAction="#displayFrom" prefHeight="26.0" prefWidth="150.0" text="From Participant..." />
       <Button fx:id="includingParticipant" layoutX="231.0" layoutY="264.0" mnemonicParsing="false" onAction="#displayIncluding" prefHeight="26.0" prefWidth="150.0" text="Including Participant..." />
       <ListView fx:id="listTransactions" layoutX="33.0" layoutY="299.0" prefHeight="173.0" prefWidth="350.0" />
-      <Button fx:id="showStatistics" layoutX="413.0" layoutY="347.0" mnemonicParsing="false" onAction="#showStatistics" text="Show Statistics">
+      <Button fx:id="settingButton" layoutX="534.0" layoutY="21.0" mnemonicParsing="false" onAction="#showSettingsPage" prefHeight="30.0" prefWidth="30.0" />
+      <Button fx:id="SendInvites" layoutX="435.0" layoutY="88.0" mnemonicParsing="false" onAction="#sendInvites" prefHeight="43.0" prefWidth="143.0" text="Send Invites" wrapText="true">
          <font>
-            <Font size="20.0" />
+            <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="homeButton" layoutX="514.0" layoutY="426.0" mnemonicParsing="false" onAction="#goHome" prefHeight="46.0" prefWidth="51.0" text="Home" />
-      <Button fx:id="editExpense" layoutX="432.0" layoutY="101.0" mnemonicParsing="false" onAction="#showEditExpensePage" text="Edit Expense">
+      <Button fx:id="AddExpense" layoutX="435.0" layoutY="149.0" mnemonicParsing="false" onAction="#showAddExpensePage" prefHeight="43.0" prefWidth="143.0" text="Add Expense">
          <font>
-            <Font size="20.0" />
+            <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="editName" layoutX="239.0" layoutY="36.0" mnemonicParsing="false" onAction="#editName" text="Edit" />
+      <Button fx:id="editExpense" layoutX="435.0" layoutY="204.0" mnemonicParsing="false" onAction="#showEditExpensePage" prefHeight="43.0" prefWidth="143.0" text="Edit Expense">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="SettleDebts" layoutX="435.0" layoutY="277.0" mnemonicParsing="false" onAction="#settleDebts" prefHeight="43.0" prefWidth="143.0" text="Balance">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="showStatistics" layoutX="435.0" layoutY="333.0" mnemonicParsing="false" onAction="#showStatistics" prefHeight="43.0" prefWidth="143.0" text="Show Statistics">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="homeButton" layoutX="514.0" layoutY="426.0" mnemonicParsing="false" onAction="#goHome" prefHeight="51.0" prefWidth="51.0" />
       <AnchorPane fx:id="namePane" layoutX="35.0" layoutY="40.0" prefHeight="58.0" prefWidth="175.0">
          <children>
             <TextField fx:id="nameField" layoutY="28.0" prefHeight="26.0" prefWidth="109.0" />
-            <Button fx:id="saveName" layoutX="127.0" layoutY="28.0" mnemonicParsing="false" onAction="#saveName" text="Save" />
+            <Button fx:id="saveName" layoutX="128.0" layoutY="28.0" mnemonicParsing="false" onAction="#saveName" prefHeight="26.0" prefWidth="24.0" />
+            <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="128.0" layoutY="29.0" mouseTransparent="true">
+               <image>
+                  <Image url="@/images/diskette.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
+      <Line endX="233.20001220703125" endY="337.9999694824219" layoutX="164.0" layoutY="149.0" startX="233.20001220703125" startY="-213.5" />
+      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="537.0" layoutY="24.0" mouseTransparent="true">
+         <image>
+            <Image url="@/images/setting2.png" />
+         </image>
+      </ImageView>
+      <ImageView disable="true" fitHeight="34.0" fitWidth="34.0" layoutX="523.0" layoutY="432.0" mouseTransparent="true" style="-fx-translate-z: -1;">
+         <image>
+            <Image url="@/images/house-black-silhouette-without-door.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="238.0" layoutY="36.0" mouseTransparent="true">
+         <image>
+            <Image url="@/images/pen.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="160.0" layoutY="111.0" mouseTransparent="true">
+         <image>
+            <Image url="@/images/pen.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="212.0" layoutY="111.0" mouseTransparent="true">
+         <image>
+            <Image url="@/images/tab.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

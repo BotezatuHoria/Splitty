@@ -65,6 +65,9 @@ public class StarterPageCtrl {
     @FXML
     private Button adminbutton;
 
+    @FXML
+    private Button settingButton;
+
     /**
      * Constructor for the StarterPageCtrl class.
      *
@@ -217,6 +220,10 @@ public class StarterPageCtrl {
                 joinEvent();
             }
         }
+    }
+
+    public void showSettingsPage(){
+        mainCtrl.showStartSettings();
     }
 
 }
