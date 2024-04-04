@@ -115,7 +115,7 @@ public class StartSettingsCtrl {
      * imports the template to a location the user can choose.
      * @throws IOException When the file to download is not found.
      */
-    public void importTemplate(){
+    public void downloadTemplate(){
         File file = new File("client/src/main/resources/messages_en.properties"); // needs to be edited to correct template!!!!
         JFrame parent = new JFrame();
         JFileChooser fileChooser = new JFileChooser();
