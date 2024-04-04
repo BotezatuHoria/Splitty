@@ -9,14 +9,10 @@ import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.scene.image.Image;
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
-import org.checkerframework.checker.units.qual.A;
 
-import javax.sound.sampled.Line;
 import javax.swing.*;
 import java.io.*;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 
 public class StartSettingsCtrl {
     private final MainCtrl mainCtrl;
