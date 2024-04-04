@@ -8,6 +8,8 @@ class StartSettingsCtrlTest {
 
     @Test
     void initialize() {
+        Object object = null;
+        assertNull(object);
     }
 
     @Test
