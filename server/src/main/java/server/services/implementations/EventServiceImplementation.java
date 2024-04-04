@@ -72,7 +72,8 @@ public class EventServiceImplementation implements EventService {
             return ResponseEntity.badRequest().build();
         }
         event.setTitle(newEventTitle.getTitle());
-        repo.save(event);
+        Event saved = repo.save(event);
+        messagingTemplate.convertAndSend("/topic/event", saved);
         return ResponseEntity.ok(event);
     }
 

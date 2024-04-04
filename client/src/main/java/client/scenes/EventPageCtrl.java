@@ -300,6 +300,12 @@ public class EventPageCtrl implements Initializable {
                 updatePage();
             });
         });
+        new Thread(() -> {
+            server.registerForMessages("/topic/event", Person.class, person -> {
+                Platform.runLater(this::updatePage);
+            });
+        }).start();
+
         //server.registerForMessages("/topic/events/transactions", Transaction.class, transaction -> {
         //    Platform.runLater(() -> {
         //        dataTransactions.add(transaction);
@@ -315,7 +321,6 @@ public class EventPageCtrl implements Initializable {
             });
         });
     }
-
     /**
      * Method that opens the Edit event page.
      */
