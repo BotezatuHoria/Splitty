@@ -6,6 +6,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -55,8 +57,8 @@
       <ListView fx:id="peopleLIstView" layoutX="16.0" layoutY="234.0" prefHeight="222.0" prefWidth="561.0" />
       <ComboBox fx:id="expenseTypeBox" layoutX="167.0" layoutY="473.0" prefHeight="26.0" prefWidth="370.0" promptText="Select the expense type" />
       <Button fx:id="addTag" layoutX="550.0" layoutY="473.0" mnemonicParsing="false" onAction="#showTagPage" prefHeight="26.0" prefWidth="23.0" text="+" />
-      <Button fx:id="abortButton" layoutX="376.0" layoutY="524.0" mnemonicParsing="false" onAction="#abortExpense" prefHeight="26.0" prefWidth="83.0" text="Abort" />
-      <Button fx:id="addButton" layoutX="474.0" layoutY="524.0" mnemonicParsing="false" onAction="#addExpense" prefHeight="26.0" prefWidth="83.0" text="Add" />
+      <Button fx:id="abortButton" layoutX="524.0" layoutY="510.0" mnemonicParsing="false" onAction="#abortExpense" prefHeight="51.0" prefWidth="51.0" />
+      <Button fx:id="addButton" layoutX="398.0" layoutY="524.0" mnemonicParsing="false" onAction="#addExpense" prefHeight="26.0" prefWidth="83.0" text="Add" />
       <Label fx:id="errorLabel" layoutX="16.0" layoutY="525.0" prefHeight="24.0" prefWidth="344.0" textFill="#da1616">
          <font>
             <Font size="19.0" />
@@ -67,5 +69,10 @@
             <Button fx:id="addTagButton" layoutX="161.0" layoutY="10.0" mnemonicParsing="false" onAction="#addNewTag" prefHeight="26.0" prefWidth="30.0" text="+" />
          </children>
       </AnchorPane>
+      <ImageView fitHeight="39.0" fitWidth="39.0" layoutX="531.0" layoutY="516.0">
+         <image>
+            <Image url="@/images/return.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
