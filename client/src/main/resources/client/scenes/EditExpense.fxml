@@ -6,10 +6,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="expensePane" prefHeight="570.0" prefWidth="590.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.EditExpenseCtrl">
+<AnchorPane fx:id="expensePane" prefHeight="570.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.EditExpenseCtrl">
    <children>
       <Label layoutX="22.0" layoutY="14.0" text="Edit Expense">
          <font>
@@ -55,8 +57,8 @@
       <ListView fx:id="peopleLIstView" layoutX="16.0" layoutY="277.0" prefHeight="179.0" prefWidth="562.0" />
       <ComboBox fx:id="expenseTypeBox" layoutX="167.0" layoutY="473.0" prefHeight="26.0" prefWidth="370.0" promptText="Select the expense type" />
       <Button fx:id="addTag" layoutX="550.0" layoutY="473.0" mnemonicParsing="false" onAction="#showTagPage" prefHeight="26.0" prefWidth="23.0" text="+" />
-      <Button fx:id="abortButton" layoutX="376.0" layoutY="524.0" mnemonicParsing="false" onAction="#abortExpense" prefHeight="26.0" prefWidth="83.0" text="Abort" />
-      <Button fx:id="saveButton" layoutX="474.0" layoutY="524.0" mnemonicParsing="false" onAction="#saveExpense" prefHeight="26.0" prefWidth="83.0" text="Save" />
+      <Button fx:id="abortButton" layoutX="524.0" layoutY="510.0" mnemonicParsing="false" onAction="#abortExpense" prefHeight="51.0" prefWidth="51.0" />
+      <Button fx:id="saveButton" layoutX="398.0" layoutY="524.0" mnemonicParsing="false" onAction="#saveExpense" prefHeight="26.0" prefWidth="83.0" text="Save" />
       <Label fx:id="errorLabel" layoutX="16.0" layoutY="525.0" prefHeight="24.0" prefWidth="344.0" textFill="#da1616">
          <font>
             <Font size="19.0" />
@@ -70,5 +72,10 @@
       </AnchorPane>
       <Button fx:id="remove" layoutX="33.0" layoutY="524.0" mnemonicParsing="false" onAction="#removeExpense" prefHeight="26.0" prefWidth="83.0" text="Remove" />
       <ComboBox fx:id="expenseScroll" layoutX="17.0" layoutY="54.0" onAction="#expenseScroll" prefHeight="26.0" prefWidth="197.0" promptText="Expense" />
+      <ImageView fitHeight="39.0" fitWidth="39.0" layoutX="531.0" layoutY="516.0">
+         <image>
+            <Image url="@/images/return.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
