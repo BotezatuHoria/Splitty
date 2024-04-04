@@ -14,7 +14,6 @@ import java.util.Objects;
 import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 public class Event {
 
     protected String tag;
@@ -32,12 +31,10 @@ public class Event {
 
     @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
     @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt"})
-    @Audited(targetAuditMode = NOT_AUDITED)
     protected List<Person> people;
 
     @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
     @JsonIgnoreProperties({"name", "date", "money", "currency", "expenseType", "participants", "creator"})
-    @Audited(targetAuditMode = NOT_AUDITED)
     protected List<Transaction> transactions;
 
     /**

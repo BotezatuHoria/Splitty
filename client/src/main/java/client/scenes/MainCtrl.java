@@ -15,7 +15,6 @@
  */
 package client.scenes;
 
-import client.utils.EventsSingleton;
 import client.utils.LanguageSingleton;
 import client.utils.SelectedEventSingleton;
 import commons.Event;
@@ -120,10 +119,6 @@ public class MainCtrl {
                            Pair<AdminPageCtrl, Parent> adminPage,
                            Pair<EditExpenseCtrl, Parent> editExpensePage) {
         this.server = new ServerUtils();
-
-        EventsSingleton eventsInstance = EventsSingleton.getInstance();
-        List<Event> events = server.getEvents();
-        eventsInstance.setEvents(events);
 
         this.primaryStage = primaryStage;
 
