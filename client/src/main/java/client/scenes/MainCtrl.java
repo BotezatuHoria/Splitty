@@ -19,6 +19,8 @@ import client.utils.EventsSingleton;
 import client.utils.LanguageSingleton;
 import client.utils.SelectedEventSingleton;
 import commons.Event;
+import commons.Person;
+import commons.Transaction;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -344,5 +346,22 @@ public class MainCtrl {
 
     public void setLanguageText(ResourceBundle resourceBundle) {
         startSettingsCtrl.setLanguageText(resourceBundle);
+    }
+
+    /**
+     * Method that builds the string representation of a transaction with all the people inside it
+     * @param id of the transaction you want to display
+     * @return
+     */
+    public String transactionString(int id) {
+        Transaction t = server.getTransactionByID(id);
+        String ret = t + " by " + server.getPersonByID(t.getCreator().getId()) + " and including participants: ";
+        if (t.getParticipants() == null || t.getParticipants().isEmpty()) {
+            return ret + "no participants;";
+        }
+        for(Person p: t.getParticipants()) {
+            ret += server.getPersonByID(p.getId()) + ", ";
+        }
+        return ret.substring(0, ret.length() - 2) + ";";
     }
 }
