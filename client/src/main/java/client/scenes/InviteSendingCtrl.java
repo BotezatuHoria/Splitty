@@ -82,7 +82,6 @@ public class InviteSendingCtrl{
      */
     public void setEventTitle(){
         String title = server.getEventByID(mainCtrl.getCurrentEventID()).getTitle();
-        System.out.println(title);
         eventTitle.setText(title);
 
     }
@@ -122,7 +121,6 @@ public class InviteSendingCtrl{
         }
         int total = Integer.parseInt(result);
         total = total/3000929;
-        System.out.println("Translated from the sharecode, eventID = " + total);
         return total;
     }
 

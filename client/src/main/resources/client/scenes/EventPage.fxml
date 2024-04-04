@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="487.0" prefWidth="591.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.EventPageCtrl">
+<AnchorPane prefHeight="500.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.EventPageCtrl">
    <children>
       <Label fx:id="eventTitle" layoutX="35.0" layoutY="23.0" prefHeight="46.0" prefWidth="231.0" text="New Year Party">
          <font>
@@ -37,8 +37,8 @@
       <Button fx:id="fromParticipant" layoutX="74.0" layoutY="264.0" mnemonicParsing="false" onAction="#displayFrom" prefHeight="26.0" prefWidth="150.0" text="From Participant..." />
       <Button fx:id="includingParticipant" layoutX="231.0" layoutY="264.0" mnemonicParsing="false" onAction="#displayIncluding" prefHeight="26.0" prefWidth="150.0" text="Including Participant..." />
       <ListView fx:id="listTransactions" layoutX="33.0" layoutY="299.0" prefHeight="173.0" prefWidth="350.0" />
-      <Button fx:id="settingButton" layoutX="534.0" layoutY="21.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" onAction="#showSettingsPage"/>
-      <Button fx:id="SendInvites" layoutX="435.0" layoutY="88.0" mnemonicParsing="false" onAction="#sendInvites" prefHeight="43.0" prefWidth="143.0" text="Send Invtites" wrapText="true">
+      <Button fx:id="settingButton" layoutX="534.0" layoutY="21.0" mnemonicParsing="false" onAction="#showSettingsPage" prefHeight="30.0" prefWidth="30.0" />
+      <Button fx:id="SendInvites" layoutX="435.0" layoutY="88.0" mnemonicParsing="false" onAction="#sendInvites" prefHeight="43.0" prefWidth="143.0" text="Send Invites" wrapText="true">
          <font>
             <Font size="14.0" />
          </font>
