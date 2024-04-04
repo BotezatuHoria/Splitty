@@ -108,6 +108,17 @@ public class ServerUtils {
 				.get(new GenericType<>() {
 				});
 	}
+	public List<DebtCellData> getDebtsOfPerson(int id, int idPerson) {
+		List<DebtCellData> openDebts = getOpenDebts(id);
+		List<DebtCellData> openDebtsForSpecificPerson = new ArrayList<>();
+		for (DebtCellData debt : openDebts) {
+			if (debt.getSender().getId() == idPerson){ //|| debt.getReceiver().getId() == idPerson (depends what we need)
+				openDebtsForSpecificPerson.add(debt);
+			}
+		}
+		return openDebtsForSpecificPerson;
+
+	}
 
 	/**
 	 * Should return list of DebtCellData that represents how much people owe to each other.

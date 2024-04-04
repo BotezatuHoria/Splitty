@@ -39,7 +39,7 @@
          </font>
       </Button>
       <ComboBox fx:id="participantsScroll" layoutX="37.0" layoutY="200.0" onAction="#selectParticipant" prefWidth="150.0" promptText="Participants..." />
-      <Button fx:id="SettleDebts" layoutX="435.0" layoutY="259.0" mnemonicParsing="false" onAction="#settleDebts" text="Settle Debts">
+      <Button fx:id="SettleDebts" layoutX="454.0" layoutY="256.0" mnemonicParsing="false" onAction="#settleDebts" text="Balance">
          <font>
             <Font size="20.0" />
          </font>
