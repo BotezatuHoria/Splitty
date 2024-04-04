@@ -23,7 +23,7 @@ public class AdminLoginCtrl {
     private PasswordField passwordField;
 
     @FXML
-    private Button resendPassword;
+    private Button resendButton;
 
     Alert a = new Alert(Alert.AlertType.NONE);
 
@@ -35,7 +35,7 @@ public class AdminLoginCtrl {
         assert backButton != null;
         assert loginButton != null;
         assert passwordField != null;
-        assert resendPassword != null;
+        assert resendButton != null;
     }
 
     /**
