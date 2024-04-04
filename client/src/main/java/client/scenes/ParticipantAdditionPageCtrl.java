@@ -169,9 +169,9 @@ public class ParticipantAdditionPageCtrl {
         List<Person> allPersons = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
 
         firstnameResponse.setText("Cannot be empty! Fill in this field!");     //as standard, there are warnings, they go away when not applicable.
-//        firstnameResponse.setStyle("-fx-font-style: italic");
+        firstnameResponse.setStyle("-fx-font-style: italic");
         lastnameResponse.setText("Cannot be empty! Fill in this field!");
-//        lastnameResponse.setStyle("-fx-font-style: italic");
+        lastnameResponse.setStyle("-fx-font-style: italic");
 
         if(newFirstName.isEmpty() && newLastName.isEmpty()){
             return;
