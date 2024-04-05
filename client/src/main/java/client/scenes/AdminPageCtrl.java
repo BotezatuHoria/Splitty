@@ -4,6 +4,7 @@ import client.utils.ServerUtils;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import commons.Event;
 import jakarta.inject.Inject;
 import javafx.application.Platform;
@@ -131,7 +132,7 @@ public class AdminPageCtrl {
             return;
         }
         //object mapper to write object to json
-        ObjectMapper obj = new ObjectMapper();
+        ObjectMapper obj = new ObjectMapper().registerModule(new JavaTimeModule());
         ObjectWriter writer = obj.writer(new DefaultPrettyPrinter());
 
         //file chooser to let user choose download destination
