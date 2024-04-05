@@ -146,7 +146,7 @@ public class AdminPageCtrl {
             if (returnValue == JFileChooser.APPROVE_OPTION){
                 File saveFile = fileChooser.getSelectedFile();
                 String jsonStr = obj.writeValueAsString(event);
-                writer.writeValue(saveFile, jsonStr);
+                obj.writeValue(saveFile, event);
             }
 
         }catch(IOException e){
