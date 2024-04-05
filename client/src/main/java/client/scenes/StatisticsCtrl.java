@@ -1,6 +1,6 @@
 package client.scenes;
-import client.utils.EventsSingleton;
 import client.utils.SelectedEventSingleton;
+import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Event;
 import commons.Transaction;
@@ -18,6 +18,7 @@ import java.util.ResourceBundle;
 
 public class StatisticsCtrl {
     private final MainCtrl mainCtrl;
+    private final ServerUtils server;
     @FXML // fx:id="statsPieChart"
     private PieChart statsPieChart;
 
@@ -31,8 +32,10 @@ public class StatisticsCtrl {
      * @param mainCtrl - reference to the main controller.
      */
     @Inject
-    public StatisticsCtrl(MainCtrl mainCtrl) {
+    public StatisticsCtrl(MainCtrl mainCtrl, ServerUtils server) {
+
         this.mainCtrl = mainCtrl;
+        this.server = server;
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -41,8 +44,7 @@ public class StatisticsCtrl {
         assert statsTotalExpenses != null : "fx:id=\"statsTotalExpenses\" was not injected: check your FXML file 'Statistics.fxml'.";
 
         SelectedEventSingleton selectedEventInstance = SelectedEventSingleton.getInstance();
-        EventsSingleton eventsInstance = EventsSingleton.getInstance();
-        Event selectedEvent = eventsInstance.getEventById(selectedEventInstance.getEventId());
+        Event selectedEvent = server.getEventByID(mainCtrl.getCurrentEventID());
 
         if (selectedEvent == null) {
             statsTotalExpenses.setText("Server error: event not found");

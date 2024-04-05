@@ -7,7 +7,6 @@ package client.scenes;
 import java.net.URL;
 import java.util.*;
 
-import client.utils.EventsSingleton;
 import client.utils.FlagListCell;
 import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
@@ -133,8 +132,6 @@ public class StarterPageCtrl {
         String name = createTextField.getText();
         if(name.equals("")) {name = "New Event";}
         Event event = server.addEvent(new Event("", name, 0, "", new ArrayList<>(), new ArrayList<>()));
-        EventsSingleton instance = EventsSingleton.getInstance();
-        instance.addEvent(event);
         listView.getItems().add(event);
         mainCtrl.showEventPage(event.getId());
     }
