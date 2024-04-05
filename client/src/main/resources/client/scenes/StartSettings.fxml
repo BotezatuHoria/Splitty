@@ -79,8 +79,9 @@
                </font>
             </Label>
             <Line endX="464.199951171875" layoutX="135.0" layoutY="348.0" startX="-100.0" />
-            <Button layoutX="252.0" layoutY="237.0" mnemonicParsing="false" onMouseEntered="#showInfo" onMouseExited="#notShowInfo" prefHeight="26.0" prefWidth="142.0" text=" Download template" onAction="#downloadTemplate"/>
+            <Button fx:id="downloadButton" layoutX="252.0" layoutY="237.0" mnemonicParsing="false" onAction="#downloadTemplate" onMouseEntered="#showInfo" onMouseExited="#notShowInfo" prefHeight="26.0" prefWidth="142.0" text=" Download template" />
             <Label fx:id="infoLabel" layoutX="426.0" layoutY="205.0" prefHeight="91.0" prefWidth="173.0" wrapText="true" />
+            <Label fx:id="changeLabel" layoutX="432.0" layoutY="393.0" prefHeight="46.0" prefWidth="180.0" wrapText="true" />
       </children>
     </AnchorPane>
   </children>
