@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.effect.Effect;
 import javafx.scene.text.Text;
 import javafx.scene.image.Image;
 import org.apache.commons.lang3.tuple.Pair;
