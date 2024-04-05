@@ -36,7 +36,6 @@ public class QuoteOverviewCtrl implements Initializable {
     private final MainCtrl mainCtrl;
 
     private ObservableList<Quote> data;
-
     @FXML
     private TableView<Quote> table;
     @FXML

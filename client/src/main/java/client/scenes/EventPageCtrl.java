@@ -155,10 +155,10 @@ public class EventPageCtrl implements Initializable {
     }
 
     /**
-     * Method for accessing the debts page.
+     * Method for accessing the debt overview page.
      */
     public void settleDebts() {
-        mainCtrl.showDebtPage();
+        mainCtrl.showDebtOverviewPage();
     }
 
     /**
