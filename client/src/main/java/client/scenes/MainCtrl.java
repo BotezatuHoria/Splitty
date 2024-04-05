@@ -19,6 +19,7 @@ import client.utils.EventsSingleton;
 import client.utils.LanguageSingleton;
 import client.utils.SelectedEventSingleton;
 import commons.Event;
+import commons.Person;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -88,6 +89,9 @@ public class MainCtrl {
     private Scene editExpensePage;
     private EditExpenseCtrl editExpenseCtrl;
 
+    private Scene debtOverview;
+    private DebtOverviewPageCtrl debtOverviewPageCtrl;
+
     public MainCtrl() {
     }
 
@@ -116,7 +120,8 @@ public class MainCtrl {
                            Pair<LanguageSelectorCtrl, Parent> language,
                            Pair<AdminLoginCtrl, Parent> adminLoginPage,
                            Pair<AdminPageCtrl, Parent> adminPage,
-                           Pair<EditExpenseCtrl, Parent> editExpensePage) {
+                           Pair<EditExpenseCtrl, Parent> editExpensePage,
+                           Pair<DebtOverviewPageCtrl, Parent> debtOverview) {
         this.server = new ServerUtils();
 
         EventsSingleton eventsInstance = EventsSingleton.getInstance();
@@ -151,6 +156,9 @@ public class MainCtrl {
 
         this.debtSettlementCtrl = debt.getKey();
         this.debt = new Scene(debt.getValue());
+
+        this.debtOverview = new Scene(debtOverview.getValue());
+        this.debtOverviewPageCtrl = debtOverview.getKey();
 
         this.languageSelectorCtrl = language.getKey();
         this.language = new Scene(language.getValue());
@@ -239,13 +247,6 @@ public class MainCtrl {
     }
 
     /**
-     * Method for showing the Debt settlement page.
-     */
-    public void showDebtSettlementPage(){
-
-    }
-
-    /**
      * Method for showing the add participant page.
      */
     public void showAddParticipant() {
@@ -273,15 +274,33 @@ public class MainCtrl {
     }
 
     /**
+     * Method for showing the debt overview page.
+     */
+    public void showDebtOverviewPage() {
+        primaryStage.setTitle("Debt Overview");
+        debtOverviewPageCtrl.populateDebtList();
+        primaryStage.setScene(debtOverview);
+    }
+    /**
      * Method for showing the debt page.
      */
     public void showDebtPage() {
         primaryStage.setTitle("Open debts");
         debtSettlementCtrl.clear();
-        debtSettlementCtrl.populateOpenDebts();
+        debtSettlementCtrl.allDebts();
         primaryStage.setScene(debt);
     }
 
+    /**
+     * Method for showing the debt page for a specific person.
+     * @param person - the person to show the debt page for.
+     */
+    public void showDebtPageForSpecificPerson(Person person) {
+        debtSettlementCtrl.clear();
+        debtSettlementCtrl.debtsOfPerson(person.getId());
+        primaryStage.setTitle("Debts for " + person.getFirstName() + " " + person.getLastName());
+        primaryStage.setScene(debt);
+    }
     /**
      * Method for showing the language selector.
      */
@@ -345,4 +364,5 @@ public class MainCtrl {
     public void setLanguageText(ResourceBundle resourceBundle) {
         startSettingsCtrl.setLanguageText(resourceBundle);
     }
+
 }

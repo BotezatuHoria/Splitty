@@ -53,7 +53,7 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="SettleDebts" layoutX="435.0" layoutY="277.0" mnemonicParsing="false" onAction="#settleDebts" prefHeight="43.0" prefWidth="143.0" text="Settle Debts">
+      <Button fx:id="SettleDebts" layoutX="435.0" layoutY="277.0" mnemonicParsing="false" onAction="#settleDebts" prefHeight="43.0" prefWidth="143.0" text="Balance">
          <font>
             <Font size="14.0" />
          </font>
