@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import commons.Event;
+import commons.Person;
 import jakarta.inject.Inject;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -67,6 +68,7 @@ public class AdminPageCtrl {
      * Gets all the events from the server and adds them to the tableview.
      */
     public void showEvents(){
+        events.getItems().clear();
         var e = server.getEvents();
         if (e != null){
             data = FXCollections.observableList(e);
@@ -79,11 +81,8 @@ public class AdminPageCtrl {
         titleColumn.setCellValueFactory(new PropertyValueFactory<Event, String>("title"));
         creationDateColumn.setCellValueFactory(new PropertyValueFactory<Event, Date>("creationDate"));
         lastModifiedColumn.setCellValueFactory(new PropertyValueFactory<Event, Date>("lastModified"));
-        server.registerForMessages("/topic/event", Event.class, event -> {
-            Platform.runLater(() -> {
-                data.add(event);
-                showEvents();
-            });
+        server.registerForMessages("/topic/event", Person.class, event -> {
+            Platform.runLater(this::showEvents);
         });
     }
 

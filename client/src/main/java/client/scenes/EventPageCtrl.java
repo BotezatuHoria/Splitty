@@ -311,6 +311,7 @@ public class EventPageCtrl implements Initializable {
         });
         new Thread(() -> {
             server.registerForMessages("/topic/event", Person.class, person -> {
+                System.out.println("This is activated");
                 Platform.runLater(this::updatePage);
             });
         }).start();

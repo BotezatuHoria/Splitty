@@ -12,8 +12,11 @@ import client.utils.FlagListCell;
 import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import commons.Event;
+import commons.Person;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import com.google.inject.Inject;
@@ -24,7 +27,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
-public class StarterPageCtrl {
+public class StarterPageCtrl implements Initializable {
 
     private final MainCtrl mainCtrl;
     private final ServerUtils server;
@@ -68,6 +71,8 @@ public class StarterPageCtrl {
     @FXML
     private Button settingButton;
 
+    private List<Event> recentEvents;
+
     /**
      * Constructor for the StarterPageCtrl class.
      *
@@ -78,15 +83,7 @@ public class StarterPageCtrl {
     public StarterPageCtrl(MainCtrl mainCtrl, ServerUtils server) {
         this.mainCtrl = mainCtrl;
         this.server = server;
-    }
-
-    @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
-        languageSelector.getItems().addAll(FlagListCell.getLanguages());
-
-        // Responsible for setting the flags and changing languages
-        languageSelector.setCellFactory(lv -> new FlagListCell());
-        languageSelector.setButtonCell(new FlagListCell());
+        recentEvents = new ArrayList<>();
     }
 
     @FXML
@@ -135,6 +132,7 @@ public class StarterPageCtrl {
         Event event = server.addEvent(new Event("", name, 0, "", new ArrayList<>(), new ArrayList<>()));
         EventsSingleton instance = EventsSingleton.getInstance();
         instance.addEvent(event);
+        recentEvents.add(event);
         listView.getItems().add(event);
         mainCtrl.showEventPage(event.getId());
     }
@@ -149,6 +147,7 @@ public class StarterPageCtrl {
         try {
             server.getEventByID(eventId);
             if (!listView.getItems().contains(server.getEventByID(eventId))) {
+                recentEvents.add(server.getEventByID(eventId));
                 listView.getItems().add(server.getEventByID(eventId));
             }
             mainCtrl.showEventPage(eventId);
@@ -226,4 +225,24 @@ public class StarterPageCtrl {
         mainCtrl.showStartSettings();
     }
 
+    void refreshListView() {
+        listView.getItems().clear();
+        for (Event e : recentEvents) {
+            listView.getItems().add(e);
+        }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        languageSelector.getItems().addAll(FlagListCell.getLanguages());
+        languageSelector.setCellFactory(lv -> new FlagListCell());
+        languageSelector.setButtonCell(new FlagListCell());
+        server.registerForMessages("/topic/event", Person.class, person -> {
+            System.out.println("This is also activated");
+            for (Event e : recentEvents) {
+                e.setTitle(server.getEventByID(e.getId()).getTitle());
+            }
+            refreshListView();
+        });
+    }
 }
