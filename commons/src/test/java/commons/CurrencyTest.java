@@ -94,4 +94,31 @@ class CurrencyTest {
     Currency currency = new Currency(75588872, "Dollar");
     assertEquals(currency.toString(),"Iso number is: 75588872, name of the currency is: Dollar");
   }
+
+  @Test
+  void emptyConstructorTest() {
+    Currency currency = new Currency();
+    assertNotEquals(currency, null);
+  }
+
+  @Test
+  void sameObjectEquals() {
+    Currency currency = new Currency(75588872, "Dollar");
+    assertEquals(currency, currency);
+  }
+
+  @Test
+  void setNameTest() {
+    Currency currency = new Currency(75588872, "Dollar");
+    currency.setName("Euro");
+    assertEquals(currency.getName(), "Euro");
+  }
+
+  @Test
+  void setIsoTest() {
+    Currency currency = new Currency(75588872, "Dollar");
+    currency.setIso(123);
+    assertEquals(currency.getIso(), 123);
+    
+  }
 }

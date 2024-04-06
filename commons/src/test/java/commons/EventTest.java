@@ -17,12 +17,41 @@ class EventTest {
         assertEquals("Event one", test.getTag());
     }
 
+    @Test
+    void emptyConstructorTest() {
+        Event test = new Event();
+        assertEquals(test.getTitle(), null);
+    }
+
+    @Test
+    void getTransactionTest() {
+        Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+        List<Transaction> transactions = new ArrayList<>();
+        transactions.add(new Transaction("test",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+                100, 947, new ArrayList<>(), new Person(), null));
+        test.setTransactions(transactions);
+        assertEquals(test.getTransactions(), transactions);
+    }
+
+    @Test
+    void getPeopleTest() {
+        Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+        List<Person> people = new ArrayList<>();
+        people.add(new Person("test@email.com", "First", "Test",
+                "iban33"));
+        test.setPeople(people);
+        assertEquals(test.getPeople(), people);
+    }
+
+
     /**
      * Test the getTitle method.
      */
     @Test
     void getTitleTest(){
         Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+        test.setTitle("Party");
         assertEquals("Party", test.getTitle());
     }
 
@@ -41,8 +70,113 @@ class EventTest {
     @Test
     void getTokenTest(){
         Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+        test.setToken("1234");
         assertEquals("1234", test.getToken());
     }
+
+    @Test
+    void addPersonTest() {
+        Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+        Person person = new Person("test@email.com", "First", "Test",
+                "iban33");
+        test.addPerson(person);
+        assertTrue(test.getPeople().contains(person));
+    }
+
+    @Test
+    void removePersonTest() {
+        Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+        Person person = new Person("test@email.com", "First", "Test",
+                "iban33");
+        test.addPerson(person);
+        test.removePerson(person);
+        assertTrue(!test.getPeople().contains(person));
+    }
+
+    @Test
+    void addTransactionTest() {
+        Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+        Transaction transaction = new Transaction("test",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+                100, 947, new ArrayList<>(), new Person(), null);
+        test.addTransaction(transaction);
+        assertTrue(test.getTransactions().contains(transaction));
+
+    }
+
+
+    @Test
+    void removeTransactionTest() {
+        Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+        Transaction transaction = new Transaction("test",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+                100, 947, new ArrayList<>(), new Person(), null);
+        test.addTransaction(transaction);
+        test.removeTransaction(transaction);
+        assertTrue(!test.getTransactions().contains(transaction));
+
+    }
+
+    @Test
+    void removeTransactionsTest() {
+        Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+        Transaction transaction = new Transaction("test",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+                100, 947, new ArrayList<>(), new Person(), null);
+        test.addTransaction(transaction);
+        test.removeTransactions();
+        assertTrue(test.getTransactions().isEmpty());
+        test.setTransactions(null);
+        assertEquals(test.getTransactions() , null);
+    }
+
+    @Test
+    void removePeeopleTest() {
+        Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+        Person person = new Person("test@email.com", "First", "Test",
+                "iban33");
+        test.addPerson(person);
+        test.removeParticipants();
+        assertTrue(test.getPeople().isEmpty());
+        test.setPeople(null);
+        assertEquals(test.getPeople() , null);
+    }
+
+    @Test
+    void sameObjectEquals() {
+        Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+        assertEquals(test, test);
+    }
+
+    @Test
+    void nullTest() {
+        Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+        assertNotEquals(test, null);
+    }
+
+    @Test
+    void getDateTest() {
+        Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+        assertNotNull(test.getCreationDate());
+    }
+
+    @Test
+    void getLastModifiedTest() {
+        Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+        test.setTag("bla");
+        assertNotNull(test.getLastModified());
+    }
+
+    @Test
+    void setLastModifiedTest() {
+        Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+        LocalDate date = LocalDate.now();
+        test.setLastModified(date);
+        assertEquals(test.getLastModified(), date);
+    }
+
+
+
 
     /**
      * Test the toString method.
