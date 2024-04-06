@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import client.utils.ServerUtils;
 import commons.DebtCellData;
 import commons.Person;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -65,8 +66,10 @@ public class DebtSettlementCtrl {
     assert titleLabel != null : "fx:id=\"titleLabel\" was not injected: check your FXML file 'OpenDebts.fxml'.";
     rootPane.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/DebtSettlementStyle.css")).toExternalForm());
     server.registerForMessages("/topic/events/people", Person.class, person -> {
-      clear();
-      allDebts();
+      Platform.runLater(() -> {
+        clear();
+        allDebts();
+      });
     });
   }
   /**
