@@ -13,7 +13,6 @@ import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import commons.Event;
 import commons.Person;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
