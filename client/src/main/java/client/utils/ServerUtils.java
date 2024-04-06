@@ -461,4 +461,20 @@ public class ServerUtils {
 		bd = bd.setScale(places, RoundingMode.HALF_UP);
 		return bd.doubleValue();
 	}
+
+
+	/**
+	 * Gets the person with the following id.
+	 * @param idPerson of the transaction you want.
+	 * @return a person
+	 */
+	public Person getPersonByID(int idPerson) {
+
+		return ClientBuilder.newClient(new ClientConfig())
+				.target(server).path("api/person/" + idPerson)
+				.request(APPLICATION_JSON)
+				.accept(APPLICATION_JSON)
+				.get(new GenericType<Person>() {});
+	}
+
 }

@@ -100,7 +100,7 @@ public class EventPageCtrl implements Initializable {
     private ComboBox<Person> participantsScroll;
 
     @FXML // fx:id="listTransactions"
-    private ListView<Transaction> listTransactions;
+    private ListView<String> listTransactions;
 
     @FXML // fx:id="editExpense"
     private Button editExpense;
@@ -242,7 +242,7 @@ public class EventPageCtrl implements Initializable {
     public void displayTransactions() {
         listTransactions.getItems().clear();
         for (Transaction t : dataTransactions) {
-            listTransactions.getItems().add(t);
+            listTransactions.getItems().add(mainCtrl.transactionString(t.getId()));
         }
     }
 
@@ -258,7 +258,7 @@ public class EventPageCtrl implements Initializable {
 
         for (Transaction transaction: transactions) {
             if (transaction.getCreator().getId() == creator) {
-                listTransactions.getItems().add(transaction);
+                listTransactions.getItems().add(mainCtrl.transactionString(transaction.getId()));
             }
         }
     }
@@ -275,7 +275,7 @@ public class EventPageCtrl implements Initializable {
 
         for (Transaction transaction: transactions) {
             if (transaction.getParticipantsIds().contains(included)) {
-                listTransactions.getItems().add(transaction);
+                listTransactions.getItems().add(mainCtrl.transactionString(transaction.getId()));
             }
         }
 

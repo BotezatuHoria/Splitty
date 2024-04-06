@@ -129,8 +129,6 @@ public class StarterPageCtrl implements Initializable {
         String name = createTextField.getText();
         if(name.equals("")) {name = "New Event";}
         Event event = server.addEvent(new Event("", name, 0, "", new ArrayList<>(), new ArrayList<>()));
-        EventsSingleton instance = EventsSingleton.getInstance();
-        instance.addEvent(event);
         recentEvents.add(event);
         listView.getItems().add(event);
         mainCtrl.showEventPage(event.getId());
