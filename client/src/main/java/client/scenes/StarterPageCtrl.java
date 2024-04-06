@@ -7,7 +7,6 @@ package client.scenes;
 import java.net.URL;
 import java.util.*;
 
-import client.utils.EventsSingleton;
 import client.utils.FlagListCell;
 import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
