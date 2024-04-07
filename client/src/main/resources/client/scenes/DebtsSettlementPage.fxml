@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="rootPane" prefHeight="500.0" prefWidth="640.0" styleClass="root" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.DebtSettlementCtrl">    <children>
-    <Button fx:id="goBackButton" layoutX="514.0" layoutY="426.0" mnemonicParsing="false" onAction="#goBack" prefHeight="51.0" prefWidth="51.0" />        <Label layoutX="42.0" layoutY="21.0" styleClass="title" text="Open Debts">
+    <Button fx:id="goBackButton" layoutX="514.0" layoutY="426.0" mnemonicParsing="false" onAction="#goBack" prefHeight="51.0" prefWidth="51.0" />        <Label fx:id="openDebtsLabel" layoutX="42.0" layoutY="21.0" styleClass="title" text="Open Debts">
     <font>                <Font size="43.0" />
     </font>        </Label>
       <ListView fx:id="debtListView" layoutX="20.0" layoutY="88.0" prefHeight="200.0" prefWidth="600.0" />

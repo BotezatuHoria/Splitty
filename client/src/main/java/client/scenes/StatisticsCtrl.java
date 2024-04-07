@@ -1,4 +1,6 @@
 package client.scenes;
+
+import client.utils.LanguageSingleton;
 import client.utils.SelectedEventSingleton;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
@@ -75,7 +77,8 @@ public class StatisticsCtrl {
 
             statsPieChart.setData(chartData);
 
-            statsTotalExpenses.setText("Total Expenses: " + totalExpenses + " Eur");
+            String totalExpensesString = (LanguageSingleton.getInstance().getResourceBundle().getString("total.expenses"));
+            statsTotalExpenses.setText(totalExpensesString + totalExpenses + " Eur");
         }
     }
 
