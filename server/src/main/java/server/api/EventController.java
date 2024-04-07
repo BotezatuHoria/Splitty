@@ -143,4 +143,9 @@ public class EventController {
         return esi.deletePerson(idEvent, idPerson);
     }
 
+    @GetMapping(path = {"/token/{token}"})
+    public ResponseEntity<Event> getEventByToken(@PathVariable("token") String token){
+        return esi.getEventByToken(token);
+    }
+
 }

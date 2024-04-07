@@ -6,6 +6,7 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import commons.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -90,19 +91,8 @@ public class InviteSendingCtrl{
      * Sets the share code of the event, an encoded version of the id.
      */
     public void setShareCode(){
-        int eventID = mainCtrl.getCurrentEventID();
-        eventID = eventID*3000929;
-        String expandedID = Integer.toString(eventID);
-        String result = "";
-        int size = expandedID.length();
-        for( int i =0; i < size; i++){
-            int number = Character.getNumericValue(expandedID.charAt(i));
-            number = number + 65;
-            char character = (char) number;
-            result += character;
-        }
-        System.out.println("Invite code of the event ="+ result);
-        inviteCode.setText(result);
+        Event event = server.getEventByID(mainCtrl.getCurrentEventID());
+        inviteCode.setText(event.getToken());
     }
 
     /**
@@ -129,8 +119,7 @@ public class InviteSendingCtrl{
      */
     public void copyCode() throws InterruptedException {
         setShareCode();
-        translateShareCode(inviteCode.getText());
-        String inviteCode = this.inviteCode.getText(); //the code of the event, pictured on the page (not yet made to be gathered from the database).
+        String inviteCode = this.inviteCode.getText();
         StringSelection selection = new StringSelection(inviteCode); //make it a stringselection so that we can set the clipboard contents to it.
         Clipboard board = Toolkit.getDefaultToolkit().getSystemClipboard(); // get our clipboard.
         board.setContents(selection, selection); //copy the eventinvite code to our clipboard.

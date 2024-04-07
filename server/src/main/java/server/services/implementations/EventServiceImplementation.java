@@ -249,4 +249,16 @@ public class EventServiceImplementation implements EventService {
             debtCalc(t, "addition");
         }
     }
+
+    /**
+     * Get an event by the invite token.
+     * @param token the token of the event
+     * @return returns the event
+     */
+    public ResponseEntity<Event> getEventByToken(String token){
+        if (repo.findByToken(token).isPresent()){
+            return ResponseEntity.ok(repo.findByToken(token).get());
+        }
+        return ResponseEntity.badRequest().build();
+    }
 }

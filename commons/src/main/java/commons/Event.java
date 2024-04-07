@@ -1,6 +1,5 @@
 package commons;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -27,12 +26,10 @@ public class Event {
     private LocalDateTime lastModified;
 
 
-    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
-    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt"})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     protected List<Person> people;
 
-    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
-    @JsonIgnoreProperties({"name", "date", "money", "currency", "expenseType", "participants", "creator"})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     protected List<Transaction> transactions;
 
     /**
