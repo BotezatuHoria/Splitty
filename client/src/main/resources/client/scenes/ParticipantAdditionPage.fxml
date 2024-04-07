@@ -8,12 +8,12 @@
 
 <AnchorPane prefHeight="500.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.ParticipantAdditionPageCtrl">
    <children>
-      <Label layoutX="26.0" layoutY="14.0" text="Add new Participant">
+      <Label fx:id="participantAdditionLabel" layoutX="26.0" layoutY="14.0" text="Add new Participant">
          <font>
             <Font size="28.0" />
          </font>
       </Label>
-      <Label layoutX="26.0" layoutY="67.0" text="Name">
+      <Label fx:id="nameLabel" layoutX="26.0" layoutY="67.0" text="Name">
          <font>
             <Font size="22.0" />
          </font>

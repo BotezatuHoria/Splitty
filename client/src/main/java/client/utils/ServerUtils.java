@@ -18,12 +18,7 @@ package client.utils;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.reflect.Type;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -56,48 +51,8 @@ public class ServerUtils {
 
 	private static String server = "http://localhost:8080/";
 
-	/**
-	 * Method for getting the quotes the hard way.
-	 * @throws IOException - IO exception
-	 * @throws URISyntaxException - Syntax exception
-	 */
-	public void getQuotesTheHardWay() throws IOException, URISyntaxException {
-		var url = new URI("http://localhost:8080/api/quotes").toURL();
-		var is = url.openConnection().getInputStream();
-		var br = new BufferedReader(new InputStreamReader(is));
-		String line;
-		while ((line = br.readLine()) != null) {
-			System.out.println(line);
-		}
-	}
-
 	public static void setServer(String server) {
 		ServerUtils.server = server;
-	}
-
-	/**
-	 * Method for retrieving the quotes.
-	 * @return - a list of quotes
-	 */
-	public List<Quote> getQuotes() {
-		return ClientBuilder.newClient(new ClientConfig()) //
-				.target(server).path("api/event") //
-				.request(APPLICATION_JSON) //
-				.accept(APPLICATION_JSON) //
-                .get(new GenericType<List<Quote>>() {});
-	}
-
-	/**
-	 * Add quote api call.
-	 * @param quote - quote
-	 * @return - quote
-	 */
-	public Quote addQuote(Quote quote) {
-		return ClientBuilder.newClient(new ClientConfig()) //
-				.target(server).path("api/quotes") //
-				.request(APPLICATION_JSON) //
-				.accept(APPLICATION_JSON) //
-				.post(Entity.entity(quote, APPLICATION_JSON), Quote.class);
 	}
 
 	public List<Event> getEvents() {

@@ -169,7 +169,7 @@ public class StarterPageCtrl implements Initializable {
         }
         catch (Exception e){
             // System.out.println("This event doesn't exist");
-            mainCtrl.showAlert("This event doesn't exist.");
+            mainCtrl.showAlert(LanguageSingleton.getInstance().getResourceBundle().getString("error.event.doesNotExist"));
         }
     }
 
@@ -204,7 +204,7 @@ public class StarterPageCtrl implements Initializable {
                         mainCtrl.showEventPage(event.getId());
                     }
                     catch (Error e) {
-                        mainCtrl.showAlert("This event doesn't exist anymore!");
+                        mainCtrl.showAlert(LanguageSingleton.getInstance().getResourceBundle().getString("error.event.nonexistent"));
                     }
                 }
             }
@@ -223,6 +223,8 @@ public class StarterPageCtrl implements Initializable {
         joinButton.setText(resourceBundle.getString("join.button"));
         joinEventText.setText(resourceBundle.getString("join.event"));
         recentlyViewedText.setText(resourceBundle.getString("recently.viewed"));
+        createTextField.setPromptText(resourceBundle.getString("create.event.placeholder"));
+        joinTextField.setPromptText(resourceBundle.getString("join.event.placeholder"));
     }
 
     public void keyPressed(KeyEvent e) {

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import commons.DebtCellData;
 import commons.Person;
@@ -26,6 +27,9 @@ public class DebtSettlementCtrl {
   private Button sendEmailButton;
   @FXML
   private Button settleDebtButton;
+
+  @FXML
+  private Label openDebtsLabel;
 
   @FXML // fx:id="markReceivedButton"
   private Button markReceivedButton; // Value injected by FXMLLoader
@@ -87,15 +91,20 @@ public class DebtSettlementCtrl {
    * Populates the open debts list.
    */
   public void populateOpenDebts(List<DebtCellData> debts){
+    LanguageSingleton lang = LanguageSingleton.getInstance();
+    ResourceBundle messages = lang.getResourceBundle();
+
     for(DebtCellData debt : debts){
       String iban = debt.getReceiver().getIban();
       if (iban == null || iban.isEmpty()) {
-        iban = "User did not provide IBAN";
+        iban = messages.getString("iban.error.noInput");
       }else{
         iban = "IBAN: " + iban;
       }
+      String accountHolderLabel = messages.getString("account.details");
+
       TextArea textArea = new TextArea(
-              "Account holder: " + debt.getReceiver().getFirstName() + " " + debt.getReceiver().getLastName() + "\n"
+              accountHolderLabel + debt.getReceiver().getFirstName() + " " + debt.getReceiver().getLastName() + "\n"
                        + iban + "\n");
       TitledPane titledPane = getTitledPane(debt, textArea);
       titledPane.expandedProperty().set(false);
@@ -113,7 +122,8 @@ public class DebtSettlementCtrl {
     HBox hBox = createButtonBox(debt);
     VBox vBox = new VBox(10, hBox, textArea); // 10 is the spacing between elements
     vBox.getStyleClass().add("debt-vbox");
-    String title = String.format("%s should give %.2f euros to %s", debt.getSender(), debt.getDebt(), debt.getReceiver());
+    String text = (LanguageSingleton.getInstance().getResourceBundle().getString("string.format"));
+    String title = String.format(text, debt.getSender(), debt.getDebt(), debt.getReceiver());
     AnchorPane anchorPane = new AnchorPane(vBox);
     anchorPane.getStyleClass().add("debt-anchor-pane");
     return new TitledPane(title, anchorPane);
@@ -125,12 +135,16 @@ public class DebtSettlementCtrl {
    * @return returns a HBox with the buttons.
    */
   private HBox createButtonBox(DebtCellData debt) {
-    Button markReceived = new Button("Mark Received");
+    String markReceivedString = (LanguageSingleton.getInstance().getResourceBundle().getString("mark.button"));
+    String sendEmailString = (LanguageSingleton.getInstance().getResourceBundle().getString("sendMail.button"));
+    String settleDebtString = (LanguageSingleton.getInstance().getResourceBundle().getString("settle.button"));
+
+    Button markReceived = new Button(markReceivedString);
     markReceived.getStyleClass().add("debt-button");
     markReceived.setOnAction(event -> settleDebt(debt));
-    Button sendEmail = new Button("Send Email");
+    Button sendEmail = new Button(sendEmailString);
     sendEmail.getStyleClass().add("debt-button");
-    Button settleDebt = new Button("Settle Debt");
+    Button settleDebt = new Button(settleDebtString);
     settleDebt.getStyleClass().add("debt-button");
     HBox hBox = new HBox(10, markReceived, sendEmail, settleDebt); // 10 is the spacing between buttons
     hBox.getStyleClass().add("debt-hbox");
@@ -142,7 +156,8 @@ public class DebtSettlementCtrl {
   }
 
   public void setLanguageText(ResourceBundle resourceBundle) {
-
+    openDebtsLabel.setText(resourceBundle.getString("openDebts.text"));
+    goBackButton.setText(resourceBundle.getString("back.button"));
   }
 
   /**

@@ -23,7 +23,6 @@ import com.google.inject.Inject;
 import client.utils.ServerUtils;
 import commons.Quote;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -71,21 +70,5 @@ public class QuoteOverviewCtrl implements Initializable {
         colFirstName.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().person.firstName));
         colLastName.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().person.lastName));
         colQuote.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().quote));
-    }
-
-    /**
-     * Method for changing the primary scene to the add quote page.
-     */
-    public void addQuote() {
-        mainCtrl.showAdd();
-    }
-
-    /**
-     * Method for refreshing the table of quotes.
-     */
-    public void refresh() {
-        var quotes = server.getQuotes();
-        data = FXCollections.observableList(quotes);
-        table.setItems(data);
     }
 }

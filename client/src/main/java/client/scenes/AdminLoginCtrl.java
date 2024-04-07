@@ -1,10 +1,12 @@
 package client.scenes;
 
+import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import jakarta.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 
 import java.util.ResourceBundle;
@@ -15,6 +17,18 @@ public class AdminLoginCtrl {
 
     @FXML
     private Button backButton;
+
+    @FXML
+    private Label adminLoginLabel;
+
+    @FXML
+    private Label adminPasswordLabel;
+
+    @FXML
+    private Label passwordConsoleLabel;
+
+    @FXML
+    private Label resendPasswordLabel;
 
     @FXML
     private Button loginButton;
@@ -60,14 +74,21 @@ public class AdminLoginCtrl {
             mainCtrl.showAdminPage();
         } else {
             a.setAlertType(Alert.AlertType.ERROR);
-            a.setContentText("Wrong Password!\nPlease look in the server console for the correct password");
+            String passwordString = LanguageSingleton.getInstance().getResourceBundle().getString("admin.login.password.error");
+            a.setContentText(passwordString);
             a.show();
         }
         passwordField.clear();
     }
 
     public void setLanguageText(ResourceBundle resourceBundle) {
-
+        adminLoginLabel.setText(resourceBundle.getString("admin.login.label"));
+        adminPasswordLabel.setText(resourceBundle.getString("admin.password.label"));
+        passwordConsoleLabel.setText(resourceBundle.getString("password.console.label"));
+        resendPasswordLabel.setText(resourceBundle.getString("resend.password.label"));
+        resendPasswordLabel.setText(resourceBundle.getString("resend.password.button"));
+        loginButton.setText(resourceBundle.getString("login.button"));
+        backButton.setText(resourceBundle.getString("back.button"));
     }
 
     /**
