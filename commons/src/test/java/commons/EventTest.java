@@ -3,6 +3,7 @@ package commons;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -170,7 +171,7 @@ class EventTest {
     @Test
     void setLastModifiedTest() {
         Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
-        LocalDate date = LocalDate.now();
+        LocalDateTime date = LocalDateTime.now();
         test.setLastModified(date);
         assertEquals(test.getLastModified(), date);
     }
