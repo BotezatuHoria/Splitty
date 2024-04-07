@@ -11,7 +11,6 @@ import client.utils.FlagListCell;
 import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import commons.Event;
-import commons.Person;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -233,7 +232,7 @@ public class StarterPageCtrl implements Initializable {
         languageSelector.getItems().addAll(FlagListCell.getLanguages());
         languageSelector.setCellFactory(lv -> new FlagListCell());
         languageSelector.setButtonCell(new FlagListCell());
-        server.registerForMessages("/topic/event", Person.class, person -> {
+        server.registerForMessages("/topic/event", Object.class, object-> {
             System.out.println("This is also activated");
             for (Event e : recentEvents) {
                 e.setTitle(server.getEventByID(e.getId()).getTitle());

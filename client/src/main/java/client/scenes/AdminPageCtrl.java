@@ -19,6 +19,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -38,7 +39,7 @@ public class AdminPageCtrl {
     @FXML
     private TableColumn<Event, Date> creationDateColumn;
     @FXML
-    private TableColumn<Event, Date> lastModifiedColumn;
+    private TableColumn<Event, LocalDateTime> lastModifiedColumn;
 
     @FXML
     private Button deleteEvent;
@@ -80,7 +81,7 @@ public class AdminPageCtrl {
         //set up the columns in the table
         titleColumn.setCellValueFactory(new PropertyValueFactory<Event, String>("title"));
         creationDateColumn.setCellValueFactory(new PropertyValueFactory<Event, Date>("creationDate"));
-        lastModifiedColumn.setCellValueFactory(new PropertyValueFactory<Event, Date>("lastModified"));
+        lastModifiedColumn.setCellValueFactory(new PropertyValueFactory<Event, LocalDateTime>("lastModified"));
         server.registerForMessages("/topic/event", Person.class, event -> {
             Platform.runLater(this::showEvents);
         });

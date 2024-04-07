@@ -6,6 +6,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,7 +24,7 @@ public class Event {
     @CreatedDate
     private LocalDate creationDate;
     @LastModifiedDate
-    private LocalDate lastModified;
+    private LocalDateTime lastModified;
 
 
     @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
@@ -51,7 +52,7 @@ public class Event {
         this.people = people;
         this.transactions = transactions;
         creationDate = LocalDate.now();
-        lastModified = LocalDate.now();
+        lastModified = LocalDateTime.now();
     }
 
     /**
@@ -228,11 +229,11 @@ public class Event {
         return creationDate;
     }
 
-    public LocalDate getLastModified() {
+    public LocalDateTime getLastModified() {
         return lastModified;
     }
 
-    public void setLastModified(LocalDate lastModified) {
+    public void setLastModified(LocalDateTime lastModified) {
         this.lastModified = lastModified;
     }
 
