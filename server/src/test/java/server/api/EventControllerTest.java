@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.util.AutoPopulatingList;
 import server.services.implementations.EventServiceImplementation;
 import server.services.implementations.PersonServiceImplementation;
 import server.services.implementations.TransactionServiceImplementation;
