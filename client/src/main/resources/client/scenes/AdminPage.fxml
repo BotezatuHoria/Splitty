@@ -14,28 +14,28 @@
             <Font size="28.0" />
          </font>
       </Label>
-      <Button fx:id="backButton" layoutX="534.0" layoutY="342.0" mnemonicParsing="false" onAction="#goBack" prefHeight="44.0" prefWidth="52.0" text="Back" />
+      <Button fx:id="backButton" layoutX="523.0" layoutY="436.0" mnemonicParsing="false" onAction="#goBack" prefHeight="44.0" prefWidth="52.0" text="Back" />
       <Label fx:id="allEventsLabel" layoutX="36.0" layoutY="69.0" prefHeight="18.0" prefWidth="92.0" text="All Events:">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="downloadEvent" onAction="#downloadEvent" layoutX="425.0" layoutY="99.0" mnemonicParsing="false" text="Download" />
-      <Button fx:id="deleteEvent" onAction="#delete" layoutX="425.0" layoutY="273.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Delete" />
-      <Button fx:id="importEvent" onAction="#importEvent" layoutX="425.0" layoutY="187.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Import" />
-      <Label fx:id="selectedEventLabel" layoutX="36.0" layoutY="342.0" prefHeight="30.0" prefWidth="141.0" text="Selected Event:">
+      <Button fx:id="downloadEvent" layoutX="522.0" layoutY="113.0" mnemonicParsing="false" onAction="#downloadEvent" text="Download" />
+      <Button fx:id="deleteEvent" layoutX="523.0" layoutY="383.0" mnemonicParsing="false" onAction="#delete" prefHeight="26.0" prefWidth="70.0" text="Delete" />
+      <Button fx:id="importEvent" layoutX="523.0" layoutY="248.0" mnemonicParsing="false" onAction="#importEvent" prefHeight="26.0" prefWidth="70.0" text="Import" />
+      <Label fx:id="selectedEventLabel" layoutX="36.0" layoutY="421.0" prefHeight="30.0" prefWidth="141.0" text="Selected Event:">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <TableView fx:id="events" layoutX="36.0" layoutY="113.0" prefHeight="200.0" prefWidth="332.0">
+      <TableView fx:id="events" layoutX="36.0" layoutY="113.0" prefHeight="296.0" prefWidth="475.0">
         <columns>
-          <TableColumn fx:id="titleColumn" prefWidth="75.0" text="Title" />
-          <TableColumn fx:id="creationDateColumn" prefWidth="108.0" text="CreationDate" />
-            <TableColumn fx:id="lastModifiedColumn" prefWidth="148.0" text="Last Activity" />
+          <TableColumn fx:id="titleColumn" prefWidth="130.0" text="Title" />
+          <TableColumn fx:id="creationDateColumn" prefWidth="130.0" text="CreationDate" />
+            <TableColumn fx:id="lastModifiedColumn" prefWidth="214.0" text="Last Activity" />
         </columns>
       </TableView>
-      <Label fx:id="selectedEvent" layoutX="178.0" layoutY="342.0" prefHeight="30.0" prefWidth="189.0" text="None">
+      <Label fx:id="selectedEvent" layoutX="179.0" layoutY="421.0" prefHeight="30.0" prefWidth="189.0" text="None">
          <font>
             <Font size="20.0" />
          </font>
