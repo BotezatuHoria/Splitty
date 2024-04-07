@@ -4,6 +4,7 @@ import client.utils.ServerUtils;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import commons.Event;
 import commons.Person;
@@ -16,6 +17,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -57,11 +61,12 @@ public class AdminPageCtrl {
 
     /**
      * Constructor for the admin page controller.
-     * @param server the server
+     *
+     * @param server   the server
      * @param mainCtrl the main controller
      */
     @Inject
-    public AdminPageCtrl(ServerUtils server, MainCtrl mainCtrl){
+    public AdminPageCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.server = server;
         this.mainCtrl = mainCtrl;
         data = FXCollections.observableList(new ArrayList<>());
@@ -70,16 +75,17 @@ public class AdminPageCtrl {
     /**
      * Gets all the events from the server and adds them to the tableview.
      */
-    public void showEvents(){
+    public void showEvents() {
         events.getItems().clear();
         var e = server.getEvents();
-        if (e != null){
+        if (e != null) {
             data = FXCollections.observableList(e);
             events.setItems(data);
         }
     }
+
     @FXML
-    void initialize(){
+    void initialize() {
         //set up the columns in the table
         titleColumn.setCellValueFactory(new PropertyValueFactory<Event, String>("title"));
         creationDateColumn.setCellValueFactory(new PropertyValueFactory<Event, Date>("creationDate"));
@@ -92,20 +98,20 @@ public class AdminPageCtrl {
     /**
      * Changes the selected event label to the event title.
      */
-    void changeSelectedEvent(){
+    void changeSelectedEvent() {
         events.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Event>() {
             @Override
             public void changed(ObservableValue<? extends Event> observable, Event oldValue, Event newValue) {
-                if (newValue != null){
+                if (newValue != null) {
                     selectedEvent.setText(newValue.getTitle());
                 }
             }
         });
     }
 
-    public void delete(){
+    public void delete() {
         Event event = events.getSelectionModel().getSelectedItem();
-        if (event == null){
+        if (event == null) {
             return;
         }
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -127,51 +133,50 @@ public class AdminPageCtrl {
 
     }
 
-    public void downloadEvent(){
+    public void downloadEvent() {
         Event event = events.getSelectionModel().getSelectedItem();
-        if (event == null){
+        if (event == null) {
             return;
         }
         //object mapper to write object to json
         ObjectMapper obj = new ObjectMapper().registerModule(new JavaTimeModule());
-        ObjectWriter writer = obj.writer(new DefaultPrettyPrinter());
+        obj.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+        ObjectWriter writer = obj.writerWithDefaultPrettyPrinter();
 
         //file chooser to let user choose download destination
-        JFrame parent = new JFrame();
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setSelectedFile(new File(event.getTitle()+".json"));
+        FileChooser fileChooser = new FileChooser();
+        Window parent = new Stage();
+        fileChooser.setInitialFileName(event.getTitle() + ".json");
+        FileChooser.ExtensionFilter extensionFilter =
+                new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json");
+        fileChooser.getExtensionFilters().add(extensionFilter);
 
-        try{
-
-            int returnValue = fileChooser.showOpenDialog(parent);
-            if (returnValue == JFileChooser.APPROVE_OPTION){
-                File saveFile = fileChooser.getSelectedFile();
-                String jsonStr = obj.writeValueAsString(event);
-                obj.writeValue(saveFile, event);
+        File saveFile = fileChooser.showSaveDialog(parent);
+        try {
+            if (saveFile != null) {
+                writer.writeValue(saveFile, event);
+                System.out.println("File saved!");
             }
-
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void importEvent() {
-        JFrame parent = new JFrame();
-        JFileChooser chooser = new JFileChooser();
+        Window parent = new Stage();
+        FileChooser chooser = new FileChooser();
         ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("JSON Files", "json");
-        chooser.setFileFilter(filter);
-        int returnValue = chooser.showOpenDialog(parent);
-        if (returnValue == JFileChooser.APPROVE_OPTION){
-            File file = chooser.getSelectedFile();
-            try {
-                Event event = objectMapper.readValue(file, Event.class);
-                System.out.println(event);
-                server.addEvent(event);
-                showEvents();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        FileChooser.ExtensionFilter extensionFilter =
+                new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json");
+        chooser.getExtensionFilters().add(extensionFilter);
+        File file = chooser.showOpenDialog(parent);
+        try {
+            Event event = objectMapper.readValue(file, Event.class);
+            System.out.println(event);
+            server.addEvent(event);
+            showEvents();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
