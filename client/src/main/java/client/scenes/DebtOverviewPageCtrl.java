@@ -15,6 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseButton;
 
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -25,7 +26,7 @@ public class DebtOverviewPageCtrl implements Initializable {
   @FXML
   private TableColumn<Person, String> name;
   @FXML
-  private TableColumn<Person, Double> debt;
+  private TableColumn<Person, String> debt;
   @FXML
   private Button goBackButton;
   @FXML
@@ -34,6 +35,8 @@ public class DebtOverviewPageCtrl implements Initializable {
   private MainCtrl mainCtrl; // Reference to the MainController
   @FXML
   private final ServerUtils server;
+
+  private static final DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
   /**
    * Constructor for the debt settlement controller.
@@ -54,7 +57,7 @@ public class DebtOverviewPageCtrl implements Initializable {
     this.name = new TableColumn<>("Name");
     this.debt = new TableColumn<>("Debt");
     name.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFirstName()));
-    debt.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getDebt()).asObject());
+    debt.setCellValueFactory(cellData -> new SimpleStringProperty(decimalFormat.format(cellData.getValue().getDebt())));
     debtValueTable.getColumns().clear();
     debtValueTable.getColumns().addAll(name, debt);
 

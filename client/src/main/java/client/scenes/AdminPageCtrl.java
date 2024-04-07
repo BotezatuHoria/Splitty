@@ -13,9 +13,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -101,6 +104,23 @@ public class AdminPageCtrl {
             public void changed(ObservableValue<? extends Event> observable, Event oldValue, Event newValue) {
                 if (newValue != null) {
                     selectedEvent.setText(newValue.getTitle());
+                }
+            }
+        });
+    }
+
+    public void joinEventsList() {
+        events.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2) {
+                    try {
+                        Event event = events.getSelectionModel().selectedItemProperty().get();
+                        mainCtrl.showEventPage(event.getId());
+                    }
+                    catch (Error e) {
+                        mainCtrl.showAlert("This event doesn't exist anymore!");
+                    }
                 }
             }
         });

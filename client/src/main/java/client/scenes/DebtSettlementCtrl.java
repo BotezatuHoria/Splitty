@@ -98,6 +98,7 @@ public class DebtSettlementCtrl {
               "Account holder: " + debt.getReceiver().getFirstName() + " " + debt.getReceiver().getLastName() + "\n"
                        + iban + "\n");
       TitledPane titledPane = getTitledPane(debt, textArea);
+      titledPane.expandedProperty().set(false);
       debtListView.getItems().add(titledPane);
     }
   }
