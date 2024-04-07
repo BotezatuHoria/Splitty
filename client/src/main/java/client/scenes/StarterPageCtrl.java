@@ -11,6 +11,7 @@ import client.utils.FlagListCell;
 import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import commons.Event;
+import jakarta.ws.rs.BadRequestException;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -140,15 +141,22 @@ public class StarterPageCtrl {
     /**
      * Generates a token for the event.
      */
-    private String generateToken(){
-        String allChars = "abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    protected String generateToken(){
+        String allChars = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String token = "";
-        while (token.length() < 8){
+        while (token.length() < 5){
             Random random = new Random();
             int charIndex = random.nextInt(allChars.length());
             token += allChars.charAt(charIndex);
         }
-        return token;
+        try
+        {
+            server.getEventByToken(token);
+        }
+        catch (BadRequestException e){
+            return token;
+        }
+        return generateToken();
     }
 
     /**
