@@ -119,6 +119,6 @@ class CurrencyTest {
     Currency currency = new Currency(75588872, "Dollar");
     currency.setIso(123);
     assertEquals(currency.getIso(), 123);
-    
   }
+
 }

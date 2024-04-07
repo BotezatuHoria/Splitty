@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.util.AutoPopulatingList;
 import server.services.implementations.EventServiceImplementation;
 import server.services.implementations.PersonServiceImplementation;
 import server.services.implementations.TransactionServiceImplementation;
@@ -207,11 +208,10 @@ class EventControllerTest {
 
     @Test
     void addPersonInvalidId() throws JsonProcessingException {
-        Event event = new Event("tag", "title",12, "token", new ArrayList<>(), new ArrayList<>());
+        Event event = new Event("tag", "title", 12, "token", new ArrayList<>(), new ArrayList<>());
         eventService.add(event);
         Person person = new Person("test@email.com", "First", "Test",
                 "iban33");
         assertEquals(BAD_REQUEST, eventService.add(50, person).getStatusCode());
     }
-
 }
