@@ -138,7 +138,7 @@ public class StarterPageCtrl {
     }
 
     /**
-     * Generates a token for the event
+     * Generates a token for the event.
      */
     private String generateToken(){
         String allChars = "abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
