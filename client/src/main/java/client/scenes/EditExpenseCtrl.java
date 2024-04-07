@@ -12,6 +12,7 @@ import client.utils.ServerUtils;
 import commons.Person;
 import commons.Transaction;
 import jakarta.inject.Inject;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -121,6 +122,9 @@ public class EditExpenseCtrl implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tagPane.visibleProperty().set(false);
+        server.registerForMessages("/topic/events/people", Person.class, person -> {
+            Platform.runLater(this::updatePage);
+        });
     }
 
     /**
@@ -340,13 +344,16 @@ public class EditExpenseCtrl implements Initializable {
         addPeopleToPayerBox(people);
         addPeopleToView(people);
         currencyBox.getItems().add(840);
-        String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
-        String entranceFeeString= LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
-        String travelString = LanguageSingleton.getInstance().getResourceBundle().getString("travel.label");
+        //String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
+        //String entranceFeeString= LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
+        //String travelString = LanguageSingleton.getInstance().getResourceBundle().getString("travel.label");
 
-        expenseTypeBox.getItems().add(foodString);
-        expenseTypeBox.getItems().add(entranceFeeString);
-        expenseTypeBox.getItems().add(travelString);
+        //expenseTypeBox.getItems().add(foodString);
+        //expenseTypeBox.getItems().add(entranceFeeString);
+        //expenseTypeBox.getItems().add(travelString);
+        expenseTypeBox.getItems().add("Food");
+        expenseTypeBox.getItems().add("Entrance fees");
+        expenseTypeBox.getItems().add("Travel");
     }
 
     /**
@@ -412,7 +419,7 @@ public class EditExpenseCtrl implements Initializable {
 
 
     public void setLanguageText(ResourceBundle resourceBundle) {
-            editExpenseTitle.setText(resourceBundle.getString("title.text"));
+        editExpenseTitle.setText(resourceBundle.getString("title.text"));
         whoPaidLabel.setText(resourceBundle.getString("who.text"));
         whatForLabel.setText(resourceBundle.getString("what.text"));
         howMuchLabel.setText(resourceBundle.getString("much.text"));

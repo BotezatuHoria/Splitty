@@ -8,6 +8,8 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import server.database.EventRepository;
 import server.services.interfaces.EventService;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -56,6 +58,7 @@ public class EventServiceImplementation implements EventService {
                     existingEvent.setToken(event.getToken());
                     existingEvent.setPeople(event.getPeople());
                     existingEvent.setTransactions(event.getTransactions());
+                    existingEvent.setLastModified(LocalDateTime.now());
                     messagingTemplate.convertAndSend("/topic/event", existingEvent);
                     return ResponseEntity.ok(repo.save(existingEvent));
                 })
@@ -72,7 +75,9 @@ public class EventServiceImplementation implements EventService {
             return ResponseEntity.badRequest().build();
         }
         event.setTitle(newEventTitle.getTitle());
-        repo.save(event);
+        event.setLastModified(LocalDateTime.now());
+        Event saved = repo.save(event);
+        messagingTemplate.convertAndSend("/topic/event", saved);
         return ResponseEntity.ok(event);
     }
 
@@ -125,7 +130,9 @@ public class EventServiceImplementation implements EventService {
             Person savedPerson = psi.add(person).getBody();
             Event event = repo.findById(id).get();
             event.addPerson(savedPerson);
-            repo.save(event);
+            event.setLastModified(LocalDateTime.now());
+            Event saved = repo.save(event);
+            messagingTemplate.convertAndSend("/topic/event", saved);
             return ResponseEntity.ok(savedPerson);
         }
         return ResponseEntity.internalServerError().build();

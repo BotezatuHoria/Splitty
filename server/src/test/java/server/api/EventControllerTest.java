@@ -18,8 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.*;
 
 class EventControllerTest {
 
@@ -47,7 +46,7 @@ class EventControllerTest {
 
 
         transactionRepository = new TestTransactionRepository();
-        transactionService = new TransactionServiceImplementation(transactionRepository);
+        transactionService = new TransactionServiceImplementation(transactionRepository, personService);
 
         eventRepository = new TestEventRepository();
         eventService = new EventServiceImplementation(eventRepository, transactionService, personService,
@@ -179,6 +178,15 @@ class EventControllerTest {
     // If we want to add it later we can add tests to see if the persons in event also get updated.
     @Test
     void createNewExpenseTest() {
+        Person p = new Person("test@gmail.com", "name", "lastname", "iban");
+        List<Person> participants = List.of(p);
+        Transaction transaction = new Transaction("name", LocalDate.now(), 4, 4, participants, p,
+                null);
+        Event event = new Event("tag", "title",12, "token", new ArrayList<>(), new ArrayList<>());
+        eventService.add(event);
+        eventService.add(event.getId(), p);
+        eventService.createNewExpense(event.getId(), transaction);
+        assertEquals(transaction, eventService.getExpenses(event.getId()).getBody().getFirst());
     }
 
     @Test
@@ -207,11 +215,106 @@ class EventControllerTest {
 
     @Test
     void addPersonInvalidId() throws JsonProcessingException {
-        Event event = new Event("tag", "title", 12, "token", new ArrayList<>(), new ArrayList<>());
+        Event event = new Event("tag", "title",12, "token", new ArrayList<>(), new ArrayList<>());
         eventService.add(event);
         Person person = new Person("test@email.com", "First", "Test",
                 "iban33");
         assertEquals(BAD_REQUEST, eventService.add(50, person).getStatusCode());
+    }
+
+    @Test
+    void getAllEventNull() {
+        assertEquals(NO_CONTENT, eventService.getAll().getStatusCode());
+    }
+
+    @Test
+    void updatTitleByIdNull() {
+        assertEquals(BAD_REQUEST, eventService.updateTitleById(1, null).getStatusCode());
+    }
+
+    @Test
+    void updateTitleByIdNotExistent() {
+        Event event = new Event("tag", "title",12, "token", new ArrayList<>(), new ArrayList<>());
+        eventService.add(event);
+        assertEquals(BAD_REQUEST, eventService.updateTitleById(2, event).getStatusCode());
+    }
+
+    @Test
+    void updateTitleById() {
+        Event event = new Event("tag", "title",12, "token", new ArrayList<>(), new ArrayList<>());
+        eventService.add(event);
+        event.setTitle("new title");
+        assertEquals(event, eventService.updateTitleById(12, event).getBody());
+    }
+
+    @Test
+    void updateTitleByIdEmptyTile() {
+        Event event = new Event("tag", "title",12, "token", new ArrayList<>(), new ArrayList<>());
+        eventService.add(event);
+        event.setTitle("");
+        assertEquals(BAD_REQUEST, eventService.updateTitleById(12, event).getStatusCode());
+    }
+
+    @Test
+    void getPeopleFail() {
+
+    }
+
+    @Test
+    void getEventByTokenInvalid() {
+        Event event = new Event("tag", "title",12, "token", new ArrayList<>(), new ArrayList<>());
+        eventService.add(event);
+        assertEquals(BAD_REQUEST, eventService.getEventByToken("x").getStatusCode());
+    }
+
+    @Test
+    void deletePerson() {
+        Person p = new Person("test@gmail.com", "name", "lastname", "iban");
+        List<Person> participants = List.of(p);
+        Transaction transaction = new Transaction("name", LocalDate.now(), 4, 4, participants, p,
+                null);
+        Event event = new Event("tag", "title",12, "token", new ArrayList<>(), new ArrayList<>());
+        eventService.add(event);
+        eventService.add(event.getId(), p);
+        eventService.createNewExpense(event.getId(), transaction);
+        eventService.deletePerson(event.getId(), p.getId());
+        assertEquals(List.of(), eventService.getExpenses(event.getId()).getBody());
+        assertEquals(List.of(), eventService.getPeople(event.getId()).getBody());
+    }
+
+    @Test
+    void deleteTransaction() {
+        Person p = new Person("test@gmail.com", "name", "lastname", "iban");
+        List<Person> participants = List.of(p);
+        Transaction transaction = new Transaction("name", LocalDate.now(), 4, 4, participants, p,
+                null);
+        Event event = new Event("tag", "title",12, "token", new ArrayList<>(), new ArrayList<>());
+        eventService.add(event);
+        eventService.add(event.getId(), p);
+        eventService.createNewExpense(event.getId(), transaction);
+        eventService.deleteTransaction(event.getId(), transaction.getId());
+        assertEquals(List.of(), eventService.getExpenses(event.getId()).getBody());
+    }
+
+    @Test
+    void deleteTransactionEventIDBad() {
+        assertEquals(BAD_REQUEST, eventService.deleteTransaction(-1, 0).getStatusCode());
+    }
+
+    @Test
+    void debtCalculator() {
+        Person p1 = new Person("test@gmail.com", "name", "lastname", "iban");
+        Person p2 = new Person("testing@gmail.com", "nem", "last", "ibab");
+        List<Person> participants = List.of(p1, p2);
+        Transaction transaction = new Transaction("name", LocalDate.now(), 20, 4, participants, p1,
+                null);
+        Event event = new Event("tag", "title",12, "token", new ArrayList<>(), new ArrayList<>());
+        eventService.add(event);
+        eventService.add(event.getId(), p1);
+        eventService.add(event.getId(), p2);
+        eventService.createNewExpense(event.getId(), transaction);
+        assertTrue(eventService.getPeople(event.getId()).getBody().getFirst().getDebt() ==
+                -eventService.getPeople(event.getId()).getBody().getLast().getDebt());
     }
 
     @Test
@@ -222,4 +325,5 @@ class EventControllerTest {
         var actual = eventService.getEventByToken("token");
         assertEquals(test, actual.getBody());
     }
+
 }

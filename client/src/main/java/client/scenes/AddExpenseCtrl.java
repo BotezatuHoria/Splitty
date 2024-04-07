@@ -160,13 +160,17 @@ public class AddExpenseCtrl implements Initializable {
         addPeopleToView(people);
         addPeopleToPayerBox(people);
         currencyBox.getItems().add(840);
-        String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
-        String entranceFeeString= LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
-        String travelString = LanguageSingleton.getInstance().getResourceBundle().getString("travel.label");
 
-        expenseTypeBox.getItems().add(foodString);
-        expenseTypeBox.getItems().add(entranceFeeString);
-        expenseTypeBox.getItems().add(travelString);
+        //String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
+        //String entranceFeeString= LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
+        //String travelString = LanguageSingleton.getInstance().getResourceBundle().getString("travel.label");
+
+        //expenseTypeBox.getItems().add(foodString);
+        //expenseTypeBox.getItems().add(entranceFeeString);
+        //expenseTypeBox.getItems().add(travelString);
+        expenseTypeBox.getItems().add("Food");
+        expenseTypeBox.getItems().add("Entrance fees");
+        expenseTypeBox.getItems().add("Travel");
     }
 
     /**

@@ -81,7 +81,7 @@ public class Main extends Application {
         var debtOverviewPage = FXML.load(DebtOverviewPageCtrl.class, "client", "scenes", "DebtOverviewPage.fxml");
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
         mainCtrl.initialize(primaryStage, starterPage, eventPage, statisticsPage, expensePage, startSettings,
-                addParticipants, editParticipants, inviteSend, debtPage,adminLogin, adminPage, editExpensePage);
+                addParticipants, editParticipants, inviteSend, debtPage,adminLogin, adminPage, editExpensePage, debtOverviewPage);
 
         primaryStage.setOnCloseRequest(e -> {
             eventPage.getKey().stop();

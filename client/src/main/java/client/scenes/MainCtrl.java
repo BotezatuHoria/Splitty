@@ -107,7 +107,8 @@ public class MainCtrl {
                            Pair<DebtSettlementCtrl, Parent> debt,
                            Pair<AdminLoginCtrl, Parent> adminLoginPage,
                            Pair<AdminPageCtrl, Parent> adminPage,
-                           Pair<EditExpenseCtrl, Parent> editExpensePage){
+                           Pair<EditExpenseCtrl, Parent> editExpensePage,
+                           Pair<DebtOverviewPageCtrl, Parent> debtOverview){
         this.server = new ServerUtils();
 
         this.primaryStage = primaryStage;
@@ -138,6 +139,10 @@ public class MainCtrl {
 
         this.debtSettlementCtrl = debt.getKey();
         this.debt = new Scene(debt.getValue());
+
+        this.debtOverview = new Scene(debtOverview.getValue());
+        this.debtOverviewPageCtrl = debtOverview.getKey();
+
 
         this.adminLoginCtrl = adminLoginPage.getKey();
         this.adminLogin = new Scene(adminLoginPage.getValue());

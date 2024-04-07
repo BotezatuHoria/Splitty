@@ -18,8 +18,10 @@ import java.util.function.Consumer;
 public class TransactionServiceImplementation implements TransactionService {
 
     private final TransactionRepository repo;
-    public TransactionServiceImplementation(TransactionRepository repo){
+    private final PersonServiceImplementation psi;
+    public TransactionServiceImplementation(TransactionRepository repo, PersonServiceImplementation psi){
         this.repo = repo;
+        this.psi = psi;
     }
     @Override
     public ResponseEntity<List<Transaction>> getAll() {
@@ -111,6 +113,7 @@ public class TransactionServiceImplementation implements TransactionService {
                 newData.getMoney() == 0 || newData.getCurrency() == 0) {
             return ResponseEntity.badRequest().build();
         }
+        debtCalc(getById(id).getBody(), "removal");
         return repo.findById(id)
                 .map(existingTransaction -> {
                     existingTransaction.setName(newData.getName());
@@ -122,6 +125,7 @@ public class TransactionServiceImplementation implements TransactionService {
                     listeners.forEach((k, v) -> {
                         v.accept(existingTransaction);
                     });
+                    debtCalc(existingTransaction, "addition");
                     return ResponseEntity.ok(repo.save(existingTransaction));
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -165,5 +169,23 @@ public class TransactionServiceImplementation implements TransactionService {
             listeners.remove(key);
         });
         return deferredResult;
+    }
+
+    public void debtCalc(Transaction transaction, String type) {
+        double money = transaction.getMoney();
+        if (type.equals("removal")) {
+            money *= -1;
+        }
+        int people = transaction.getParticipants().size();
+        Person creator = transaction.getCreator();
+        double debt = 0;
+        debt = money / people;
+        Person crt = psi.getById(creator.getId()).getBody();
+        crt.setDebt(crt.getDebt() + money);
+        for (Person p : transaction.getParticipants()) {
+            Person person = psi.getById(p.getId()).getBody();
+            person.setDebt(person.getDebt() - debt);
+            psi.updateById(p.getId(), person);
+        }
     }
 }
