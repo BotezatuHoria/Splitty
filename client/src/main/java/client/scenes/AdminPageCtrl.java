@@ -168,6 +168,7 @@ public class AdminPageCtrl {
                 Event event = objectMapper.readValue(file, Event.class);
                 System.out.println(event);
                 server.addEvent(event);
+                showEvents();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

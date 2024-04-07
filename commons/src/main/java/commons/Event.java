@@ -26,10 +26,10 @@ public class Event {
     private LocalDate lastModified;
 
 
-    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     protected List<Person> people;
 
-    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     protected List<Transaction> transactions;
 
     /**
