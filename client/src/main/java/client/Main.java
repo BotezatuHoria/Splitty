@@ -59,7 +59,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws IOException {
 
         getConfigFile();
-        boolean result = checkConnection(); //if this is false, the client is trying to connect to a server that is not running.
+        String host = config.getClientsServer();
+        boolean result = checkConnection(host); //if this is false, the client is trying to connect to a server that is not running.
         // we can choose to have ui for this or not...
 
         var starterPage = FXML.load(StarterPageCtrl.class, "client", "scenes", "StarterPage.fxml");
@@ -77,6 +78,7 @@ public class Main extends Application {
                 "ParticipantEditPage.fxml");
         var editExpensePage = FXML.load(EditExpenseCtrl.class, "client", "scenes", "EditExpense.fxml");
 
+        var debtOverviewPage = FXML.load(DebtOverviewPageCtrl.class, "client", "scenes", "DebtOverviewPage.fxml");
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
         mainCtrl.initialize(primaryStage, starterPage, eventPage, statisticsPage, expensePage, startSettings,
                 addParticipants, editParticipants, inviteSend, debtPage,adminLogin, adminPage, editExpensePage);
@@ -133,8 +135,8 @@ public class Main extends Application {
      * checks whether the server the client wants to connect to is running (tested with an api call).
      * @return true when client connects to running server, false otherwise.
      */
-    public boolean checkConnection(){
-        String uri = config.getClientsServer() + "/api/events";
+    public boolean checkConnection(String host){
+        String uri = host + "/api/events";
         URL url;
         try {
             url = new URI(uri).toURL();

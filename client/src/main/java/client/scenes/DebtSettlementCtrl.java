@@ -57,6 +57,9 @@ public class DebtSettlementCtrl {
     this.server = server;
 
   }
+  /**
+   * Method to initialize the debt settlement controller.
+   */
   @FXML // This method is called by the FXMLLoader when initialization is complete
   void initialize() {
     assert sendEmailButton != null : "fx:id=\"sendEmailButton\" was not injected: check your FXML file 'OpenDebts.fxml'.";
@@ -67,17 +70,27 @@ public class DebtSettlementCtrl {
     rootPane.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/DebtSettlementStyle.css")).toExternalForm());
     server.registerForMessages("/topic/events/people", Person.class, person -> {
       clear();
-      populateOpenDebts();
+      allDebts();
     });
   }
-
   /**
-   * depicts the debts that are still open on the debt list View in the debt-overview.
+   * Populates the open debts list.
    */
-  public void populateOpenDebts(){
+  public void debtsOfPerson(int idPerson){
+    List<DebtCellData> debts = server.getDebtsOfPerson(mainCtrl.getCurrentEventID(), idPerson);
+    populateOpenDebts(debts);
+  }
+  public void allDebts(){
     List<DebtCellData> debts = server.getOpenDebts(mainCtrl.getCurrentEventID());
+    populateOpenDebts(debts);
+  }
+  /**
+   * Populates the open debts list.
+   */
+  public void populateOpenDebts(List<DebtCellData> debts){
     LanguageSingleton lang = LanguageSingleton.getInstance();
     ResourceBundle messages = lang.getResourceBundle();
+
     for(DebtCellData debt : debts){
       String iban = debt.getReceiver().getIban();
       if (iban == null || iban.isEmpty()) {
@@ -97,12 +110,12 @@ public class DebtSettlementCtrl {
 
   /**
    * returns the debtCellPane but titled with the correct text/body.
-   * @param debt debtcellData filled with the debt of a person.
+   * @param debt debtCellData filled with the debt of a person.
    * @param textArea textArea of the debt cell.
    * @return return a titledPane with the correct text/naming and debt amount
    */
-  private static TitledPane getTitledPane(DebtCellData debt, TextArea textArea) {
-    HBox hBox = createButtonBox();
+  private TitledPane getTitledPane(DebtCellData debt, TextArea textArea) {
+    HBox hBox = createButtonBox(debt);
     VBox vBox = new VBox(10, hBox, textArea); // 10 is the spacing between elements
     vBox.getStyleClass().add("debt-vbox");
     String text = (LanguageSingleton.getInstance().getResourceBundle().getString("string.format"));
@@ -112,13 +125,19 @@ public class DebtSettlementCtrl {
     return new TitledPane(title, anchorPane);
   }
 
-  private static HBox createButtonBox() {
+  /**
+   * Creates a button box.
+   * @param debt debtCellData filled with the debt of a person.
+   * @return returns a HBox with the buttons.
+   */
+  private HBox createButtonBox(DebtCellData debt) {
     String markReceivedString = (LanguageSingleton.getInstance().getResourceBundle().getString("mark.button"));
     String sendEmailString = (LanguageSingleton.getInstance().getResourceBundle().getString("sendMail.button"));
     String settleDebtString = (LanguageSingleton.getInstance().getResourceBundle().getString("settle.button"));
 
     Button markReceived = new Button(markReceivedString);
     markReceived.getStyleClass().add("debt-button");
+    markReceived.setOnAction(event -> settleDebt(debt));
     Button sendEmail = new Button(sendEmailString);
     sendEmail.getStyleClass().add("debt-button");
     Button settleDebt = new Button(settleDebtString);
@@ -147,7 +166,7 @@ public class DebtSettlementCtrl {
    * Method to go back to the event page.
    */
   public void goBack() {
-    mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
+    mainCtrl.showDebtOverviewPage();
   }
 
 }

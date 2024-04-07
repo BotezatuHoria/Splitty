@@ -27,6 +27,8 @@ public class EventsSingleton {
         this.events = events;
     }
 
+    public void addEvent(Event event) { this.events.add(event); }
+
     public Event getEventById(int id) {
         for (Event event : events) {
             if (event.getId() == id) {

@@ -15,10 +15,10 @@
  */
 package client.scenes;
 
-import client.utils.EventsSingleton;
 import client.utils.LanguageSingleton;
 import client.utils.SelectedEventSingleton;
-import commons.Event;
+import commons.Person;
+import commons.Transaction;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -27,7 +27,6 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 import client.utils.ServerUtils;
 
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainCtrl {
@@ -78,6 +77,9 @@ public class MainCtrl {
     private Scene editExpensePage;
     private EditExpenseCtrl editExpenseCtrl;
 
+    private Scene debtOverview;
+    private DebtOverviewPageCtrl debtOverviewPageCtrl;
+
     public MainCtrl() {
     }
 
@@ -105,12 +107,8 @@ public class MainCtrl {
                            Pair<DebtSettlementCtrl, Parent> debt,
                            Pair<AdminLoginCtrl, Parent> adminLoginPage,
                            Pair<AdminPageCtrl, Parent> adminPage,
-                           Pair<EditExpenseCtrl, Parent> editExpensePage) {
+                           Pair<EditExpenseCtrl, Parent> editExpensePage){
         this.server = new ServerUtils();
-
-        EventsSingleton eventsInstance = EventsSingleton.getInstance();
-        List<Event> events = server.getEvents();
-        eventsInstance.setEvents(events);
 
         this.primaryStage = primaryStage;
 
@@ -191,6 +189,7 @@ public class MainCtrl {
      * Method for showing statistics page.
      */
     public void showStatisticsPage() {
+        statisticsCtrl.initializeStatistics();
         primaryStage.setTitle("Statistics Page");
         primaryStage.setScene(statistics);
     }
@@ -202,13 +201,6 @@ public class MainCtrl {
         primaryStage.setTitle("Add Expense");
         expenseCtrl.retrievePeopleFromDb();
         primaryStage.setScene(expense);
-
-    }
-
-    /**
-     * Method for showing the Debt settlement page.
-     */
-    public void showDebtSettlementPage(){
 
     }
 
@@ -240,16 +232,38 @@ public class MainCtrl {
     }
 
     /**
+     * Method for showing the debt overview page.
+     */
+    public void showDebtOverviewPage() {
+        primaryStage.setTitle("Debt Overview");
+        debtOverviewPageCtrl.populateDebtList();
+        primaryStage.setScene(debtOverview);
+    }
+    /**
      * Method for showing the debt page.
      */
     public void showDebtPage() {
         primaryStage.setTitle("Open debts");
         debtSettlementCtrl.clear();
-        debtSettlementCtrl.populateOpenDebts();
+        debtSettlementCtrl.allDebts();
         primaryStage.setScene(debt);
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Method for showing the debt page for a specific person.
+     * @param person - the person to show the debt page for.
+     */
+    public void showDebtPageForSpecificPerson(Person person) {
+        debtSettlementCtrl.clear();
+        debtSettlementCtrl.debtsOfPerson(person.getId());
+        primaryStage.setTitle("Debts for " + person.getFirstName() + " " + person.getLastName());
+        primaryStage.setScene(debt);
+    }
+
+    /**
+>>>>>>> main
      * Method for showing the admin login.
      */
     public void showAdminLogin(){
@@ -315,4 +329,22 @@ public class MainCtrl {
         adminPageCtrl.setLanguageText(resourceBundle);
         editExpenseCtrl.setLanguageText(resourceBundle);
     }
+
+    /**
+     * Method that builds the string representation of a transaction with all the people inside it.
+     * @param id of the transaction you want to display.
+     * @return
+     */
+    public String transactionString(int id) {
+        Transaction t = server.getTransactionByID(id);
+        String ret = t + " by " + server.getPersonByID(t.getCreator().getId()) + " and including participants: ";
+        if (t.getParticipants() == null || t.getParticipants().isEmpty()) {
+            return ret + "no participants;";
+        }
+        for(Person p: t.getParticipants()) {
+            ret += server.getPersonByID(p.getId()) + ", ";
+        }
+        return ret.substring(0, ret.length() - 2) + ";";
+    }
+
 }

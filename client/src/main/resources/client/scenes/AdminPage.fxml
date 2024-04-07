@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.AdminPageCtrl">
+<AnchorPane prefHeight="500.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.AdminPageCtrl">
    <children>
       <Label fx:id="adminPageLabel" layoutX="14.0" layoutY="14.0" text="Admin Page">
          <font>
@@ -20,9 +20,9 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="downloadEvent" layoutX="425.0" layoutY="99.0" mnemonicParsing="false" onAction="#downloadEvent" text="Download" />
-      <Button fx:id="deleteEvent" layoutX="425.0" layoutY="273.0" mnemonicParsing="false" onAction="#delete" prefHeight="26.0" prefWidth="70.0" text="Delete" />
-      <Button fx:id="importEvent" layoutX="425.0" layoutY="187.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Import" />
+      <Button fx:id="downloadEvent" onAction="#downloadEvent" layoutX="425.0" layoutY="99.0" mnemonicParsing="false" text="Download" />
+      <Button fx:id="deleteEvent" onAction="#delete" layoutX="425.0" layoutY="273.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Delete" />
+      <Button fx:id="importEvent" onAction="#importEvent" layoutX="425.0" layoutY="187.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Import" />
       <Label fx:id="selectedEventLabel" layoutX="36.0" layoutY="342.0" prefHeight="30.0" prefWidth="141.0" text="Selected Event:">
          <font>
             <Font size="20.0" />

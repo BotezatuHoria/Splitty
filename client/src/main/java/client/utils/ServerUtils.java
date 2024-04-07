@@ -18,12 +18,7 @@ package client.utils;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.reflect.Type;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -67,6 +62,17 @@ public class ServerUtils {
 				.accept(APPLICATION_JSON) //
 				.get(new GenericType<>() {
 				});
+	}
+	public List<DebtCellData> getDebtsOfPerson(int id, int idPerson) {
+		List<DebtCellData> openDebts = getOpenDebts(id);
+		List<DebtCellData> openDebtsForSpecificPerson = new ArrayList<>();
+		for (DebtCellData debt : openDebts) {
+			if (debt.getSender().getId() == idPerson){ //|| debt.getReceiver().getId() == idPerson (depends what we need)
+				openDebtsForSpecificPerson.add(debt);
+			}
+		}
+		return openDebtsForSpecificPerson;
+
 	}
 
 	/**
@@ -409,5 +415,33 @@ public class ServerUtils {
 		BigDecimal bd = BigDecimal.valueOf(value);
 		bd = bd.setScale(places, RoundingMode.HALF_UP);
 		return bd.doubleValue();
+	}
+
+
+	/**
+	 * Gets the person with the following id.
+	 * @param idPerson of the transaction you want.
+	 * @return a person
+	 */
+	public Person getPersonByID(int idPerson) {
+
+		return ClientBuilder.newClient(new ClientConfig())
+				.target(server).path("api/person/" + idPerson)
+				.request(APPLICATION_JSON)
+				.accept(APPLICATION_JSON)
+				.get(new GenericType<Person>() {});
+	}
+
+	/**
+	 * Gets an event from the server using the invite token.
+	 * @param token the token of the event
+	 * @return the event
+	 */
+	public Event getEventByToken(String token){
+		return ClientBuilder.newClient(new ClientConfig())
+				.target(server).path("api/event/token/" + token)
+				.request(APPLICATION_JSON)
+				.accept(APPLICATION_JSON)
+				.get(new GenericType<Event>() {});
 	}
 }

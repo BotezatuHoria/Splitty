@@ -11,6 +11,7 @@ import client.utils.FlagListCell;
 import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import commons.Event;
+import jakarta.ws.rs.BadRequestException;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -63,6 +64,9 @@ public class StarterPageCtrl {
 
     @FXML
     private Button adminbutton;
+
+    @FXML
+    private Button settingButton;
 
     /**
      * Constructor for the StarterPageCtrl class.
@@ -127,26 +131,45 @@ public class StarterPageCtrl {
      */
     public void showEventPage() {
         String name = createTextField.getText();
+
         if(name.equals("")) {name = "New Event";}
-        Event event = server.addEvent(new Event("", name, 0, "", new ArrayList<>(), new ArrayList<>()));
-        System.out.println(event);
+        Event event = server.addEvent(new Event("", name, 0, generateToken(), new ArrayList<>(), new ArrayList<>()));
         listView.getItems().add(event);
         mainCtrl.showEventPage(event.getId());
+    }
+
+    /**
+     * Generates a token for the event.
+     */
+    protected String generateToken(){
+        String allChars = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String token = "";
+        while (token.length() < 5){
+            Random random = new Random();
+            int charIndex = random.nextInt(allChars.length());
+            token += allChars.charAt(charIndex);
+        }
+        try
+        {
+            server.getEventByToken(token);
+        }
+        catch (BadRequestException e){
+            return token;
+        }
+        return generateToken();
     }
 
     /**
      * Method that allows you to join an event using a code.
      */
     public void joinEvent() {
-        String name = joinTextField.getText();
-        // This needs to be decoded in the future use, method by Tom
-        int eventId = translateShareCode(name);
+        String token = joinTextField.getText();
         try {
-            server.getEventByID(eventId);
-            if (!listView.getItems().contains(server.getEventByID(eventId))) {
-                listView.getItems().add(server.getEventByID(eventId));
+            server.getEventByToken(token);
+            if (!listView.getItems().contains(server.getEventByToken(token))) {
+                listView.getItems().add(server.getEventByToken(token));
             }
-            mainCtrl.showEventPage(eventId);
+            mainCtrl.showEventPage(server.getEventByToken(token).getId());
         }
         catch (Exception e){
             // System.out.println("This event doesn't exist");
@@ -180,9 +203,9 @@ public class StarterPageCtrl {
             public void handle(MouseEvent mouseEvent) {
                 if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2) {
                     try {
-                        int eventId = listView.getSelectionModel().getSelectedItem().getId();
-                        server.getEventByID(eventId);
-                        mainCtrl.showEventPage(eventId);
+                        String token = listView.getSelectionModel().getSelectedItem().getToken();
+                        Event event = server.getEventByToken(token);
+                        mainCtrl.showEventPage(event.getId());
                     }
                     catch (Error e) {
                         mainCtrl.showAlert(LanguageSingleton.getInstance().getResourceBundle().getString("error.event.nonexistent"));
@@ -217,6 +240,10 @@ public class StarterPageCtrl {
                 joinEvent();
             }
         }
+    }
+
+    public void showSettingsPage(){
+        mainCtrl.showStartSettings();
     }
 
 }

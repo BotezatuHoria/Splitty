@@ -52,9 +52,6 @@ public class EventPageCtrl implements Initializable {
     @FXML // fx:id="expensesLabel"
     private Label expensesLabel; // Value injected by FXMLLoader
 
-    @FXML // fx:id="EditParticipant"
-    private Button EditParticipant; // Value injected by FXMLLoader
-
     @FXML // fx:id="AddParticipant"
     private Button AddParticipant; // Value injected by FXMLLoader
 
@@ -101,13 +98,16 @@ public class EventPageCtrl implements Initializable {
     private ComboBox<Person> participantsScroll;
 
     @FXML // fx:id="listTransactions"
-    private ListView<Transaction> listTransactions;
+    private ListView<String> listTransactions;
 
     @FXML // fx:id="editExpense"
     private Button editExpense;
 
     @FXML // fx:id="editName"
     private Button editName;
+
+    @FXML
+    private Button settingButton;
 
 
     /**
@@ -153,10 +153,10 @@ public class EventPageCtrl implements Initializable {
     }
 
     /**
-     * Method for accessing the debts page.
+     * Method for accessing the debt overview page.
      */
     public void settleDebts() {
-        mainCtrl.showDebtPage();
+        mainCtrl.showDebtOverviewPage();
     }
 
     /**
@@ -213,7 +213,10 @@ public class EventPageCtrl implements Initializable {
         }
         if (!display.isBlank()) {display = display.substring(0, display.length() - 2);}
         participantsList.setText(display);
-        System.out.println("This is selected" + participantsScroll.getSelectionModel().getSelectedItem());
+        if(participantsScroll.getSelectionModel().getSelectedItem()!= null){
+            System.out.println("This participant added to the event: " + participantsScroll.getSelectionModel().getSelectedItem());
+        }
+
     }
 
     /**
@@ -221,7 +224,10 @@ public class EventPageCtrl implements Initializable {
      */
     public void selectParticipant() {
         Person person = participantsScroll.getSelectionModel().getSelectedItem();
-        System.out.println(person);
+        if(person != null){
+            System.out.println("This participant is selected: " + person);
+        }
+
         if (person != null) {
             ResourceBundle resourceBundle = LanguageSingleton.getInstance().getResourceBundle();
 
@@ -236,7 +242,7 @@ public class EventPageCtrl implements Initializable {
     public void displayTransactions() {
         listTransactions.getItems().clear();
         for (Transaction t : dataTransactions) {
-            listTransactions.getItems().add(t);
+            listTransactions.getItems().add(mainCtrl.transactionString(t.getId()));
         }
     }
 
@@ -252,7 +258,7 @@ public class EventPageCtrl implements Initializable {
 
         for (Transaction transaction: transactions) {
             if (transaction.getCreator().getId() == creator) {
-                listTransactions.getItems().add(transaction);
+                listTransactions.getItems().add(mainCtrl.transactionString(transaction.getId()));
             }
         }
     }
@@ -269,7 +275,7 @@ public class EventPageCtrl implements Initializable {
 
         for (Transaction transaction: transactions) {
             if (transaction.getParticipantsIds().contains(included)) {
-                listTransactions.getItems().add(transaction);
+                listTransactions.getItems().add(mainCtrl.transactionString(transaction.getId()));
             }
         }
 
@@ -336,7 +342,7 @@ public class EventPageCtrl implements Initializable {
         showStatistics.setText(resourceBundle.getString("showStats.button"));
         SendInvites.setText(resourceBundle.getString("sendInvites.button"));
         participantsLabel.setText(resourceBundle.getString("participants"));
-        EditParticipant.setText(resourceBundle.getString("edit.button"));
+        editParticipants.setText(resourceBundle.getString("edit.button"));
         AddParticipant.setText(resourceBundle.getString("addParticipant.button"));
         expensesLabel.setText(resourceBundle.getString("expenses"));
         allExpenses.setText(resourceBundle.getString("all.button"));
@@ -346,6 +352,10 @@ public class EventPageCtrl implements Initializable {
 
     public void stop() {
         server.stop();
+    }
+
+    public void showSettingsPage(){
+        mainCtrl.showStartSettings();
     }
 }
 

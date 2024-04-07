@@ -92,7 +92,7 @@ public class AddExpenseCtrl implements Initializable {
     private TextField newTagField;
 
     @FXML
-    private Button addTag;
+    private Button addTagButton;
 
     //private final ServerUtils server;
 

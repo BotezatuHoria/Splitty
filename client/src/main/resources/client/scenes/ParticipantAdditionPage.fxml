@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.ParticipantAdditionPageCtrl">
+<AnchorPane prefHeight="500.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.ParticipantAdditionPageCtrl">
    <children>
-      <Label fx:id="participantAdditionLabel" layoutX="26.0" layoutY="14.0" text="Add/Edit new Participant">
+      <Label fx:id="participantAdditionLabel" layoutX="26.0" layoutY="14.0" text="Add new Participant">
          <font>
             <Font size="28.0" />
          </font>

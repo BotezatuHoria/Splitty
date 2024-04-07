@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TransactionTest {
     /**
@@ -145,4 +146,136 @@ public class TransactionTest {
         t.setCurrency(840);
         assertEquals(840, t.getCurrency());
     }
+
+    @Test
+    public void emptyConstructorTest() {
+        Transaction t = new Transaction();
+        assertNotEquals(t, null);
+    }
+
+    @Test
+    public void alternativeConstructorTest() {
+        Transaction t = new Transaction("test",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+                100, 947, "type", new ArrayList<>(), new Person());
+        assertEquals("test", t.getName());
+        assertEquals(1970, t.getDate().getYear());
+        assertEquals(10, t.getDate().getMonthValue());
+        assertEquals(10, t.getDate().getDayOfMonth());
+        assertEquals(100, t.getMoney());
+        assertEquals(947, t.getCurrency());
+
+    }
+
+    @Test
+    public void getIdTest() {
+        Transaction t = new Transaction("test",
+            LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+            100, 947, "type", new ArrayList<>(), new Person());
+        assertEquals(t.getId(), 0);
+    }
+
+    @Test
+    public void getExpenseTypeTest() {
+        Transaction t = new Transaction("test",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+                100, 947, "type", new ArrayList<>(), new Person());
+        assertEquals(t.getExpenseType(), "type");
+    }
+
+    @Test
+    public void getParticipantsTest() {
+        List<Person> participants = new ArrayList<>();
+        participants.add(new Person("test@email.com", "First", "Test",
+                "iban33"));
+        Transaction t = new Transaction("test",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+                100, 947, "type", participants, new Person());
+        assertEquals(t.getParticipants(), participants);
+    }
+
+    @Test
+    public void getCreatorTest() {
+        Person creator = new Person("test@email.com", "First", "Test",
+                "iban33");
+        Transaction t = new Transaction("test",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+                100, 947, "type", new ArrayList<>(), creator);
+        assertEquals(t.getCreator(), creator);
+
+    }
+
+    @Test
+    public void setParticipantTest() {
+        List<Person> participants = new ArrayList<>();
+        participants.add(new Person("test@email.com", "First", "Test",
+                "iban33"));
+        Transaction t = new Transaction("test",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+                100, 947, "type", new ArrayList<>(), new Person());
+        t.setParticipants(participants);
+        assertEquals(t.getParticipants(), participants);
+
+    }
+
+    @Test
+    public void setCreatorTest() {
+        Person creator = new Person("test@email.com", "First", "Test",
+                "iban33");
+        Transaction t = new Transaction("test",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+                100, 947, "type", new ArrayList<>(), new Person());
+        t.setCreator(creator);
+        assertEquals(t.getCreator(), creator);
+    }
+
+    @Test
+    public void setExpenseTypeTest() {
+        Transaction t = new Transaction("test",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+                100, 947, "type22", new ArrayList<>(), new Person());
+        t.setExpenseType("type");
+        assertEquals(t.getExpenseType(), "type");
+    }
+
+    @Test
+    public void toStringTest() {
+        Transaction t = new Transaction("test",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+                100, 947, "type22", new ArrayList<>(), new Person());
+        assertEquals(t.toString(), "test, date: 1970-10-10, 100.0 947");
+    }
+
+    @Test
+    public void hashTest() {
+        Transaction t = new Transaction("test",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+                100, 947, "type22", new ArrayList<>(), new Person());
+        Transaction t2 = new Transaction("test",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+                100, 947, "type22", new ArrayList<>(), new Person());
+        assertEquals(t.hashCode(), t2.hashCode());
+
+    }
+
+    @Test
+    public void getParticipantsIdsTest() {
+        Transaction t = new Transaction("test",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+                100, 947, "type22", new ArrayList<>(), new Person());
+        List<Person> participants = new ArrayList<>();
+        participants.add(new Person("test@email.com", "First", "Test",
+                "iban33"));
+        t.setParticipants(participants);
+        assertEquals(t.getParticipantsIds().size(), 1);
+        Transaction t2 = new Transaction("test",
+                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+                100, 947, "type22", null, new Person());
+        assertEquals(t2.getParticipants(), null);
+    }
+
+
+
+
+
 }

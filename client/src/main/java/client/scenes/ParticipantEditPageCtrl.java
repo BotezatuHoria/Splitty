@@ -127,7 +127,6 @@ public class ParticipantEditPageCtrl {
         for (Person person : people) {
             participantsScroll.getItems().add(person);
         }
-        System.out.println(participantsScroll.getItems());
     }
 
     /**
@@ -135,7 +134,7 @@ public class ParticipantEditPageCtrl {
      */
     public void selectParticipant() {
         Person person = participantsScroll.getSelectionModel().getSelectedItem();
-        System.out.println("person to edit: " + person);
+        System.out.println("Person selected to edit: " + person);
         if (person != null) {
             originalFName.setText(person.getFirstName());
             originalLName.setText(person.getLastName());
@@ -165,10 +164,10 @@ public class ParticipantEditPageCtrl {
             person.setEmail(newEmail);
             person.setIban(newIban);
             Person updatedperson = server.updatePerson(person.getId(), person);
-            System.out.println("person with id " + person.getId() + " was adjusted to " + updatedperson);
+            System.out.println("PERSON EDITED: person with id " + person.getId() + " was adjusted to " + updatedperson);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Person edited succesfully!");
-            alert.show();
+            alert.setContentText("Person edited successfully!");
+            alert.showAndWait();
             clearFields();
             mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
         } else {
@@ -195,7 +194,7 @@ public class ParticipantEditPageCtrl {
                     personIsDuplicate = true;
                     warningLabel.setText("A person with this combination of first and last name already exists. " +
                             "Please rename this, or the other equally named person.");
-                    System.out.println("tried to add a combination of firstname and lastname that already exists");
+                    System.out.println("ADDING FAILED: Tried to add a combination of firstname and lastname that already exists");
                     return personIsDuplicate;
                 }
 
