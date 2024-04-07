@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Person;
@@ -52,6 +53,12 @@ public class ParticipantAdditionPageCtrl {
 
     @FXML
     private Label firstnameResponse;
+
+    @FXML
+    private Label participantAdditionLabel;
+
+    @FXML
+    private Label nameLabel;
 
     @FXML
     private Label lastnameResponse;
@@ -110,7 +117,7 @@ public class ParticipantAdditionPageCtrl {
 
         if( server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID()).size()> amountOfPerson )    {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Participant added successfully!");
+            alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("participant.add.success"));
             alert.show();
             clearFields();
             mainCtrl.showEventPage(mainCtrl.getCurrentEventID());  //This method still needs to be created
@@ -168,9 +175,9 @@ public class ParticipantAdditionPageCtrl {
 
         List<Person> allPersons = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
 
-        firstnameResponse.setText("Cannot be empty! Fill in this field!");     //as standard, there are warnings, they go away when not applicable.
+        firstnameResponse.setText(LanguageSingleton.getInstance().getResourceBundle().getString("error.emptyField"));     //as standard, there are warnings, they go away when not applicable.
         firstnameResponse.setStyle("-fx-font-style: italic");
-        lastnameResponse.setText("Cannot be empty! Fill in this field!");
+        lastnameResponse.setText(LanguageSingleton.getInstance().getResourceBundle().getString("error.emptyField"));
         lastnameResponse.setStyle("-fx-font-style: italic");
 
         if(newFirstName.isEmpty() && newLastName.isEmpty()){
@@ -184,9 +191,9 @@ public class ParticipantAdditionPageCtrl {
             firstnameResponse.setText("");
         }
         else if (isDuplicate) {
-            firstnameResponse.setText("Make firstname + lastname a unique combination. ");
+            firstnameResponse.setText(LanguageSingleton.getInstance().getResourceBundle().getString("error.duplicatePerson"));
             lastnameResponse.setText("");
-            doublePersonResponse.setText("The combination of this first and last name already exists in this event. It is recommended to rename this participant.");
+            doublePersonResponse.setText(LanguageSingleton.getInstance().getResourceBundle().getString("error.personExists"));
             System.out.println("User tried to add a person already existing in this event (by first + lastname");
             System.out.println();
         }
@@ -211,7 +218,7 @@ public class ParticipantAdditionPageCtrl {
         boolean personIsDuplicate = false;
         for (Person e : allPersons) {
             if (firstname.equals(e.getFirstName()) && lastname.equals(e.getLastName())) {
-                doublePersonResponse.setText("The combination of this first and last name already exists in this event. It is recommended to rename this participant.");
+                doublePersonResponse.setText(LanguageSingleton.getInstance().getResourceBundle().getString("error.personExists"));
                 System.out.println("tried to add a combination of firstname and lastname that already exists");
                 personIsDuplicate = true;
             }
@@ -220,7 +227,11 @@ public class ParticipantAdditionPageCtrl {
     }
 
     public void setLanguageText(ResourceBundle resourceBundle) {
-
+        participantAdditionLabel.setText(resourceBundle.getString("participant.form.title"));
+        nameLabel.setText(resourceBundle.getString("participant.form.label.name"));
+        firstName.setPromptText(resourceBundle.getString("participant.form.placeholder.firstName")); // Assuming these are text fields with placeholders
+        lastName.setPromptText(resourceBundle.getString("participant.form.placeholder.lastName"));
+        abortButton.setText(resourceBundle.getString("participant.form.button.abort"));
     }
 
     /**

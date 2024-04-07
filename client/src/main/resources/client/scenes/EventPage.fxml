@@ -20,15 +20,15 @@
             <Font size="20.0" />
          </font>
       </Button>
-      <Label layoutX="35.0" layoutY="94.0" prefHeight="32.0" prefWidth="143.0" text="Participants">
+      <Label fx:id="participantsLabel" layoutX="35.0" layoutY="94.0" prefHeight="32.0" prefWidth="143.0" text="Participants">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="EditParticipants" layoutX="160.0" layoutY="97.0" mnemonicParsing="false" onAction="#editParticipants" text="Edit" />
+      <Button fx:id="EditParticipant" layoutX="160.0" layoutY="97.0" mnemonicParsing="false" onAction="#editParticipants" text="Edit" />
       <Button fx:id="AddParticipant" layoutX="212.0" layoutY="97.0" mnemonicParsing="false" onAction="#addParticipants" text="Add" />
       <Label fx:id="participantsList" layoutX="37.0" layoutY="123.0" prefHeight="26.0" prefWidth="400.0" text="Participants..." />
-      <Label layoutX="35.0" layoutY="163.0" prefHeight="32.0" prefWidth="143.0" text="Expenses">
+      <Label fx:id="expensesLabel" layoutX="35.0" layoutY="163.0" prefHeight="32.0" prefWidth="143.0" text="Expenses">
          <font>
             <Font size="20.0" />
          </font>

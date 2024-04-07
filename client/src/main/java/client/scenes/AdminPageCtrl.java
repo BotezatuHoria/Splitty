@@ -1,5 +1,6 @@
 package client.scenes;
 
+import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,6 +39,19 @@ public class AdminPageCtrl {
     private TableColumn<Event, Date> creationDateColumn;
     @FXML
     private TableColumn<Event, Date> lastModifiedColumn;
+
+    @FXML
+    private Label adminPageLabel;
+
+    @FXML
+    private Label allEventsLabel;
+
+    @FXML
+    private Label selectedEventLabel;
+
+    @FXML
+    private Button backButton;
+
 
     @FXML
     private Button deleteEvent;
@@ -108,7 +122,7 @@ public class AdminPageCtrl {
         }
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete");
-        alert.setContentText("Are you sure you want to delete event: " + event.getTitle());
+        alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("confirm.deleteEvent") + event.getTitle());
         alert.showAndWait().filter(ButtonType.OK::equals).ifPresent(b -> {
             server.deleteEventById(event, event.getId());
             clear();
@@ -122,7 +136,15 @@ public class AdminPageCtrl {
     }
 
     public void setLanguageText(ResourceBundle resourceBundle) {
-
+        adminPageLabel.setText(resourceBundle.getString("admin.page.label"));
+        allEventsLabel.setText(resourceBundle.getString("events.all.label"));
+        selectedEventLabel.setText(resourceBundle.getString("selected.event"));
+        titleColumn.setText(resourceBundle.getString("table.header.title"));
+        creationDateColumn.setText(resourceBundle.getString("table.header.creationDate"));
+        lastModifiedColumn.setText(resourceBundle.getString("table.header.lastActivity"));
+        importEvent.setText(resourceBundle.getString("button.import"));
+        deleteEvent.setText(resourceBundle.getString("button.delete"));
+        backButton.setText(resourceBundle.getString("button.back"));
     }
 
     public void downloadEvent(){

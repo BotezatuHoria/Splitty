@@ -36,12 +36,6 @@ public class MainCtrl {
 
     private Stage primaryStage;
 
-    private QuoteOverviewCtrl overviewCtrl;
-    private Scene overview;
-
-    private AddQuoteCtrl addCtrl;
-    private Scene add;
-
     private Scene starter;
     private StarterPageCtrl starterPageCtrl;
 
@@ -71,10 +65,6 @@ public class MainCtrl {
     private Scene debt;
 
     private DebtSettlementCtrl debtSettlementCtrl;
-
-    private Scene language;
-
-    private LanguageSelectorCtrl languageSelectorCtrl;
 
     private Scene adminLogin;
     private AdminLoginCtrl adminLoginCtrl;
@@ -113,7 +103,6 @@ public class MainCtrl {
                            Pair<ParticipantEditPageCtrl, Parent> editParticipant,
                            Pair<InviteSendingCtrl, Parent> inviteSend,
                            Pair<DebtSettlementCtrl, Parent> debt,
-                           Pair<LanguageSelectorCtrl, Parent> language,
                            Pair<AdminLoginCtrl, Parent> adminLoginPage,
                            Pair<AdminPageCtrl, Parent> adminPage,
                            Pair<EditExpenseCtrl, Parent> editExpensePage) {
@@ -152,9 +141,6 @@ public class MainCtrl {
         this.debtSettlementCtrl = debt.getKey();
         this.debt = new Scene(debt.getValue());
 
-        this.languageSelectorCtrl = language.getKey();
-        this.language = new Scene(language.getValue());
-
         this.adminLoginCtrl = adminLoginPage.getKey();
         this.adminLogin = new Scene(adminLoginPage.getValue());
 
@@ -170,24 +156,6 @@ public class MainCtrl {
 
         showStartSettings();
         primaryStage.show();
-    }
-
-    /**
-     * Method for showing overview.
-     */
-    public void showOverview() {
-        primaryStage.setTitle("Quotes: Overview");
-        primaryStage.setScene(overview);
-        overviewCtrl.refresh();
-    }
-
-    /**
-     * Method for showing the add quote.
-     */
-    public void showAdd() {
-        primaryStage.setTitle("Quotes: Adding Quote");
-        primaryStage.setScene(add);
-        add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
     /**
@@ -282,14 +250,6 @@ public class MainCtrl {
     }
 
     /**
-     * Method for showing the language selector.
-     */
-    public void showLanguage() {
-        primaryStage.setTitle("Select language");
-        primaryStage.setScene(language);
-    }
-
-    /**
      * Method for showing the admin login.
      */
     public void showAdminLogin(){
@@ -343,5 +303,16 @@ public class MainCtrl {
 
     public void setLanguageText(ResourceBundle resourceBundle) {
         startSettingsCtrl.setLanguageText(resourceBundle);
+        starterPageCtrl.setLanguageText(resourceBundle);
+        eventCtrl.setLanguageText(resourceBundle);
+        statisticsCtrl.setLanguageText(resourceBundle);
+        expenseCtrl.setLanguageText(resourceBundle);
+        additionPageCtrl.setLanguageText(resourceBundle);
+        editPageCtrl.setLanguageText(resourceBundle);
+        inviteSendingCtrl.setLanguageText(resourceBundle);
+        debtSettlementCtrl.setLanguageText(resourceBundle);
+        adminLoginCtrl.setLanguageText(resourceBundle);
+        adminPageCtrl.setLanguageText(resourceBundle);
+        editExpenseCtrl.setLanguageText(resourceBundle);
     }
 }

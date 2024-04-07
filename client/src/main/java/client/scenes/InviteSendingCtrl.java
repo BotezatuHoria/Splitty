@@ -4,6 +4,7 @@
 
 package client.scenes;
 
+import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
@@ -42,6 +43,12 @@ public class InviteSendingCtrl{
 
     @FXML // fx:id="SendInviteButton"
     private Button sendInviteButton; // Value injected by FXMLLoader
+
+    @FXML // fx:id="copyText"
+    private Label copyText; // Value injected by FXMLLoader
+
+    @FXML // fx:id="inviteText"
+    private Label inviteText; // Value injected by FXMLLoader
 
     @FXML // fx:id="cancel"
     private Button cancel; // Value injected by FXMLLoader
@@ -136,11 +143,18 @@ public class InviteSendingCtrl{
         StringSelection selection = new StringSelection(inviteCode); //make it a stringselection so that we can set the clipboard contents to it.
         Clipboard board = Toolkit.getDefaultToolkit().getSystemClipboard(); // get our clipboard.
         board.setContents(selection, selection); //copy the eventinvite code to our clipboard.
-        responseCopy.setText("Code copied!");
+        ResourceBundle resourceBundle = LanguageSingleton.getInstance().getResourceBundle();
+
+        responseCopy.setText(resourceBundle.getString("message.code.copied"));
     }
 
     public void setLanguageText(ResourceBundle resourceBundle) {
-
+        copyInviteCodeButton.setText(resourceBundle.getString("copy.button"));
+        copyText.setText(resourceBundle.getString("copy.text"));
+        inviteText.setText(resourceBundle.getString("invite.text"));
+        mailInputField.setPromptText(resourceBundle.getString("textfield.text"));
+        cancel.setText(resourceBundle.getString("cancel.button"));
+        sendInviteButton.setText(resourceBundle.getString("send.button"));
     }
 
     /**

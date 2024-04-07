@@ -10,13 +10,13 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.ParticipantEditPageCtrl">
    <children>
-      <Label layoutX="26.0" layoutY="14.0" text="Edit Participant">
+      <Label fx:id="editParticipantLabel" layoutX="26.0" layoutY="14.0" text="Edit Participant">
          <font>
             <Font size="28.0" />
          </font>
       </Label>
       <ComboBox fx:id="participantsScroll" layoutX="20.0" layoutY="74.0" onAction="#selectParticipant" prefWidth="150.0" promptText="Participants..." />
-      <Label layoutX="17.0" layoutY="182.0" prefHeight="20.0" prefWidth="71.0" text="First name">
+      <Label fx:id="firstNameLabel" layoutX="17.0" layoutY="182.0" prefHeight="20.0" prefWidth="71.0" text="First name">
          <font>
             <Font size="14.0" />
          </font>
@@ -25,7 +25,7 @@
       <TextField fx:id="lastName" layoutX="245.0" layoutY="215.0" prefHeight="32.0" prefWidth="323.0" promptText="Last Name" />
       <TextField fx:id="email" layoutX="245.0" layoutY="253.0" prefHeight="32.0" prefWidth="323.0" promptText="Email" />
       <TextField fx:id="iban" layoutX="245.0" layoutY="291.0" prefHeight="32.0" prefWidth="323.0" promptText="IBAN" />
-      <Button fx:id="saveButton" layoutX="479.0" layoutY="335.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="90.0" text="Save" onAction="#saveUpdatedParticipant">
+      <Button fx:id="saveButton" layoutX="479.0" layoutY="335.0" mnemonicParsing="false" onAction="#saveUpdatedParticipant" prefHeight="45.0" prefWidth="90.0" text="Save">
          <font>
             <Font size="24.0" />
          </font>
@@ -35,9 +35,9 @@
             <Font size="24.0" />
          </font>
       </Button>
-      <Label layoutX="23.0" layoutY="57.0" text="Select participant:" />
-      <Button layoutX="347.0" layoutY="335.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="119.0" text="Remove Participant" onAction="#removePerson"/>
-      <Label layoutX="17.0" layoutY="221.0" prefHeight="20.0" prefWidth="71.0" text="Last name">
+      <Label fx:id="selectParticipantLabel" layoutX="23.0" layoutY="57.0" text="Select participant:" />
+      <Button fx:id="removeParticipantButton" layoutX="347.0" layoutY="335.0" mnemonicParsing="false" onAction="#removePerson" prefHeight="51.0" prefWidth="119.0" text="Remove Participant" />
+      <Label fx:id="lastNameLabel" layoutX="17.0" layoutY="221.0" prefHeight="20.0" prefWidth="71.0" text="Last name">
          <font>
             <Font size="14.0" />
          </font>
@@ -52,7 +52,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="111.0" layoutY="157.0" prefHeight="20.0" prefWidth="71.0" text="Original">
+      <Label fx:id="originalLabel" layoutX="111.0" layoutY="157.0" prefHeight="20.0" prefWidth="71.0" text="Original">
          <font>
             <Font size="14.0" />
          </font>
@@ -78,7 +78,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="245.0" layoutY="157.0" prefHeight="20.0" prefWidth="84.0" text="New value(s)">
+      <Label fx:id="newValuesLabel" layoutX="245.0" layoutY="157.0" prefHeight="20.0" prefWidth="84.0" text="New value(s)">
          <font>
             <Font size="14.0" />
          </font>

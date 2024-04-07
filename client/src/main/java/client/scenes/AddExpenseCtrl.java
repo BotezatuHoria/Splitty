@@ -4,6 +4,7 @@
 
 package client.scenes;
 
+import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import commons.Person;
 import commons.Transaction;
@@ -27,6 +28,12 @@ public class AddExpenseCtrl implements Initializable {
     @FXML // fx:id="abortButton"
     private Button abortButton; // Value injected by FXMLLoader
 
+    @FXML // fx:id="remove"
+    private Button remove; // Value injected by FXMLLoader
+
+    @FXML // fx:id="saveButton"
+    private Button saveButton; // Value injected by FXMLLoader
+
     @FXML // fx:id="addButton"
     private Button addButton; // Value injected by FXMLLoader
 
@@ -36,8 +43,32 @@ public class AddExpenseCtrl implements Initializable {
     @FXML // fx:id="currencyBox"
     private ComboBox<Integer> currencyBox; // Value injected by FXMLLoader
 
+    @FXML // fx:id="expenseScroll"
+    private ComboBox<Integer> expenseScroll; // Value injected by FXMLLoader
+
     @FXML // fx:id="dateBox"
     private DatePicker dateBox; // Value injected by FXMLLoader
+
+    @FXML // fx:id="addExpenseTitle"
+    private Label addExpenseTitle; // Value injected by FXMLLoader
+
+    @FXML // fx:id="whoPaidLabel"
+    private Label whoPaidLabel; // Value injected by FXMLLoader
+
+    @FXML // fx:id="whatForLabel"
+    private Label whatForLabel; // Value injected by FXMLLoader
+
+    @FXML // fx:id="howMuchLabel"
+    private Label howMuchLabel; // Value injected by FXMLLoader
+
+    @FXML // fx:id="whenLabel"
+    private Label whenLabel; // Value injected by FXMLLoader
+
+    @FXML // fx:id="howToLabel"
+    private Label howToLabel; // Value injected by FXMLLoader
+
+    @FXML // fx:id="expenseTypeLabel"
+    private Label expenseTypeLabel; // Value injected by FXMLLoader
 
     @FXML // fx:id="expenseField"
     private TextField expenseField; // Value injected by FXMLLoader
@@ -129,9 +160,13 @@ public class AddExpenseCtrl implements Initializable {
         addPeopleToView(people);
         addPeopleToPayerBox(people);
         currencyBox.getItems().add(840);
-        expenseTypeBox.getItems().add("Food");
-        expenseTypeBox.getItems().add("Entrance fees");
-        expenseTypeBox.getItems().add("Travel");
+        String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
+        String entranceFeeString= LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
+        String travelString = LanguageSingleton.getInstance().getResourceBundle().getString("travel.label");
+
+        expenseTypeBox.getItems().add(foodString);
+        expenseTypeBox.getItems().add(entranceFeeString);
+        expenseTypeBox.getItems().add(travelString);
     }
 
     /**
@@ -204,10 +239,14 @@ public class AddExpenseCtrl implements Initializable {
             System.out.println(result.toString());
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.initModality(Modality.APPLICATION_MODAL);
-            alert.setContentText("Expense created successfully!");
+            String expenseCreatedAlert = LanguageSingleton.getInstance().getResourceBundle().getString("expense.created.alert");
+
+            alert.setContentText(expenseCreatedAlert);
             alert.showAndWait();
         }catch (Exception e) {
-            mainCtrl.showAlert("Transaction was not created");
+            String expenseFailedAlert = LanguageSingleton.getInstance().getResourceBundle().getString("expense.created.fail.alert");
+
+            mainCtrl.showAlert(expenseFailedAlert);
         }
 
     }
@@ -234,19 +273,23 @@ public class AddExpenseCtrl implements Initializable {
      *
      * @return - true if all fields have a value, otherwise false.
      */
+
     public boolean checkFields() {
+        LanguageSingleton lang = LanguageSingleton.getInstance();
+        ResourceBundle messages = lang.getResourceBundle();
+
         if (expenseField.getText() == null || expenseField.getText().equals(" ")) {
-            mainCtrl.showAlert("Please provide the expense!");
+            mainCtrl.showAlert(messages.getString("expense.validation.error.provideExpense"));
             return false;
         }
-        if ((priceField.getText() == null)) {
-            mainCtrl.showAlert("Please provide the amount of the expense!");
+        if (priceField.getText() == null || priceField.getText().equals(" ")) {
+            mainCtrl.showAlert(messages.getString("expense.validation.error.provideAmount"));
             return false;
         }
         try {
             double x = Double.parseDouble(priceField.getText());
         } catch (NumberFormatException e) {
-            mainCtrl.showAlert("Please provide a valid amount.");
+            mainCtrl.showAlert(messages.getString("expense.validation.error.validAmount"));
             return false;
         }
 
@@ -259,25 +302,29 @@ public class AddExpenseCtrl implements Initializable {
      * @return - true if anything is selected, otherwise false.
      */
     public boolean checkBoxes() {
+        LanguageSingleton lang = LanguageSingleton.getInstance();
+        ResourceBundle messages = lang.getResourceBundle();
+
         if (payerBox.valueProperty().get() == null) {
-            mainCtrl.showAlert("Please provide who paid! ");
+            mainCtrl.showAlert(messages.getString("validation.error.providePayer"));
             return false;
         }
 
         if (currencyBox.valueProperty().get() == null) {
-            mainCtrl.showAlert("Please select a currency!");
+            mainCtrl.showAlert(messages.getString("validation.error.provideCurrency"));
             return false;
         }
 
         if (dateBox.valueProperty().get() == null) {
-            mainCtrl.showAlert("Please select a valid date!");
+            mainCtrl.showAlert(messages.getString("validation.error.provideDate"));
             return false;
         }
 
         if (expenseTypeBox.valueProperty().get() == null) {
-            mainCtrl.showAlert("Please select a valid type of expense!");
+            mainCtrl.showAlert(messages.getString("validation.error.provideExpenseType"));
             return false;
         }
+
         return true;
     }
 
@@ -297,12 +344,28 @@ public class AddExpenseCtrl implements Initializable {
         if (checked) {
             return true;
         }
-        mainCtrl.showAlert("Please select at least a person!");
+        mainCtrl.showAlert(LanguageSingleton.getInstance().getResourceBundle().getString("selection.error.minPerson"));
         return false;
     }
 
     public void setLanguageText(ResourceBundle resourceBundle) {
-
+        addExpenseTitle.setText(resourceBundle.getString("title.text"));
+        whoPaidLabel.setText(resourceBundle.getString("who.text"));
+        whatForLabel.setText(resourceBundle.getString("what.text"));
+        howMuchLabel.setText(resourceBundle.getString("much.text"));
+        whenLabel.setText(resourceBundle.getString("when.text"));
+        howToLabel.setText(resourceBundle.getString("split.text"));
+        expenseTypeLabel.setText(resourceBundle.getString("type.text"));
+        addEverybody.setText(resourceBundle.getString("split.button"));
+        abortButton.setText(resourceBundle.getString("abort.button"));
+        addEverybody.setText(resourceBundle.getString("split.button"));
+        payerBox.setPromptText(resourceBundle.getString("payer.menu"));
+        expenseField.setPromptText(resourceBundle.getString("what.textfield"));
+        priceField.setPromptText(resourceBundle.getString("much.textfield"));
+        dateBox.setPromptText(resourceBundle.getString("when.textfield"));
+        currencyBox.setPromptText(resourceBundle.getString("currency.menu"));
+        expenseTypeBox.setPromptText(resourceBundle.getString("type.menu"));
+        newTagField.setPromptText(resourceBundle.getString("newType.textfield"));
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete

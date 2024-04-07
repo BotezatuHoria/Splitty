@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import commons.Person;
 import commons.Transaction;
@@ -37,6 +38,27 @@ public class EditExpenseCtrl implements Initializable {
 
     @FXML // fx:id="addTagButton"
     private Button addTagButton; // Value injected by FXMLLoader
+
+    @FXML // fx:id="editExpenseTitle"
+    private Label editExpenseTitle; // Value injected by FXMLLoader
+
+    @FXML // fx:id="whoPaidLabel"
+    private Label whoPaidLabel; // Value injected by FXMLLoader
+
+    @FXML // fx:id="whatForLabel"
+    private Label whatForLabel; // Value injected by FXMLLoader
+
+    @FXML // fx:id="howMuchLabel"
+    private Label howMuchLabel; // Value injected by FXMLLoader
+
+    @FXML // fx:id="whenLabel"
+    private Label whenLabel; // Value injected by FXMLLoader
+
+    @FXML // fx:id="howToLabel"
+    private Label howToLabel; // Value injected by FXMLLoader
+
+    @FXML // fx:id="expenseTypeLabel"
+    private Label expenseTypeLabel; // Value injected by FXMLLoader
 
     @FXML // fx:id="currencyBox"
     private ComboBox<Integer> currencyBox; // Value injected by FXMLLoader
@@ -127,12 +149,12 @@ public class EditExpenseCtrl implements Initializable {
     @FXML
     public void removeExpense() {
         if(expenseScroll.getValue() == null) {
-            mainCtrl.showAlert("No expense selected");
+            mainCtrl.showAlert(LanguageSingleton.getInstance().getResourceBundle().getString("error.expense.noneSelected"));
             return;
         }
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initModality(Modality.APPLICATION_MODAL);
-        alert.setContentText("Are you sure you want to delete this expense?");
+        alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("confirm.expense.delete"));
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             server.deleteTransactionFromCurrentEvent(mainCtrl.getCurrentEventID(), expenseScroll.getValue().getId());
@@ -146,7 +168,7 @@ public class EditExpenseCtrl implements Initializable {
     @FXML
     public void saveExpense() {
         if(expenseScroll.getValue() == null) {
-            mainCtrl.showAlert("Please select a transaction to update.");
+            mainCtrl.showAlert(LanguageSingleton.getInstance().getResourceBundle().getString("prompt.transaction.selectToUpdate"));
             return;
         }
         if (checkCompleted()) {
@@ -179,10 +201,10 @@ public class EditExpenseCtrl implements Initializable {
             System.out.println(result.toString());
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.initModality(Modality.APPLICATION_MODAL);
-            alert.setContentText("Expense updated successfully!");
+            alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("info.expense.updated"));
             alert.showAndWait();
         }catch (Exception e) {
-            mainCtrl.showAlert("Transaction was not updated");
+            mainCtrl.showAlert(LanguageSingleton.getInstance().getResourceBundle().getString("error.transaction.notUpdated"));
         }
 
     }
@@ -201,25 +223,29 @@ public class EditExpenseCtrl implements Initializable {
      * @return - true if anything is selected, otherwise false.
      */
     public boolean checkBoxes() {
+        LanguageSingleton lang = LanguageSingleton.getInstance();
+        ResourceBundle messages = lang.getResourceBundle();
+
         if (payerBox.valueProperty().get() == null) {
-            mainCtrl.showAlert("Please provide who paid! ");
+            mainCtrl.showAlert(messages.getString("validation.error.providePayer"));
             return false;
         }
 
         if (currencyBox.valueProperty().get() == null) {
-            mainCtrl.showAlert("Please select a currency!");
+            mainCtrl.showAlert(messages.getString("validation.error.provideCurrency"));
             return false;
         }
 
         if (dateBox.valueProperty().get() == null) {
-            mainCtrl.showAlert("Please select a valid date!");
+            mainCtrl.showAlert(messages.getString("validation.error.provideDate"));
             return false;
         }
 
         if (expenseTypeBox.valueProperty().get() == null) {
-            mainCtrl.showAlert("Please select a valid type of expense!");
+            mainCtrl.showAlert(messages.getString("validation.error.provideExpenseType"));
             return false;
         }
+
         return true;
     }
 
@@ -229,18 +255,21 @@ public class EditExpenseCtrl implements Initializable {
      * @return - true if all fields have a value, otherwise false.
      */
     public boolean checkFields() {
+        LanguageSingleton lang = LanguageSingleton.getInstance();
+        ResourceBundle messages = lang.getResourceBundle();
+
         if (expenseField.getText() == null || expenseField.getText().equals(" ")) {
-            mainCtrl.showAlert("Please provide the expense!");
+            mainCtrl.showAlert(messages.getString("expense.validation.error.provideExpense"));
             return false;
         }
-        if ((priceField.getText() == null)) {
-            mainCtrl.showAlert("Please provide the amount of the expense!");
+        if (priceField.getText() == null || priceField.getText().equals(" ")) {
+            mainCtrl.showAlert(messages.getString("expense.validation.error.provideAmount"));
             return false;
         }
         try {
             double x = Double.parseDouble(priceField.getText());
         } catch (NumberFormatException e) {
-            mainCtrl.showAlert("Please provide a valid amount.");
+            mainCtrl.showAlert(messages.getString("expense.validation.error.validAmount"));
             return false;
         }
 
@@ -263,7 +292,7 @@ public class EditExpenseCtrl implements Initializable {
         if (checked) {
             return true;
         }
-        mainCtrl.showAlert("Please select at least a person!");
+        mainCtrl.showAlert(LanguageSingleton.getInstance().getResourceBundle().getString("selection.error.minPerson"));
         return false;
     }
 
@@ -311,9 +340,13 @@ public class EditExpenseCtrl implements Initializable {
         addPeopleToPayerBox(people);
         addPeopleToView(people);
         currencyBox.getItems().add(840);
-        expenseTypeBox.getItems().add("Food");
-        expenseTypeBox.getItems().add("Entrance fees");
-        expenseTypeBox.getItems().add("Travel");
+        String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
+        String entranceFeeString= LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
+        String travelString = LanguageSingleton.getInstance().getResourceBundle().getString("travel.label");
+
+        expenseTypeBox.getItems().add(foodString);
+        expenseTypeBox.getItems().add(entranceFeeString);
+        expenseTypeBox.getItems().add(travelString);
     }
 
     /**
@@ -377,6 +410,29 @@ public class EditExpenseCtrl implements Initializable {
         peopleLIstView.getItems().clear();
     }
 
+
+    public void setLanguageText(ResourceBundle resourceBundle) {
+            editExpenseTitle.setText(resourceBundle.getString("title.text"));
+        whoPaidLabel.setText(resourceBundle.getString("who.text"));
+        whatForLabel.setText(resourceBundle.getString("what.text"));
+        howMuchLabel.setText(resourceBundle.getString("much.text"));
+        whenLabel.setText(resourceBundle.getString("when.text"));
+        howToLabel.setText(resourceBundle.getString("split.text"));
+        expenseTypeLabel.setText(resourceBundle.getString("type.text"));
+        addEverybody.setText(resourceBundle.getString("split.button"));
+        abortButton.setText(resourceBundle.getString("abort.button"));
+        addEverybody.setText(resourceBundle.getString("split.button"));
+        payerBox.setPromptText(resourceBundle.getString("payer.menu"));
+        expenseField.setPromptText(resourceBundle.getString("what.textfield"));
+        priceField.setPromptText(resourceBundle.getString("much.textfield"));
+        dateBox.setPromptText(resourceBundle.getString("when.textfield"));
+        currencyBox.setPromptText(resourceBundle.getString("currency.menu"));
+        expenseTypeBox.setPromptText(resourceBundle.getString("type.menu"));
+        newTagField.setPromptText(resourceBundle.getString("newType.textfield"));
+        expenseScroll.setPromptText(resourceBundle.getString("expense.text"));
+        remove.setText(resourceBundle.getString("remove.text"));
+        saveButton.setText(resourceBundle.getString("save.text"));
+    }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {

@@ -27,6 +27,27 @@ public class ParticipantEditPageCtrl {
     private Button abortButton;
 
     @FXML
+    private Button removeParticipantButton;
+
+    @FXML
+    private Label editParticipantLabel;
+
+    @FXML
+    private Label selectParticipantLabel;
+
+    @FXML
+    private Label firstNameLabel;
+
+    @FXML
+    private Label lastNameLabel;
+
+    @FXML
+    private Label originalLabel;
+
+    @FXML
+    private Label newValuesLabel;
+
+    @FXML
     private TextField email;
 
     @FXML
@@ -216,6 +237,18 @@ public class ParticipantEditPageCtrl {
     }
 
     public void setLanguageText(ResourceBundle resourceBundle) {
+        editParticipantLabel.setText(resourceBundle.getString("edit.participant.title"));
+        selectParticipantLabel.setText(resourceBundle.getString("edit.participant.selectLabel"));
+        firstNameLabel.setText(resourceBundle.getString("edit.participant.firstName"));
+        lastNameLabel.setText(resourceBundle.getString("edit.participant.lastName"));
+        originalLabel.setText(resourceBundle.getString("edit.participant.column.original"));
+        newValuesLabel.setText(resourceBundle.getString("edit.participant.column.newValue"));
+        firstName.setPromptText(resourceBundle.getString("edit.participant.firstName"));
+        lastName.setPromptText(resourceBundle.getString("edit.participant.lastName"));
+        participantsScroll.setPromptText(resourceBundle.getString("edit.participant.comboBoxPrompt"));
+        abortButton.setText(resourceBundle.getString("edit.participant.button.abort"));
+        removeParticipantButton.setText(resourceBundle.getString("edit.participant.button.remove"));
+        saveButton.setText(resourceBundle.getString("edit.participant.button.save"));
 
     }
 

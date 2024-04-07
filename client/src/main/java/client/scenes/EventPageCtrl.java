@@ -4,6 +4,7 @@
 
 package client.scenes;
 
+import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 
@@ -222,8 +223,10 @@ public class EventPageCtrl implements Initializable {
         Person person = participantsScroll.getSelectionModel().getSelectedItem();
         System.out.println(person);
         if (person != null) {
-            fromParticipant.setText("From " + person);
-            includingParticipant.setText("Including " + person);
+            ResourceBundle resourceBundle = LanguageSingleton.getInstance().getResourceBundle();
+
+            fromParticipant.setText(resourceBundle.getString("label.from") + person);
+            includingParticipant.setText(resourceBundle.getString("label.including") + person);
         }
     }
 
@@ -276,10 +279,12 @@ public class EventPageCtrl implements Initializable {
      * Method that clears the page of all previous inputs.
      */
     public void clear() {
+        ResourceBundle resourceBundle = LanguageSingleton.getInstance().getResourceBundle();
+
         participantsScroll.getItems().clear();
         listTransactions.getItems().clear();
-        fromParticipant.setText("From participant...");
-        includingParticipant.setText("Including participant...");
+        fromParticipant.setText(resourceBundle.getString("label.fromParticipant"));
+        includingParticipant.setText(resourceBundle.getString("label.includingParticipant"));
     }
 
 
@@ -324,17 +329,19 @@ public class EventPageCtrl implements Initializable {
     }
 
     public void setLanguageText(ResourceBundle resourceBundle) {
+        fromParticipant.setText(resourceBundle.getString("from.button"));
+        includingParticipant.setText(resourceBundle.getString("including.button"));
+        AddExpense.setText(resourceBundle.getString("addExpense.button"));
+        SettleDebts.setText(resourceBundle.getString("settleDebts.button"));
+        showStatistics.setText(resourceBundle.getString("showStats.button"));
         SendInvites.setText(resourceBundle.getString("sendInvites.button"));
         participantsLabel.setText(resourceBundle.getString("participants"));
         EditParticipant.setText(resourceBundle.getString("edit.button"));
         AddParticipant.setText(resourceBundle.getString("addParticipant.button"));
         expensesLabel.setText(resourceBundle.getString("expenses"));
         allExpenses.setText(resourceBundle.getString("all.button"));
-        fromParticipant.setText(resourceBundle.getString("from.button"));
-        includingParticipant.setText(resourceBundle.getString("including.button"));
-        AddExpense.setText(resourceBundle.getString("addExpense.button"));
-        SettleDebts.setText(resourceBundle.getString("settleDebts.button"));
-        showStatistics.setText(resourceBundle.getString("showStats.button"));
+        participantsScroll.setPromptText(resourceBundle.getString("edit.participant.comboBoxPrompt"));
+        editExpense.setText(resourceBundle.getString("edit.expense"));
     }
 
     public void stop() {
