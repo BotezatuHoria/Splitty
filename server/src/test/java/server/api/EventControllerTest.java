@@ -261,14 +261,6 @@ class EventControllerTest {
     }
 
     @Test
-    void getEventByToken() {
-        Event event = new Event("tag", "title",12, "dsadad", new ArrayList<>(), new ArrayList<>());
-        Event event1 = eventService.add(event).getBody();
-        assertEquals(event1.getToken(), "dsadad");
-        //assertEquals(event, eventService.getEventByToken("dsadad").getBody());
-    }
-
-    @Test
     void getEventByTokenInvalid() {
         Event event = new Event("tag", "title",12, "token", new ArrayList<>(), new ArrayList<>());
         eventService.add(event);
@@ -323,6 +315,15 @@ class EventControllerTest {
         eventService.createNewExpense(event.getId(), transaction);
         assertTrue(eventService.getPeople(event.getId()).getBody().getFirst().getDebt() ==
                 -eventService.getPeople(event.getId()).getBody().getLast().getDebt());
+    }
+
+    @Test
+    void getEventByToken(){
+        Event event = new Event("tag", "title",2, "token",new ArrayList<>(), new ArrayList<>());
+        eventService.add(event);
+        Event test = eventService.getById(2).getBody();
+        var actual = eventService.getEventByToken("token");
+        assertEquals(test, actual.getBody());
     }
 
 }
