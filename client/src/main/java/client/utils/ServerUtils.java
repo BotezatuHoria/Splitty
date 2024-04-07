@@ -36,6 +36,7 @@ import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import javafx.util.Pair;
+import org.checkerframework.checker.units.qual.C;
 import org.glassfish.jersey.client.ClientConfig;
 
 import jakarta.ws.rs.client.ClientBuilder;
@@ -477,4 +478,16 @@ public class ServerUtils {
 				.get(new GenericType<Person>() {});
 	}
 
+	/**
+	 * Gets an event from the server using the invite token.
+	 * @param token the token of the event
+	 * @return the event
+	 */
+	public Event getEventByToken(String token){
+		return ClientBuilder.newClient(new ClientConfig())
+				.target(server).path("api/event/token/" + token)
+				.request(APPLICATION_JSON)
+				.accept(APPLICATION_JSON)
+				.get(new GenericType<Event>() {});
+	}
 }
