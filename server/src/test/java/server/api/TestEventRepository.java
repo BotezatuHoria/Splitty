@@ -33,6 +33,13 @@ public class TestEventRepository implements EventRepository {
 
     @Override
     public Optional<Event> findByToken(String token) {
+        Iterator<Event> iterator = events.iterator();
+        while (iterator.hasNext()){
+            Event event = iterator.next();
+            if (event.getToken() == token){
+                return Optional.of(event);
+            }
+        }
         return Optional.empty();
     }
 

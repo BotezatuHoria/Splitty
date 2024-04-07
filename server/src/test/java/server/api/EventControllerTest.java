@@ -213,4 +213,13 @@ class EventControllerTest {
                 "iban33");
         assertEquals(BAD_REQUEST, eventService.add(50, person).getStatusCode());
     }
+
+    @Test
+    void getEventByToken(){
+        Event event = new Event("tag", "title",2, "token",new ArrayList<>(), new ArrayList<>());
+        eventService.add(event);
+        Event test = eventService.getById(2).getBody();
+        var actual = eventService.getEventByToken("token");
+        assertEquals(test, actual.getBody());
+    }
 }
