@@ -4,19 +4,22 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Event;
 import commons.Transaction;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class StatisticsCtrl {
+public class StatisticsCtrl implements Initializable {
     private final MainCtrl mainCtrl;
     private final ServerUtils server;
     @FXML // fx:id="statsPieChart"
@@ -88,5 +91,12 @@ public class StatisticsCtrl {
      */
     public void goBack() {
         mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        server.registerForMessages("/topic/event", Object.class, object -> {
+            Platform.runLater(this::initializeStatistics);
+        });
     }
 }

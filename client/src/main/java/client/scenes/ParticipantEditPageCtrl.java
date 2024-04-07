@@ -8,11 +8,13 @@ import java.util.ResourceBundle;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Person;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 
-public class ParticipantEditPageCtrl {
+public class ParticipantEditPageCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
@@ -233,6 +235,12 @@ public class ParticipantEditPageCtrl {
     }
 
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        server.registerForMessages("/topic/events/people", Person.class, person -> {
+            Platform.runLater(this::updatePage);
+        });
     }
+}
 
 

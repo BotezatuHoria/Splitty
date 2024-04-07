@@ -3,18 +3,22 @@ package client.scenes;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Person;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseButton;
 
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class DebtOverviewPageCtrl {
+public class DebtOverviewPageCtrl implements Initializable {
 
   @FXML
   private TableView<Person> debtValueTable;
@@ -46,7 +50,7 @@ public class DebtOverviewPageCtrl {
    * Initialize the debt overview page.
    */
   @FXML
-  public void initialize() {
+  public void initializeTable() {
     this.name = new TableColumn<>("Name");
     this.debt = new TableColumn<>("Debt");
     name.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFirstName()));
@@ -92,5 +96,13 @@ public class DebtOverviewPageCtrl {
   @FXML
   public void buttonPressHandle() {
     mainCtrl.showDebtPage();
+  }
+
+  @Override
+  public void initialize(URL url, ResourceBundle resourceBundle) {
+    initializeTable();
+    server.registerForMessages("/topic/events/people", Person.class, person -> {
+      Platform.runLater(this::populateDebtList);
+    });
   }
 }

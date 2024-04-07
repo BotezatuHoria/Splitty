@@ -11,6 +11,7 @@ import client.utils.ServerUtils;
 import commons.Person;
 import commons.Transaction;
 import jakarta.inject.Inject;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -99,6 +100,9 @@ public class EditExpenseCtrl implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tagPane.visibleProperty().set(false);
+        server.registerForMessages("/topic/events/people", Person.class, person -> {
+            Platform.runLater(this::updatePage);
+        });
     }
 
     /**
