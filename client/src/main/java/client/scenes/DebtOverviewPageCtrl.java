@@ -62,7 +62,7 @@ public class DebtOverviewPageCtrl implements Initializable {
     debtValueTable.setRowFactory(tv -> {
       TableRow<Person> row = new TableRow<>();
       row.setOnMouseClicked(event -> {
-        if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
+        if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
           Person clickedPerson = row.getItem();
           // Call the method to open the new page, passing the clicked person as a parameter
           openDebtsForSpecificPerson(clickedPerson);
