@@ -12,7 +12,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Objects;
-
+import com.neovisionaries.i18n.CurrencyCode;
 @Entity
 public class Currency {
 
@@ -103,16 +103,22 @@ public class Currency {
    * TODO: make an error for a wrong currency iso code
    */
   private double fetchConversion() throws IOException {
-    URL url = new URL("https://v6.exchangerate-api.com/v6/874a6a98cff76d00444b486f/pair/EUR/" + "USD");
-    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-    con.setRequestMethod("GET");
-    //?
-    con.setDoOutput(true);
-    con.setConnectTimeout(10000);
-    con.setReadTimeout(10000);
+      String currency = "";
+      if(CurrencyCode.getByCode(iso) != null){
+          currency = CurrencyCode.getByCode(iso).getCurrency().getCurrencyCode();
+      } else{
+          return -1; //error with conversion because of wrong iso code
+      }
+      URL url = new URL("https://v6.exchangerate-api.com/v6/874a6a98cff76d00444b486f/pair/EUR/" + currency);
+      HttpURLConnection con = (HttpURLConnection) url.openConnection();
+      con.setRequestMethod("GET");
+      //?
+      con.setDoOutput(true);
+      con.setConnectTimeout(10000);
+      con.setReadTimeout(10000);
 
-    int status = con.getResponseCode();
-    System.out.println("Currency GET response code: " + status);
+      int status = con.getResponseCode();
+      System.out.println("Currency GET response code: " + status);
 
     //if response code is 200
     double result = 0;

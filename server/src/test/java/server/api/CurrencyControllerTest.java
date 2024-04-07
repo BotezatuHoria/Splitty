@@ -23,7 +23,7 @@ public class CurrencyControllerTest {
 
     @Test
     void addTest(){
-        Currency currency = new Currency(1, "EUR");
+        Currency currency = new Currency(978, "EUR");
         var actual = currencyController.add(currency);
         assertEquals(actual.getBody(), currency);
     }
@@ -31,7 +31,7 @@ public class CurrencyControllerTest {
     @Test
     void addNullTest(){
         Currency nullCurrency = null;
-        Currency wrongFields = new Currency(-1, null);
+        Currency wrongFields = new Currency(978, null);
         var actual1 = currencyController.add(nullCurrency);
         var actual2 = currencyController.add(wrongFields);
         assertEquals(BAD_REQUEST, actual1.getStatusCode());
@@ -40,9 +40,9 @@ public class CurrencyControllerTest {
 
     @Test
     void getByIso() {
-        Currency currency = new Currency(1, "EUR");
+        Currency currency = new Currency(978, "EUR");
         currencyController.add(currency);
-        var actual = currencyController.getById(1);
+        var actual = currencyController.getById(978);
         assertEquals(currency, actual.getBody());
     }
 
@@ -56,7 +56,7 @@ public class CurrencyControllerTest {
 
     @Test
     void getAllTest() {
-        Currency currency = new Currency(1, "EUR");
+        Currency currency = new Currency(978, "EUR");
         currencyController.add(currency);
         var actual = currencyController.getAll();
         assertNotEquals(0, actual.size());
@@ -65,17 +65,17 @@ public class CurrencyControllerTest {
 
     @Test
     void updateByIdTest() {
-        Currency currency = new Currency(1, "EUR");
+        Currency currency = new Currency(978, "EUR");
         currencyController.add(currency);
-        Currency eddited = new Currency(1, "USD");
-        var actual = currencyController.updateById(eddited, 1);
+        Currency eddited = new Currency(978, "USD");
+        var actual = currencyController.updateById(eddited, 978);
         assertEquals(eddited, actual.getBody());
     }
     @Test
     void updateByIDInvalidTest() {
-        Currency currency = new Currency(1, "EUR");
+        Currency currency = new Currency(978, "EUR");
         currencyController.add(currency);
-        Currency wrongIso = new Currency(2, "USD");
+        Currency wrongIso = new Currency(-1, "USD");
         Currency wrongFields = new Currency(-1, null);
         var actual1 = currencyController.updateById(wrongIso, 1);
         var actual2 = currencyController.updateById(wrongFields, -1);
@@ -86,11 +86,11 @@ public class CurrencyControllerTest {
     }
     @Test
     void deleteByIsoTest() {
-        Currency currency = new Currency(1, "EUR");
+        Currency currency = new Currency(978, "EUR");
         currencyController.add(currency);
-        var actual = currencyController.deleteById(1);
+        var actual = currencyController.deleteById(978);
         assertEquals(currency, actual.getBody());
-        assertEquals(BAD_REQUEST, currencyController.getById(1).getStatusCode());
+        assertEquals(BAD_REQUEST, currencyController.getById(978).getStatusCode());
     }
 
     @Test
