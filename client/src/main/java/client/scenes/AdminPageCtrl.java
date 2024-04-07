@@ -4,6 +4,7 @@ import client.utils.ServerUtils;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import commons.Event;
 import jakarta.inject.Inject;
 import javafx.application.Platform;
@@ -16,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -131,7 +133,7 @@ public class AdminPageCtrl {
             return;
         }
         //object mapper to write object to json
-        ObjectMapper obj = new ObjectMapper();
+        ObjectMapper obj = new ObjectMapper().registerModule(new JavaTimeModule());
         ObjectWriter writer = obj.writer(new DefaultPrettyPrinter());
 
         //file chooser to let user choose download destination
@@ -145,11 +147,31 @@ public class AdminPageCtrl {
             if (returnValue == JFileChooser.APPROVE_OPTION){
                 File saveFile = fileChooser.getSelectedFile();
                 String jsonStr = obj.writeValueAsString(event);
-                writer.writeValue(saveFile, jsonStr);
+                obj.writeValue(saveFile, event);
             }
 
         }catch(IOException e){
             e.printStackTrace();
+        }
+    }
+
+    public void importEvent() {
+        JFrame parent = new JFrame();
+        JFileChooser chooser = new JFileChooser();
+        ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("JSON Files", "json");
+        chooser.setFileFilter(filter);
+        int returnValue = chooser.showOpenDialog(parent);
+        if (returnValue == JFileChooser.APPROVE_OPTION){
+            File file = chooser.getSelectedFile();
+            try {
+                Event event = objectMapper.readValue(file, Event.class);
+                System.out.println(event);
+                server.addEvent(event);
+                showEvents();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

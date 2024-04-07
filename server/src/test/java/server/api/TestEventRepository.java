@@ -32,6 +32,11 @@ public class TestEventRepository implements EventRepository {
     }
 
     @Override
+    public Optional<Event> findByToken(String token) {
+        return Optional.empty();
+    }
+
+    @Override
     public void flush() {}
 
     @Override
