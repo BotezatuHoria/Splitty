@@ -7,6 +7,7 @@ package client.scenes;
 import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import commons.Person;
+import commons.Tag;
 import commons.Transaction;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -160,6 +161,9 @@ public class AddExpenseCtrl implements Initializable {
         addPeopleToView(people);
         addPeopleToPayerBox(people);
         currencyBox.getItems().add(840);
+        for (Tag t : server.getEventByID(mainCtrl.getCurrentEventID()).getTagList()) {
+            expenseTypeBox.getItems().add(t.getTitle());
+        }
 
         //String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
         //String entranceFeeString= LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
@@ -168,9 +172,9 @@ public class AddExpenseCtrl implements Initializable {
         //expenseTypeBox.getItems().add(foodString);
         //expenseTypeBox.getItems().add(entranceFeeString);
         //expenseTypeBox.getItems().add(travelString);
-        expenseTypeBox.getItems().add("Food");
-        expenseTypeBox.getItems().add("Entrance fees");
-        expenseTypeBox.getItems().add("Travel");
+        //expenseTypeBox.getItems().add("Food");
+        //expenseTypeBox.getItems().add("Entrance fees");
+        //expenseTypeBox.getItems().add("Travel");
     }
 
     /**
@@ -216,6 +220,7 @@ public class AddExpenseCtrl implements Initializable {
      */
     public void addNewTag() {
         expenseTypeBox.getItems().add(newTagField.getText());
+
         newTagField.clear();
         tagPane.visibleProperty().set(false);
     }
