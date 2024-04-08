@@ -2,7 +2,6 @@ package commons;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
@@ -32,11 +31,9 @@ public class Transaction {
 
 
     @ManyToMany(fetch = FetchType.EAGER)
-//    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt"})
     public List<Person> participants;
 
     @ManyToOne
-//    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt"})
     public Person creator;
 
     /**

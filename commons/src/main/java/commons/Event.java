@@ -1,18 +1,15 @@
 package commons;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 
 @Entity
@@ -59,7 +56,8 @@ public class Event {
         this.token = token;
         this.people = people;
         this.transactions = transactions;
-        this.tagList = List.of(new Tag("Food"), new Tag("Entrance Fees"), new Tag("Travel"));
+        this.tagList = new ArrayList<>();
+        tagList.addAll(List.of(new Tag("Food"), new Tag("Entrance Fees"), new Tag("Travel")));
         creationDate = LocalDate.now();
         lastModified = LocalDateTime.now();
     }

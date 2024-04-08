@@ -50,8 +50,12 @@ public class Tag {
 
     @Override
     public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
         Tag tag = (Tag) object;
         return id == tag.id && Objects.equals(title, tag.title);
     }

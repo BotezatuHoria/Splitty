@@ -1,9 +1,7 @@
 package server.services.implementations;
 
-import commons.Event;
 import commons.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import server.database.TagRepository;
 import server.services.interfaces.TagService;
@@ -14,18 +12,17 @@ import java.util.List;
 public class TagServiceImplementation implements TagService {
 
     private final TagRepository repo;
-    private final SimpMessagingTemplate messagingTemplate;
 
-    public TagServiceImplementation(TagRepository repo, SimpMessagingTemplate messagingTemplate) {
+    public TagServiceImplementation(TagRepository repo) {
         this.repo = repo;
-        this.messagingTemplate = messagingTemplate;
     }
 
     @Override
     public ResponseEntity<List<Tag>> getAll() {
         List<Tag> tagList = repo.findAll();
-        if (tagList.isEmpty())
+        if (tagList.isEmpty()){
             return ResponseEntity.noContent().build();
+        }
         return ResponseEntity.ok(repo.findAll());
     }
 

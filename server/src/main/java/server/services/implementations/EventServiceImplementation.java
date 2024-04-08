@@ -24,7 +24,8 @@ public class EventServiceImplementation implements EventService {
     private final TagServiceImplementation tagServiceImplementation;
 
     public EventServiceImplementation(EventRepository repo, TransactionServiceImplementation tsi,
-                                      PersonServiceImplementation psi, SimpMessagingTemplate messagingTemplate, TagServiceImplementation tagServiceImplementation) {
+                                      PersonServiceImplementation psi, SimpMessagingTemplate messagingTemplate,
+                                      TagServiceImplementation tagServiceImplementation) {
         this.repo = repo;
         this.tsi = tsi;
         this.psi = psi;

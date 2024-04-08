@@ -4,7 +4,6 @@ import commons.Tag;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
-import java.util.Set;
 
 public interface TagService {
     public ResponseEntity<List<Tag>> getAll();
