@@ -34,11 +34,12 @@ class EventServiceImplementationTest {
   @InjectMocks
   private EventServiceImplementation eventServiceImplementation;
 
- //setup
+  //setup
   @BeforeEach
   void setUp() {
     MockitoAnnotations.openMocks(this);
   }
+
   /**
    * Test the getAll method.
    */
@@ -109,112 +110,116 @@ class EventServiceImplementationTest {
   /**
    * Test the updateById method with a null title.
    */
-    @Test
-    void testUpdateByIdWithInvalidId() {
-        // Setup your test data and expectations
-        Event event = new Event();
-        event.setId(1);
-        when(eventRepository.existsById(1L)).thenReturn(false);
-        when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
-        when(eventRepository.save(event)).thenReturn(event);
+  @Test
+  void testUpdateByIdWithInvalidId() {
+    // Setup your test data and expectations
+    Event event = new Event();
+    event.setId(1);
+    when(eventRepository.existsById(1L)).thenReturn(false);
+    when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+    when(eventRepository.save(event)).thenReturn(event);
 
-        // Execute the method being tested
-        ResponseEntity<Event> response = eventServiceImplementation.updateById(1L, event);
+    // Execute the method being tested
+    ResponseEntity<Event> response = eventServiceImplementation.updateById(1L, event);
 
-        // Verify the results
-        assertEquals(400, response.getStatusCodeValue());
-    }
+    // Verify the results
+    assertEquals(400, response.getStatusCodeValue());
+  }
 
   /**
    * Test the updateById method with a null name.
    */
   @Test
-    void testUpdateByIdWithNullName() {
-        // Setup your test data and expectations
-        Event event = new Event();
-        event.setId(1);
-        when(eventRepository.existsById(1L)).thenReturn(true);
-        when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
-        when(eventRepository.save(event)).thenReturn(event);
+  void testUpdateByIdWithNullName() {
+    // Setup your test data and expectations
+    Event event = new Event();
+    event.setId(1);
+    when(eventRepository.existsById(1L)).thenReturn(true);
+    when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+    when(eventRepository.save(event)).thenReturn(event);
 
-        // Execute the method being tested
-        ResponseEntity<Event> response = eventServiceImplementation.updateById(1L, event);
+    // Execute the method being tested
+    ResponseEntity<Event> response = eventServiceImplementation.updateById(1L, event);
 
-        // Verify the results
-        assertEquals(400, response.getStatusCodeValue());
-    }
-    /**
-     * Test the updateById method with a null tag.
-     */
-    @Test
-    void testUpdateByIdWithNullTag() {
-        // Setup your test data and expectations
-        Event event = new Event();
-        event.setId(1);
-        when(eventRepository.existsById(1L)).thenReturn(true);
-        when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
-        when(eventRepository.save(event)).thenReturn(event);
+    // Verify the results
+    assertEquals(400, response.getStatusCodeValue());
+  }
 
-        // Execute the method being tested
-        ResponseEntity<Event> response = eventServiceImplementation.updateById(1L, event);
+  /**
+   * Test the updateById method with a null tag.
+   */
+  @Test
+  void testUpdateByIdWithNullTag() {
+    // Setup your test data and expectations
+    Event event = new Event();
+    event.setId(1);
+    when(eventRepository.existsById(1L)).thenReturn(true);
+    when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+    when(eventRepository.save(event)).thenReturn(event);
 
-        // Verify the results
-        assertEquals(400, response.getStatusCodeValue());
-    }
-    /**
-     * Test the updateById method with a null token.
-     */
-    @Test
-    void testUpdateByIdWithNullToken() {
-        // Setup your test data and expectations
-        Event event = new Event();
-        event.setId(1);
-        when(eventRepository.existsById(1L)).thenReturn(true);
-        when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
-        when(eventRepository.save(event)).thenReturn(event);
+    // Execute the method being tested
+    ResponseEntity<Event> response = eventServiceImplementation.updateById(1L, event);
 
-        // Execute the method being tested
-        ResponseEntity<Event> response = eventServiceImplementation.updateById(1L, event);
+    // Verify the results
+    assertEquals(400, response.getStatusCodeValue());
+  }
 
-        // Verify the results
-        assertEquals(400, response.getStatusCodeValue());
-    }
-    /**
-     * Test the updateById method with a null people.
-     */
-    @Test
-    void testUpdateByIdWithNullPeople() {
-        // Setup your test data and expectations
-        Event event = new Event();
-        event.setId(1);
-        when(eventRepository.existsById(1L)).thenReturn(true);
-        when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
-        when(eventRepository.save(event)).thenReturn(event);
+  /**
+   * Test the updateById method with a null token.
+   */
+  @Test
+  void testUpdateByIdWithNullToken() {
+    // Setup your test data and expectations
+    Event event = new Event();
+    event.setId(1);
+    when(eventRepository.existsById(1L)).thenReturn(true);
+    when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+    when(eventRepository.save(event)).thenReturn(event);
 
-        // Execute the method being tested
-        ResponseEntity<Event> response = eventServiceImplementation.updateById(1L, event);
+    // Execute the method being tested
+    ResponseEntity<Event> response = eventServiceImplementation.updateById(1L, event);
 
-        // Verify the results
-        assertEquals(400, response.getStatusCodeValue());
-    }
-    /**
-     * Test the updateById method with a null transactions.
-     */
-    @Test
-    void testUpdateByIdWithNullTransactions() {
-        // Setup your test data and expectations
-        Event event = new Event();
-        event.setId(1);
-        when(eventRepository.existsById(1L)).thenReturn(true);
-        when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
-        when(eventRepository.save(event)).thenReturn(event);
+    // Verify the results
+    assertEquals(400, response.getStatusCodeValue());
+  }
 
-        // Execute the method being tested
-        ResponseEntity<Event> response = eventServiceImplementation.updateById(1L, event);
+  /**
+   * Test the updateById method with a null people.
+   */
+  @Test
+  void testUpdateByIdWithNullPeople() {
+    // Setup your test data and expectations
+    Event event = new Event();
+    event.setId(1);
+    when(eventRepository.existsById(1L)).thenReturn(true);
+    when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+    when(eventRepository.save(event)).thenReturn(event);
 
-        // Verify the results
-        assertEquals(400, response.getStatusCodeValue());
-    }
+    // Execute the method being tested
+    ResponseEntity<Event> response = eventServiceImplementation.updateById(1L, event);
+
+    // Verify the results
+    assertEquals(400, response.getStatusCodeValue());
+  }
+
+  /**
+   * Test the updateById method with a null transactions.
+   */
+  @Test
+  void testUpdateByIdWithNullTransactions() {
+    // Setup your test data and expectations
+    Event event = new Event();
+    event.setId(1);
+    when(eventRepository.existsById(1L)).thenReturn(true);
+    when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+    when(eventRepository.save(event)).thenReturn(event);
+
+    // Execute the method being tested
+    ResponseEntity<Event> response = eventServiceImplementation.updateById(1L, event);
+
+    // Verify the results
+    assertEquals(400, response.getStatusCodeValue());
+  }
 
   /**
    * Test the getPeople method with a valid id.
@@ -230,185 +235,195 @@ class EventServiceImplementationTest {
 
     assertEquals(event.getPeople(), response.getBody());
   }
+
   /**
    * Test the add method with a valid id.
    */
-    @Test
-    void testAdd() {
-      Event event = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
-      Person person = new Person("test@email.com", "First", "Test",
-              "iban33");
-      event.addPerson(person);
-      when(eventRepository.existsById(1L)).thenReturn(true);
-      when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
-      when(psi.add(person)).thenReturn(ResponseEntity.ok(person));
-      when(eventRepository.save(event)).thenReturn(event);
-      when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
-      ResponseEntity<Person> response = eventServiceImplementation.add(1L, person);
+  @Test
+  void testAdd() {
+    Event event = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+    Person person = new Person("test@email.com", "First", "Test",
+            "iban33");
+    event.addPerson(person);
+    when(eventRepository.existsById(1L)).thenReturn(true);
+    when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+    when(psi.add(person)).thenReturn(ResponseEntity.ok(person));
+    when(eventRepository.save(event)).thenReturn(event);
+    when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+    ResponseEntity<Person> response = eventServiceImplementation.add(1L, person);
 
-      assertEquals(person, response.getBody());
-    }
-    /**
-     * Test the getExpenses method with a valid id.
-     */
-    @Test
-    void testGetExpenses() {
-      Event event = new Event();
-      event.setId(1);
-      when(eventRepository.existsById(1L)).thenReturn(true);
-      when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+    assertEquals(person, response.getBody());
+  }
 
-      ResponseEntity<List<Transaction>> response = eventServiceImplementation.getExpenses(1L);
+  /**
+   * Test the getExpenses method with a valid id.
+   */
+  @Test
+  void testGetExpenses() {
+    Event event = new Event();
+    event.setId(1);
+    when(eventRepository.existsById(1L)).thenReturn(true);
+    when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
 
-      assertEquals(event.getTransactions(), response.getBody());
-    }
-    /**
-     * Test the createNewExpense method with a valid id.
-     */
-    @Test
-    void testCreateNewExpense() {
-      Event event = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
-      Person person = new Person("test@email.com", "First", "Test", "iban33");
-      event.addPerson(person);
+    ResponseEntity<List<Transaction>> response = eventServiceImplementation.getExpenses(1L);
 
-      Transaction transaction = new Transaction("test",
-              LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
-              100, 947, "type22", new ArrayList<>(), person);
-      List<Person> participants = new ArrayList<>();
-      participants.add(person);
-      transaction.setParticipants(participants);
+    assertEquals(event.getTransactions(), response.getBody());
+  }
 
-      // Mock the getById method of PersonServiceImplementation to return a non-null value
-      when(psi.getById(anyInt())).thenReturn(ResponseEntity.ok(person));
+  /**
+   * Test the createNewExpense method with a valid id.
+   */
+  @Test
+  void testCreateNewExpense() {
+    Event event = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+    Person person = new Person("test@email.com", "First", "Test", "iban33");
+    event.addPerson(person);
 
-      // Mock the add method of TransactionServiceImplementation to return a non-null value
-      when(tsi.add(any(Transaction.class))).thenReturn(ResponseEntity.ok(transaction));
+    Transaction transaction = new Transaction("test",
+            LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+            100, 947, "type22", new ArrayList<>(), person);
+    List<Person> participants = new ArrayList<>();
+    participants.add(person);
+    transaction.setParticipants(participants);
 
-      when(eventRepository.existsById(1L)).thenReturn(true);
-      when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
-      when(eventRepository.save(event)).thenReturn(event);
+    // Mock the getById method of PersonServiceImplementation to return a non-null value
+    when(psi.getById(anyInt())).thenReturn(ResponseEntity.ok(person));
 
-      ResponseEntity<Transaction> response = eventServiceImplementation.createNewExpense(1L, transaction);
+    // Mock the add method of TransactionServiceImplementation to return a non-null value
+    when(tsi.add(any(Transaction.class))).thenReturn(ResponseEntity.ok(transaction));
 
-      assertEquals(transaction, response.getBody());
-    }
-    /**
-     * Test the deleteById method with a valid id.
-     */
-    @Test
-      void testDeleteById() {
-      Event event = new Event();
-      event.setId(1);
-      when(eventRepository.existsById(1L)).thenReturn(true);
-      when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
-      when(eventRepository.save(event)).thenReturn(event);
+    when(eventRepository.existsById(1L)).thenReturn(true);
+    when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+    when(eventRepository.save(event)).thenReturn(event);
 
-      ResponseEntity<Event> response = eventServiceImplementation.deleteById(1L);
+    ResponseEntity<Transaction> response = eventServiceImplementation.createNewExpense(1L, transaction);
 
-      assertEquals(event, response.getBody());
-    }
-    /**
-     * Test the deletePerson by id method with a valid id.
-     */
-    @Test
-    void testDeletePerson() {
-      Event event = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
-      Person person = new Person("test@email.com", "First", "Test", "iban33");
-      event.addPerson(person);
+    assertEquals(transaction, response.getBody());
+  }
 
-      when(eventRepository.existsById(1L)).thenReturn(true);
-      when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
-      when(eventRepository.save(event)).thenReturn(event);
-      when(psi.deleteById(anyInt())).thenReturn(ResponseEntity.ok(person)); // Mock the deleteById method to return a non-null value
-      when(psi.getById(1)).thenReturn(ResponseEntity.ok(person));
+  /**
+   * Test the deleteById method with a valid id.
+   */
+  @Test
+  void testDeleteById() {
+    Event event = new Event();
+    event.setId(1);
+    when(eventRepository.existsById(1L)).thenReturn(true);
+    when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+    when(eventRepository.save(event)).thenReturn(event);
 
-      ResponseEntity<Person> response = eventServiceImplementation.deletePerson(1L, 1);
+    ResponseEntity<Event> response = eventServiceImplementation.deleteById(1L);
 
-      assertEquals(person, response.getBody());
-    }
-    /**
-     * Test the deletePerson by id method with an invalid id.
-     */
-    @Test
-    void testDeletePersonWithInvalidId() {
-      Event event = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
-      Person person = new Person("test@email.com", "First", "Test", "iban33");
-      event.addPerson(person);
+    assertEquals(event, response.getBody());
+  }
 
-        when(eventRepository.existsById(1L)).thenReturn(true);
-        when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
-        when(eventRepository.save(event)).thenReturn(event);
-        when(psi.deleteById(anyInt())).thenReturn(ResponseEntity.ok(person)); // Mock the deleteById method to return a non-null value
-        when(psi.getById(1)).thenReturn(ResponseEntity.ok(person));
+  /**
+   * Test the deletePerson by id method with a valid id.
+   */
+  @Test
+  void testDeletePerson() {
+    Event event = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+    Person person = new Person("test@email.com", "First", "Test", "iban33");
+    event.addPerson(person);
 
-      ResponseEntity<Person> response = eventServiceImplementation.deletePerson(2L, 2);
+    when(eventRepository.existsById(1L)).thenReturn(true);
+    when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+    when(eventRepository.save(event)).thenReturn(event);
+    when(psi.deleteById(anyInt())).thenReturn(ResponseEntity.ok(person)); // Mock the deleteById method to return a non-null value
+    when(psi.getById(1)).thenReturn(ResponseEntity.ok(person));
 
-      assertEquals(400, response.getStatusCodeValue());
-    }
+    ResponseEntity<Person> response = eventServiceImplementation.deletePerson(1L, 1);
+
+    assertEquals(person, response.getBody());
+  }
+
+  /**
+   * Test the deletePerson by id method with an invalid id.
+   */
+  @Test
+  void testDeletePersonWithInvalidId() {
+    Event event = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+    Person person = new Person("test@email.com", "First", "Test", "iban33");
+    event.addPerson(person);
+
+    when(eventRepository.existsById(1L)).thenReturn(true);
+    when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+    when(eventRepository.save(event)).thenReturn(event);
+    when(psi.deleteById(anyInt())).thenReturn(ResponseEntity.ok(person)); // Mock the deleteById method to return a non-null value
+    when(psi.getById(1)).thenReturn(ResponseEntity.ok(person));
+
+    ResponseEntity<Person> response = eventServiceImplementation.deletePerson(2L, 2);
+
+    assertEquals(400, response.getStatusCodeValue());
+  }
+
   /**
    * Test the deleteTransaction method with a valid id.
    */
-    @Test
-    void testDeleteTransaction() {
-      Person person = new Person("test", "test", "test", "test");
-      Event event = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
-      Transaction transaction = new Transaction("test",
-              LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
-              100, 947, "type22", new ArrayList<>(), person);
-      event.addTransaction(transaction);
+  @Test
+  void testDeleteTransaction() {
+    Person person = new Person("test", "test", "test", "test");
+    Event event = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+    Transaction transaction = new Transaction("test",
+            LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+            100, 947, "type22", new ArrayList<>(), person);
+    event.addTransaction(transaction);
 
-      when(eventRepository.existsById(1L)).thenReturn(true);
-      when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
-      when(eventRepository.save(event)).thenReturn(event);
-      when(tsi.deleteById(anyInt())).thenReturn(ResponseEntity.ok(transaction)); // Mock the deleteById method to return a non-null value
-      when(tsi.getById(1)).thenReturn(ResponseEntity.ok(transaction));
-      when(psi.getById(0)).thenReturn(ResponseEntity.ok(person));
+    when(eventRepository.existsById(1L)).thenReturn(true);
+    when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+    when(eventRepository.save(event)).thenReturn(event);
+    when(tsi.deleteById(anyInt())).thenReturn(ResponseEntity.ok(transaction)); // Mock the deleteById method to return a non-null value
+    when(tsi.getById(1)).thenReturn(ResponseEntity.ok(transaction));
+    when(psi.getById(0)).thenReturn(ResponseEntity.ok(person));
 
-      ResponseEntity<Transaction> response = eventServiceImplementation.deleteTransaction(1L, 1);
+    ResponseEntity<Transaction> response = eventServiceImplementation.deleteTransaction(1L, 1);
 
-      assertEquals(transaction, response.getBody());
-    }
+    assertEquals(transaction, response.getBody());
+  }
+
   /**
    * Test the getEventByToken method with valid id.
    */
-    @Test
-    void testGetEventByToken() {
-      Event event = new Event();
-      event.setId(1);
-      when(eventRepository.findByToken("1234")).thenReturn(Optional.of(event));
+  @Test
+  void testGetEventByToken() {
+    Event event = new Event();
+    event.setId(1);
+    when(eventRepository.findByToken("1234")).thenReturn(Optional.of(event));
 
-      ResponseEntity<Event> response = eventServiceImplementation.getEventByToken("1234");
+    ResponseEntity<Event> response = eventServiceImplementation.getEventByToken("1234");
 
-      assertEquals(event, response.getBody());
-    }
+    assertEquals(event, response.getBody());
+  }
+
   /**
    * Test updateTitleById method with valid id.
    */
-    @Test
-    void testUpdateTitleById() {
-      Event event = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
-      when(eventRepository.existsById(1L)).thenReturn(true);
-      when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
-      when(eventRepository.save(event)).thenReturn(event);
-      Event event1 = new Event("Event one", "BOB", 1, "1234", new ArrayList<>(), new ArrayList<>());
-      ResponseEntity<Event> response = eventServiceImplementation.updateTitleById(1L, event1);
+  @Test
+  void testUpdateTitleById() {
+    Event event = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+    when(eventRepository.existsById(1L)).thenReturn(true);
+    when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+    when(eventRepository.save(event)).thenReturn(event);
+    Event event1 = new Event("Event one", "BOB", 1, "1234", new ArrayList<>(), new ArrayList<>());
+    ResponseEntity<Event> response = eventServiceImplementation.updateTitleById(1L, event1);
 
-      assertEquals(event1, response.getBody());
-    }
+    assertEquals(event1, response.getBody());
+  }
+
   /**
    * Test add method with valid id.
    */
-    @Test
-    void testAdd1() {
-      Event event = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
-      Person person = new Person("test", "test", "test", "test");
-      when(eventRepository.existsById(1L)).thenReturn(true);
-      when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
-      when(psi.add(person)).thenReturn(ResponseEntity.ok(person));
-      when(eventRepository.save(event)).thenReturn(event);
-      when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
-      ResponseEntity<Person> response = eventServiceImplementation.add(1L, person);
+  @Test
+  void testAdd1() {
+    Event event = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+    Person person = new Person("test", "test", "test", "test");
+    when(eventRepository.existsById(1L)).thenReturn(true);
+    when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+    when(psi.add(person)).thenReturn(ResponseEntity.ok(person));
+    when(eventRepository.save(event)).thenReturn(event);
+    when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+    ResponseEntity<Person> response = eventServiceImplementation.add(1L, person);
 
-      assertEquals(person, response.getBody());
-    }
+    assertEquals(person, response.getBody());
+  }
 }
