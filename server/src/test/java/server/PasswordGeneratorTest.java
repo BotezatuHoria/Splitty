@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.verify;
 
 public class PasswordGeneratorTest {
 
@@ -28,7 +27,8 @@ public class PasswordGeneratorTest {
   public void setup() {
     MockitoAnnotations.openMocks(this);
   }
-/**
+
+  /**
    * Tests if the password is generated.
    */
   @Test

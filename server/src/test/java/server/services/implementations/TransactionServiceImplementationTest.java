@@ -49,6 +49,7 @@ class TransactionServiceImplementationTest {
 
     assertEquals(ResponseEntity.noContent().build(), response);
   }
+
   /**
    * Test the getAll method when the list is not empty.
    */
@@ -64,99 +65,106 @@ class TransactionServiceImplementationTest {
 
     assertEquals(ResponseEntity.ok(Collections.singletonList(transaction)), response);
   }
+
   /**
    * Test the getById method when the transaction is not found.
    */
-    @Test
-    void getByIdNotFound() {
-        when(repo.findById(1)).thenReturn(java.util.Optional.empty());
+  @Test
+  void getByIdNotFound() {
+    when(repo.findById(1)).thenReturn(java.util.Optional.empty());
 
-        ResponseEntity<Transaction> response = service.getById(1);
+    ResponseEntity<Transaction> response = service.getById(1);
 
-        assertEquals(ResponseEntity.notFound().build(), response);
-    }
+    assertEquals(ResponseEntity.notFound().build(), response);
+  }
+
   /**
    * Test the add method when the transaction is null.
    */
-    @Test
-    void addNull() {
-        ResponseEntity<Transaction> response = service.add(null);
+  @Test
+  void addNull() {
+    ResponseEntity<Transaction> response = service.add(null);
 
-        assertEquals(ResponseEntity.badRequest().build(), response);
-    }
-    /**
-     * Test the add method when the transaction is invalid.
-     */
-    @Test
-    void addInvalid() {
-        Transaction transaction = new Transaction("test",
-                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
-                100, 947, "type22", new ArrayList<>(), null);
+    assertEquals(ResponseEntity.badRequest().build(), response);
+  }
 
-        ResponseEntity<Transaction> response = service.add(transaction);
+  /**
+   * Test the add method when the transaction is invalid.
+   */
+  @Test
+  void addInvalid() {
+    Transaction transaction = new Transaction("test",
+            LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+            100, 947, "type22", new ArrayList<>(), null);
 
-        assertEquals(ResponseEntity.badRequest().build(), response);
-    }
-    /**
-     * Test the add method when the transaction is valid.
-     */
-    @Test
-    void addValidTransaction() {
-      // Arrange
-      Person creator = new Person("test@email.com", "First", "Test", "iban33");
-      List<Person> participants = new ArrayList<>();
-      participants.add(creator);
-      Transaction validTransaction = new Transaction("test",
-              LocalDate.of(1970, 10, 10),
-              100, 947, "type22", participants, creator);
+    ResponseEntity<Transaction> response = service.add(transaction);
 
-      when(repo.save(validTransaction)).thenReturn(validTransaction);
+    assertEquals(ResponseEntity.badRequest().build(), response);
+  }
 
-      // Act
-      ResponseEntity<Transaction> response = service.add(validTransaction);
+  /**
+   * Test the add method when the transaction is valid.
+   */
+  @Test
+  void addValidTransaction() {
+    // Arrange
+    Person creator = new Person("test@email.com", "First", "Test", "iban33");
+    List<Person> participants = new ArrayList<>();
+    participants.add(creator);
+    Transaction validTransaction = new Transaction("test",
+            LocalDate.of(1970, 10, 10),
+            100, 947, "type22", participants, creator);
 
-      // Assert
-      assertEquals(HttpStatus.OK, response.getStatusCode());
-      assertEquals(validTransaction, response.getBody());
-    }
-    /**
-     * Test the deleteById method when the transaction is not found.
-     */
-    @Test
-    void deleteByIdNotFound() {
-        when(repo.existsById(1)).thenReturn(false);
+    when(repo.save(validTransaction)).thenReturn(validTransaction);
 
-        ResponseEntity<Transaction> response = service.deleteById(1);
+    // Act
+    ResponseEntity<Transaction> response = service.add(validTransaction);
 
-        assertEquals(ResponseEntity.badRequest().build(), response);
-    }
-    /**
-     * Test the deleteById method when the transaction is found.
-     */
-    @Test
-    void deleteByIdValid() {
-      // Arrange
-      int validId = 1;
-      Person creator = new Person("test@email.com", "First", "Test", "iban33");
-      List<Person> participants = new ArrayList<>();
-      participants.add(creator);
-      Transaction validTransaction = new Transaction("test",
-              LocalDate.of(1970, 10, 10),
-              100, 947, "type22", participants, creator);
+    // Assert
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertEquals(validTransaction, response.getBody());
+  }
 
-      when(repo.existsById(validId)).thenReturn(true);
-      when(repo.findById(validId)).thenReturn(Optional.of(validTransaction));
+  /**
+   * Test the deleteById method when the transaction is not found.
+   */
+  @Test
+  void deleteByIdNotFound() {
+    when(repo.existsById(1)).thenReturn(false);
 
-      // Act
-      ResponseEntity<Transaction> response = service.deleteById(validId);
+    ResponseEntity<Transaction> response = service.deleteById(1);
 
-      // Assert
-      assertEquals(HttpStatus.OK, response.getStatusCode());
-      assertEquals(validTransaction, response.getBody());
-    }
-    /**
-     * Test the updateNameById method when the transaction is valid.
-     */
+    assertEquals(ResponseEntity.badRequest().build(), response);
+  }
+
+  /**
+   * Test the deleteById method when the transaction is found.
+   */
+  @Test
+  void deleteByIdValid() {
+    // Arrange
+    int validId = 1;
+    Person creator = new Person("test@email.com", "First", "Test", "iban33");
+    List<Person> participants = new ArrayList<>();
+    participants.add(creator);
+    Transaction validTransaction = new Transaction("test",
+            LocalDate.of(1970, 10, 10),
+            100, 947, "type22", participants, creator);
+
+    when(repo.existsById(validId)).thenReturn(true);
+    when(repo.findById(validId)).thenReturn(Optional.of(validTransaction));
+
+    // Act
+    ResponseEntity<Transaction> response = service.deleteById(validId);
+
+    // Assert
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertEquals(validTransaction, response.getBody());
+  }
+
+  /**
+   * Test the updateNameById method when the transaction is valid.
+   */
   @Test
   void updateNameByIdValid() {
     // Arrange
@@ -179,97 +187,102 @@ class TransactionServiceImplementationTest {
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals(newName, response.getBody().getName());
   }
-    /**
-     * Test the updateNameById method when the transaction is not found.
-     */
-    @Test
-    void updateNameByIdNotFound() {
-        when(repo.existsById(1)).thenReturn(false);
 
-        ResponseEntity<Transaction> response = service.updateNameById(1, "updatedName");
+  /**
+   * Test the updateNameById method when the transaction is not found.
+   */
+  @Test
+  void updateNameByIdNotFound() {
+    when(repo.existsById(1)).thenReturn(false);
 
-        assertEquals(ResponseEntity.badRequest().build(), response);
-    }
-    /**
-     * Test the updateParticipantsById method when the transaction is valid.
-     */
-    @Test
-    void updateParticipantsByIdValid() {
-      // Arrange
-      int validId = 1;
-      Person creator = new Person("test@email.com", "First", "Test", "iban33");
-      List<Person> oldParticipants = new ArrayList<>();
-      oldParticipants.add(creator);
-      Transaction validTransaction = new Transaction("test",
-              LocalDate.of(1970, 10, 10),
-              100, 947, "type22", oldParticipants, creator);
+    ResponseEntity<Transaction> response = service.updateNameById(1, "updatedName");
 
-      Person newParticipant = new Person("new@email.com", "New", "Participant", "iban44");
-      List<Person> newParticipants = new ArrayList<>();
-      newParticipants.add(newParticipant);
+    assertEquals(ResponseEntity.badRequest().build(), response);
+  }
 
-      when(repo.existsById(validId)).thenReturn(true);
-      when(repo.findById(validId)).thenReturn(Optional.of(validTransaction));
+  /**
+   * Test the updateParticipantsById method when the transaction is valid.
+   */
+  @Test
+  void updateParticipantsByIdValid() {
+    // Arrange
+    int validId = 1;
+    Person creator = new Person("test@email.com", "First", "Test", "iban33");
+    List<Person> oldParticipants = new ArrayList<>();
+    oldParticipants.add(creator);
+    Transaction validTransaction = new Transaction("test",
+            LocalDate.of(1970, 10, 10),
+            100, 947, "type22", oldParticipants, creator);
 
-      // Act
-      ResponseEntity<Transaction> response = service.updateParticipantsById(validId, newParticipants);
+    Person newParticipant = new Person("new@email.com", "New", "Participant", "iban44");
+    List<Person> newParticipants = new ArrayList<>();
+    newParticipants.add(newParticipant);
 
-      // Assert
-      assertEquals(HttpStatus.OK, response.getStatusCode());
-      assertEquals(newParticipants, response.getBody().getParticipants());
-    }
-    /**
-     * Test the updateParticipantsById method when the transaction is not found.
-     */
-    @Test
-    void updateParticipantsByIdNotFound() {
-        when(repo.existsById(1)).thenReturn(false);
+    when(repo.existsById(validId)).thenReturn(true);
+    when(repo.findById(validId)).thenReturn(Optional.of(validTransaction));
 
-        ResponseEntity<Transaction> response = service.updateParticipantsById(1, new ArrayList<>());
+    // Act
+    ResponseEntity<Transaction> response = service.updateParticipantsById(validId, newParticipants);
 
-        assertEquals(ResponseEntity.badRequest().build(), response);
-    }
-    /**
-     * Test the updateById method when the transaction is invalid.
-     */
-    @Test
-    void updateByIdInvalid() {
-        Transaction transaction = new Transaction("test",
-                LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
-                100, 947, "type22", new ArrayList<>(), null);
+    // Assert
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertEquals(newParticipants, response.getBody().getParticipants());
+  }
 
-        ResponseEntity<Transaction> response = service.updateById(1, transaction);
+  /**
+   * Test the updateParticipantsById method when the transaction is not found.
+   */
+  @Test
+  void updateParticipantsByIdNotFound() {
+    when(repo.existsById(1)).thenReturn(false);
 
-        assertEquals(ResponseEntity.badRequest().build(), response);
-    }
-    /**
-     * Test the updateById method when the transaction is valid.
-     */
-    @Test
-    void updateByIdValid() {
-      // Arrange
-      int validId = 1;
-      Person creator = new Person("test@email.com", "First", "Test", "iban33");
-      List<Person> participants = new ArrayList<>();
-      participants.add(creator);
-      Transaction oldTransaction = new Transaction("test",
-              LocalDate.of(1970, 10, 10),
-              100, 947, "type22", participants, creator);
+    ResponseEntity<Transaction> response = service.updateParticipantsById(1, new ArrayList<>());
 
-      Transaction newTransaction = new Transaction("updatedTest",
-              LocalDate.of(1970, 10, 11),
-              200, 948, "type23", participants, creator);
+    assertEquals(ResponseEntity.badRequest().build(), response);
+  }
 
-      when(repo.existsById(validId)).thenReturn(true);
-      when(repo.findById(validId)).thenReturn(Optional.of(oldTransaction));
-      when(psi.getById(creator.getId())).thenReturn(ResponseEntity.ok(creator));
+  /**
+   * Test the updateById method when the transaction is invalid.
+   */
+  @Test
+  void updateByIdInvalid() {
+    Transaction transaction = new Transaction("test",
+            LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
+            100, 947, "type22", new ArrayList<>(), null);
 
-      // Act
-      ResponseEntity<Transaction> response = service.updateById(validId, newTransaction);
+    ResponseEntity<Transaction> response = service.updateById(1, transaction);
 
-      // Assert
-      assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
+    assertEquals(ResponseEntity.badRequest().build(), response);
+  }
+
+  /**
+   * Test the updateById method when the transaction is valid.
+   */
+  @Test
+  void updateByIdValid() {
+    // Arrange
+    int validId = 1;
+    Person creator = new Person("test@email.com", "First", "Test", "iban33");
+    List<Person> participants = new ArrayList<>();
+    participants.add(creator);
+    Transaction oldTransaction = new Transaction("test",
+            LocalDate.of(1970, 10, 10),
+            100, 947, "type22", participants, creator);
+
+    Transaction newTransaction = new Transaction("updatedTest",
+            LocalDate.of(1970, 10, 11),
+            200, 948, "type23", participants, creator);
+
+    when(repo.existsById(validId)).thenReturn(true);
+    when(repo.findById(validId)).thenReturn(Optional.of(oldTransaction));
+    when(psi.getById(creator.getId())).thenReturn(ResponseEntity.ok(creator));
+
+    // Act
+    ResponseEntity<Transaction> response = service.updateById(validId, newTransaction);
+
+    // Assert
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+  }
 
   /**
    * Test the updateMoneyById method when.
@@ -333,6 +346,7 @@ class TransactionServiceImplementationTest {
     assertNotNull(response);
     assertEquals(ResponseEntity.ok(null), response.getResult());
   }
+
   @Test
   void isNullOrEmptyTest() {
     // Act & Assert

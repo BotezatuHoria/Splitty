@@ -15,7 +15,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class PersonServiceImplementationTest extends Person{
+class PersonServiceImplementationTest extends Person {
 
   @Mock
   private PersonRepository personRepository;
@@ -43,53 +43,57 @@ class PersonServiceImplementationTest extends Person{
 
     assertEquals(people, response.getBody());
   }
+
   /**
    * Test the getById method.
    */
-    @Test
-    void testGetById() {
-        Person person = new Person();
-        when(personRepository.findById(1)).thenReturn(java.util.Optional.of(person));
+  @Test
+  void testGetById() {
+    Person person = new Person();
+    when(personRepository.findById(1)).thenReturn(java.util.Optional.of(person));
 
-        ResponseEntity<Person> response = personServiceImplementation.getById(1);
+    ResponseEntity<Person> response = personServiceImplementation.getById(1);
 
-        assertEquals(person, response.getBody());
-    }
-    /**
-     * Test the add method.
-     */
-    @Test
-    void testAdd() {
-      Person person = new Person("test", "test", "test", "test");
-        when(personRepository.save(person)).thenReturn(person);
+    assertEquals(person, response.getBody());
+  }
 
-        ResponseEntity<Person> response = personServiceImplementation.add(person);
+  /**
+   * Test the add method.
+   */
+  @Test
+  void testAdd() {
+    Person person = new Person("test", "test", "test", "test");
+    when(personRepository.save(person)).thenReturn(person);
 
-        assertEquals(person, response.getBody());
-    }
-    /**
-     * Test the deleteById method.
-     */
-    @Test
-    void testDeleteById() {
-        Person person = new Person("test", "test", "test", "test");
-        when(personRepository.findById(1)).thenReturn(java.util.Optional.of(person));
-      when(personRepository.existsById(1)).thenReturn(true);
-        ResponseEntity<Person> response = personServiceImplementation.deleteById(1);
+    ResponseEntity<Person> response = personServiceImplementation.add(person);
 
-        assertEquals(person, response.getBody());
-    }
-    /**
-     * Test the updateById method with invalid id.
-     */
-    @Test
-    void testUpdateByIdInvalidId() {
-        Person person = new Person("test", "test", "test", "test");
-        when(personRepository.existsById(1)).thenReturn(false);
+    assertEquals(person, response.getBody());
+  }
 
-        ResponseEntity<Person> response = personServiceImplementation.updateById(1, person);
+  /**
+   * Test the deleteById method.
+   */
+  @Test
+  void testDeleteById() {
+    Person person = new Person("test", "test", "test", "test");
+    when(personRepository.findById(1)).thenReturn(java.util.Optional.of(person));
+    when(personRepository.existsById(1)).thenReturn(true);
+    ResponseEntity<Person> response = personServiceImplementation.deleteById(1);
 
-        assertEquals(ResponseEntity.badRequest().build(), response);
-    }
+    assertEquals(person, response.getBody());
+  }
+
+  /**
+   * Test the updateById method with invalid id.
+   */
+  @Test
+  void testUpdateByIdInvalidId() {
+    Person person = new Person("test", "test", "test", "test");
+    when(personRepository.existsById(1)).thenReturn(false);
+
+    ResponseEntity<Person> response = personServiceImplementation.updateById(1, person);
+
+    assertEquals(ResponseEntity.badRequest().build(), response);
+  }
 
 }
