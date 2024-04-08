@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 
 @Entity
@@ -32,6 +33,9 @@ public class Event {
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     protected List<Transaction> transactions;
 
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    protected Set<Tag> tagList;
+
     /**
      * constructor, constructs the event with all these attributes.
      * @param tag tag of the event.
@@ -48,6 +52,7 @@ public class Event {
         this.token = token;
         this.people = people;
         this.transactions = transactions;
+        this.tagList = Set.of(new Tag("Food"), new Tag("Entrance Fees"), new Tag("Travel"));
         creationDate = LocalDate.now();
         lastModified = LocalDateTime.now();
     }
@@ -236,6 +241,18 @@ public class Event {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Set<Tag> getTagList() {
+        return tagList;
+    }
+
+    public void setTagList(Set<Tag> tagList) {
+        this.tagList = tagList;
+    }
+
+    public void addTag(String text) {
+        this.tagList.add(new Tag(text.trim()));
     }
 }
 

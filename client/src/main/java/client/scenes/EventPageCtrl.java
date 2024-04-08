@@ -312,7 +312,7 @@ public class EventPageCtrl implements Initializable {
             });
         });
         new Thread(() -> {
-            server.registerForMessages("/topic/event", Person.class, person -> {
+            server.registerForMessages("/topic/event", Object.class, object -> {
                 System.out.println("This is activated");
                 Platform.runLater(this::updatePage);
             });
