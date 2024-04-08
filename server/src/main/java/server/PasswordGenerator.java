@@ -16,7 +16,7 @@ public class PasswordGenerator {
      * Generates a new random password for the admin.
      */
     @PostConstruct
-    private void generatePassword(){
+    void generatePassword(){
         String allChars = "abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         password = "";
         while (password.length() < 8){
