@@ -48,7 +48,6 @@ public class StatisticsCtrl implements Initializable {
         assert statsPieChart != null : "fx:id=\"statsPieChart\" was not injected: check your FXML file 'Statistics.fxml'.";
         assert statsTotalExpenses != null : "fx:id=\"statsTotalExpenses\" was not injected: check your FXML file 'Statistics.fxml'.";
 
-        SelectedEventSingleton selectedEventInstance = SelectedEventSingleton.getInstance();
         Event selectedEvent = server.getEventByID(mainCtrl.getCurrentEventID());
 
         if (selectedEvent == null) {

@@ -62,8 +62,7 @@ public class StartSettingsCtrl {
         this.mainCtrl = mainCtrl;
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
+    void initializeLanguages() {
         // Push all the languages to the combobox
         startPageLanguageSelector.getItems().addAll(FlagListCell.getLanguages());
 
@@ -71,7 +70,19 @@ public class StartSettingsCtrl {
         startPageLanguageSelector.setCellFactory(lv -> new FlagListCell());
         startPageLanguageSelector.setButtonCell(new FlagListCell());
 
+        startPageLanguageSelector.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                LanguageSingleton.getInstance().setLanguage((Pair<String, Image>) newVal);
+                LanguageSingleton.getInstance().setLanguageText();
+            }
+        });
+
         // Show current language
+        Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
+        startPageLanguageSelector.getSelectionModel().select(currentLanguage);
+    }
+
+    public void setLanguageSelector() {
         Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
         startPageLanguageSelector.getSelectionModel().select(currentLanguage);
     }

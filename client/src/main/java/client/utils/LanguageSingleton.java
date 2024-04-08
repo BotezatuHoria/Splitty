@@ -36,7 +36,7 @@ public class LanguageSingleton {
 
     public void setLanguageText() {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("messages", new Locale.Builder().setLanguage(language.getKey()).build());
-        mainCtrl.setLanguageText(resourceBundle);
+        this.mainCtrl.setLanguageText(resourceBundle);
     }
 
     public ResourceBundle getResourceBundle() {

@@ -143,7 +143,6 @@ public class MainCtrl {
         this.debtOverview = new Scene(debtOverview.getValue());
         this.debtOverviewPageCtrl = debtOverview.getKey();
 
-
         this.adminLoginCtrl = adminLoginPage.getKey();
         this.adminLogin = new Scene(adminLoginPage.getValue());
 
@@ -153,8 +152,9 @@ public class MainCtrl {
         this.editExpenseCtrl = editExpensePage.getKey();
         this.editExpensePage = new Scene(editExpensePage.getValue());
 
+        startSettingsCtrl.initializeLanguages();
+        starterPageCtrl.initializeLanguages();
         LanguageSingleton languageSingleton = LanguageSingleton.getInstance();
-        languageSingleton.setMainCtrl(this);
         languageSingleton.setLanguageText();
 
         showStartSettings();
@@ -321,6 +321,9 @@ public class MainCtrl {
     }
 
     public void setLanguageText(ResourceBundle resourceBundle) {
+        starterPageCtrl.setLanguageSelector();
+        startSettingsCtrl.setLanguageSelector();
+
         startSettingsCtrl.setLanguageText(resourceBundle);
         starterPageCtrl.setLanguageText(resourceBundle);
         eventCtrl.setLanguageText(resourceBundle);

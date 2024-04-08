@@ -26,6 +26,7 @@ import java.net.URL;
 
 
 import client.scenes.*;
+import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Injector;
@@ -63,6 +64,11 @@ public class Main extends Application {
         boolean result = checkConnection(host); //if this is false, the client is trying to connect to a server that is not running.
         // we can choose to have ui for this or not...
 
+        var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
+
+        LanguageSingleton languageSingleton = LanguageSingleton.getInstance();
+        languageSingleton.setMainCtrl(mainCtrl);
+
         var starterPage = FXML.load(StarterPageCtrl.class, "client", "scenes", "StarterPage.fxml");
         var eventPage = FXML.load(EventPageCtrl.class, "client", "scenes", "EventPage.fxml");
         var statisticsPage = FXML.load(StatisticsCtrl.class, "client", "scenes", "Statistics.fxml");
@@ -79,7 +85,7 @@ public class Main extends Application {
         var editExpensePage = FXML.load(EditExpenseCtrl.class, "client", "scenes", "EditExpense.fxml");
 
         var debtOverviewPage = FXML.load(DebtOverviewPageCtrl.class, "client", "scenes", "DebtOverviewPage.fxml");
-        var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
+
         mainCtrl.initialize(primaryStage, starterPage, eventPage, statisticsPage, expensePage, startSettings,
                 addParticipants, editParticipants, inviteSend, debtPage,adminLogin, adminPage, editExpensePage, debtOverviewPage);
 
