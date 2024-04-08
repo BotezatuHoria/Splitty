@@ -168,7 +168,8 @@ public class EventServiceImplementation implements EventService {
             }
             Event event = repo.findById(idEvent).get();
             event.addTransaction(savedTransaction);
-            updateById(idEvent, event);
+            Event saved = updateById(idEvent, event).getBody();
+            messagingTemplate.convertAndSend("/topic/event", saved);
             return ResponseEntity.ok(savedTransaction);
         }
         return ResponseEntity.internalServerError().build();

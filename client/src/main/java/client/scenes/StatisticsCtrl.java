@@ -99,7 +99,9 @@ public class StatisticsCtrl implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         server.registerForMessages("/topic/event", Object.class, object -> {
-            Platform.runLater(this::initializeStatistics);
+            if (mainCtrl.getCurrentEventID() != 0) {
+                Platform.runLater(this::initializeStatistics);
+            }
         });
     }
 }

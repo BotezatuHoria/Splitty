@@ -2,7 +2,6 @@ package server.api;
 
 import java.util.*;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import commons.Event;
 
 import commons.Person;
@@ -106,7 +105,7 @@ public class EventController {
      * @return - current state of the event
      */
     @PostMapping(path = {"/{id}/person"})
-    public ResponseEntity<Person> add(@PathVariable("id") long id, @RequestBody Person person) throws JsonProcessingException {
+    public ResponseEntity<Person> add(@PathVariable("id") long id, @RequestBody Person person) {
        return esi.add(id, person);
     }
 
