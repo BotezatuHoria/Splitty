@@ -258,5 +258,11 @@ public class Event {
     public void removeTag(Tag tag) {
         this.tagList.remove(tag);
     }
+
+    public void removeTags() {
+        if (tagList != null) {
+            tagList.clear();
+        }
+    }
 }
 

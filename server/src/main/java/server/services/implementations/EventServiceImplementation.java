@@ -109,6 +109,7 @@ public class EventServiceImplementation implements EventService {
         Event event = repo.findById(id).get();
         event.removeTransactions();
         event.removeParticipants();
+        event.removeTags();
         ResponseEntity<commons.Event> response = ResponseEntity.ok(event);
         repo.deleteById(id);
         return response;
