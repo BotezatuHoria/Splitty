@@ -34,7 +34,7 @@ public class Event {
     protected List<Transaction> transactions;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    protected Set<Tag> tagList;
+    protected List<Tag> tagList;
 
     /**
      * constructor, constructs the event with all these attributes.
@@ -52,7 +52,7 @@ public class Event {
         this.token = token;
         this.people = people;
         this.transactions = transactions;
-        this.tagList = Set.of(new Tag("Food"), new Tag("Entrance Fees"), new Tag("Travel"));
+        this.tagList = List.of(new Tag("Food"), new Tag("Entrance Fees"), new Tag("Travel"));
         creationDate = LocalDate.now();
         lastModified = LocalDateTime.now();
     }
@@ -243,16 +243,20 @@ public class Event {
         this.id = id;
     }
 
-    public Set<Tag> getTagList() {
+    public List<Tag> getTagList() {
         return tagList;
     }
 
-    public void setTagList(Set<Tag> tagList) {
+    public void setTagList(List<Tag> tagList) {
         this.tagList = tagList;
     }
 
-    public void addTag(String text) {
-        this.tagList.add(new Tag(text.trim()));
+    public void addTag(Tag tag) {
+        this.tagList.add(tag);
+    }
+
+    public void removeTag(Tag tag) {
+        this.tagList.remove(tag);
     }
 }
 

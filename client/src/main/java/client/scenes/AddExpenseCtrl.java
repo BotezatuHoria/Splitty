@@ -220,7 +220,7 @@ public class AddExpenseCtrl implements Initializable {
      */
     public void addNewTag() {
         expenseTypeBox.getItems().add(newTagField.getText());
-
+        server.addTag(new Tag(newTagField.getText().trim()), mainCtrl.getCurrentEventID());
         newTagField.clear();
         tagPane.visibleProperty().set(false);
     }

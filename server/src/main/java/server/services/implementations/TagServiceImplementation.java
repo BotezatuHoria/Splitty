@@ -43,18 +43,16 @@ public class TagServiceImplementation implements TagService {
         return repo.findById(id)
                 .map(existingTag -> {
                     existingTag.setTitle(newTag.getTitle());
-                    messagingTemplate.convertAndSend("/topic/event", existingTag);
                     return ResponseEntity.ok(repo.save(existingTag));
                 }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Override
-    public ResponseEntity<Tag> add(String text) {
-        if (text == null || text.isEmpty()) {
+    public ResponseEntity<Tag> add(Tag tag) {
+        if (tag == null || tag.getTitle().isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
-        Tag saved = repo.save(new Tag(text));
-        messagingTemplate.convertAndSend("/topic/event", saved);
+        Tag saved = repo.save(tag);
         return ResponseEntity.ok(saved);
     }
 

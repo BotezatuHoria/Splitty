@@ -444,4 +444,41 @@ public class ServerUtils {
 				.accept(APPLICATION_JSON)
 				.get(new GenericType<Event>() {});
 	}
+
+	public Tag addTag(Tag tag, int id) {
+		Response response = ClientBuilder.newClient().target(server)
+				.path("api/event/" + id + "/tag")
+				.request(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.post(Entity.entity(tag, MediaType.APPLICATION_JSON));
+		if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+			return response.readEntity(Tag.class);
+		} else {
+			throw new RuntimeException("Failed to add person. Status code: " + response.getStatus());
+		}
+	}
+
+	public Person removeTag(int tagID, int eventID){
+		Response response = ClientBuilder.newClient().target(server)
+				.path("api/event/" + eventID + "/tag")
+				.queryParam("id", tagID)
+				.request(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.delete();
+		if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+			return response.readEntity(Person.class);
+		} else {
+			throw new RuntimeException("Failed to remove person. Status code: " + response.getStatus());
+		}
+	}
+
+	public Tag updateTag(int tagID, Tag tag){
+		return ClientBuilder.newClient(new ClientConfig())
+				.target(server).path("api/tag/" + tagID)
+				.request(APPLICATION_JSON)
+				.accept(APPLICATION_JSON)
+				.put(Entity.entity(tag, APPLICATION_JSON), Tag.class);
+	}
+
+
 }

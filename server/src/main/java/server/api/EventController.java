@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import commons.Event;
 
 import commons.Person;
+import commons.Tag;
 import commons.Transaction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -146,6 +147,20 @@ public class EventController {
     @GetMapping(path = {"/token/{token}"})
     public ResponseEntity<Event> getEventByToken(@PathVariable("token") String token){
         return esi.getEventByToken(token);
+    }
+
+    @GetMapping(path = {"/{idEvent}/tag"})
+    public ResponseEntity<List<Tag>> getAllTags(@PathVariable("idEvent") long id) {
+        return esi.getTags(id);
+    }
+    @PostMapping(path = "/{idEvent}/tag")
+    public ResponseEntity<Tag> createTag(@PathVariable("idEvent") long id, @RequestBody Tag tag) {
+        return esi.createTag(id, tag);
+    }
+
+    @DeleteMapping(path = "/{idEvent}/tag")
+    public ResponseEntity<Tag> removeTag(@PathVariable("idEvent") long id, @RequestParam("id") int idTag) {
+        return esi.deleteTag(id, idTag);
     }
 
 }
