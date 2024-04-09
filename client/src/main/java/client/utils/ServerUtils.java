@@ -21,6 +21,7 @@ import java.math.RoundingMode;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -30,6 +31,8 @@ import commons.*;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import javafx.scene.control.Alert;
+import javafx.stage.Modality;
 import javafx.util.Pair;
 import org.glassfish.jersey.client.ClientConfig;
 
@@ -47,9 +50,15 @@ import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 public class ServerUtils {
 
 	private static String server = "http://localhost:8080/";
+	private static final String EMAIL_USERNAME = "";
+	private static final String EMAIL_PASSWORD = "";
 
 	public static void setServer(String server) {
 		ServerUtils.server = server;
@@ -479,6 +488,61 @@ public class ServerUtils {
 				.accept(APPLICATION_JSON)
 				.put(Entity.entity(tag, APPLICATION_JSON), Tag.class);
 	}
+
+	public void sendEmail(String to, String subject, String message) {
+		if (to.isEmpty() || to  == null) {
+			sendBadEmailAlert();
+			return;
+		}
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+		props.put("mail.debug", "true");
+
+		Session session = Session.getInstance(props, new Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(EMAIL_USERNAME, EMAIL_PASSWORD);
+			}
+		});
+
+		try {
+			Message mimeMessage = new MimeMessage(session);
+			mimeMessage.setFrom(new InternetAddress(EMAIL_USERNAME));
+			mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+			mimeMessage.setSubject(subject);
+			mimeMessage.setText(message);
+
+			Transport.send(mimeMessage);
+			sendConfirmAlert();
+		} catch (MessagingException e) {
+			sendFailAlert(e);
+		}
+	}
+
+	public void sendConfirmAlert() {
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.initModality(Modality.APPLICATION_MODAL);
+		alert.setContentText("Email sent successfully!");
+		alert.showAndWait();
+	}
+
+	public void sendFailAlert(MessagingException e) {
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.initModality(Modality.APPLICATION_MODAL);
+		alert.setContentText("Failed to send email: " + e.getMessage());
+		alert.showAndWait();
+	}
+
+	public void sendBadEmailAlert() {
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.initModality(Modality.APPLICATION_MODAL);
+		alert.setContentText("The user does not have a valid email address registered, " +
+				"please reach out to him using another method!");
+		alert.showAndWait();
+	}
+
 
 
 }

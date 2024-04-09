@@ -9,9 +9,11 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Event;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.stage.Modality;
 
 
 import javax.mail.*;
@@ -28,9 +30,6 @@ public class InviteSendingCtrl{
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
-
-    private static final String EMAIL_USERNAME = "";
-    private static final String EMAIL_PASSWORD = "";
 
     @FXML // fx:id="CopyInviteCodeButton"
     private Button copyInviteCodeButton; // Value injected by FXMLLoader
@@ -83,7 +82,7 @@ public class InviteSendingCtrl{
         }
         for(String s : listOfMails){
             String doSomethingWithThis= s.toLowerCase();// here we add the protocol to send emails if we want, using a mail API like google or the Java one.
-            sendEmail(s, "Invite to Splitty App", inviteCode.getText());
+            server.sendEmail(s, "Invite to Splitty App", inviteCode.getText());
         }
 
     }
@@ -154,33 +153,5 @@ public class InviteSendingCtrl{
         mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
     }
 
-    public void sendEmail(String to, String subject, String message) {
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-        props.put("mail.debug", "true");
-
-        Session session = Session.getInstance(props, new Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(EMAIL_USERNAME, EMAIL_PASSWORD);
-            }
-        });
-
-        try {
-            Message mimeMessage = new MimeMessage(session);
-            mimeMessage.setFrom(new InternetAddress(EMAIL_USERNAME));
-            mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
-            mimeMessage.setSubject(subject);
-            mimeMessage.setText(message);
-
-            Transport.send(mimeMessage);
-
-            System.out.println("Email sent successfully!");
-        } catch (MessagingException e) {
-            System.err.println("Failed to send email: " + e.getMessage());
-        }
-    }
 
 }
