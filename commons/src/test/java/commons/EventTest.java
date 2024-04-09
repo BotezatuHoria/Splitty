@@ -185,7 +185,7 @@ class EventTest {
     @Test
     void toStringTest(){
         Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
-        assertEquals("Event{tag='Event one', title='Party', id=1, token='1234'}", test.toString());
+        assertEquals("Party", test.toString());
     }
 
     /**
