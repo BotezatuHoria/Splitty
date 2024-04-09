@@ -133,7 +133,7 @@ public class AdminPageCtrl {
                         mainCtrl.showEventPage(event.getId());
                     }
                     catch (Error e) {
-                        mainCtrl.showAlert("This event doesn't exist anymore!");
+                        mainCtrl.showAlert(LanguageSingleton.getInstance().getResourceBundle().getString("error.event.notExist"));
                     }
                 }
             }

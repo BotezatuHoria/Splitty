@@ -154,7 +154,9 @@ public class MainCtrl {
 
         startSettingsCtrl.initializeLanguages();
         starterPageCtrl.initializeLanguages();
+
         LanguageSingleton languageSingleton = LanguageSingleton.getInstance();
+        languageSingleton.setLanguageByCode(ServerUtils.getConfig().getClientsLanguage());
         languageSingleton.setLanguageText();
 
         showStartSettings();
@@ -345,9 +347,13 @@ public class MainCtrl {
      */
     public String transactionString(int id) {
         Transaction t = server.getTransactionByID(id);
-        String ret = t + " by " + server.getPersonByID(t.getCreator().getId()) + " and including participants: ";
+        String byLabel = LanguageSingleton.getInstance().getResourceBundle().getString("by.label");
+        String includingParticipantsLabel = LanguageSingleton.getInstance().getResourceBundle().getString("including.participants");
+        String noParticipants = LanguageSingleton.getInstance().getResourceBundle().getString("no.participants");
+
+        String ret = t + byLabel + server.getPersonByID(t.getCreator().getId()) + includingParticipantsLabel;
         if (t.getParticipants() == null || t.getParticipants().isEmpty()) {
-            return ret + "no participants;";
+            return ret + noParticipants;
         }
         for(Person p: t.getParticipants()) {
             ret += server.getPersonByID(p.getId()) + ", ";

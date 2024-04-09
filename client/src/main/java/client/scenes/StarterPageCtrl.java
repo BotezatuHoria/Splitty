@@ -7,6 +7,7 @@ package client.scenes;
 import java.net.URL;
 import java.util.*;
 
+import client.Config;
 import client.utils.FlagListCell;
 import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
@@ -214,7 +215,6 @@ public class StarterPageCtrl implements Initializable {
     public void updateLanguage() {
         // Show current language
         Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
-//        languageSelector.getSelectionModel().select(currentLanguage);
     }
 
     public void setLanguageText(ResourceBundle resourceBundle) {
@@ -258,6 +258,13 @@ public class StarterPageCtrl implements Initializable {
             if (newVal != null) {
                 LanguageSingleton.getInstance().setLanguage((Pair<String, Image>) newVal);
                 LanguageSingleton.getInstance().setLanguageText();
+
+                Config config = ServerUtils.getConfig();
+
+                if (config != null) {
+                    config.setLanguage(((Pair<String, Image>) newVal).getKey());
+                    ServerUtils.setConfig(config);
+                }
             }
         });
 

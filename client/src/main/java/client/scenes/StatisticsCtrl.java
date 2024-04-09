@@ -1,7 +1,6 @@
 package client.scenes;
 
 import client.utils.LanguageSingleton;
-import client.utils.SelectedEventSingleton;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Event;
@@ -51,7 +50,7 @@ public class StatisticsCtrl implements Initializable {
         Event selectedEvent = server.getEventByID(mainCtrl.getCurrentEventID());
 
         if (selectedEvent == null) {
-            statsTotalExpenses.setText("Server error: event not found");
+            statsTotalExpenses.setText(LanguageSingleton.getInstance().getResourceBundle().getString("error.server.eventNotFound"));
         } else {
             List<Transaction> transactions = selectedEvent.getTransactions();
 

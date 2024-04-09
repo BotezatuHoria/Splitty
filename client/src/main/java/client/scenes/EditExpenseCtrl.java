@@ -344,16 +344,13 @@ public class EditExpenseCtrl implements Initializable {
         addPeopleToPayerBox(people);
         addPeopleToView(people);
         currencyBox.getItems().add(840);
-        //String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
-        //String entranceFeeString= LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
-        //String travelString = LanguageSingleton.getInstance().getResourceBundle().getString("travel.label");
+        String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
+        String entranceFeeString= LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
+        String travelString = LanguageSingleton.getInstance().getResourceBundle().getString("travel.label");
 
-        //expenseTypeBox.getItems().add(foodString);
-        //expenseTypeBox.getItems().add(entranceFeeString);
-        //expenseTypeBox.getItems().add(travelString);
-        expenseTypeBox.getItems().add("Food");
-        expenseTypeBox.getItems().add("Entrance fees");
-        expenseTypeBox.getItems().add("Travel");
+        expenseTypeBox.getItems().add(foodString);
+        expenseTypeBox.getItems().add(entranceFeeString);
+        expenseTypeBox.getItems().add(travelString);
     }
 
     /**
@@ -427,7 +424,6 @@ public class EditExpenseCtrl implements Initializable {
         howToLabel.setText(resourceBundle.getString("split.text"));
         expenseTypeLabel.setText(resourceBundle.getString("type.text"));
         addEverybody.setText(resourceBundle.getString("split.button"));
-        abortButton.setText(resourceBundle.getString("abort.button"));
         addEverybody.setText(resourceBundle.getString("split.button"));
         payerBox.setPromptText(resourceBundle.getString("payer.menu"));
         expenseField.setPromptText(resourceBundle.getString("what.textfield"));

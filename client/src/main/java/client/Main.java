@@ -131,6 +131,7 @@ public class Main extends Application {
             var fileReader = new FileReader(file);
             ObjectMapper objectMapper = new ObjectMapper();
             config = objectMapper.readValue(fileReader,Config.class);
+            ServerUtils.setConfig(config);
             ServerUtils.setServer(config.getClientsServer());
         } catch (IOException e) {
             System.out.println("An error occurred while creating the file: " + e.getMessage());
