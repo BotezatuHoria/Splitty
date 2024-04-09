@@ -207,12 +207,7 @@ public class Event {
      */
     @Override
     public String toString() {
-        return "Event{" +
-                "tag='" + tag + '\'' +
-                ", title='" + title + '\'' +
-                ", id=" + id +
-                ", token='" + token + '\'' +
-                '}';
+        return title;
     }
 
     @Override

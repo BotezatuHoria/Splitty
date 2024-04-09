@@ -38,7 +38,6 @@ public class StatisticsCtrl implements Initializable {
      */
     @Inject
     public StatisticsCtrl(MainCtrl mainCtrl, ServerUtils server) {
-
         this.mainCtrl = mainCtrl;
         this.server = server;
     }
@@ -81,7 +80,7 @@ public class StatisticsCtrl implements Initializable {
             statsPieChart.setData(chartData);
 
             String totalExpensesString = (LanguageSingleton.getInstance().getResourceBundle().getString("total.expenses"));
-            statsTotalExpenses.setText(totalExpensesString + totalExpenses + " Eur");
+            statsTotalExpenses.setText(totalExpensesString + " " + totalExpenses + " EUR");
         }
     }
 

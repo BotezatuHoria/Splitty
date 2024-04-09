@@ -16,7 +16,7 @@
             <Font size="31.0" />
          </font>
       </Text>
-      <Button fx:id="settleDebtButton" layoutX="68.0" layoutY="81.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="460.0" text="Settle list" />
+      <Button fx:id="settleDebtButton" layoutX="70.0" layoutY="81.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="460.0" text="Settle list" />
       <TableView fx:id="debtValueTable" layoutX="70.0" layoutY="107.0" prefHeight="249.0" prefWidth="460.0">
         <columns>
           <TableColumn prefWidth="75.0" text="C1" />
