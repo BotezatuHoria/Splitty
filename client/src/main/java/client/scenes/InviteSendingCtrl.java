@@ -29,8 +29,8 @@ public class InviteSendingCtrl{
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
-    private static final String EMAIL_USERNAME = "group53.splitty@gmail.com";
-    private static final String EMAIL_PASSWORD = "pigu txlq kfdl rwsq";
+    private static final String EMAIL_USERNAME = "";
+    private static final String EMAIL_PASSWORD = "";
 
     @FXML // fx:id="CopyInviteCodeButton"
     private Button copyInviteCodeButton; // Value injected by FXMLLoader
