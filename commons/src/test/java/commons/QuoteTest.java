@@ -15,11 +15,9 @@
  */
 package commons;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class QuoteTest {
 
@@ -66,5 +64,13 @@ public class QuoteTest {
 		assertTrue(actual.contains(Quote.class.getSimpleName()));
 		assertTrue(actual.contains("\n"));
 		assertTrue(actual.contains("person"));
+	}
+	/**
+	 * Test for empty constructor.
+	 */
+	@Test
+	public void emptyConstructorTest() {
+		Quote test = new Quote();
+		assertNotNull(test);
 	}
 }
