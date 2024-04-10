@@ -1,7 +1,6 @@
 package client.utils;
 
 
-import client.Config;
 import client.scenes.MainCtrl;
 import javafx.scene.image.Image;
 import org.apache.commons.lang3.tuple.Pair;
@@ -18,10 +17,12 @@ public class LanguageSingleton {
     private ResourceBundle resourceBundle;
 
     public LanguageSingleton() {
-        String startLanguage = new Config().getClientsLanguage();
-        Optional<Pair<String, Image>> current_language =  FlagListCell.getLanguages().stream().filter(x -> x.getKey().equals(startLanguage)).findFirst();
-        this.language = current_language.orElseGet(() -> FlagListCell.getLanguages().get(0));
-
+        if (ServerUtils.getConfig().getClientsLanguage() == null) {
+            this.language = FlagListCell.getLanguages().get(0);
+        }
+        else {
+            setLanguageByCode(ServerUtils.getConfig().getClientsLanguage());
+        }
         this.resourceBundle = ResourceBundle.getBundle("messages", new Locale.Builder().setLanguage(this.language.getKey()).build());
     }
 
@@ -34,9 +35,14 @@ public class LanguageSingleton {
         this.resourceBundle = ResourceBundle.getBundle("messages", new Locale.Builder().setLanguage(this.language.getKey()).build());
     }
 
+    public void setLanguageByCode(String language) {
+        Optional<Pair<String, Image>> current_language =  FlagListCell.getLanguages().stream().filter(x -> x.getKey().equals(language)).findFirst();
+        this.language = current_language.orElseGet(() -> this.language);
+    }
+
     public void setLanguageText() {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("messages", new Locale.Builder().setLanguage(language.getKey()).build());
-        mainCtrl.setLanguageText(resourceBundle);
+        this.mainCtrl.setLanguageText(resourceBundle);
     }
 
     public ResourceBundle getResourceBundle() {

@@ -1,6 +1,5 @@
 package client.utils;
 
-import javafx.geometry.Pos;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
@@ -22,17 +21,12 @@ public class FlagListCell extends ListCell<Pair<String, Image>> {
         if (empty || item == null) {
             setGraphic(null);
         } else {
-            LanguageSingleton instance = LanguageSingleton.getInstance();
-            instance.setLanguage(item);
-            instance.setLanguageText();
-
             ImageView flagView = new ImageView(item.getValue());
             flagView.setFitHeight(17); // Adjust size as needed
             flagView.setFitWidth(40);
 
             setGraphic(flagView);
             setContentDisplay(ContentDisplay.GRAPHIC_ONLY); // Display only the graphic
-            setAlignment(Pos.CENTER); // Center the content
         }
     }
 

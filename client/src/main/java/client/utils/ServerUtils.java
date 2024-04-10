@@ -16,9 +16,14 @@
 package client.utils;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -26,6 +31,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
+import client.Config;
+import client.Main;
 import commons.*;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.core.MediaType;
@@ -50,10 +57,44 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 public class ServerUtils {
 
 	private static String server = "http://localhost:8080/";
-
+	private static Config config;
 	public static void setServer(String server) {
 		ServerUtils.server = server;
 	}
+
+	public static void setConfig(Config config) {
+		ServerUtils.config = config;
+		String path= "";
+		try {
+			path = Main.class
+					.getProtectionDomain()
+					.getCodeSource()
+					.getLocation()
+					.toURI()
+					.getPath();
+			path = path + "/client/config.json";
+		} catch (URISyntaxException ex) {
+			System.out.println("URISyntaxException: " + ex.getMessage());
+		}
+		var file = new File(path);
+
+		try (FileWriter writer = new FileWriter(file, false)) {
+			String server = config.getClientsServer() != null ? "\"" + config.getClientsServer() + "\"" : "\"http://localhost:8080/\"";
+			String email = config.getClientsEmailAddress() != null ? "\"" + config.getClientsEmailAddress() + "\"" : "\"example@gmail.com\"";
+			String language = config.getClientsLanguage() != null ? "\"" + config.getClientsLanguage() + "\"" : "\"en\"";
+
+			writer.write("{\n" +
+					"  \"server\": " + server + ",\n" +
+					"  \"emailAddress\": " + email + ",\n" +
+					"  \"language\":" + language + "\n" +
+					"}");
+		} catch (IOException e) {
+			System.out.println("An error occurred while creating the file: " + e.getMessage());
+		}
+	}
+
+	public static Config getConfig() { return config; }
+
 
 	public List<Event> getEvents() {
 		return ClientBuilder.newClient(new ClientConfig()) //

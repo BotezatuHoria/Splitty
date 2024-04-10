@@ -143,7 +143,6 @@ public class MainCtrl {
         this.debtOverview = new Scene(debtOverview.getValue());
         this.debtOverviewPageCtrl = debtOverview.getKey();
 
-
         this.adminLoginCtrl = adminLoginPage.getKey();
         this.adminLogin = new Scene(adminLoginPage.getValue());
 
@@ -153,8 +152,11 @@ public class MainCtrl {
         this.editExpenseCtrl = editExpensePage.getKey();
         this.editExpensePage = new Scene(editExpensePage.getValue());
 
+        startSettingsCtrl.initializeLanguages();
+        starterPageCtrl.initializeLanguages();
+
         LanguageSingleton languageSingleton = LanguageSingleton.getInstance();
-        languageSingleton.setMainCtrl(this);
+        languageSingleton.setLanguageByCode(ServerUtils.getConfig().getClientsLanguage());
         languageSingleton.setLanguageText();
 
         showStartSettings();
@@ -321,6 +323,9 @@ public class MainCtrl {
     }
 
     public void setLanguageText(ResourceBundle resourceBundle) {
+        starterPageCtrl.setLanguageSelector();
+        startSettingsCtrl.setLanguageSelector();
+
         startSettingsCtrl.setLanguageText(resourceBundle);
         starterPageCtrl.setLanguageText(resourceBundle);
         eventCtrl.setLanguageText(resourceBundle);
@@ -342,9 +347,13 @@ public class MainCtrl {
      */
     public String transactionString(int id) {
         Transaction t = server.getTransactionByID(id);
-        String ret = t + " by " + server.getPersonByID(t.getCreator().getId()) + " and including participants: ";
+        String byLabel = LanguageSingleton.getInstance().getResourceBundle().getString("by.label");
+        String includingParticipantsLabel = LanguageSingleton.getInstance().getResourceBundle().getString("including.participants");
+        String noParticipants = LanguageSingleton.getInstance().getResourceBundle().getString("no.participants");
+
+        String ret = t + byLabel + server.getPersonByID(t.getCreator().getId()) + includingParticipantsLabel;
         if (t.getParticipants() == null || t.getParticipants().isEmpty()) {
-            return ret + "no participants;";
+            return ret + noParticipants;
         }
         for(Person p: t.getParticipants()) {
             ret += server.getPersonByID(p.getId()) + ", ";
