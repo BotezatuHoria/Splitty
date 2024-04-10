@@ -11,6 +11,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.scene.image.Image;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.swing.*;
@@ -146,36 +149,32 @@ public class StartSettingsCtrl {
      * @throws IOException When the file to download is not found.
      */
     public void downloadTemplate(){
-        File file = new File("src/main/resources/template.properties"); // needs to be edited to correct template!!!!
-        JFrame parent = new JFrame();
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setSelectedFile(new File("languageTemplate.properties"));
-
+        File file = new File("client/src/main/resources/template.properties"); // needs to be edited to correct template!!!!
+        Window parent = new Stage();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialFileName("languageTemplate.properties");
+        //fileChooser.setSelectedFile(new File("languageTemplate.properties"));
         try{
+            File saveFile = fileChooser.showSaveDialog(parent);
+            try (FileInputStream in = new FileInputStream(file); FileOutputStream out = new FileOutputStream(saveFile)) {
 
-            int returnValue = fileChooser.showOpenDialog(parent);
-            if (returnValue == JFileChooser.APPROVE_OPTION) {
-                File saveFile = fileChooser.getSelectedFile();
-                try (FileInputStream in = new FileInputStream(file); FileOutputStream out = new FileOutputStream(saveFile)) {
+                int n;
 
-                    int n;
-
-                    // read() function to read the
-                    // byte of data
-                    while ((n = in.read()) != -1) {
-                        // write() function to write
-                        // the byte of data
-                        out.write(n);
-                    }
-                } finally {
-                    // close() function to close the
-                    // stream
-                    // close() function to close
-                    // the stream
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("alert.template.download.success"));
-                    alert.showAndWait();
+                // read() function to read the
+                // byte of data
+                while ((n = in.read()) != -1) {
+                    // write() function to write
+                    // the byte of data
+                    out.write(n);
                 }
+            } finally {
+                // close() function to close the
+                // stream
+                // close() function to close
+                // the stream
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("alert.template.download.success"));
+                alert.showAndWait();
             }
 
         }catch(IOException e){
