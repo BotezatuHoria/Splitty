@@ -136,7 +136,6 @@ public class InviteSendingCtrl{
         copyText.setText(resourceBundle.getString("copy.text"));
         inviteText.setText(resourceBundle.getString("invite.text"));
         mailInputField.setPromptText(resourceBundle.getString("textfield.text"));
-        cancel.setText(resourceBundle.getString("cancel.button"));
         sendInviteButton.setText(resourceBundle.getString("send.button"));
     }
 

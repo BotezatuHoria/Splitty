@@ -1,7 +1,6 @@
 package client.scenes;
 
 import client.utils.LanguageSingleton;
-import client.utils.SelectedEventSingleton;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Event;
@@ -49,11 +48,10 @@ public class StatisticsCtrl implements Initializable {
         assert statsPieChart != null : "fx:id=\"statsPieChart\" was not injected: check your FXML file 'Statistics.fxml'.";
         assert statsTotalExpenses != null : "fx:id=\"statsTotalExpenses\" was not injected: check your FXML file 'Statistics.fxml'.";
 
-        SelectedEventSingleton selectedEventInstance = SelectedEventSingleton.getInstance();
-        selectedEvent = server.getEventByID(mainCtrl.getCurrentEventID());
+        Event selectedEvent = server.getEventByID(mainCtrl.getCurrentEventID());
 
         if (selectedEvent == null) {
-            statsTotalExpenses.setText("Server error: event not found");
+            statsTotalExpenses.setText(LanguageSingleton.getInstance().getResourceBundle().getString("error.server.eventNotFound"));
         } else {
             List<Transaction> transactions = selectedEvent.getTransactions();
 

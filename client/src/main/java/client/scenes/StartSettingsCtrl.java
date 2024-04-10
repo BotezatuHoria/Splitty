@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
 
 public class StartSettingsCtrl {
     private final MainCtrl mainCtrl;
-    private static Config config = new Config();
+    private static Config config = ServerUtils.getConfig();
     @FXML
     public Label serverLabel;
     @FXML
@@ -62,8 +62,7 @@ public class StartSettingsCtrl {
         this.mainCtrl = mainCtrl;
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
+    void initializeLanguages() {
         // Push all the languages to the combobox
         startPageLanguageSelector.getItems().addAll(FlagListCell.getLanguages());
 
@@ -71,13 +70,32 @@ public class StartSettingsCtrl {
         startPageLanguageSelector.setCellFactory(lv -> new FlagListCell());
         startPageLanguageSelector.setButtonCell(new FlagListCell());
 
+        startPageLanguageSelector.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                LanguageSingleton.getInstance().setLanguage((Pair<String, Image>) newVal);
+                LanguageSingleton.getInstance().setLanguageText();
+
+                Config config = ServerUtils.getConfig();
+                if (config != null) {
+                    config.setLanguage(((Pair<String, Image>) newVal).getKey());
+                    ServerUtils.setConfig(config);
+                }
+            }
+        });
+
         // Show current language
+        Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
+        startPageLanguageSelector.getSelectionModel().select(currentLanguage);
+    }
+
+    public void setLanguageSelector() {
         Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
         startPageLanguageSelector.getSelectionModel().select(currentLanguage);
     }
 
     public void setLanguageText(ResourceBundle resourceBundle) {
         startSettingsLabel.setText(resourceBundle.getString("select.language"));
+        downloadButton.setText(resourceBundle.getString("button.downloadTemplate"));
     }
 
     @FXML
@@ -113,7 +131,7 @@ public class StartSettingsCtrl {
      * makes info text about importing the template file appear.
      */
     public void showInfo(){
-        infoLabel.setText("Import a template which you can use to add a language. Sent this filled template to the moderators of the app, group53@gmail.com");
+        infoLabel.setText(LanguageSingleton.getInstance().getResourceBundle().getString("info.import.template"));
     }
 
     /**
@@ -128,7 +146,7 @@ public class StartSettingsCtrl {
      * @throws IOException When the file to download is not found.
      */
     public void downloadTemplate(){
-        File file = new File("client/src/main/resources/messages_en.properties"); // needs to be edited to correct template!!!!
+        File file = new File("src/main/resources/template.properties"); // needs to be edited to correct template!!!!
         JFrame parent = new JFrame();
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setSelectedFile(new File("languageTemplate.properties"));
@@ -155,7 +173,7 @@ public class StartSettingsCtrl {
                     // close() function to close
                     // the stream
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setContentText("Downloading of the template file succeeded!");
+                    alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("alert.template.download.success"));
                     alert.showAndWait();
                 }
             }
@@ -170,10 +188,9 @@ public class StartSettingsCtrl {
         String host = serverTextField.getText();
         boolean canWeConnect = main.checkConnection(host);
         if (!(canWeConnect)){
-            changeLabel.setText("Incorrect server input. Try format like http://localhost:8080/");
+            changeLabel.setText(LanguageSingleton.getInstance().getResourceBundle().getString("error.incorrectServerInput"));
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText("Server that has been given is incorrect! \n " +
-                    "Application will not function on this server, use another.");
+            alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("alert.serverIncorrect"));
             alert.showAndWait();
             startPageConfirm.setDisable(true);
             downloadButton.setDisable(true);
@@ -181,7 +198,7 @@ public class StartSettingsCtrl {
         }
         else{
             Alert alertb = new Alert(Alert.AlertType.INFORMATION);
-            alertb.setContentText("Connecting to the server succeeded");
+            alertb.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("alert.serverConnectSuccess"));
             alertb.showAndWait();
             changeLabel.setText("");
             startPageConfirm.setDisable(false);

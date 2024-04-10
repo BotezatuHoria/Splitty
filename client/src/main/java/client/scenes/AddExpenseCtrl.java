@@ -165,9 +165,9 @@ public class AddExpenseCtrl implements Initializable {
             expenseTypeBox.getItems().add(t.getTitle());
         }
 
-        //String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
-        //String entranceFeeString= LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
-        //String travelString = LanguageSingleton.getInstance().getResourceBundle().getString("travel.label");
+        String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
+        String entranceFeeString= LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
+        String travelString = LanguageSingleton.getInstance().getResourceBundle().getString("travel.label");
 
         //expenseTypeBox.getItems().add(foodString);
         //expenseTypeBox.getItems().add(entranceFeeString);
@@ -375,6 +375,7 @@ public class AddExpenseCtrl implements Initializable {
         currencyBox.setPromptText(resourceBundle.getString("currency.menu"));
         expenseTypeBox.setPromptText(resourceBundle.getString("type.menu"));
         newTagField.setPromptText(resourceBundle.getString("newType.textfield"));
+        addButton.setText(resourceBundle.getString("add.button"));
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete

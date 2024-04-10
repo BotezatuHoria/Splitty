@@ -153,7 +153,7 @@ public class TransactionServiceImplementation implements TransactionService {
      * @param s string to check
      * @return returns true if the string is empty or null
      */
-    private static boolean isNullOrEmpty(String s) {
+    static boolean isNullOrEmpty(String s) {
         return s == null || s.isEmpty();
     }
 

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Person;
@@ -157,8 +158,7 @@ public class ParticipantEditPageCtrl implements Initializable {
         String newIban = iban.getText();
 
         if (newFirstName.isEmpty() || newLastName.isEmpty()) {
-            warningLabel.setText("The firstname and/or lastname column is/are empty; " +
-                    "it is mandatory to give the person a name. Please fill these in.");
+            warningLabel.setText(LanguageSingleton.getInstance().getResourceBundle().getString("warning.fields.empty"));
         }
         else if (!(personExists(newFirstName, newLastName))) {
             person.setFirstName(newFirstName);
@@ -168,13 +168,13 @@ public class ParticipantEditPageCtrl implements Initializable {
             Person updatedperson = server.updatePerson(person.getId(), person);
             System.out.println("PERSON EDITED: person with id " + person.getId() + " was adjusted to " + updatedperson);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Person edited successfully!");
+            alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("person.edit.success"));
             alert.showAndWait();
             clearFields();
             mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
         } else {
             if(!(personExists(newFirstName,newLastName))){
-                warningLabel.setText("Something went wrong. Please contact t.p.p.vanleest@student.tudelft.nl");
+                warningLabel.setText(LanguageSingleton.getInstance().getResourceBundle().getString("error.generic"));
             }
         }
 
@@ -194,8 +194,7 @@ public class ParticipantEditPageCtrl implements Initializable {
             if (firstname.equals(e.getFirstName()) && lastname.equals(e.getLastName())) {
                 if (!(participantsScroll.getSelectionModel().getSelectedItem().equals(e))) {
                     personIsDuplicate = true;
-                    warningLabel.setText("A person with this combination of first and last name already exists. " +
-                            "Please rename this, or the other equally named person.");
+                    warningLabel.setText(LanguageSingleton.getInstance().getResourceBundle().getString("error.duplicate.name"));
                     System.out.println("ADDING FAILED: Tried to add a combination of firstname and lastname that already exists");
                     return personIsDuplicate;
                 }
@@ -215,7 +214,7 @@ public class ParticipantEditPageCtrl implements Initializable {
         int serverID = mainCtrl.getCurrentEventID();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initModality(Modality.APPLICATION_MODAL);
-        alert.setContentText("Are you sure you want to delete this person?");
+        alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("confirm.delete.person"));
         Optional<ButtonType> result = alert.showAndWait();
         if(result.isPresent() && result.get() == ButtonType.OK){
             Person removedPerson = server.removePerson(personID, serverID);
@@ -224,7 +223,7 @@ public class ParticipantEditPageCtrl implements Initializable {
         }
         else{
             Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-            alert2.setContentText("Person not deleted!");
+            alert2.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("person.delete.cancelled"));
             alert2.show();
         }
     }

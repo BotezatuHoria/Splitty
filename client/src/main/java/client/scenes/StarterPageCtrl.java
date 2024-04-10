@@ -7,6 +7,7 @@ package client.scenes;
 import java.net.URL;
 import java.util.*;
 
+import client.Config;
 import client.utils.FlagListCell;
 import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
@@ -214,7 +215,6 @@ public class StarterPageCtrl implements Initializable {
     public void updateLanguage() {
         // Show current language
         Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
-        languageSelector.getSelectionModel().select(currentLanguage);
     }
 
     public void setLanguageText(ResourceBundle resourceBundle) {
@@ -249,11 +249,35 @@ public class StarterPageCtrl implements Initializable {
         }
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initializeLanguages() {
         languageSelector.getItems().addAll(FlagListCell.getLanguages());
         languageSelector.setCellFactory(lv -> new FlagListCell());
         languageSelector.setButtonCell(new FlagListCell());
+
+        languageSelector.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                LanguageSingleton.getInstance().setLanguage((Pair<String, Image>) newVal);
+                LanguageSingleton.getInstance().setLanguageText();
+
+                Config config = ServerUtils.getConfig();
+
+                if (config != null) {
+                    config.setLanguage(((Pair<String, Image>) newVal).getKey());
+                    ServerUtils.setConfig(config);
+                }
+            }
+        });
+
+        Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
+        languageSelector.getSelectionModel().select(currentLanguage);
+    }
+
+    public void setLanguageSelector() {
+        Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
+        languageSelector.getSelectionModel().select(currentLanguage);
+    }
+
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         server.registerForMessages("/topic/event", Object.class, object-> {
             System.out.println("This is also activated");
             for (Event e : recentEvents) {

@@ -159,7 +159,6 @@ public class DebtSettlementCtrl {
 
   public void setLanguageText(ResourceBundle resourceBundle) {
     openDebtsLabel.setText(resourceBundle.getString("openDebts.text"));
-    goBackButton.setText(resourceBundle.getString("back.button"));
   }
 
   /**

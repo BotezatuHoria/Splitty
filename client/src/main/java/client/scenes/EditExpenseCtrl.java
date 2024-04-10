@@ -351,6 +351,9 @@ public class EditExpenseCtrl implements Initializable {
         //String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
         //String entranceFeeString= LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
         //String travelString = LanguageSingleton.getInstance().getResourceBundle().getString("travel.label");
+        String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
+        String entranceFeeString= LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
+        String travelString = LanguageSingleton.getInstance().getResourceBundle().getString("travel.label");
 
         //expenseTypeBox.getItems().add(foodString);
         //expenseTypeBox.getItems().add(entranceFeeString);
@@ -431,7 +434,6 @@ public class EditExpenseCtrl implements Initializable {
         howToLabel.setText(resourceBundle.getString("split.text"));
         expenseTypeLabel.setText(resourceBundle.getString("type.text"));
         addEverybody.setText(resourceBundle.getString("split.button"));
-        abortButton.setText(resourceBundle.getString("abort.button"));
         addEverybody.setText(resourceBundle.getString("split.button"));
         payerBox.setPromptText(resourceBundle.getString("payer.menu"));
         expenseField.setPromptText(resourceBundle.getString("what.textfield"));

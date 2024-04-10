@@ -8,15 +8,15 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="418.0" prefWidth="611.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.ParticipantEditPageCtrl">
+<AnchorPane prefHeight="500.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.ParticipantEditPageCtrl">
    <children>
       <Label fx:id="editParticipantLabel" layoutX="26.0" layoutY="14.0" text="Edit Participant">
          <font>
             <Font size="28.0" />
          </font>
       </Label>
-      <ComboBox fx:id="participantsScroll" layoutX="26.0" layoutY="74.0" onAction="#selectParticipant" prefWidth="150.0" promptText="Participants..." />
-      <Label fx:id="firstNameLabel" layoutX="17.0" layoutY="182.0" prefHeight="20.0" prefWidth="71.0" text="First name">
+      <ComboBox fx:id="participantsScroll" layoutX="20.0" layoutY="74.0" onAction="#selectParticipant" prefWidth="150.0" promptText="Participants..." />
+      <Label fx:id="firstNameLabel" layoutX="17.0" layoutY="182.0" prefHeight="20.0" prefWidth="94.0" text="First name">
          <font>
             <Font size="14.0" />
          </font>
@@ -25,19 +25,19 @@
       <TextField fx:id="lastName" layoutX="245.0" layoutY="215.0" prefHeight="32.0" prefWidth="323.0" promptText="Last Name" />
       <TextField fx:id="email" layoutX="245.0" layoutY="253.0" prefHeight="32.0" prefWidth="323.0" promptText="Email" />
       <TextField fx:id="iban" layoutX="245.0" layoutY="291.0" prefHeight="32.0" prefWidth="323.0" promptText="IBAN" />
-      <Button fx:id="saveButton" layoutX="479.0" layoutY="335.0" mnemonicParsing="false" onAction="#saveUpdatedParticipant" prefHeight="51.0" prefWidth="98.0" text="Save">
+      <Button fx:id="saveButton" layoutX="417.0" layoutY="400.0" mnemonicParsing="false" onAction="#saveUpdatedParticipant" prefHeight="51.0" prefWidth="150.0" text="Save">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
-      <Button fx:id="abortButton" layoutX="223.0" layoutY="335.0" mnemonicParsing="false" onAction="#abort" prefHeight="51.0" prefWidth="95.0" text="Abort">
+      <Button fx:id="abortButton" layoutX="245.0" layoutY="400.0" mnemonicParsing="false" onAction="#abort" prefHeight="51.0" prefWidth="150.0" text="Abort">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
-      <Label fx:id="selectParticipantLabel" layoutX="26.0" layoutY="57.0" text="Select participant:" />
-      <Button fx:id="removeParticipantButton" layoutX="329.0" layoutY="335.0" mnemonicParsing="false" onAction="#removePerson" prefHeight="51.0" prefWidth="137.0" text="Remove Participant" />
-      <Label fx:id="lastNameLabel" layoutX="17.0" layoutY="221.0" prefHeight="20.0" prefWidth="71.0" text="Last name">
+      <Label fx:id="selectParticipantLabel" layoutX="23.0" layoutY="57.0" text="Select participant:" />
+      <Button fx:id="removeParticipantButton" layoutX="245.0" layoutY="334.0" mnemonicParsing="false" onAction="#removePerson" prefHeight="51.0" prefWidth="323.0" text="Remove Participant" />
+      <Label fx:id="lastNameLabel" layoutX="17.0" layoutY="221.0" prefHeight="20.0" prefWidth="94.0" text="Last name">
          <font>
             <Font size="14.0" />
          </font>
@@ -52,33 +52,33 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="originalLabel" layoutX="111.0" layoutY="157.0" prefHeight="20.0" prefWidth="71.0" text="Original">
+      <Label fx:id="originalLabel" layoutX="134.0" layoutY="157.0" prefHeight="20.0" prefWidth="111.0" text="Original">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Line endX="8.0" endY="148.0" layoutX="88.0" layoutY="168.0" startX="8.000045776367188" />
-      <Label fx:id="originalFName" layoutX="111.0" layoutY="182.0" prefHeight="20.0" prefWidth="119.0">
+      <Line endX="8.0" endY="148.0" layoutX="103.0" layoutY="167.0" startX="8.000045776367188" />
+      <Label fx:id="originalFName" layoutX="119.0" layoutY="182.0" prefHeight="20.0" prefWidth="119.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="originalLName" layoutX="111.0" layoutY="221.0" prefHeight="20.0" prefWidth="119.0">
+      <Label fx:id="originalLName" layoutX="119.0" layoutY="221.0" prefHeight="20.0" prefWidth="119.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="originalEmail" layoutX="111.0" layoutY="259.0" prefHeight="20.0" prefWidth="119.0">
+      <Label fx:id="originalEmail" layoutX="119.0" layoutY="259.0" prefHeight="20.0" prefWidth="119.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="originalIBAN" layoutX="111.0" layoutY="297.0" prefHeight="20.0" prefWidth="119.0">
+      <Label fx:id="originalIBAN" layoutX="119.0" layoutY="297.0" prefHeight="20.0" prefWidth="119.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="newValuesLabel" layoutX="245.0" layoutY="157.0" prefHeight="20.0" prefWidth="84.0" text="New value(s)">
+      <Label fx:id="newValuesLabel" layoutX="245.0" layoutY="157.0" prefHeight="20.0" prefWidth="323.0" text="New value(s)">
          <font>
             <Font size="14.0" />
          </font>
