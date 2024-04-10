@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.apache.commons.lang3.tuple.Pair;
 
-import javax.swing.*;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.util.ResourceBundle;
