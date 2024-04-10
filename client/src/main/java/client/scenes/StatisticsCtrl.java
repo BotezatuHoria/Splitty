@@ -32,6 +32,8 @@ public class StatisticsCtrl implements Initializable {
     @FXML // fx:id="goBackButton"
     private Button goBackButton; // Value injected by FXMLLoader
 
+    private Event selectedEvent;
+
     /**
      * Constructor for the statistics controller.
      * @param mainCtrl - reference to the main controller.
@@ -48,7 +50,7 @@ public class StatisticsCtrl implements Initializable {
         assert statsTotalExpenses != null : "fx:id=\"statsTotalExpenses\" was not injected: check your FXML file 'Statistics.fxml'.";
 
         SelectedEventSingleton selectedEventInstance = SelectedEventSingleton.getInstance();
-        Event selectedEvent = server.getEventByID(mainCtrl.getCurrentEventID());
+        selectedEvent = server.getEventByID(mainCtrl.getCurrentEventID());
 
         if (selectedEvent == null) {
             statsTotalExpenses.setText("Server error: event not found");
@@ -99,8 +101,16 @@ public class StatisticsCtrl implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         server.registerForMessages("/topic/event", Object.class, object -> {
             if (mainCtrl.getCurrentEventID() != 0) {
-                Platform.runLater(this::initializeStatistics);
+                if (checkNewData()) {
+                    Platform.runLater(this::initializeStatistics);
+                }
             }
         });
+    }
+
+
+    public boolean checkNewData() {
+        Event currentEvent = server.getEventByID(mainCtrl.getCurrentEventID());
+        return currentEvent.getTransactions() != selectedEvent.getTransactions();
     }
 }
