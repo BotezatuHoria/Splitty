@@ -14,7 +14,7 @@
             <Font size="28.0" />
          </font>
       </Label>
-      <Button fx:id="backButton" layoutX="523.0" layoutY="436.0" mnemonicParsing="false" onAction="#goBack" prefHeight="44.0" prefWidth="52.0" text="Back" />
+      <Button fx:id="backButton" layoutX="523.0" layoutY="436.0" mnemonicParsing="false" onAction="#goBack" prefHeight="44.0" prefWidth="57.0" text="Back" />
       <Label fx:id="allEventsLabel" layoutX="36.0" layoutY="69.0" prefHeight="30.0" prefWidth="190.0" text="All Events:">
          <font>
             <Font size="20.0" />

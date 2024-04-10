@@ -13,14 +13,14 @@
             <Font size="28.0" />
          </font>
       </Label>
-      <Button fx:id="backButton" layoutX="374.0" layoutY="331.0" mnemonicParsing="false" onAction="#goBack" prefHeight="48.0" prefWidth="48.0" text="Back" />
+      <Button fx:id="backButton" layoutX="364.0" layoutY="331.0" mnemonicParsing="false" onAction="#goBack" prefHeight="48.0" prefWidth="58.0" text="Back" />
       <Label fx:id="adminPasswordLabel" layoutX="29.0" layoutY="78.0" text="Admin Password">
          <font>
             <Font size="23.0" />
          </font>
       </Label>
       <PasswordField fx:id="passwordField" layoutX="29.0" layoutY="115.0" prefHeight="26.0" prefWidth="183.0" />
-      <Button fx:id="loginButton" layoutX="226.0" layoutY="115.0" mnemonicParsing="false" onAction="#loginButton_onClick" text="Login" />
+      <Button fx:id="loginButton" layoutX="226.0" layoutY="115.0" mnemonicParsing="false" onAction="#loginButton_onClick" prefHeight="26.0" prefWidth="58.0" text="Login" />
       <Label fx:id="passwordConsoleLabel" layoutX="29.0" layoutY="149.0" text="**Password can be found in the server console">
          <font>
             <Font name="System Italic" size="12.0" />

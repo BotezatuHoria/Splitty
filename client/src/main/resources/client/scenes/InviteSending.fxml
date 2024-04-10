@@ -20,7 +20,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="inviteCode" layoutX="380.0" layoutY="124.0" prefHeight="30.0" prefWidth="126.0" text="{InviteCode}">
+      <Label fx:id="inviteCode" layoutX="390.0" layoutY="122.0" prefHeight="30.0" prefWidth="126.0" text="{InviteCode}">
          <font>
             <Font size="20.0" />
          </font>
@@ -30,14 +30,14 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="copyInviteCodeButton" layoutX="505.0" layoutY="126.0" mnemonicParsing="false" onAction="#copyCode" text="copy" />
+      <Button fx:id="copyInviteCodeButton" layoutX="535.0" layoutY="126.0" mnemonicParsing="false" onAction="#copyCode" text="copy" />
       <Button fx:id="cancel" layoutX="551.0" layoutY="426.0" mnemonicParsing="false" onAction="#cancelGoBack" prefHeight="51.0" prefWidth="51.0" />
       <Button fx:id="sendInviteButton" layoutX="383.0" layoutY="387.0" mnemonicParsing="false" onAction="#sendInvite" prefHeight="30.0" prefWidth="120.0" text="Send Invites">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Label fx:id="responseCopy" layoutX="535.0" layoutY="170.0" prefHeight="17.0" prefWidth="15.0" />
+      <Label fx:id="responseCopy" layoutX="535.0" layoutY="164.0" prefHeight="17.0" prefWidth="83.0" />
       <TextArea fx:id="mailInputField" layoutX="52.0" layoutY="211.0" prefHeight="167.0" prefWidth="453.0" promptText="Put your e-mail here, every line at most 1" />
       <ImageView fitHeight="39.0" fitWidth="39.0" layoutX="557.0" layoutY="432.0" mouseTransparent="true">
          <image>
