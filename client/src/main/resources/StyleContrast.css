@@ -19,3 +19,10 @@
     -fx-background-color: #F4D35E;
     -fx-text-fill: #0D3B66;
 }
+.table-view .column-header-background .label{
+    -fx-text-fill: #0D3B66;
+}
+
+.table-view .label {
+    -fx-text-fill: #0D3B66;
+}
