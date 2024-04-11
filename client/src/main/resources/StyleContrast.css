@@ -26,3 +26,6 @@
 .table-view .label {
     -fx-text-fill: #0D3B66;
 }
+.date-picker .label{
+    -fx-text-fill: #0D3B66;
+}
