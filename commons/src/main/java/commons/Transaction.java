@@ -27,6 +27,8 @@ public class Transaction {
     protected int currency;
     protected String expenseType;
 
+    protected boolean handOff;
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt"})
@@ -61,6 +63,7 @@ public class Transaction {
         this.participants = participants;
         this.creator = creator;
         this.expenseType = Objects.requireNonNullElse(expenseType, "Other");
+        this.handOff = false;
     }
 
     /**
@@ -81,9 +84,26 @@ public class Transaction {
         this.expenseType = expenseType;
         this.participants = participants;
         this.creator = creator;
+        this.handOff = false;
         // calculateDebts();
     }
 
+
+    /**
+     * Getter for handOff
+     * @return true if this is a handoff
+     */
+    public boolean isHandOff() {
+        return handOff;
+    }
+
+    /**
+     * Setter for handoff
+     * @param handOff determining if this is a handoff or not
+     */
+    public void setHandOff(boolean handOff) {
+        this.handOff = handOff;
+    }
 
     /**
      * Getter for the id of a transaction.
