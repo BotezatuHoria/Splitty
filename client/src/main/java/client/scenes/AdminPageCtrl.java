@@ -9,6 +9,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import commons.Event;
 import commons.Person;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.BadRequestException;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -213,11 +214,23 @@ public class AdminPageCtrl {
             Event event = objectMapper.readValue(file, Event.class);
             event.setId(0);
             System.out.println(event);
-            server.addEvent(event);
-            showEvents();
+            try{
+                server.getEventByToken(event.getToken());
+            }catch (BadRequestException e){
+                server.addEvent(event);
+                showEvents();
+                return;
+            }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            Alert alert2 = new Alert(Alert.AlertType.ERROR);
+            alert2.setTitle("Importing Error");
+            alert2.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("error.importEvent"));
+            alert2.show();
         }
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error importing event");
+        alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("error.importEventExists"));
+        alert.show();
     }
 
     public void clear() {
