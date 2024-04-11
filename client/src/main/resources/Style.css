@@ -1,0 +1,11 @@
+
+#pane{
+    -fx-background-color: #ADEFD1FF;
+    -fx-text-fill: #00203FFF;
+}
+.label{
+    -fx-text-fill: #00203FFF;
+}
+.button{
+    -fx-text-fill: #00203FFF;
+}

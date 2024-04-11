@@ -115,42 +115,55 @@ public class MainCtrl {
 
         this.startSettingsCtrl = startSettings.getKey();
         this.startSettings = new Scene(startSettings.getValue());
+        this.startSettings.getStylesheets().add("/Style.css");
 
         this.starterPageCtrl = starter.getKey();
         this.starter = new Scene(starter.getValue());
+        this.starter.getStylesheets().add("/Style.css");
 
         this.eventCtrl = event.getKey();
         this.event = new Scene(event.getValue());
+        this.event.getStylesheets().add("/Style.css");
 
         this.statisticsCtrl = statistics.getKey();
         this.statistics = new Scene(statistics.getValue());
+        this.statistics.getStylesheets().add("/Style.css");
 
         this.expenseCtrl = expense.getKey();
         this.expense = new Scene(expense.getValue());
+        this.expense.getStylesheets().add("/Style.css");
 
         this.additionPageCtrl = addParticipant.getKey();
         this.addParticipant = new Scene(addParticipant.getValue());
+        this.addParticipant.getStylesheets().add("/Style.css");
 
         this.editPageCtrl = editParticipant.getKey();
         this.editParticipant = new Scene(editParticipant.getValue());
+        this.editParticipant.getStylesheets().add("/Style.css");
 
         this.inviteSendingCtrl = inviteSend.getKey();
         this.inviteSend = new Scene(inviteSend.getValue());
+        this.inviteSend.getStylesheets().add("/Style.css");
 
         this.debtSettlementCtrl = debt.getKey();
         this.debt = new Scene(debt.getValue());
+        this.debt.getStylesheets().add("/Style.css");
 
         this.debtOverview = new Scene(debtOverview.getValue());
         this.debtOverviewPageCtrl = debtOverview.getKey();
+        this.debtOverview.getStylesheets().add("/Style.css");
 
         this.adminLoginCtrl = adminLoginPage.getKey();
         this.adminLogin = new Scene(adminLoginPage.getValue());
+        this.adminLogin.getStylesheets().add("/Style.css");
 
         this.adminPageCtrl = adminPage.getKey();
         this.adminPage = new Scene(adminPage.getValue());
+        this.adminPage.getStylesheets().add("/Style.css");
 
         this.editExpenseCtrl = editExpensePage.getKey();
         this.editExpensePage = new Scene(editExpensePage.getValue());
+        this.editExpensePage.getStylesheets().add("/Style.css");
 
         startSettingsCtrl.initializeLanguages();
         starterPageCtrl.initializeLanguages();
