@@ -1,7 +1,6 @@
 package client.scenes;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import client.utils.LanguageSingleton;
