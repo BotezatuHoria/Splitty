@@ -6,28 +6,29 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
+
 <AnchorPane fx:id="pane" prefHeight="500.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.AdminLoginCtrl">
    <children>
-      <Label fx:id="adminLoginLabel" layoutX="30.0" layoutY="23.0" text="Admin Login">
+      <Label fx:id="adminLoginLabel" layoutX="152.0" layoutY="23.0" text="Admin Login">
          <font>
             <Font size="28.0" />
          </font>
       </Label>
-      <Button fx:id="backButton" layoutX="21.0" layoutY="342.0" mnemonicParsing="false" onAction="#goBack" text="Back" />
-      <Label fx:id="adminPasswordLabel" layoutX="30.0" layoutY="69.0" text="Admin Password">
+      <Button fx:id="backButton" layoutX="364.0" layoutY="331.0" mnemonicParsing="false" onAction="#goBack" prefHeight="48.0" prefWidth="58.0" text="Back" />
+      <Label fx:id="adminPasswordLabel" layoutX="29.0" layoutY="78.0" text="Admin Password">
          <font>
-            <Font size="14.0" />
+            <Font size="23.0" />
          </font>
       </Label>
-      <PasswordField fx:id="passwordField" layoutX="30.0" layoutY="89.0" />
-      <Button fx:id="loginButton" layoutX="188.0" layoutY="89.0" mnemonicParsing="false" onAction="#loginButton_onClick" text="Login" />
-      <Label fx:id="passwordConsoleLabel" layoutX="30.0" layoutY="130.0" text="**Password can be found in the server console">
+      <PasswordField fx:id="passwordField" layoutX="29.0" layoutY="115.0" prefHeight="26.0" prefWidth="183.0" />
+      <Button fx:id="loginButton" layoutX="226.0" layoutY="115.0" mnemonicParsing="false" onAction="#loginButton_onClick" prefHeight="26.0" prefWidth="58.0" text="Login" />
+      <Label fx:id="passwordConsoleLabel" layoutX="29.0" layoutY="149.0" text="**Password can be found in the server console">
          <font>
             <Font name="System Italic" size="12.0" />
          </font>
       </Label>
-      <Button fx:id="resendButton" layoutX="95.0" layoutY="342.0" mnemonicParsing="false" onAction="#resendPassword" text="Resend Password" />
-      <Label fx:id="resendPasswordLabel" layoutX="211.0" layoutY="346.0" text="Resend the password to the server console">
+      <Button fx:id="resendButton" layoutX="152.0" layoutY="342.0" mnemonicParsing="false" onAction="#resendPassword" text="Resend Password" />
+      <Label fx:id="resendPasswordLabel" layoutX="102.0" layoutY="321.0" text="Resend the password to the server console">
          <font>
             <Font name="System Italic" size="12.0" />
          </font>

@@ -7,6 +7,7 @@ package client.scenes;
 import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import commons.Person;
+import commons.Tag;
 import commons.Transaction;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -160,14 +161,20 @@ public class AddExpenseCtrl implements Initializable {
         addPeopleToView(people);
         addPeopleToPayerBox(people);
         currencyBox.getItems().add(840);
+        for (Tag t : server.getEventByID(mainCtrl.getCurrentEventID()).getTagList()) {
+            expenseTypeBox.getItems().add(t.getTitle());
+        }
 
         String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
         String entranceFeeString= LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
         String travelString = LanguageSingleton.getInstance().getResourceBundle().getString("travel.label");
 
-        expenseTypeBox.getItems().add(foodString);
-        expenseTypeBox.getItems().add(entranceFeeString);
-        expenseTypeBox.getItems().add(travelString);
+        //expenseTypeBox.getItems().add(foodString);
+        //expenseTypeBox.getItems().add(entranceFeeString);
+        //expenseTypeBox.getItems().add(travelString);
+        //expenseTypeBox.getItems().add("Food");
+        //expenseTypeBox.getItems().add("Entrance fees");
+        //expenseTypeBox.getItems().add("Travel");
     }
 
     /**
@@ -213,6 +220,7 @@ public class AddExpenseCtrl implements Initializable {
      */
     public void addNewTag() {
         expenseTypeBox.getItems().add(newTagField.getText());
+        server.addTag(new Tag(newTagField.getText().trim()), mainCtrl.getCurrentEventID());
         newTagField.clear();
         tagPane.visibleProperty().set(false);
     }
@@ -358,6 +366,7 @@ public class AddExpenseCtrl implements Initializable {
         howToLabel.setText(resourceBundle.getString("split.text"));
         expenseTypeLabel.setText(resourceBundle.getString("type.text"));
         addEverybody.setText(resourceBundle.getString("split.button"));
+        abortButton.setText(resourceBundle.getString("abort.button"));
         addEverybody.setText(resourceBundle.getString("split.button"));
         payerBox.setPromptText(resourceBundle.getString("payer.menu"));
         expenseField.setPromptText(resourceBundle.getString("what.textfield"));

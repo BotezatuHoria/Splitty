@@ -311,12 +311,12 @@ public class EventPageCtrl implements Initializable {
                 updatePage();
             });
         });
-        new Thread(() -> {
-            server.registerForMessages("/topic/event", Person.class, person -> {
-                System.out.println("This is activated");
+        new Thread(() -> {server.registerForMessages("/topic/event", Object.class, object -> {
+            if (mainCtrl.getCurrentEventID() != 0) {
                 Platform.runLater(this::updatePage);
-            });
-        }).start();
+            }
+        });}).start();
+
 
         //server.registerForMessages("/topic/events/transactions", Transaction.class, transaction -> {
         //    Platform.runLater(() -> {

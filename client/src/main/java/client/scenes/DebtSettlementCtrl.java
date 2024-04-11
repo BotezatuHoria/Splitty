@@ -142,6 +142,8 @@ public class DebtSettlementCtrl {
     markReceived.setOnAction(event -> settleDebt(debt));
     Button sendEmail = new Button(sendEmailString);
     sendEmail.getStyleClass().add("debt-button");
+    sendEmail.setOnAction(actionEvent -> {server.sendEmail(debt.getSender().getEmail(), "You owe some money",
+            "Hey! You forgot to pay: " + debt.getDebt() + " EUR" + " to " + debt.getReceiver().toString() + ".");});
     Button settleDebt = new Button(settleDebtString);
     settleDebt.getStyleClass().add("debt-button");
     HBox hBox = new HBox(10, markReceived, sendEmail, settleDebt); // 10 is the spacing between buttons

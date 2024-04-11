@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
+
 <AnchorPane fx:id="pane" prefHeight="570.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.AddExpenseCtrl">
    <children>
       <Label fx:id="addExpenseTitle" layoutX="22.0" layoutY="14.0" text="Add Expense">
@@ -63,9 +64,9 @@
          <font>
             <Font size="19.0" />
          </font></Label>
-      <AnchorPane fx:id="tagPane" layoutX="166.0" layoutY="503.0" prefHeight="45.0" prefWidth="197.0">
+      <AnchorPane fx:id="tagPane" layoutX="163.0" layoutY="503.0" prefHeight="45.0" prefWidth="197.0">
          <children>
-            <TextField fx:id="newTagField" layoutX="8.0" layoutY="10.0" prefHeight="26.0" prefWidth="142.0" promptText="New epxense type..." />
+            <TextField fx:id="newTagField" layoutX="6.0" layoutY="10.0" prefHeight="26.0" prefWidth="144.0" promptText="New epxense type..." />
             <Button fx:id="addTagButton" layoutX="161.0" layoutY="10.0" mnemonicParsing="false" onAction="#addNewTag" prefHeight="26.0" prefWidth="30.0" text="+" />
          </children>
       </AnchorPane>
