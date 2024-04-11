@@ -1,17 +1,20 @@
 package client.scenes;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
+import commons.Person;
+import commons.Transaction;
 import jakarta.inject.Inject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 
 public class GiveMoneyCtrl {
 
@@ -28,7 +31,7 @@ public class GiveMoneyCtrl {
     private Button addButton; // Value injected by FXMLLoader
 
     @FXML // fx:id="currencyBox"
-    private ComboBox<?> currencyBox; // Value injected by FXMLLoader
+    private ComboBox<Integer> currencyBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="dateBox"
     private DatePicker dateBox; // Value injected by FXMLLoader
@@ -43,10 +46,10 @@ public class GiveMoneyCtrl {
     private Label howMuchLabel; // Value injected by FXMLLoader
 
     @FXML // fx:id="payeeBox"
-    private ComboBox<?> payeeBox; // Value injected by FXMLLoader
+    private ComboBox<Person> payeeBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="payerBox"
-    private ComboBox<?> payerBox; // Value injected by FXMLLoader
+    private ComboBox<Person> payerBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="priceField"
     private TextField priceField; // Value injected by FXMLLoader
@@ -59,35 +62,56 @@ public class GiveMoneyCtrl {
 
     @FXML // fx:id="whoPaidLabel"
     private Label whoPaidLabel; // Value injected by FXMLLoader
+    private MainCtrl mainCtrl;
+    private ServerUtils server;
 
-
-    @FXML
-    void PayeeScroll(ActionEvent event) {
-
-    }
 
     @FXML
     void abortExpense(ActionEvent event) {
-
+        mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
     }
 
     @FXML
     void addExpense(ActionEvent event) {
+        if (checkCompleted()) {
+            addTransaction();
+            clear();
+            mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
+        }
 
     }
 
-    @FXML
-    void currencyScroll(ActionEvent event) {
+    public void addTransaction() {
+        try {
+            Person payer = payerBox.getValue();
+            Person payee = payeeBox.getValue();
+            double value = Double.parseDouble(priceField.getText());
+            LocalDate date = dateBox.getValue();
+            int currency = currencyBox.getValue();
+            List<Person> participants = new ArrayList<>();
+            participants.add(payee);
+            String title = payer + " pays " + payee;
+            String expenseType = null;
+            Transaction transaction = new Transaction(title, date, value, currency, expenseType, participants, payer);
+            transaction.setHandOff(true);
+            System.out.println(transaction.getCreator().toString());
+            Transaction result = server.addTransactionToCurrentEvent(mainCtrl.getCurrentEventID(), transaction);
+            System.out.println(result.toString());
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.initModality(Modality.APPLICATION_MODAL);
+            String expenseCreatedAlert = LanguageSingleton.getInstance().getResourceBundle().getString("expense.created.alert");
 
+            alert.setContentText(expenseCreatedAlert);
+            alert.showAndWait();
+        }catch (Exception e) {
+            String expenseFailedAlert = LanguageSingleton.getInstance().getResourceBundle().getString("expense.created.fail.alert");
+
+            mainCtrl.showAlert(expenseFailedAlert);
+        }
     }
 
-    @FXML
-    void payerScroll(ActionEvent event) {
 
-    }
 
-    private MainCtrl mainCtrl;
-    private ServerUtils server;
 
     @Inject
     public GiveMoneyCtrl(MainCtrl mainCtrl, ServerUtils server) {
@@ -96,11 +120,31 @@ public class GiveMoneyCtrl {
     }
 
     public void clear() {
-
+        payerBox.getItems().clear();
+        payeeBox.getItems().clear();
+        priceField.clear();
+        currencyBox.getItems().clear();
+        dateBox.valueProperty().set(null);
     }
 
     public void updatePage() {
+        clear();
+        List<Person> people = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
+        addPeopleToPayerAndPayeeBox(people);
+        currencyBox.getItems().add(840);
+    }
 
+    /**
+     * Method that adds all the people in the peoplePlayerBox.
+     * @param people - people to be added
+     */
+    public void addPeopleToPayerAndPayeeBox(List<Person> people) {
+        payerBox.getItems().clear();
+        payeeBox.getItems().clear();
+        for (Person p : people) {
+            payerBox.getItems().add(p);
+            payeeBox.getItems().add(p);
+        }
     }
 
 
@@ -121,6 +165,58 @@ public class GiveMoneyCtrl {
         assert whenLabel != null : "fx:id=\"whenLabel\" was not injected: check your FXML file 'GiveMoney.fxml'.";
         assert whoPaidLabel != null : "fx:id=\"whoPaidLabel\" was not injected: check your FXML file 'GiveMoney.fxml'.";
 
+    }
+
+    /**
+     * Method that checks that all fields and boxes are filled.
+     * @return
+     */
+    public boolean checkCompleted() {return checkBoxes() && checkFields();}
+
+    private boolean checkBoxes() {
+        LanguageSingleton lang = LanguageSingleton.getInstance();
+        ResourceBundle messages = lang.getResourceBundle();
+
+
+        if (payerBox.valueProperty().get() == null) {
+            mainCtrl.showAlert(messages.getString("validation.error.providePayer"));
+            return false;
+        }
+
+        if (currencyBox.valueProperty().get() == null) {
+            mainCtrl.showAlert(messages.getString("validation.error.provideCurrency"));
+            return false;
+        }
+
+        if (dateBox.valueProperty().get() == null) {
+            mainCtrl.showAlert(messages.getString("validation.error.provideDate"));
+            return false;
+        }
+
+        if (payerBox.getValue().equals(payeeBox.getValue())) {
+            mainCtrl.showAlert("Please choose a different payee than the payer");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean checkFields() {
+        LanguageSingleton lang = LanguageSingleton.getInstance();
+        ResourceBundle messages = lang.getResourceBundle();
+
+        if (priceField.getText() == null || priceField.getText().equals(" ")) {
+            mainCtrl.showAlert(messages.getString("expense.validation.error.provideAmount"));
+            return false;
+        }
+        try {
+            double x = Double.parseDouble(priceField.getText());
+        } catch (NumberFormatException e) {
+            mainCtrl.showAlert(messages.getString("expense.validation.error.validAmount"));
+            return false;
+        }
+
+        return true;
     }
 
 }

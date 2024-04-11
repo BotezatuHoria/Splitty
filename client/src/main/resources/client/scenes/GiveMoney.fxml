@@ -33,9 +33,9 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <ComboBox fx:id="payerBox" layoutX="167.0" layoutY="64.0" onAction="#payerScroll" prefHeight="26.0" prefWidth="197.0" promptText="Payer" />
+      <ComboBox fx:id="payerBox" layoutX="167.0" layoutY="64.0" prefHeight="26.0" prefWidth="197.0" promptText="Payer" />
       <TextField fx:id="priceField" layoutX="166.0" layoutY="129.0" prefHeight="26.0" prefWidth="273.0" promptText="Value of the expense..." />
-      <ComboBox fx:id="currencyBox" layoutX="447.0" layoutY="129.0" onAction="#currencyScroll" prefHeight="26.0" prefWidth="111.0" promptText="Currency" />
+      <ComboBox fx:id="currencyBox" layoutX="447.0" layoutY="129.0" prefHeight="26.0" prefWidth="111.0" promptText="Currency" />
       <DatePicker fx:id="dateBox" layoutX="166.0" layoutY="162.0" prefHeight="26.0" prefWidth="392.0" promptText="Please select the date..." />
       <Button fx:id="abortButton" layoutX="532.0" layoutY="202.0" mnemonicParsing="false" onAction="#abortExpense" prefHeight="51.0" prefWidth="51.0" />
       <Button fx:id="addButton" layoutX="405.0" layoutY="215.0" mnemonicParsing="false" onAction="#addExpense" prefHeight="26.0" prefWidth="83.0" text="Add" />
@@ -49,6 +49,6 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <ComboBox fx:id="payeeBox" layoutX="167.0" layoutY="100.0" onAction="#PayeeScroll" prefHeight="26.0" prefWidth="197.0" promptText="Payee" />
+      <ComboBox fx:id="payeeBox" layoutX="167.0" layoutY="100.0" prefHeight="26.0" prefWidth="197.0" promptText="Payee" />
    </children>
 </AnchorPane>

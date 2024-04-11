@@ -84,9 +84,10 @@ public class Main extends Application {
         var editExpensePage = FXML.load(EditExpenseCtrl.class, "client", "scenes", "EditExpense.fxml");
 
         var debtOverviewPage = FXML.load(DebtOverviewPageCtrl.class, "client", "scenes", "DebtOverviewPage.fxml");
+        var giveMoneyPage = FXML.load(GiveMoneyCtrl.class, "client", "scenes", "GiveMoney.fxml");
 
         mainCtrl.initialize(primaryStage, starterPage, eventPage, statisticsPage, expensePage, startSettings,
-                addParticipants, editParticipants, inviteSend, debtPage,adminLogin, adminPage, editExpensePage, debtOverviewPage);
+                addParticipants, editParticipants, inviteSend, debtPage,adminLogin, adminPage, editExpensePage, debtOverviewPage, giveMoneyPage);
 
         primaryStage.setOnCloseRequest(e -> {
             eventPage.getKey().stop();

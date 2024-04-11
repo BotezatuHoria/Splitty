@@ -80,6 +80,9 @@ public class MainCtrl {
     private Scene debtOverview;
     private DebtOverviewPageCtrl debtOverviewPageCtrl;
 
+    private Scene giveMoneyPage;
+    private GiveMoneyCtrl giveMoneyCtrl;
+
     public MainCtrl() {
     }
 
@@ -108,7 +111,8 @@ public class MainCtrl {
                            Pair<AdminLoginCtrl, Parent> adminLoginPage,
                            Pair<AdminPageCtrl, Parent> adminPage,
                            Pair<EditExpenseCtrl, Parent> editExpensePage,
-                           Pair<DebtOverviewPageCtrl, Parent> debtOverview){
+                           Pair<DebtOverviewPageCtrl, Parent> debtOverview,
+                           Pair<GiveMoneyCtrl, Parent> giveMoney){
         this.server = new ServerUtils();
 
         this.primaryStage = primaryStage;
@@ -151,6 +155,11 @@ public class MainCtrl {
 
         this.editExpenseCtrl = editExpensePage.getKey();
         this.editExpensePage = new Scene(editExpensePage.getValue());
+
+        this.giveMoneyCtrl = giveMoney.getKey();
+        this.giveMoneyPage = new Scene(giveMoney.getValue());
+
+
 
         startSettingsCtrl.initializeLanguages();
         starterPageCtrl.initializeLanguages();
@@ -361,4 +370,13 @@ public class MainCtrl {
         return ret.substring(0, ret.length() - 2) + ";";
     }
 
+    /**
+     * Method that opens the Give Money Page
+     */
+    public void showGiveMoneyPage() {
+        primaryStage.setTitle("Give Money");
+        giveMoneyCtrl.updatePage();
+        primaryStage.setScene(giveMoneyPage);
+
+    }
 }

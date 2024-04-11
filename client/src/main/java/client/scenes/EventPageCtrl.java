@@ -109,6 +109,9 @@ public class EventPageCtrl implements Initializable {
     @FXML
     private Button settingButton;
 
+    @FXML
+    private Button giveMoney;
+
 
     /**
      * Constructor for EventPageCtrl.
@@ -206,6 +209,8 @@ public class EventPageCtrl implements Initializable {
         displayTransactions();
     }
 
+
+
     /**
      * Displays participants on that page for the current event.
      */
@@ -250,6 +255,10 @@ public class EventPageCtrl implements Initializable {
         for (Transaction t : dataTransactions) {
             listTransactions.getItems().add(mainCtrl.transactionString(t.getId()));
         }
+    }
+
+    public void giveMoneyPage() {
+        mainCtrl.showGiveMoneyPage();
     }
 
     /**
