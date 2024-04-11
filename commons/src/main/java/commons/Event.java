@@ -1,11 +1,13 @@
 package commons;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,11 +28,17 @@ public class Event {
     private LocalDateTime lastModified;
 
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("id")
     protected List<Person> people;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("id")
     protected List<Transaction> transactions;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("id")
+    protected List<Tag> tagList;
 
     /**
      * constructor, constructs the event with all these attributes.
@@ -48,6 +56,8 @@ public class Event {
         this.token = token;
         this.people = people;
         this.transactions = transactions;
+        this.tagList = new ArrayList<>();
+        tagList.addAll(List.of(new Tag("Food"), new Tag("Entrance Fees"), new Tag("Travel")));
         creationDate = LocalDate.now();
         lastModified = LocalDateTime.now();
     }
@@ -197,12 +207,7 @@ public class Event {
      */
     @Override
     public String toString() {
-        return "Event{" +
-                "tag='" + tag + '\'' +
-                ", title='" + title + '\'' +
-                ", id=" + id +
-                ", token='" + token + '\'' +
-                '}';
+        return title;
     }
 
     @Override
@@ -236,6 +241,28 @@ public class Event {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<Tag> getTagList() {
+        return tagList;
+    }
+
+    public void setTagList(List<Tag> tagList) {
+        this.tagList = tagList;
+    }
+
+    public void addTag(Tag tag) {
+        this.tagList.add(tag);
+    }
+
+    public void removeTag(Tag tag) {
+        this.tagList.remove(tag);
+    }
+
+    public void removeTags() {
+        if (tagList != null) {
+            tagList.clear();
+        }
     }
 }
 

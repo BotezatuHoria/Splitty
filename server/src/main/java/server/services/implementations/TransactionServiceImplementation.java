@@ -122,6 +122,7 @@ public class TransactionServiceImplementation implements TransactionService {
                     existingTransaction.setCurrency(newData.getCurrency());
                     existingTransaction.setParticipants(newData.getParticipants());
                     existingTransaction.setExpenseType(newData.getExpenseType());
+                    existingTransaction.setCreator(newData.getCreator());
                     listeners.forEach((k, v) -> {
                         v.accept(existingTransaction);
                     });

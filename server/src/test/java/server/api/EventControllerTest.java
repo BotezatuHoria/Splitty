@@ -11,6 +11,7 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import server.services.implementations.EventServiceImplementation;
 import server.services.implementations.PersonServiceImplementation;
+import server.services.implementations.TagServiceImplementation;
 import server.services.implementations.TransactionServiceImplementation;
 
 import java.time.LocalDate;
@@ -30,6 +31,9 @@ class EventControllerTest {
     private TransactionServiceImplementation transactionService;
     private TestTransactionRepository transactionRepository;
 
+    private TagRepositoryTest tagRepositoryTest;
+    private TagServiceImplementation tagServiceImplementation;
+
     private SimpMessagingTemplate messagingTemplate;
 
     @BeforeEach
@@ -48,6 +52,9 @@ class EventControllerTest {
         transactionRepository = new TestTransactionRepository();
         transactionService = new TransactionServiceImplementation(transactionRepository, personService);
 
+        tagRepositoryTest = new TagRepositoryTest();
+        tagServiceImplementation = new TagServiceImplementation(tagRepositoryTest);
+
         eventRepository = new TestEventRepository();
         eventService = new EventServiceImplementation(eventRepository, transactionService, personService,
                 new SimpMessagingTemplate(new MessageChannel() {
@@ -55,7 +62,7 @@ class EventControllerTest {
             public boolean send(Message<?> message, long timeout) {
                 return true;
             }
-        }));
+        }), tagServiceImplementation);
     }
 
 

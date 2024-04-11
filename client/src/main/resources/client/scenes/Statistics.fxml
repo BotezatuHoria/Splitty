@@ -41,16 +41,19 @@
 
 <VBox prefHeight="500.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.StatisticsCtrl">
   <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="576.0" prefWidth="640.0" VBox.vgrow="ALWAYS">
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="525.0" prefWidth="640.0" VBox.vgrow="ALWAYS">
       <children>
-            <PieChart fx:id="statsPieChart" layoutX="129.0" layoutY="64.0" prefHeight="283.0" prefWidth="381.0" />
-            <Label fx:id="statsTotalExpenses" layoutX="129.0" layoutY="45.0" prefHeight="18.0" prefWidth="382.0" />
-            <Label alignment="BOTTOM_LEFT" layoutX="129.0" layoutY="26.0" prefHeight="18.0" prefWidth="382.0" text="Statistics" textAlignment="CENTER">
+            <PieChart fx:id="statsPieChart" layoutX="70.0" layoutY="108.0" prefHeight="342.0" prefWidth="501.0" />
+            <Label fx:id="statsTotalExpenses" layoutX="29.0" layoutY="65.0" prefHeight="17.0" prefWidth="365.0">
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font size="25.0" />
+               </font></Label>
+            <Label alignment="BOTTOM_LEFT" layoutX="27.0" layoutY="23.0" prefHeight="18.0" prefWidth="382.0" text="Statistics" textAlignment="CENTER">
+               <font>
+                  <Font size="30.0" />
                </font>
             </Label>
-            <Button fx:id="goBackButton" layoutX="36.0" layoutY="347.0" mnemonicParsing="false" onAction="#goBack" prefHeight="51.0" prefWidth="58.0" text="Back" />
+            <Button fx:id="goBackButton" layoutX="568.0" layoutY="435.0" mnemonicParsing="false" onAction="#goBack" prefHeight="51.0" prefWidth="58.0" text="Back" />
       </children>
     </AnchorPane>
   </children>

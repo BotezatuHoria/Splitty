@@ -211,6 +211,7 @@ public class AdminPageCtrl {
         File file = chooser.showOpenDialog(parent);
         try {
             Event event = objectMapper.readValue(file, Event.class);
+            event.setId(0);
             System.out.println(event);
             server.addEvent(event);
             showEvents();

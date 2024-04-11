@@ -13,16 +13,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
-
 import java.awt.*;
 import java.awt.datatransfer.Clipboard; //to set the clipboard of the user when clicking the copy button, in method CopyCode.
 import java.awt.datatransfer.StringSelection; // Also in method CopyCode.
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Scanner;
-
-
 
 
 public class InviteSendingCtrl{
@@ -79,8 +74,9 @@ public class InviteSendingCtrl{
         while (scanner.hasNext()){
             listOfMails.add(scanner.next());
         }
-        for(String s:listOfMails){
+        for(String s : listOfMails){
             String doSomethingWithThis= s.toLowerCase();// here we add the protocol to send emails if we want, using a mail API like google or the Java one.
+            server.sendEmail(s, "Invite to Splitty App", inviteCode.getText());
         }
 
     }
@@ -149,5 +145,6 @@ public class InviteSendingCtrl{
     public void cancelGoBack(){
         mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
     }
+
 
 }

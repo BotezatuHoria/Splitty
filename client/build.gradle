@@ -30,6 +30,8 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-websocket:3.2.2'
 
+	implementation 'com.sun.mail:javax.mail:1.6.2'
+
 	implementation group: 'jakarta.activation', name: 'jakarta.activation-api', version: '2.0.1'
 
 	implementation group: 'jakarta.activation', name: 'jakarta.activation-api', version: '2.0.1'

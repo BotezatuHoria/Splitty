@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.StarterPageCtrl">
+<AnchorPane prefHeight="500.0" prefWidth="622.0" styleClass="anchor-pane" stylesheets="@../../CSS/StarterPageStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.StarterPageCtrl">
    <children>
       <ComboBox fx:id="languageSelector" layoutX="388.0" layoutY="14.0" prefHeight="45.0" prefWidth="83.0" />
       <Label fx:id="createTextLabel" layoutX="30.0" layoutY="23.0" text="Create New Event">
@@ -41,7 +41,7 @@
          </font>
       </Label>
       <ListView fx:id="listView" editable="true" layoutX="30.0" layoutY="267.0" onMouseClicked="#joinEventsList" prefHeight="200.0" prefWidth="526.0" style="-fx-background-color: #DCDCDC;" />
-      <Button fx:id="settingButton" layoutX="534.0" layoutY="21.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" onAction="#showSettingsPage"/>
+      <Button fx:id="settingButton" layoutX="534.0" layoutY="21.0" mnemonicParsing="false" onAction="#showSettingsPage" prefHeight="30.0" prefWidth="30.0" />
       <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="537.0" layoutY="24.0" mouseTransparent="true">
          <image>
             <Image url="@/images/setting2.png" />
