@@ -1,0 +1,21 @@
+
+#pane{
+    -fx-background-color: #0D3B66;
+    -fx-text-fill: #F4D35E;
+}
+.label{
+    -fx-text-fill: #F4D35E;
+}
+.button{
+    -fx-background-color: #F4D35E;
+    -fx-text-fill: #0D3B66;
+}
+.text-field{
+    -fx-background-color: #F4D35E;
+    -fx-text-fill: #0D3B66;
+    -fx-prompt-text-fill: #0D3B66;
+}
+.combo-box{
+    -fx-background-color: #F4D35E;
+    -fx-text-fill: #0D3B66;
+}

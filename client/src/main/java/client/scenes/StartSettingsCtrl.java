@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.text.Text;
 import javafx.scene.image.Image;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -29,7 +28,7 @@ public class StartSettingsCtrl {
     public Button startPageConfirm;
 
     @FXML // fx:id="startSettingsLabel"
-    private Text startSettingsLabel;
+    private Label startSettingsLabel;
 
     @FXML // fx:id="startPageAdmin"
     private Button startPageAdmin;
@@ -51,6 +50,9 @@ public class StartSettingsCtrl {
 
     @FXML
     private Button downloadButton;
+
+    @FXML
+    private Button contrastButton;
 
 
     /**
@@ -224,6 +226,20 @@ public class StartSettingsCtrl {
             String oldHost = config.getClientsServer();
             config.setServer(host);
             System.out.println("config file, server overwritten from " + oldHost + " to "+ config.getClientsServer());
+        }
+    }
+
+    public void changeContrast(){
+        if (contrastButton.getText().equals("Enable High Contrast")){
+            //set new button title
+            contrastButton.setText("Disable High Contrast");
+
+            //set all the correct stylesheets
+            mainCtrl.highContrast();
+        }
+        else {
+            contrastButton.setText("Enable High Contrast");
+            mainCtrl.normalContrast();
         }
     }
 }
