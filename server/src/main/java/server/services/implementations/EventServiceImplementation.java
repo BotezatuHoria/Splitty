@@ -2,6 +2,7 @@ package server.services.implementations;
 
 import commons.Event;
 import commons.Person;
+import commons.Tag;
 import commons.Transaction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -20,12 +21,16 @@ public class EventServiceImplementation implements EventService {
     private final PersonServiceImplementation psi;
     private final SimpMessagingTemplate messagingTemplate;
 
+    private final TagServiceImplementation tagServiceImplementation;
+
     public EventServiceImplementation(EventRepository repo, TransactionServiceImplementation tsi,
-                                      PersonServiceImplementation psi, SimpMessagingTemplate messagingTemplate) {
+                                      PersonServiceImplementation psi, SimpMessagingTemplate messagingTemplate,
+                                      TagServiceImplementation tagServiceImplementation) {
         this.repo = repo;
         this.tsi = tsi;
         this.psi = psi;
         this.messagingTemplate = messagingTemplate;
+        this.tagServiceImplementation = tagServiceImplementation;
     }
 
     @Override
@@ -105,6 +110,7 @@ public class EventServiceImplementation implements EventService {
         Event event = repo.findById(id).get();
         event.removeTransactions();
         event.removeParticipants();
+        event.removeTags();
         ResponseEntity<commons.Event> response = ResponseEntity.ok(event);
         repo.deleteById(id);
         return response;
@@ -162,7 +168,8 @@ public class EventServiceImplementation implements EventService {
             }
             Event event = repo.findById(idEvent).get();
             event.addTransaction(savedTransaction);
-            updateById(idEvent, event);
+            Event saved = updateById(idEvent, event).getBody();
+            messagingTemplate.convertAndSend("/topic/event", saved);
             return ResponseEntity.ok(savedTransaction);
         }
         return ResponseEntity.internalServerError().build();
@@ -260,5 +267,38 @@ public class EventServiceImplementation implements EventService {
             return ResponseEntity.ok(repo.findByToken(token).get());
         }
         return ResponseEntity.badRequest().build();
+    }
+
+    public ResponseEntity<List<Tag>> getTags(long idEvent) {
+        if (idEvent < 0 || !repo.existsById(idEvent)) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (repo.findById(idEvent).isPresent()) {
+            return ResponseEntity.ok(repo.findById(idEvent).get().getTagList());
+        }
+        return ResponseEntity.internalServerError().build();
+    }
+
+    public ResponseEntity<Tag> createTag(long id, Tag tag) {
+        if (tag == null || tag.getTitle().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        Tag saved = tagServiceImplementation.add(tag).getBody();
+        Event event = getById(id).getBody();
+        event.addTag(saved);
+        updateById(id, event);
+        messagingTemplate.convertAndSend("/topic/event", event);
+        return ResponseEntity.ok(saved);
+    }
+
+    public ResponseEntity<Tag> deleteTag(long id, int tag) {
+        if (tagServiceImplementation.getById(tag) == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        Event event = getById(id).getBody();
+        Tag deletedTag = tagServiceImplementation.getById(tag).getBody();
+        event.removeTag(deletedTag);
+        updateById(id, event);
+        return ResponseEntity.ok(deletedTag);
     }
 }

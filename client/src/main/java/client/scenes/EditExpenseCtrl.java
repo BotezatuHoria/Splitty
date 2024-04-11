@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import commons.Person;
+import commons.Tag;
 import commons.Transaction;
 import jakarta.inject.Inject;
 import javafx.application.Platform;
@@ -344,13 +345,22 @@ public class EditExpenseCtrl implements Initializable {
         addPeopleToPayerBox(people);
         addPeopleToView(people);
         currencyBox.getItems().add(840);
+        for (Tag t : server.getEventByID(mainCtrl.getCurrentEventID()).getTagList()) {
+            expenseTypeBox.getItems().add(t.getTitle());
+        }
+        //String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
+        //String entranceFeeString= LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
+        //String travelString = LanguageSingleton.getInstance().getResourceBundle().getString("travel.label");
         String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
         String entranceFeeString= LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
         String travelString = LanguageSingleton.getInstance().getResourceBundle().getString("travel.label");
 
-        expenseTypeBox.getItems().add(foodString);
-        expenseTypeBox.getItems().add(entranceFeeString);
-        expenseTypeBox.getItems().add(travelString);
+        //expenseTypeBox.getItems().add(foodString);
+        //expenseTypeBox.getItems().add(entranceFeeString);
+        //expenseTypeBox.getItems().add(travelString);
+        //expenseTypeBox.getItems().add("Food");
+        //expenseTypeBox.getItems().add("Entrance fees");
+        //expenseTypeBox.getItems().add("Travel");
     }
 
     /**

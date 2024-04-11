@@ -31,13 +31,14 @@ public class StatisticsCtrl implements Initializable {
     @FXML // fx:id="goBackButton"
     private Button goBackButton; // Value injected by FXMLLoader
 
+    private Event selectedEvent;
+
     /**
      * Constructor for the statistics controller.
      * @param mainCtrl - reference to the main controller.
      */
     @Inject
     public StatisticsCtrl(MainCtrl mainCtrl, ServerUtils server) {
-
         this.mainCtrl = mainCtrl;
         this.server = server;
     }
@@ -79,7 +80,7 @@ public class StatisticsCtrl implements Initializable {
             statsPieChart.setData(chartData);
 
             String totalExpensesString = (LanguageSingleton.getInstance().getResourceBundle().getString("total.expenses"));
-            statsTotalExpenses.setText(totalExpensesString + totalExpenses + " Eur");
+            statsTotalExpenses.setText(totalExpensesString + " " + totalExpenses + " EUR");
         }
     }
 
@@ -97,7 +98,17 @@ public class StatisticsCtrl implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         server.registerForMessages("/topic/event", Object.class, object -> {
-            Platform.runLater(this::initializeStatistics);
+            if (mainCtrl.getCurrentEventID() != 0) {
+                if (checkNewData()) {
+                    Platform.runLater(this::initializeStatistics);
+                }
+            }
         });
+    }
+
+
+    public boolean checkNewData() {
+        Event currentEvent = server.getEventByID(mainCtrl.getCurrentEventID());
+        return currentEvent.getTransactions() != selectedEvent.getTransactions();
     }
 }

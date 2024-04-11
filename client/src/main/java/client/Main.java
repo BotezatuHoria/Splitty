@@ -18,10 +18,7 @@ package client;
 import static com.google.inject.Guice.createInjector;
 
 import java.io.*;
-import java.net.ConnectException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 
 
 
@@ -34,9 +31,11 @@ import com.google.inject.Injector;
 //import client.scenes.AddQuoteCtrl;
 //import client.scenes.QuoteOverviewCtrl;
 
-import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.core.Response;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import org.glassfish.jersey.client.ClientConfig;
 
 public class Main extends Application {
 
@@ -142,7 +141,7 @@ public class Main extends Application {
      * checks whether the server the client wants to connect to is running (tested with an api call).
      * @return true when client connects to running server, false otherwise.
      */
-    public boolean checkConnection(String host){
+    /*public boolean checkConnection(String host){
         String uri = host + "/api/events";
         URL url;
         try {
@@ -169,5 +168,19 @@ public class Main extends Application {
         return true;
 
 
+    }*/
+
+    public boolean checkConnection(String host) {
+        try {
+            Response response = ClientBuilder.newClient(new ClientConfig()) //
+                    .target(host)
+                    .request().get();
+            System.out.println(response.getStatus());
+            return true;
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 }

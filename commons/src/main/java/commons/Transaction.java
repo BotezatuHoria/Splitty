@@ -1,7 +1,8 @@
 package commons;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import java.util.Objects;
  * Transaction class.
  */
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Transaction {
 
     @Id
@@ -31,11 +33,9 @@ public class Transaction {
 
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt"})
     public List<Person> participants;
 
     @ManyToOne
-    @JsonIgnoreProperties({"firstName", "lastName", "iban", "email", "debt"})
     public Person creator;
 
     /**
