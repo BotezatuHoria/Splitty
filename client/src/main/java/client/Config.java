@@ -14,6 +14,7 @@ public class Config {
     private String server;
     private String emailAddress;
     private String language;
+    private String password;
 
     public String getClientsServer() {
         return server;
@@ -22,6 +23,11 @@ public class Config {
     public String getClientsEmailAddress() {
         return emailAddress;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
 
     public String getClientsLanguage() {
         return language;
@@ -37,6 +43,10 @@ public class Config {
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void readConfigFile(){

@@ -39,6 +39,8 @@ import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.util.Pair;
 import org.glassfish.jersey.client.ClientConfig;
@@ -91,11 +93,13 @@ public class ServerUtils {
 		try (FileWriter writer = new FileWriter(file, false)) {
 			String server = config.getClientsServer() != null ? "\"" + config.getClientsServer() + "\"" : "\"http://localhost:8080/\"";
 			String email = config.getClientsEmailAddress() != null ? "\"" + config.getClientsEmailAddress() + "\"" : "\"example@gmail.com\"";
+			String password = config.getPassword() != null ? "\"" + config.getPassword() + "\"" : "\"password\"";
 			String language = config.getClientsLanguage() != null ? "\"" + config.getClientsLanguage() + "\"" : "\"en\"";
 
 			writer.write("{\n" +
 					"  \"server\": " + server + ",\n" +
 					"  \"emailAddress\": " + email + ",\n" +
+					"  \"password\": " + password + ",\n" +
 					"  \"language\":" + language + "\n" +
 					"}");
 		} catch (IOException e) {
@@ -585,6 +589,35 @@ public class ServerUtils {
 		alert.showAndWait();
 	}
 
+	public void initializeLanguages(ComboBox languageSelector) {
+		// Push all the languages to the combobox
+		languageSelector.getItems().addAll(FlagListCell.getLanguages());
 
+		// Responsible for setting the flags and changing languages
+		languageSelector.setCellFactory(lv -> new FlagListCell());
+		languageSelector.setButtonCell(new FlagListCell());
+
+		languageSelector.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+			if (newVal != null) {
+				LanguageSingleton.getInstance().setLanguage((org.apache.commons.lang3.tuple.Pair<String, Image>) newVal);
+				LanguageSingleton.getInstance().setLanguageText();
+
+				Config config = ServerUtils.getConfig();
+				if (config != null) {
+					config.setLanguage(((org.apache.commons.lang3.tuple.Pair<String, Image>) newVal).getKey());
+					ServerUtils.setConfig(config);
+				}
+			}
+		});
+
+		// Show current language
+		org.apache.commons.lang3.tuple.Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
+		languageSelector.getSelectionModel().select(currentLanguage);
+	}
+
+	public void setLanguageSelector(ComboBox languageSelector) {
+		org.apache.commons.lang3.tuple.Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
+		languageSelector.getSelectionModel().select(currentLanguage);
+	}
 
 }

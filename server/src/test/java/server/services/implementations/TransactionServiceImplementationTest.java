@@ -7,6 +7,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.context.request.async.DeferredResult;
 import server.database.TransactionRepository;
 import commons.Transaction;
@@ -35,7 +38,12 @@ class TransactionServiceImplementationTest {
   void setUp() {
     repo = Mockito.mock(TransactionRepository.class);
     psi = Mockito.mock(PersonServiceImplementation.class);
-    service = new TransactionServiceImplementation(repo, psi);
+    service = new TransactionServiceImplementation(repo, psi, new SimpMessagingTemplate(new MessageChannel() {
+      @Override
+      public boolean send(Message<?> message, long timeout) {
+        return true;
+      }
+    }));
   }
 
   /**
