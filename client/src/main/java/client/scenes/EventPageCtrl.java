@@ -310,8 +310,9 @@ public class EventPageCtrl implements Initializable {
                     data.remove(person);
                     data.add(person);
                 }
-                else
+                else {
                     data.add(person);
+                }
                 updatePage();
             });
         });

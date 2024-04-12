@@ -5,7 +5,6 @@ import client.Main;
 import client.utils.FlagListCell;
 import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
