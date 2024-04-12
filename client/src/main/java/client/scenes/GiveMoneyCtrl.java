@@ -65,12 +65,19 @@ public class GiveMoneyCtrl {
     private MainCtrl mainCtrl;
     private ServerUtils server;
 
-
+    /**
+     * Aborts the expense and goes back to the event page.
+     * @param event
+     */
     @FXML
     void abortExpense(ActionEvent event) {
         mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
     }
 
+    /**
+     * Adds expense to the event.
+     * @param event
+     */
     @FXML
     void addExpense(ActionEvent event) {
         if (checkCompleted()) {
@@ -81,6 +88,9 @@ public class GiveMoneyCtrl {
 
     }
 
+    /**
+     * Gets all the fields that had to be entered.
+     */
     public void addTransaction() {
         try {
             Person payer = payerBox.getValue();
@@ -112,14 +122,20 @@ public class GiveMoneyCtrl {
     }
 
 
-
-
+    /**
+     * Constructor.
+     * @param mainCtrl the main ctrl
+     * @param server to get stuff
+     */
     @Inject
     public GiveMoneyCtrl(MainCtrl mainCtrl, ServerUtils server) {
         this.mainCtrl = mainCtrl;
         this.server = server;
     }
 
+    /**
+     * Clears the page.
+     */
     public void clear() {
         payerBox.getItems().clear();
         payeeBox.getItems().clear();
@@ -128,6 +144,9 @@ public class GiveMoneyCtrl {
         dateBox.valueProperty().set(null);
     }
 
+    /**
+     * Updates the page by loading all required stuff.
+     */
     public void updatePage() {
         clear();
         List<Person> people = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
@@ -149,7 +168,9 @@ public class GiveMoneyCtrl {
     }
 
 
-
+    /**
+     * Fxml method to initialize stuff.
+     */
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert abortButton != null : "fx:id=\"abortButton\" was not injected: check your FXML file 'GiveMoney.fxml'.";
@@ -202,6 +223,10 @@ public class GiveMoneyCtrl {
         return true;
     }
 
+    /**
+     * Checks that all fields are full.
+     * @return true if they are indeed full
+     */
     private boolean checkFields() {
         LanguageSingleton lang = LanguageSingleton.getInstance();
         ResourceBundle messages = lang.getResourceBundle();
@@ -220,6 +245,10 @@ public class GiveMoneyCtrl {
         return true;
     }
 
+    /**
+     * Sets the language for the page.
+     * @param resourceBundle that holds all keys and words.
+     */
     public void setLanguageText(ResourceBundle resourceBundle) {
         //fromParticipant.setText(resourceBundle.getString("from.button"));
         giveMoneyTitle.setText(resourceBundle.getString("giveMoney.label"));

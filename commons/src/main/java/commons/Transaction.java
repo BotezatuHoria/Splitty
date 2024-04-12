@@ -90,7 +90,7 @@ public class Transaction {
 
 
     /**
-     * Getter for handOff
+     * Getter for handOff.
      * @return true if this is a handoff
      */
     public boolean isHandOff() {
@@ -98,7 +98,7 @@ public class Transaction {
     }
 
     /**
-     * Setter for handoff
+     * Setter for handoff.
      * @param handOff determining if this is a handoff or not
      */
     public void setHandOff(boolean handOff) {

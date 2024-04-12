@@ -372,7 +372,7 @@ public class MainCtrl {
     }
 
     /**
-     * Method that opens the Give Money Page
+     * Method that opens the Give Money Page.
      */
     public void showGiveMoneyPage() {
         primaryStage.setTitle("Give Money");
