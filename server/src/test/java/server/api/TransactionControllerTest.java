@@ -45,7 +45,12 @@ class TransactionControllerTest {
                 return true;
             }
         }));
-        sut = new TransactionServiceImplementation(db, psi);
+        sut = new TransactionServiceImplementation(db, psi, new SimpMessagingTemplate(new MessageChannel() {
+            @Override
+            public boolean send(Message<?> message, long timeout) {
+                return true;
+            }
+        }));
 
         // Create a sample transaction
         participants = new ArrayList<>();

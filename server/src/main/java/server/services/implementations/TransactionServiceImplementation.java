@@ -1,9 +1,11 @@
 package server.services.implementations;
 
+import commons.Event;
 import commons.Person;
 import commons.Transaction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.async.DeferredResult;
 import server.database.TransactionRepository;
@@ -19,9 +21,11 @@ public class TransactionServiceImplementation implements TransactionService {
 
     private final TransactionRepository repo;
     private final PersonServiceImplementation psi;
-    public TransactionServiceImplementation(TransactionRepository repo, PersonServiceImplementation psi){
+    private final SimpMessagingTemplate simpMessagingTemplate;
+    public TransactionServiceImplementation(TransactionRepository repo, PersonServiceImplementation psi, SimpMessagingTemplate simpMessagingTemplate){
         this.repo = repo;
         this.psi = psi;
+        this.simpMessagingTemplate = simpMessagingTemplate;
     }
     @Override
     public ResponseEntity<List<Transaction>> getAll() {
@@ -126,6 +130,7 @@ public class TransactionServiceImplementation implements TransactionService {
                     listeners.forEach((k, v) -> {
                         v.accept(existingTransaction);
                     });
+                    simpMessagingTemplate.convertAndSend("/topic/event", new Event());
                     debtCalc(existingTransaction, "addition");
                     return ResponseEntity.ok(repo.save(existingTransaction));
                 })

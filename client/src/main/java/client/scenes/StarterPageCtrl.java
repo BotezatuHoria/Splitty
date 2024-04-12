@@ -7,8 +7,6 @@ package client.scenes;
 import java.net.URL;
 import java.util.*;
 
-import client.Config;
-import client.utils.FlagListCell;
 import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import commons.Event;
@@ -249,32 +247,12 @@ public class StarterPageCtrl implements Initializable {
         }
     }
 
-    public void initializeLanguages() {
-        languageSelector.getItems().addAll(FlagListCell.getLanguages());
-        languageSelector.setCellFactory(lv -> new FlagListCell());
-        languageSelector.setButtonCell(new FlagListCell());
-
-        languageSelector.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) {
-                LanguageSingleton.getInstance().setLanguage((Pair<String, Image>) newVal);
-                LanguageSingleton.getInstance().setLanguageText();
-
-                Config config = ServerUtils.getConfig();
-
-                if (config != null) {
-                    config.setLanguage(((Pair<String, Image>) newVal).getKey());
-                    ServerUtils.setConfig(config);
-                }
-            }
-        });
-
-        Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
-        languageSelector.getSelectionModel().select(currentLanguage);
+    void initializeLanguages() {
+        server.initializeLanguages(languageSelector);
     }
 
     public void setLanguageSelector() {
-        Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
-        languageSelector.getSelectionModel().select(currentLanguage);
+        server.setLanguageSelector(languageSelector);
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
