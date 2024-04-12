@@ -20,6 +20,7 @@ import java.util.ResourceBundle;
 
 public class StartSettingsCtrl {
     private final MainCtrl mainCtrl;
+    private final ServerUtils serverUtils;
     private static Config config = ServerUtils.getConfig();
     @FXML
     public Label serverLabel;
@@ -65,39 +66,17 @@ public class StartSettingsCtrl {
      * @param mainCtrl - reference to the main controller.
      */
     @Inject
-    public StartSettingsCtrl(MainCtrl mainCtrl) {
+    public StartSettingsCtrl(MainCtrl mainCtrl, ServerUtils serverUtils) {
         this.mainCtrl = mainCtrl;
+        this.serverUtils = serverUtils;
     }
 
     void initializeLanguages() {
-        // Push all the languages to the combobox
-        startPageLanguageSelector.getItems().addAll(FlagListCell.getLanguages());
-
-        // Responsible for setting the flags and changing languages
-        startPageLanguageSelector.setCellFactory(lv -> new FlagListCell());
-        startPageLanguageSelector.setButtonCell(new FlagListCell());
-
-        startPageLanguageSelector.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) {
-                LanguageSingleton.getInstance().setLanguage((Pair<String, Image>) newVal);
-                LanguageSingleton.getInstance().setLanguageText();
-
-                Config config = ServerUtils.getConfig();
-                if (config != null) {
-                    config.setLanguage(((Pair<String, Image>) newVal).getKey());
-                    ServerUtils.setConfig(config);
-                }
-            }
-        });
-
-        // Show current language
-        Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
-        startPageLanguageSelector.getSelectionModel().select(currentLanguage);
+        serverUtils.initializeLanguages(startPageLanguageSelector);
     }
 
     public void setLanguageSelector() {
-        Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
-        startPageLanguageSelector.getSelectionModel().select(currentLanguage);
+        serverUtils.setLanguageSelector(startPageLanguageSelector);
     }
 
     public void setLanguageText(ResourceBundle resourceBundle) {

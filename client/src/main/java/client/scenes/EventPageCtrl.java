@@ -4,6 +4,8 @@
 
 package client.scenes;
 
+import client.Config;
+import client.utils.FlagListCell;
 import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
@@ -17,7 +19,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.net.URL;
 import java.util.List;
@@ -108,6 +112,9 @@ public class EventPageCtrl implements Initializable {
 
     @FXML
     private Button settingButton;
+
+    @FXML
+    private ComboBox languageSelector;
 
 
     /**
@@ -358,6 +365,19 @@ public class EventPageCtrl implements Initializable {
 
     public void showSettingsPage(){
         mainCtrl.showStartSettings();
+    }
+
+    void initializeLanguages() {
+        server.initializeLanguages(languageSelector);
+    }
+
+    public void setLanguageSelector() {
+        server.setLanguageSelector(languageSelector);
+    }
+
+    public void updateLanguage() {
+        // Show current language
+        Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
     }
 }
 
