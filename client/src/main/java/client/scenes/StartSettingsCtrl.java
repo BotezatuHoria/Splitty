@@ -215,13 +215,12 @@ public class StartSettingsCtrl {
             } catch (URISyntaxException ex) {
                 System.out.println("URISyntaxException: " + ex.getMessage());
             }
-            File file = new File(path);
-            var fileReader = new FileReader(file);
-            ObjectMapper objectMapper = new ObjectMapper();
-            config = objectMapper.readValue(fileReader, Config.class);
-            String oldHost = config.getClientsServer();
-            config.setServer(host);
-            System.out.println("config file, server overwritten from " + oldHost + " to "+ config.getClientsServer());
+            Config config = ServerUtils.getConfig();
+            if (config != null) {
+                System.out.println("Server was changed from: " + config.getClientsServer() + " to: " + host);
+                config.setServer(host);
+                ServerUtils.setConfig(config);
+            }
         }
     }
 }
