@@ -306,29 +306,26 @@ public class EventPageCtrl implements Initializable {
         namePane.setVisible(false);
         server.registerForMessages("/topic/events/people", Person.class, person -> {
             Platform.runLater(() -> {
-                data.add(person);
-                refresh();
+                if (data.contains(person)) {
+                    data.remove(person);
+                    data.add(person);
+                }
+                else
+                    data.add(person);
                 updatePage();
             });
         });
         new Thread(() -> {server.registerForMessages("/topic/event", Object.class, object -> {
             if (mainCtrl.getCurrentEventID() != 0) {
-                Platform.runLater(this::updatePage);
+                Platform.runLater(() -> {
+                    this.refresh();
+                    this.updatePage();
+                });
             }
         });}).start();
-
-
-        //server.registerForMessages("/topic/events/transactions", Transaction.class, transaction -> {
-        //    Platform.runLater(() -> {
-        //        dataTransactions.add(transaction);
-        //        refresh();
-        //        updatePage();
-        //    });
-        //});
         server.registerForUpdates(t -> {
             Platform.runLater(() -> {
                 dataTransactions.add(t);
-                refresh();
                 updatePage();
             });
         });
