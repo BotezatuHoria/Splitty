@@ -2,17 +2,14 @@ package client.scenes;
 
 import client.Config;
 import client.Main;
-import client.utils.FlagListCell;
 import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.*;
 import java.net.URISyntaxException;

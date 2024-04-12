@@ -4,8 +4,6 @@
 
 package client.scenes;
 
-import client.Config;
-import client.utils.FlagListCell;
 import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
