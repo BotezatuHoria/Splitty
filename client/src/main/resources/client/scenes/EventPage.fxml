@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" prefHeight="500.0" prefWidth="684.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.EventPageCtrl">
+<AnchorPane fx:id="pane" prefHeight="500.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.EventPageCtrl">
    <children>
       <Label fx:id="eventTitle" layoutX="35.0" layoutY="23.0" prefHeight="46.0" prefWidth="231.0" text="New Year Party">
          <font>
@@ -39,33 +39,33 @@
       <Button fx:id="fromParticipant" layoutX="74.0" layoutY="264.0" mnemonicParsing="false" onAction="#displayFrom" prefHeight="26.0" prefWidth="150.0" text="From Participant..." />
       <Button fx:id="includingParticipant" layoutX="231.0" layoutY="264.0" mnemonicParsing="false" onAction="#displayIncluding" prefHeight="26.0" prefWidth="150.0" text="Including Participant..." />
       <ListView fx:id="listTransactions" layoutX="33.0" layoutY="299.0" prefHeight="173.0" prefWidth="404.0" />
-      <Button fx:id="settingButton" layoutX="620.0" layoutY="21.0" mnemonicParsing="false" onAction="#showSettingsPage" prefHeight="30.0" prefWidth="30.0" />
-      <Button fx:id="SendInvites" layoutX="507.0" layoutY="90.0" mnemonicParsing="false" onAction="#sendInvites" prefHeight="43.0" prefWidth="143.0" text="Send Invites" wrapText="true">
+      <Button fx:id="settingButton" layoutX="593.0" layoutY="21.0" mnemonicParsing="false" onAction="#showSettingsPage" prefHeight="30.0" prefWidth="30.0" />
+      <Button fx:id="SendInvites" layoutX="482.0" layoutY="90.0" mnemonicParsing="false" onAction="#sendInvites" prefHeight="43.0" prefWidth="143.0" text="Send Invites" wrapText="true">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="AddExpense" layoutX="507.0" layoutY="149.0" mnemonicParsing="false" onAction="#showAddExpensePage" prefHeight="43.0" prefWidth="143.0" text="Add Expense">
+      <Button fx:id="AddExpense" layoutX="482.0" layoutY="149.0" mnemonicParsing="false" onAction="#showAddExpensePage" prefHeight="43.0" prefWidth="143.0" text="Add Expense">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="editExpense" layoutX="507.0" layoutY="205.0" mnemonicParsing="false" onAction="#showEditExpensePage" prefHeight="43.0" prefWidth="143.0" text="Edit Expense">
+      <Button fx:id="editExpense" layoutX="482.0" layoutY="205.0" mnemonicParsing="false" onAction="#showEditExpensePage" prefHeight="43.0" prefWidth="143.0" text="Edit Expense">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="SettleDebts" layoutX="507.0" layoutY="278.0" mnemonicParsing="false" onAction="#settleDebts" prefHeight="43.0" prefWidth="143.0" text="Balance">
+      <Button fx:id="SettleDebts" layoutX="482.0" layoutY="278.0" mnemonicParsing="false" onAction="#settleDebts" prefHeight="43.0" prefWidth="143.0" text="Balance">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="showStatistics" layoutX="507.0" layoutY="343.0" mnemonicParsing="false" onAction="#showStatistics" prefHeight="43.0" prefWidth="143.0" text="Show Statistics">
+      <Button fx:id="showStatistics" layoutX="482.0" layoutY="343.0" mnemonicParsing="false" onAction="#showStatistics" prefHeight="43.0" prefWidth="143.0" text="Show Statistics">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="homeButton" layoutX="599.0" layoutY="427.0" mnemonicParsing="false" onAction="#goHome" prefHeight="51.0" prefWidth="51.0" />
+      <Button fx:id="homeButton" layoutX="568.0" layoutY="435.0" mnemonicParsing="false" onAction="#goHome" prefHeight="51.0" prefWidth="51.0" />
       <AnchorPane fx:id="namePane" layoutX="35.0" layoutY="40.0" prefHeight="58.0" prefWidth="175.0">
          <children>
             <TextField fx:id="nameField" layoutY="28.0" prefHeight="26.0" prefWidth="109.0" />
@@ -78,12 +78,12 @@
          </children>
       </AnchorPane>
       <Line endX="233.20001220703125" endY="337.9999694824219" layoutX="235.0" layoutY="161.0" startX="233.20001220703125" startY="-213.5" />
-      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="623.0" layoutY="24.0" mouseTransparent="true">
+      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="596.0" layoutY="24.0" mouseTransparent="true">
          <image>
             <Image url="@/images/setting2.png" />
          </image>
       </ImageView>
-      <ImageView disable="true" fitHeight="34.0" fitWidth="34.0" layoutX="608.0" layoutY="433.0" mouseTransparent="true" style="-fx-translate-z: -1;">
+      <ImageView disable="true" fitHeight="34.0" fitWidth="34.0" layoutX="576.0" layoutY="444.0" mouseTransparent="true" style="-fx-translate-z: -1;">
          <image>
             <Image url="@/images/house-black-silhouette-without-door.png" />
          </image>

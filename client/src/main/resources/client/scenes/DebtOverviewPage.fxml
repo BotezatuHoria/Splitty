@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" prefHeight="441.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.DebtOverviewPageCtrl">
+<AnchorPane fx:id="pane" prefHeight="500.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.DebtOverviewPageCtrl">
    <children>
       <Button fx:id="settleDebtButton" layoutX="68.0" layoutY="81.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="460.0" text="Settle list" />
       <TableView fx:id="debtValueTable" layoutX="70.0" layoutY="107.0" prefHeight="249.0" prefWidth="460.0">
@@ -21,10 +21,10 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button fx:id="goBackButton" layoutX="490.0" layoutY="370.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="51.0" />
-      <ImageView fitHeight="43.0" fitWidth="42.0" layoutX="495.0" layoutY="373.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+      <Button fx:id="goBackButton" layoutX="568.0" layoutY="435.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="51.0" />
+      <ImageView fitHeight="43.0" fitWidth="42.0" layoutX="573.0" layoutY="439.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../images/return.png" />
+            <Image url="@/images/return.png" />
          </image>
       </ImageView>
       <Label layoutX="32.0" layoutY="25.0" prefHeight="46.0" prefWidth="355.0" text="Debt overview page">
