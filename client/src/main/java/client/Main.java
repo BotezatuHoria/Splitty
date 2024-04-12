@@ -34,6 +34,7 @@ import com.google.inject.Injector;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.Response;
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.glassfish.jersey.client.ClientConfig;
 
@@ -92,6 +93,8 @@ public class Main extends Application {
         primaryStage.setOnCloseRequest(e -> {
             eventPage.getKey().stop();
         });
+
+        primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/images/Splitty.png")));
     }
 
     /**

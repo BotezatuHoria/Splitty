@@ -11,10 +11,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="expensePane" prefHeight="570.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.AddExpenseCtrl">
-   <children>
 
-      <Label fx:id="addExpenseTitle" layoutX="14.0" layoutY="14.0" text="Add Expense">
+<AnchorPane fx:id="pane" prefHeight="570.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.AddExpenseCtrl">
+   <children>
+      <Label fx:id="addExpenseTitle" layoutX="22.0" layoutY="14.0" text="Add Expense">
          <font>
             <Font size="28.0" />
          </font>
