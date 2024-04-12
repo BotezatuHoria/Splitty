@@ -367,6 +367,7 @@ public class EventPageCtrl implements Initializable {
         allExpenses.setText(resourceBundle.getString("all.button"));
         participantsScroll.setPromptText(resourceBundle.getString("edit.participant.comboBoxPrompt"));
         editExpense.setText(resourceBundle.getString("edit.expense"));
+        giveMoney.setText(resourceBundle.getString("giveMoney.button"));
     }
 
     public void stop() {

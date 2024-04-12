@@ -347,6 +347,7 @@ public class MainCtrl {
         adminLoginCtrl.setLanguageText(resourceBundle);
         adminPageCtrl.setLanguageText(resourceBundle);
         editExpenseCtrl.setLanguageText(resourceBundle);
+        giveMoneyCtrl.setLanguageText(resourceBundle);
     }
 
     /**
@@ -360,7 +361,7 @@ public class MainCtrl {
         String includingParticipantsLabel = LanguageSingleton.getInstance().getResourceBundle().getString("including.participants");
         String noParticipants = LanguageSingleton.getInstance().getResourceBundle().getString("no.participants");
 
-        String ret = t + byLabel + server.getPersonByID(t.getCreator().getId()) + includingParticipantsLabel;
+        String ret = t + " " + byLabel +  " " + server.getPersonByID(t.getCreator().getId()) + " " + includingParticipantsLabel + " ";
         if (t.getParticipants() == null || t.getParticipants().isEmpty()) {
             return ret + noParticipants;
         }

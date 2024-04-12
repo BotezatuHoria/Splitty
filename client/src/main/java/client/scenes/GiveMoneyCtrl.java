@@ -90,7 +90,8 @@ public class GiveMoneyCtrl {
             int currency = currencyBox.getValue();
             List<Person> participants = new ArrayList<>();
             participants.add(payee);
-            String title = payer + " pays " + payee;
+            String title = payer +  " " +
+                    LanguageSingleton.getInstance().getResourceBundle().getString("pays.misc") + " " + payee;
             String expenseType = null;
             Transaction transaction = new Transaction(title, date, value, currency, expenseType, participants, payer);
             transaction.setHandOff(true);
@@ -194,7 +195,7 @@ public class GiveMoneyCtrl {
         }
 
         if (payerBox.getValue().equals(payeeBox.getValue())) {
-            mainCtrl.showAlert("Please choose a different payee than the payer");
+            mainCtrl.showAlert(messages.getString("validation.error.differentPayee"));
             return false;
         }
 
@@ -217,6 +218,21 @@ public class GiveMoneyCtrl {
         }
 
         return true;
+    }
+
+    public void setLanguageText(ResourceBundle resourceBundle) {
+        //fromParticipant.setText(resourceBundle.getString("from.button"));
+        giveMoneyTitle.setText(resourceBundle.getString("giveMoney.label"));
+        whoPaidLabel.setText(resourceBundle.getString("who.Paid"));
+        toWhomLabel1.setText(resourceBundle.getString("to.whom"));
+        howMuchLabel.setText(resourceBundle.getString("how.Much"));
+        whenLabel.setText(resourceBundle.getString("when.label"));
+        payerBox.setPromptText(resourceBundle.getString("payer.box"));
+        payeeBox.setPromptText(resourceBundle.getString("payee.box"));
+        currencyBox.setPromptText(resourceBundle.getString("currency.menu"));
+        priceField.setPromptText(resourceBundle.getString("much.textfield"));
+        dateBox.setPromptText(resourceBundle.getString("when.textfield"));
+        addButton.setText(resourceBundle.getString("add.button"));
     }
 
 }
