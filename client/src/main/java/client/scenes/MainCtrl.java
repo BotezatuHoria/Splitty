@@ -485,9 +485,9 @@ public class MainCtrl {
         this.editExpensePage.getStylesheets().add(styleSheet);
     }
 
-        /**
-         * Method that opens the Give Money Page.
-         */
+    /**
+     * Method that opens the Give Money Page.
+     * */
     public void showGiveMoneyPage() {
         primaryStage.setTitle("Give Money");
         giveMoneyCtrl.updatePage();
