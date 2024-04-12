@@ -177,6 +177,7 @@ public class MainCtrl {
 
         this.giveMoneyCtrl = giveMoney.getKey();
         this.giveMoneyPage = new Scene(giveMoney.getValue());
+        this.giveMoneyPage.getStylesheets().add(styleSheet);
 
 
 
@@ -432,6 +433,9 @@ public class MainCtrl {
 
         this.editExpensePage.getStylesheets().remove(styleSheet);
         this.editExpensePage.getStylesheets().add(contrastStyleSheet);
+
+        this.giveMoneyPage.getStylesheets().remove(styleSheet);
+        this.editExpensePage.getStylesheets().add(contrastStyleSheet);
     }
 
     /**
@@ -476,11 +480,14 @@ public class MainCtrl {
 
         this.editExpensePage.getStylesheets().remove(contrastStyleSheet);
         this.editExpensePage.getStylesheets().add(styleSheet);
+
+        this.giveMoneyPage.getStylesheets().remove(contrastStyleSheet);
+        this.editExpensePage.getStylesheets().add(styleSheet);
     }
 
-    /**
-     * Method that opens the Give Money Page.
-     */
+        /**
+         * Method that opens the Give Money Page.
+         */
     public void showGiveMoneyPage() {
         primaryStage.setTitle("Give Money");
         giveMoneyCtrl.updatePage();
