@@ -79,6 +79,7 @@ public class StartSettingsCtrl {
     public void setLanguageText(ResourceBundle resourceBundle) {
         startSettingsLabel.setText(resourceBundle.getString("select.language"));
         downloadButton.setText(resourceBundle.getString("button.downloadTemplate"));
+        changeButton.setText(resourceBundle.getString("change.server"));
         if (currentContrast == null || currentContrast.equals(highContrast)){
             highContrast = resourceBundle.getString("button.highContrast");
             currentContrast = highContrast;
