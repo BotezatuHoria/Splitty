@@ -162,7 +162,7 @@ public class StartSettingsCtrl {
                 // stream
                 // close() function to close
                 // the stream
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("alert.template.download.success"));
                 alert.showAndWait();
             }

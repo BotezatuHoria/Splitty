@@ -31,6 +31,9 @@ public class StatisticsCtrl implements Initializable {
     @FXML // fx:id="goBackButton"
     private Button goBackButton; // Value injected by FXMLLoader
 
+    @FXML
+    private Label statsLabel;
+
     private Event selectedEvent;
 
     /**
@@ -78,7 +81,7 @@ public class StatisticsCtrl implements Initializable {
             }
 
             statsPieChart.setData(chartData);
-
+            statsLabel.setText(LanguageSingleton.getInstance().getResourceBundle().getString("stats.title"));
             String totalExpensesString = (LanguageSingleton.getInstance().getResourceBundle().getString("total.expenses"));
             statsTotalExpenses.setText(totalExpensesString + " " + totalExpenses + " EUR");
         }
