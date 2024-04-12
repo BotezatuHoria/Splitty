@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="pane" prefHeight="500.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.InviteSendingCtrl">
    <children>
       <Label fx:id="eventTitle" layoutX="53.0" layoutY="45.0" prefHeight="58.0" prefWidth="453.0" text="{EventTitle}">
@@ -16,12 +15,12 @@
             <Font size="40.0" />
          </font>
       </Label>
-      <Label fx:id="copyText" layoutX="52.0" layoutY="122.0" prefHeight="30.0" prefWidth="338.0" text="Give people the following invite code:">
+      <Label fx:id="copyText" layoutX="52.0" layoutY="122.0" prefHeight="30.0" prefWidth="369.0" text="Give people the following invite code:">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="inviteCode" layoutX="390.0" layoutY="122.0" prefHeight="30.0" prefWidth="126.0" text="{InviteCode}">
+      <Label fx:id="inviteCode" layoutX="425.0" layoutY="122.0" prefHeight="30.0" prefWidth="126.0" text="{InviteCode}">
          <font>
             <Font size="20.0" />
          </font>
@@ -31,7 +30,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="copyInviteCodeButton" layoutX="535.0" layoutY="126.0" mnemonicParsing="false" onAction="#copyCode" text="copy" />
+      <Button fx:id="copyInviteCodeButton" layoutX="555.0" layoutY="124.0" mnemonicParsing="false" onAction="#copyCode" text="copy" />
       <Button fx:id="cancel" layoutX="551.0" layoutY="426.0" mnemonicParsing="false" onAction="#cancelGoBack" prefHeight="51.0" prefWidth="51.0" />
       <Button fx:id="sendInviteButton" layoutX="383.0" layoutY="387.0" mnemonicParsing="false" onAction="#sendInvite" prefHeight="30.0" prefWidth="120.0" text="Send Invites">
          <font>
