@@ -315,6 +315,12 @@ public class EventPageCtrl implements Initializable {
                 updatePage();
             });
         });
+        server.registerForUpdates(t -> {
+            Platform.runLater(() -> {
+                dataTransactions.add(t);
+                updatePage();
+            });
+        });
         new Thread(() -> {server.registerForMessages("/topic/event", Object.class, object -> {
             if (mainCtrl.getCurrentEventID() != 0) {
                 Platform.runLater(() -> {
@@ -323,12 +329,6 @@ public class EventPageCtrl implements Initializable {
                 });
             }
         });}).start();
-        server.registerForUpdates(t -> {
-            Platform.runLater(() -> {
-                dataTransactions.add(t);
-                updatePage();
-            });
-        });
     }
     /**
      * Method that opens the Edit event page.
