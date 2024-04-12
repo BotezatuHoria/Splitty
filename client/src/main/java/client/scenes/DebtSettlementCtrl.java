@@ -1,7 +1,6 @@
 package client.scenes;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import client.utils.LanguageSingleton;
@@ -68,7 +67,6 @@ public class DebtSettlementCtrl {
     assert markReceivedButton != null : "fx:id=\"markReceivedButton\" was not injected: check your FXML file 'OpenDebts.fxml'.";
     assert sendReminderButton != null : "fx:id=\"sendReminderButton\" was not injected: check your FXML file 'OpenDebts.fxml'.";
     assert titleLabel != null : "fx:id=\"titleLabel\" was not injected: check your FXML file 'OpenDebts.fxml'.";
-    rootPane.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/DebtSettlementStyle.css")).toExternalForm());
     server.registerForMessages("/topic/events/people", Person.class, person -> {
       Platform.runLater(() -> {
         clear();

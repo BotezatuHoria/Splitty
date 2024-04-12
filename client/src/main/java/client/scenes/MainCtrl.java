@@ -80,6 +80,9 @@ public class MainCtrl {
     private Scene debtOverview;
     private DebtOverviewPageCtrl debtOverviewPageCtrl;
 
+    private String styleSheet;
+    private String contrastStyleSheet;
+
     public MainCtrl() {
     }
 
@@ -113,44 +116,60 @@ public class MainCtrl {
 
         this.primaryStage = primaryStage;
 
+        styleSheet = "/StyleNormal.css";
+        contrastStyleSheet = "/StyleContrast.css";
+
         this.startSettingsCtrl = startSettings.getKey();
         this.startSettings = new Scene(startSettings.getValue());
+        this.startSettings.getStylesheets().add(styleSheet);
 
         this.starterPageCtrl = starter.getKey();
         this.starter = new Scene(starter.getValue());
+        this.starter.getStylesheets().add(styleSheet);
 
         this.eventCtrl = event.getKey();
         this.event = new Scene(event.getValue());
+        this.event.getStylesheets().add(styleSheet);
 
         this.statisticsCtrl = statistics.getKey();
         this.statistics = new Scene(statistics.getValue());
+        this.statistics.getStylesheets().add(styleSheet);
 
         this.expenseCtrl = expense.getKey();
         this.expense = new Scene(expense.getValue());
+        this.expense.getStylesheets().add(styleSheet);
 
         this.additionPageCtrl = addParticipant.getKey();
         this.addParticipant = new Scene(addParticipant.getValue());
+        this.addParticipant.getStylesheets().add(styleSheet);
 
         this.editPageCtrl = editParticipant.getKey();
         this.editParticipant = new Scene(editParticipant.getValue());
+        this.editParticipant.getStylesheets().add(styleSheet);
 
         this.inviteSendingCtrl = inviteSend.getKey();
         this.inviteSend = new Scene(inviteSend.getValue());
+        this.inviteSend.getStylesheets().add(styleSheet);
 
         this.debtSettlementCtrl = debt.getKey();
         this.debt = new Scene(debt.getValue());
+        this.debt.getStylesheets().add(styleSheet);
 
         this.debtOverview = new Scene(debtOverview.getValue());
         this.debtOverviewPageCtrl = debtOverview.getKey();
+        this.debtOverview.getStylesheets().add(styleSheet);
 
         this.adminLoginCtrl = adminLoginPage.getKey();
         this.adminLogin = new Scene(adminLoginPage.getValue());
+        this.adminLogin.getStylesheets().add(styleSheet);
 
         this.adminPageCtrl = adminPage.getKey();
         this.adminPage = new Scene(adminPage.getValue());
+        this.adminPage.getStylesheets().add(styleSheet);
 
         this.editExpenseCtrl = editExpensePage.getKey();
         this.editExpensePage = new Scene(editExpensePage.getValue());
+        this.editExpensePage.getStylesheets().add(styleSheet);
 
         startSettingsCtrl.initializeLanguages();
         starterPageCtrl.initializeLanguages();
@@ -359,6 +378,94 @@ public class MainCtrl {
             ret += server.getPersonByID(p.getId()) + ", ";
         }
         return ret.substring(0, ret.length() - 2) + ";";
+    }
+
+    /**
+     * Changes all the pages from the normal contrast to the high contrast stylesheet.
+     */
+    public void highContrast(){
+        this.startSettings.getStylesheets().remove(styleSheet);
+        this.startSettings.getStylesheets().add(contrastStyleSheet);
+
+        this.starter.getStylesheets().remove(styleSheet);
+        this.starter.getStylesheets().add(contrastStyleSheet);
+
+        this.event.getStylesheets().remove(styleSheet);
+        this.event.getStylesheets().add(contrastStyleSheet);
+
+        this.statistics.getStylesheets().remove(styleSheet);
+        this.statistics.getStylesheets().add(contrastStyleSheet);
+
+        this.expense.getStylesheets().remove(styleSheet);
+        this.expense.getStylesheets().add(contrastStyleSheet);
+
+        this.addParticipant.getStylesheets().remove(styleSheet);
+        this.addParticipant.getStylesheets().add(contrastStyleSheet);
+
+        this.editParticipant.getStylesheets().remove(styleSheet);
+        this.editParticipant.getStylesheets().add(contrastStyleSheet);
+
+        this.inviteSend.getStylesheets().remove(styleSheet);
+        this.inviteSend.getStylesheets().add(contrastStyleSheet);
+
+        this.debt.getStylesheets().remove(styleSheet);
+        this.debt.getStylesheets().add(contrastStyleSheet);
+
+        this.debtOverview.getStylesheets().remove(styleSheet);
+        this.debtOverview.getStylesheets().add(contrastStyleSheet);
+
+        this.adminLogin.getStylesheets().remove(styleSheet);
+        this.adminLogin.getStylesheets().add(contrastStyleSheet);
+
+        this.adminPage.getStylesheets().remove(styleSheet);
+        this.adminPage.getStylesheets().add(contrastStyleSheet);
+
+        this.editExpensePage.getStylesheets().remove(styleSheet);
+        this.editExpensePage.getStylesheets().add(contrastStyleSheet);
+    }
+
+    /**
+     * Changes all the pages from the high contrast to normal contrast stylesheet.
+     */
+    public void normalContrast(){
+        this.startSettings.getStylesheets().remove(contrastStyleSheet);
+        this.startSettings.getStylesheets().add(styleSheet);
+
+        this.starter.getStylesheets().remove(contrastStyleSheet);
+        this.starter.getStylesheets().add(styleSheet);
+
+        this.event.getStylesheets().remove(contrastStyleSheet);
+        this.event.getStylesheets().add(styleSheet);
+
+        this.statistics.getStylesheets().remove(contrastStyleSheet);
+        this.statistics.getStylesheets().add(styleSheet);
+
+        this.expense.getStylesheets().remove(contrastStyleSheet);
+        this.expense.getStylesheets().add(styleSheet);
+
+        this.addParticipant.getStylesheets().remove(contrastStyleSheet);
+        this.addParticipant.getStylesheets().add(styleSheet);
+
+        this.editParticipant.getStylesheets().remove(contrastStyleSheet);
+        this.editParticipant.getStylesheets().add(styleSheet);
+
+        this.inviteSend.getStylesheets().remove(contrastStyleSheet);
+        this.inviteSend.getStylesheets().add(styleSheet);
+
+        this.debt.getStylesheets().remove(contrastStyleSheet);
+        this.debt.getStylesheets().add(styleSheet);
+
+        this.debtOverview.getStylesheets().remove(contrastStyleSheet);
+        this.debtOverview.getStylesheets().add(styleSheet);
+
+        this.adminLogin.getStylesheets().remove(contrastStyleSheet);
+        this.adminLogin.getStylesheets().add(styleSheet);
+
+        this.adminPage.getStylesheets().remove(contrastStyleSheet);
+        this.adminPage.getStylesheets().add(styleSheet);
+
+        this.editExpensePage.getStylesheets().remove(contrastStyleSheet);
+        this.editExpensePage.getStylesheets().add(styleSheet);
     }
 
 }
