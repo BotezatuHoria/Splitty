@@ -12,7 +12,8 @@ import java.util.List;
 public class FlagListCell extends ListCell<Pair<String, Image>> {
     static List<Pair<String, Image>> languages = List.of(
             new ImmutablePair<>("en", new Image("/images/uk_flag.png")),
-            new ImmutablePair<>("nl", new Image("/images/nl_flag.png"))
+            new ImmutablePair<>("nl", new Image("/images/nl_flag.png")),
+            new ImmutablePair<>("ro", new Image("/images/ro_flag.png"))
     );
 
     @Override
