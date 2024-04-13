@@ -243,7 +243,7 @@ public class TransactionTest {
         Transaction t = new Transaction("test",
                 LocalDate.of(Integer.parseInt("1970"), Integer.parseInt("10"), Integer.parseInt("10")),
                 100, 947, "type22", new ArrayList<>(), new Person());
-        assertEquals(t.toString(), "test, date: 1970-10-10, 100.0 947");
+        assertEquals(t.toString(), "test, date: 1970-10-10, 100.0 EUR");
     }
 
     @Test
