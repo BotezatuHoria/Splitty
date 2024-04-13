@@ -549,13 +549,13 @@ public class ServerUtils {
 
 		Session session = Session.getInstance(props, new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(EMAIL_USERNAME, EMAIL_PASSWORD);
+				return new PasswordAuthentication(config.getClientsEmailAddress(), config.getPassword());
 			}
 		});
 
 		try {
 			Message mimeMessage = new MimeMessage(session);
-			mimeMessage.setFrom(new InternetAddress(EMAIL_USERNAME));
+			mimeMessage.setFrom(new InternetAddress(config.getClientsEmailAddress()));
 			mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
 			mimeMessage.setSubject(subject);
 			mimeMessage.setText(message);
