@@ -40,27 +40,27 @@
       <Button fx:id="includingParticipant" layoutX="231.0" layoutY="264.0" mnemonicParsing="false" onAction="#displayIncluding" prefHeight="26.0" prefWidth="150.0" text="Including Participant..." />
       <ListView fx:id="listTransactions" layoutX="33.0" layoutY="299.0" prefHeight="173.0" prefWidth="404.0" />
       <Button fx:id="settingButton" layoutX="620.0" layoutY="21.0" mnemonicParsing="false" onAction="#showSettingsPage" prefHeight="30.0" prefWidth="30.0" />
-      <Button fx:id="SendInvites" layoutX="507.0" layoutY="90.0" mnemonicParsing="false" onAction="#sendInvites" prefHeight="43.0" prefWidth="143.0" text="Send Invites" wrapText="true">
+      <Button fx:id="SendInvites" layoutX="507.0" layoutY="76.0" mnemonicParsing="false" onAction="#sendInvites" prefHeight="43.0" prefWidth="143.0" text="Send Invites" wrapText="true">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="AddExpense" layoutX="507.0" layoutY="149.0" mnemonicParsing="false" onAction="#showAddExpensePage" prefHeight="43.0" prefWidth="143.0" text="Add Expense">
+      <Button fx:id="AddExpense" layoutX="507.0" layoutY="135.0" mnemonicParsing="false" onAction="#showAddExpensePage" prefHeight="43.0" prefWidth="143.0" text="Add Expense">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="editExpense" layoutX="507.0" layoutY="205.0" mnemonicParsing="false" onAction="#showEditExpensePage" prefHeight="43.0" prefWidth="143.0" text="Edit Expense">
+      <Button fx:id="editExpense" layoutX="507.0" layoutY="192.0" mnemonicParsing="false" onAction="#showEditExpensePage" prefHeight="43.0" prefWidth="143.0" text="Edit Expense">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="SettleDebts" layoutX="507.0" layoutY="278.0" mnemonicParsing="false" onAction="#settleDebts" prefHeight="43.0" prefWidth="143.0" text="Balance">
+      <Button fx:id="SettleDebts" layoutX="507.0" layoutY="309.0" mnemonicParsing="false" onAction="#settleDebts" prefHeight="43.0" prefWidth="143.0" text="Balance">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="showStatistics" layoutX="507.0" layoutY="343.0" mnemonicParsing="false" onAction="#showStatistics" prefHeight="43.0" prefWidth="143.0" text="Show Statistics">
+      <Button fx:id="showStatistics" layoutX="507.0" layoutY="364.0" mnemonicParsing="false" onAction="#showStatistics" prefHeight="43.0" prefWidth="143.0" text="Show Statistics">
          <font>
             <Font size="14.0" />
          </font>
@@ -103,6 +103,11 @@
             <Image url="@/images/tab.png" />
          </image>
       </ImageView>
+      <Button fx:id="giveMoney" layoutX="507.0" layoutY="250.0" mnemonicParsing="false" onAction="#giveMoneyPage" prefHeight="43.0" prefWidth="143.0" text="Give Money">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
       <ComboBox fx:id="languageSelector" layoutX="366.0" layoutY="24.0" prefHeight="45.0" prefWidth="83.0" />
    </children>
 </AnchorPane>

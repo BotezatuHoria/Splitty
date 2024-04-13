@@ -59,17 +59,19 @@ public class StatisticsCtrl implements Initializable {
             Map<String, Double> expensesData = new HashMap<>();
 
             for (Transaction transaction : transactions) {
-                totalExpenses += transaction.getMoney();
+                if (transaction.isHandOff()) {
+                    totalExpenses += transaction.getMoney();
 
-                double currentTotal;
-                if (expensesData.get(transaction.getExpenseType()) == null) {
-                    currentTotal = 0.0;
-                }
-                else {
-                    currentTotal = expensesData.get(transaction.getExpenseType());
-                }
+                    double currentTotal;
+                    if (expensesData.get(transaction.getExpenseType()) == null) {
+                        currentTotal = 0.0;
+                    }
+                    else {
+                        currentTotal = expensesData.get(transaction.getExpenseType());
+                    }
 
-                expensesData.put(transaction.getExpenseType(), currentTotal + transaction.getMoney());
+                    expensesData.put(transaction.getExpenseType(), currentTotal + transaction.getMoney());
+                }
             }
 
             ObservableList<PieChart.Data> chartData = FXCollections.observableArrayList();

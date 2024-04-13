@@ -83,6 +83,9 @@ public class MainCtrl {
     private String styleSheet;
     private String contrastStyleSheet;
 
+    private Scene giveMoneyPage;
+    private GiveMoneyCtrl giveMoneyCtrl;
+
     public MainCtrl() {
     }
 
@@ -111,7 +114,8 @@ public class MainCtrl {
                            Pair<AdminLoginCtrl, Parent> adminLoginPage,
                            Pair<AdminPageCtrl, Parent> adminPage,
                            Pair<EditExpenseCtrl, Parent> editExpensePage,
-                           Pair<DebtOverviewPageCtrl, Parent> debtOverview){
+                           Pair<DebtOverviewPageCtrl, Parent> debtOverview,
+                           Pair<GiveMoneyCtrl, Parent> giveMoney){
         this.server = new ServerUtils();
 
         this.primaryStage = primaryStage;
@@ -170,6 +174,12 @@ public class MainCtrl {
         this.editExpenseCtrl = editExpensePage.getKey();
         this.editExpensePage = new Scene(editExpensePage.getValue());
         this.editExpensePage.getStylesheets().add(styleSheet);
+
+        this.giveMoneyCtrl = giveMoney.getKey();
+        this.giveMoneyPage = new Scene(giveMoney.getValue());
+        this.giveMoneyPage.getStylesheets().add(styleSheet);
+
+
 
         startSettingsCtrl.initializeLanguages();
         starterPageCtrl.initializeLanguages();
@@ -360,6 +370,7 @@ public class MainCtrl {
         adminLoginCtrl.setLanguageText(resourceBundle);
         adminPageCtrl.setLanguageText(resourceBundle);
         editExpenseCtrl.setLanguageText(resourceBundle);
+        giveMoneyCtrl.setLanguageText(resourceBundle);
     }
 
     /**
@@ -373,7 +384,7 @@ public class MainCtrl {
         String includingParticipantsLabel = LanguageSingleton.getInstance().getResourceBundle().getString("including.participants");
         String noParticipants = LanguageSingleton.getInstance().getResourceBundle().getString("no.participants");
 
-        String ret = t + byLabel + server.getPersonByID(t.getCreator().getId()) + includingParticipantsLabel;
+        String ret = t + " " + byLabel +  " " + server.getPersonByID(t.getCreator().getId()) + " " + includingParticipantsLabel + " ";
         if (t.getParticipants() == null || t.getParticipants().isEmpty()) {
             return ret + noParticipants;
         }
@@ -425,6 +436,9 @@ public class MainCtrl {
 
         this.editExpensePage.getStylesheets().remove(styleSheet);
         this.editExpensePage.getStylesheets().add(contrastStyleSheet);
+
+        this.giveMoneyPage.getStylesheets().remove(styleSheet);
+        this.editExpensePage.getStylesheets().add(contrastStyleSheet);
     }
 
     /**
@@ -469,6 +483,18 @@ public class MainCtrl {
 
         this.editExpensePage.getStylesheets().remove(contrastStyleSheet);
         this.editExpensePage.getStylesheets().add(styleSheet);
+
+        this.giveMoneyPage.getStylesheets().remove(contrastStyleSheet);
+        this.editExpensePage.getStylesheets().add(styleSheet);
     }
 
+    /**
+     * Method that opens the Give Money Page.
+     * */
+    public void showGiveMoneyPage() {
+        primaryStage.setTitle("Give Money");
+        giveMoneyCtrl.updatePage();
+        primaryStage.setScene(giveMoneyPage);
+
+    }
 }
