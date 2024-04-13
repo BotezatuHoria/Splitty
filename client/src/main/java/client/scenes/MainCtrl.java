@@ -22,11 +22,13 @@ import commons.Transaction;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import client.utils.ServerUtils;
-
 import java.util.ResourceBundle;
 
 public class MainCtrl {
@@ -90,7 +92,7 @@ public class MainCtrl {
     }
 
 
-    @SuppressWarnings({"parameterNumber", "MethodLength"})
+    @SuppressWarnings({"parameterNumber", "MethodLength", "CyclomaticComplexity"})
     /**
      * Initialize method for the main controller.
      * @param primaryStage - primary stage
@@ -191,6 +193,62 @@ public class MainCtrl {
 
         showStartSettings();
         primaryStage.show();
+
+        //keyboard combinations
+        KeyCombination ctrle = new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN);
+        KeyCombination ctrli = new KeyCodeCombination(KeyCode.I, KeyCombination.CONTROL_DOWN);
+        KeyCombination ctrls = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
+        KeyCombination ctrlp = new KeyCodeCombination(KeyCode.P, KeyCombination.CONTROL_DOWN);
+        KeyCombination ctrld = new KeyCodeCombination(KeyCode.D, KeyCombination.CONTROL_DOWN);
+        KeyCombination ctrlh = new KeyCodeCombination(KeyCode.H, KeyCombination.CONTROL_DOWN);
+        KeyCombination ctrlb = new KeyCodeCombination(KeyCode.B, KeyCombination.CONTROL_DOWN);
+
+        //shortcuts
+        this.event.setOnKeyPressed(event1 -> {
+            if (ctrle.match(event1)){
+                showExpensePage();
+            } else if (ctrli.match(event1)) {
+                showInviteParticipantPage();
+            } else if (ctrls.match(event1)){
+                showStatisticsPage();
+            } else if (ctrlp.match(event1)){
+                showAddParticipant();
+            } else if (ctrld.match(event1)){
+                showDebtOverviewPage();
+            } else if (ctrlh.match(event1)) {
+                showStarter();
+            }
+        });
+
+        this.expense.setOnKeyPressed(event1 -> {
+            if(ctrlb.match(event1)){
+                showEventPage(getCurrentEventID());
+            }
+        });
+
+        this.inviteSend.setOnKeyPressed(event1 -> {
+            if(ctrlb.match(event1)){
+                showEventPage(getCurrentEventID());
+            }
+        });
+
+        this.statistics.setOnKeyPressed(event1 -> {
+            if(ctrlb.match(event1)){
+                showEventPage(getCurrentEventID());
+            }
+        });
+
+        this.addParticipant.setOnKeyPressed(event1 -> {
+            if(ctrlb.match(event1)){
+                showEventPage(getCurrentEventID());
+            }
+        });
+
+        this.debtOverview.setOnKeyPressed(event1 -> {
+            if(ctrlb.match(event1)){
+                showEventPage(getCurrentEventID());
+            }
+        });
     }
 
     /**
