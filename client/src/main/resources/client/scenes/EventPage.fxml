@@ -55,6 +55,11 @@
             <Font size="14.0" />
          </font>
       </Button>
+      <Button fx:id="giveMoney" layoutX="507.0" layoutY="250.0" mnemonicParsing="false" onAction="#giveMoneyPage" prefHeight="43.0" prefWidth="143.0" text="Give Money">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
       <Button fx:id="SettleDebts" layoutX="507.0" layoutY="309.0" mnemonicParsing="false" onAction="#settleDebts" prefHeight="43.0" prefWidth="143.0" text="Balance">
          <font>
             <Font size="14.0" />
@@ -103,11 +108,6 @@
             <Image url="@/images/tab.png" />
          </image>
       </ImageView>
-      <Button fx:id="giveMoney" layoutX="507.0" layoutY="250.0" mnemonicParsing="false" onAction="#giveMoneyPage" prefHeight="43.0" prefWidth="143.0" text="Give Money">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
       <ComboBox fx:id="languageSelector" layoutX="366.0" layoutY="24.0" prefHeight="45.0" prefWidth="83.0" />
    </children>
 </AnchorPane>

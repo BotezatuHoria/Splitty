@@ -202,6 +202,7 @@ public class MainCtrl {
         KeyCombination ctrld = new KeyCodeCombination(KeyCode.D, KeyCombination.CONTROL_DOWN);
         KeyCombination ctrlh = new KeyCodeCombination(KeyCode.H, KeyCombination.CONTROL_DOWN);
         KeyCombination ctrlb = new KeyCodeCombination(KeyCode.B, KeyCombination.CONTROL_DOWN);
+        KeyCombination esc = new KeyCodeCombination(KeyCode.ESCAPE);
 
         //shortcuts
         this.event.setOnKeyPressed(event1 -> {
@@ -217,7 +218,10 @@ public class MainCtrl {
                 showDebtOverviewPage();
             } else if (ctrlh.match(event1)) {
                 showStarter();
+            }else if (esc.match(event1)) {
+                showStartSettings();
             }
+
         });
 
         this.expense.setOnKeyPressed(event1 -> {

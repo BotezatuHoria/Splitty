@@ -31,3 +31,19 @@
     -fx-background-color: #F7E3AF;
     -fx-text-fill: #000000;
 }
+
+.text-field:hover {
+    -fx-background-color: #f6da72;
+}
+
+.button:hover{
+    -fx-background-color: #f6da72;
+}
+
+.button:focused{
+    -fx-background-color: #f6da72;
+}
+
+combo-box:hover {
+    -fx-background-color: #f6da72;
+}
