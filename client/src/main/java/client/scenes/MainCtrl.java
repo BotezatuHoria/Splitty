@@ -183,6 +183,7 @@ public class MainCtrl {
 
         startSettingsCtrl.initializeLanguages();
         starterPageCtrl.initializeLanguages();
+        eventCtrl.initializeLanguages();
 
         LanguageSingleton languageSingleton = LanguageSingleton.getInstance();
         languageSingleton.setLanguageByCode(ServerUtils.getConfig().getClientsLanguage());
@@ -218,6 +219,7 @@ public class MainCtrl {
         selectedEventInstance.setEventId(eventID);
         eventCtrl.refresh();
         eventCtrl.updatePage();
+        eventCtrl.updateLanguage();
         primaryStage.setScene(event);
     }
 
@@ -354,6 +356,7 @@ public class MainCtrl {
     public void setLanguageText(ResourceBundle resourceBundle) {
         starterPageCtrl.setLanguageSelector();
         startSettingsCtrl.setLanguageSelector();
+        eventCtrl.setLanguageSelector();
 
         startSettingsCtrl.setLanguageText(resourceBundle);
         starterPageCtrl.setLanguageText(resourceBundle);

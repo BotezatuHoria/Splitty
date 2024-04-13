@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import client.Config;
 import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import commons.Person;
@@ -63,7 +64,7 @@ public class EditExpenseCtrl implements Initializable {
     private Label expenseTypeLabel; // Value injected by FXMLLoader
 
     @FXML // fx:id="currencyBox"
-    private ComboBox<Integer> currencyBox; // Value injected by FXMLLoader
+    private ComboBox<String> currencyBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="dateBox"
     private DatePicker dateBox; // Value injected by FXMLLoader
@@ -192,7 +193,7 @@ public class EditExpenseCtrl implements Initializable {
             String title = expenseField.getText();
             double value = Double.parseDouble(priceField.getText());
             LocalDate date = dateBox.getValue();
-            int currency = currencyBox.getValue();
+            int currency = 840;
             List<Person> participants = new ArrayList<>();
             for (CheckBox checkBox : peopleLIstView.getItems()) {
                 if (checkBox.isSelected()) {
@@ -319,7 +320,7 @@ public class EditExpenseCtrl implements Initializable {
             payerBox.setValue(transaction.getCreator());
             expenseField.setText(transaction.getName());
             priceField.setText("" + transaction.getMoney());
-            currencyBox.setValue(transaction.getCurrency());
+            currencyBox.setValue("EUR");
             dateBox.setValue(transaction.getDate());
             if (!expenseTypeBox.getItems().contains(transaction.getExpenseType())) {
                 expenseTypeBox.getItems().add(transaction.getExpenseType());
@@ -344,23 +345,26 @@ public class EditExpenseCtrl implements Initializable {
         List<Person> people = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
         addPeopleToPayerBox(people);
         addPeopleToView(people);
-        currencyBox.getItems().add(840);
-        for (Tag t : server.getEventByID(mainCtrl.getCurrentEventID()).getTagList()) {
-            expenseTypeBox.getItems().add(t.getTitle());
-        }
-        //String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
-        //String entranceFeeString= LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
-        //String travelString = LanguageSingleton.getInstance().getResourceBundle().getString("travel.label");
+        currencyBox.getItems().add("EUR");
+        Config config = ServerUtils.getConfig();
         String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
         String entranceFeeString= LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
         String travelString = LanguageSingleton.getInstance().getResourceBundle().getString("travel.label");
+        for (Tag t : server.getEventByID(mainCtrl.getCurrentEventID()).getTagList()) {
+            if (!config.getClientsLanguage().equals("en")) {
+                if (t.getTitle().equals("Food")) {
+                    t.setTitle(foodString);
+                }
+                if (t.getTitle().equals("Entrance Fees")) {
+                    t.setTitle(entranceFeeString);
+                }
+                if (t.getTitle().equals("Travel")) {
+                    t.setTitle(travelString);
+                }
+            }
+            expenseTypeBox.getItems().add(t.getTitle());
+        }
 
-        //expenseTypeBox.getItems().add(foodString);
-        //expenseTypeBox.getItems().add(entranceFeeString);
-        //expenseTypeBox.getItems().add(travelString);
-        //expenseTypeBox.getItems().add("Food");
-        //expenseTypeBox.getItems().add("Entrance fees");
-        //expenseTypeBox.getItems().add("Travel");
     }
 
     /**

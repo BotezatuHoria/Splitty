@@ -4,6 +4,7 @@
 
 package client.scenes;
 
+import client.Config;
 import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import commons.Person;
@@ -42,7 +43,7 @@ public class AddExpenseCtrl implements Initializable {
     private Button addEverybody; // Value injected by FXMLLoader
 
     @FXML // fx:id="currencyBox"
-    private ComboBox<Integer> currencyBox; // Value injected by FXMLLoader
+    private ComboBox<String> currencyBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="expenseScroll"
     private ComboBox<Integer> expenseScroll; // Value injected by FXMLLoader
@@ -160,21 +161,25 @@ public class AddExpenseCtrl implements Initializable {
         List<Person> people = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
         addPeopleToView(people);
         addPeopleToPayerBox(people);
-        currencyBox.getItems().add(840);
-        for (Tag t : server.getEventByID(mainCtrl.getCurrentEventID()).getTagList()) {
-            expenseTypeBox.getItems().add(t.getTitle());
-        }
-
+        currencyBox.getItems().add("EUR");
+        Config config = ServerUtils.getConfig();
         String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
         String entranceFeeString= LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
         String travelString = LanguageSingleton.getInstance().getResourceBundle().getString("travel.label");
-
-        //expenseTypeBox.getItems().add(foodString);
-        //expenseTypeBox.getItems().add(entranceFeeString);
-        //expenseTypeBox.getItems().add(travelString);
-        //expenseTypeBox.getItems().add("Food");
-        //expenseTypeBox.getItems().add("Entrance fees");
-        //expenseTypeBox.getItems().add("Travel");
+        for (Tag t : server.getEventByID(mainCtrl.getCurrentEventID()).getTagList()) {
+            if (!config.getClientsLanguage().equals("en")) {
+                if (t.getTitle().equals("Food")) {
+                    t.setTitle(foodString);
+                }
+                if (t.getTitle().equals("Entrance Fees")) {
+                    t.setTitle(entranceFeeString);
+                }
+                if (t.getTitle().equals("Travel")) {
+                    t.setTitle(travelString);
+                }
+            }
+            expenseTypeBox.getItems().add(t.getTitle());
+        }
     }
 
     /**
@@ -234,7 +239,7 @@ public class AddExpenseCtrl implements Initializable {
             String title = expenseField.getText();
             double value = Double.parseDouble(priceField.getText());
             LocalDate date = dateBox.getValue();
-            int currency = currencyBox.getValue();
+            int currency = 840;
             List<Person> participants = new ArrayList<>();
             for (CheckBox checkBox : peopleLIstView.getItems()) {
                 if (checkBox.isSelected()) {

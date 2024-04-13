@@ -230,7 +230,7 @@ public class Transaction {
     @Override
     public String toString() {
         return name + ", date: " + date +
-                ", " + money + " " + currency;
+                ", " + money + " EUR";
     }
 
 

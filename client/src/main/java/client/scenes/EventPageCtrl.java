@@ -17,7 +17,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.net.URL;
 import java.util.List;
@@ -108,6 +110,9 @@ public class EventPageCtrl implements Initializable {
 
     @FXML
     private Button settingButton;
+
+    @FXML
+    private ComboBox languageSelector;
 
     @FXML
     private Button giveMoney;
@@ -321,32 +326,30 @@ public class EventPageCtrl implements Initializable {
         namePane.setVisible(false);
         server.registerForMessages("/topic/events/people", Person.class, person -> {
             Platform.runLater(() -> {
-                data.add(person);
-                refresh();
+                if (data.contains(person)) {
+                    data.remove(person);
+                    data.add(person);
+                }
+                else {
+                    data.add(person);
+                }
+                updatePage();
+            });
+        });
+        server.registerForUpdates(t -> {
+            Platform.runLater(() -> {
+                dataTransactions.add(t);
                 updatePage();
             });
         });
         new Thread(() -> {server.registerForMessages("/topic/event", Object.class, object -> {
             if (mainCtrl.getCurrentEventID() != 0) {
-                Platform.runLater(this::updatePage);
+                Platform.runLater(() -> {
+                    this.refresh();
+                    this.updatePage();
+                });
             }
         });}).start();
-
-
-        //server.registerForMessages("/topic/events/transactions", Transaction.class, transaction -> {
-        //    Platform.runLater(() -> {
-        //        dataTransactions.add(transaction);
-        //        refresh();
-        //        updatePage();
-        //    });
-        //});
-        server.registerForUpdates(t -> {
-            Platform.runLater(() -> {
-                dataTransactions.add(t);
-                refresh();
-                updatePage();
-            });
-        });
     }
     /**
      * Method that opens the Edit event page.
@@ -376,6 +379,19 @@ public class EventPageCtrl implements Initializable {
 
     public void showSettingsPage(){
         mainCtrl.showStartSettings();
+    }
+
+    void initializeLanguages() {
+        server.initializeLanguages(languageSelector);
+    }
+
+    public void setLanguageSelector() {
+        server.setLanguageSelector(languageSelector);
+    }
+
+    public void updateLanguage() {
+        // Show current language
+        Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
     }
 }
 

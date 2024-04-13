@@ -31,7 +31,7 @@ public class GiveMoneyCtrl {
     private Button addButton; // Value injected by FXMLLoader
 
     @FXML // fx:id="currencyBox"
-    private ComboBox<Integer> currencyBox; // Value injected by FXMLLoader
+    private ComboBox<String> currencyBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="dateBox"
     private DatePicker dateBox; // Value injected by FXMLLoader
@@ -97,7 +97,7 @@ public class GiveMoneyCtrl {
             Person payee = payeeBox.getValue();
             double value = Double.parseDouble(priceField.getText());
             LocalDate date = dateBox.getValue();
-            int currency = currencyBox.getValue();
+            int currency = 840;
             List<Person> participants = new ArrayList<>();
             participants.add(payee);
             String title = payer +  " " +
@@ -151,7 +151,7 @@ public class GiveMoneyCtrl {
         clear();
         List<Person> people = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
         addPeopleToPayerAndPayeeBox(people);
-        currencyBox.getItems().add(840);
+        currencyBox.getItems().add("EUR");
     }
 
     /**
