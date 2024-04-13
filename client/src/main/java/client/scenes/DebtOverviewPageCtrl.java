@@ -54,8 +54,8 @@ public class DebtOverviewPageCtrl implements Initializable {
    */
   @FXML
   public void initializeTable() {
-    this.name = new TableColumn<>(LanguageSingleton.getInstance().getResourceBundle().getString("nameInTable"));
-    this.debt = new TableColumn<>(LanguageSingleton.getInstance().getResourceBundle().getString("debtInTable"));
+    this.name = new TableColumn<>("Name");
+    this.debt = new TableColumn<>("Debt");
 
     name.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFirstName()));
     debt.setCellValueFactory(cellData -> new SimpleStringProperty(decimalFormat.format(cellData.getValue().getDebt())));
@@ -86,6 +86,8 @@ public class DebtOverviewPageCtrl implements Initializable {
     debtValueTable.getItems().clear();
     List<Person> people = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
     debtValueTable.getItems().addAll(people);
+    name.setText(LanguageSingleton.getInstance().getResourceBundle().getString("nameInTable"));
+    debt.setText(LanguageSingleton.getInstance().getResourceBundle().getString("debtInTable"));
     settleDebtButton.setText(LanguageSingleton.getInstance().getResourceBundle().getString("settleList.button"));
     debtOverviewLabel.setText(LanguageSingleton.getInstance().getResourceBundle().getString("debtOverview.title"));
 
