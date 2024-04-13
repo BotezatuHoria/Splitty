@@ -56,6 +56,7 @@ public class DebtOverviewPageCtrl implements Initializable {
   public void initializeTable() {
     this.name = new TableColumn<>(LanguageSingleton.getInstance().getResourceBundle().getString("nameInTable"));
     this.debt = new TableColumn<>(LanguageSingleton.getInstance().getResourceBundle().getString("debtInTable"));
+
     name.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFirstName()));
     debt.setCellValueFactory(cellData -> new SimpleStringProperty(decimalFormat.format(cellData.getValue().getDebt())));
     debtValueTable.getColumns().clear();
@@ -87,6 +88,7 @@ public class DebtOverviewPageCtrl implements Initializable {
     debtValueTable.getItems().addAll(people);
     settleDebtButton.setText(LanguageSingleton.getInstance().getResourceBundle().getString("settleList.button"));
     debtOverviewLabel.setText(LanguageSingleton.getInstance().getResourceBundle().getString("debtOverview.title"));
+
   }
 
   /**
