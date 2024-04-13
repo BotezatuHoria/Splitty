@@ -114,6 +114,9 @@ public class EventPageCtrl implements Initializable {
     @FXML
     private ComboBox languageSelector;
 
+    @FXML
+    private Button giveMoney;
+
 
     /**
      * Constructor for EventPageCtrl.
@@ -190,9 +193,15 @@ public class EventPageCtrl implements Initializable {
 
     public void saveName() {
         String name = nameField.getText().trim();
-        eventTitle.setText(name);
-        namePane.setVisible(false);
-        server.updateTitleEvent(mainCtrl.getCurrentEventID(), name);
+        if (!name.isEmpty()) {
+            eventTitle.setText(name);
+            namePane.setVisible(false);
+            server.updateTitleEvent(mainCtrl.getCurrentEventID(), name);
+        }
+        else {
+            mainCtrl.showAlert("Please enter a non-empty event name!");
+        }
+
     }
 
     /**
@@ -204,6 +213,8 @@ public class EventPageCtrl implements Initializable {
         displayParticipants();
         displayTransactions();
     }
+
+
 
     /**
      * Displays participants on that page for the current event.
@@ -249,6 +260,10 @@ public class EventPageCtrl implements Initializable {
         for (Transaction t : dataTransactions) {
             listTransactions.getItems().add(mainCtrl.transactionString(t.getId()));
         }
+    }
+
+    public void giveMoneyPage() {
+        mainCtrl.showGiveMoneyPage();
     }
 
     /**
@@ -355,6 +370,7 @@ public class EventPageCtrl implements Initializable {
         allExpenses.setText(resourceBundle.getString("all.button"));
         participantsScroll.setPromptText(resourceBundle.getString("edit.participant.comboBoxPrompt"));
         editExpense.setText(resourceBundle.getString("edit.expense"));
+        giveMoney.setText(resourceBundle.getString("giveMoney.button"));
     }
 
     public void stop() {
