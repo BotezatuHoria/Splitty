@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import client.utils.LanguageSingleton;
+import client.utils.LanguageManager;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Person;
@@ -27,6 +27,7 @@ public class ParticipantAdditionPageCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private final LanguageManager languageManager;
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -85,9 +86,10 @@ public class ParticipantAdditionPageCtrl implements Initializable {
      * @param mainCtrl the main controller
      */
     @Inject
-    public ParticipantAdditionPageCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public ParticipantAdditionPageCtrl(ServerUtils server, MainCtrl mainCtrl, LanguageManager languageManager) {
         this.mainCtrl = mainCtrl;
         this.server = server;
+        this.languageManager = languageManager;
     }
 
     /**
@@ -118,7 +120,7 @@ public class ParticipantAdditionPageCtrl implements Initializable {
 
         if( server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID()).size()> amountOfPerson )    {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("participant.add.success"));
+            alert.setContentText(languageManager.getResourceBundle().getString("participant.add.success"));
             alert.showAndWait();
 
             clearFields();
@@ -177,9 +179,9 @@ public class ParticipantAdditionPageCtrl implements Initializable {
 
         List<Person> allPersons = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
 
-        firstnameResponse.setText(LanguageSingleton.getInstance().getResourceBundle().getString("error.emptyField"));     //as standard, there are warnings, they go away when not applicable.
+        firstnameResponse.setText(languageManager.getResourceBundle().getString("error.emptyField"));     //as standard, there are warnings, they go away when not applicable.
         firstnameResponse.setStyle("-fx-font-style: italic");
-        lastnameResponse.setText(LanguageSingleton.getInstance().getResourceBundle().getString("error.emptyField"));
+        lastnameResponse.setText(languageManager.getResourceBundle().getString("error.emptyField"));
         lastnameResponse.setStyle("-fx-font-style: italic");
 
         if(newFirstName.isEmpty() && newLastName.isEmpty()){
@@ -193,9 +195,9 @@ public class ParticipantAdditionPageCtrl implements Initializable {
             firstnameResponse.setText("");
         }
         else if (isDuplicate) {
-            firstnameResponse.setText(LanguageSingleton.getInstance().getResourceBundle().getString("error.duplicatePerson"));
+            firstnameResponse.setText(languageManager.getResourceBundle().getString("error.duplicatePerson"));
             lastnameResponse.setText("");
-            doublePersonResponse.setText(LanguageSingleton.getInstance().getResourceBundle().getString("error.personExists"));
+            doublePersonResponse.setText(languageManager.getResourceBundle().getString("error.personExists"));
             System.out.println("EDITING FAILED: User tried to add a person already existing in this event (by first + lastname)");
         }
         else {
@@ -219,7 +221,7 @@ public class ParticipantAdditionPageCtrl implements Initializable {
         boolean personIsDuplicate = false;
         for (Person e : allPersons) {
             if (firstname.equals(e.getFirstName()) && lastname.equals(e.getLastName())) {
-                doublePersonResponse.setText(LanguageSingleton.getInstance().getResourceBundle().getString("error.personExists"));
+                doublePersonResponse.setText(languageManager.getResourceBundle().getString("error.personExists"));
                 System.out.println("ADDING ERROR: user tried to add a combination of firstname and lastname that already exists");
                 personIsDuplicate = true;
             }

@@ -1,6 +1,6 @@
 package client.scenes;
 
-import client.utils.LanguageSingleton;
+import client.utils.LanguageManager;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Person;
@@ -36,6 +36,8 @@ public class DebtOverviewPageCtrl implements Initializable {
   private MainCtrl mainCtrl; // Reference to the MainController
   @FXML
   private final ServerUtils server;
+  @FXML
+  private final LanguageManager languageManager;
 
   @FXML
   private Label sharePerPersonLabel;
@@ -52,10 +54,10 @@ public class DebtOverviewPageCtrl implements Initializable {
    * @param mainCtrl - reference to the main controller
    */
   @Inject
-  public DebtOverviewPageCtrl(MainCtrl mainCtrl, ServerUtils server) {
+  public DebtOverviewPageCtrl(MainCtrl mainCtrl, ServerUtils server, LanguageManager languageManager) {
     this.mainCtrl = mainCtrl;
     this.server = server;
-
+    this.languageManager = languageManager;
   }
 
   /**
@@ -110,11 +112,11 @@ public class DebtOverviewPageCtrl implements Initializable {
     }
 
     debtValueTable.getItems().addAll(people);
-    name.setText(LanguageSingleton.getInstance().getResourceBundle().getString("nameInTable"));
-    debt.setText(LanguageSingleton.getInstance().getResourceBundle().getString("debtInTable"));
-    settleDebtButton.setText(LanguageSingleton.getInstance().getResourceBundle().getString("settleList.button"));
-    debtOverviewLabel.setText(LanguageSingleton.getInstance().getResourceBundle().getString("debtOverview.title"));
-    sharePerPersonLabel.setText(LanguageSingleton.getInstance().getResourceBundle().getString("share.person"));
+    name.setText(languageManager.getResourceBundle().getString("nameInTable"));
+    debt.setText(languageManager.getResourceBundle().getString("debtInTable"));
+    settleDebtButton.setText(languageManager.getResourceBundle().getString("settleList.button"));
+    debtOverviewLabel.setText(languageManager.getResourceBundle().getString("debtOverview.title"));
+    sharePerPersonLabel.setText(languageManager.getResourceBundle().getString("share.person"));
   }
 
   /**

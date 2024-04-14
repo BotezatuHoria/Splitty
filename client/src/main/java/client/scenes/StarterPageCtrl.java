@@ -7,7 +7,7 @@ package client.scenes;
 import java.net.URL;
 import java.util.*;
 
-import client.utils.LanguageSingleton;
+import client.utils.LanguageManager;
 import client.utils.ServerUtils;
 import commons.Event;
 import jakarta.ws.rs.BadRequestException;
@@ -28,6 +28,7 @@ public class StarterPageCtrl implements Initializable {
 
     private final MainCtrl mainCtrl;
     private final ServerUtils server;
+    private final LanguageManager languageManager;
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -77,9 +78,10 @@ public class StarterPageCtrl implements Initializable {
      * @param server
      */
     @Inject
-    public StarterPageCtrl(MainCtrl mainCtrl, ServerUtils server) {
+    public StarterPageCtrl(MainCtrl mainCtrl, ServerUtils server, LanguageManager languageManager) {
         this.mainCtrl = mainCtrl;
         this.server = server;
+        this.languageManager = languageManager;
         recentEvents = new ArrayList<>();
     }
 
@@ -168,7 +170,7 @@ public class StarterPageCtrl implements Initializable {
         }
         catch (Exception e){
             // System.out.println("This event doesn't exist");
-            mainCtrl.showAlert(LanguageSingleton.getInstance().getResourceBundle().getString("error.event.doesNotExist"));
+            mainCtrl.showAlert(languageManager.getResourceBundle().getString("error.event.doesNotExist"));
         }
     }
 
@@ -206,7 +208,7 @@ public class StarterPageCtrl implements Initializable {
                         mainCtrl.showEventPage(event.getId());
                     }
                     catch (Error e) {
-                        mainCtrl.showAlert(LanguageSingleton.getInstance().getResourceBundle().getString("error.event.nonexistent"));
+                        mainCtrl.showAlert(languageManager.getResourceBundle().getString("error.event.nonexistent"));
                     }
                 }
             }
@@ -218,7 +220,7 @@ public class StarterPageCtrl implements Initializable {
      */
     public void updateLanguage() {
         // Show current language
-        Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
+        Pair<String, Image> currentLanguage = languageManager.getLanguage();
     }
 
     /**
@@ -297,7 +299,7 @@ public class StarterPageCtrl implements Initializable {
                         mainCtrl.showEventPage(event.getId());
                     }
                     catch (Error e) {
-                        mainCtrl.showAlert(LanguageSingleton.getInstance().getResourceBundle().getString("error.event.nonexistent"));
+                        mainCtrl.showAlert(languageManager.getResourceBundle().getString("error.event.nonexistent"));
                     }
                 }
             }
