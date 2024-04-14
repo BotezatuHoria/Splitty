@@ -8,13 +8,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="pane" prefHeight="500.0" prefWidth="640.0" styleClass="root" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.DebtSettlementCtrl">    <children>
-    <Button fx:id="goBackButton" layoutX="514.0" layoutY="426.0" mnemonicParsing="false" onAction="#goBack" prefHeight="51.0" prefWidth="51.0" />        <Label fx:id="openDebtsLabel" layoutX="20.0" layoutY="21.0" styleClass="title" text="Open Debts">
+    <Button fx:id="goBackButton" layoutX="573.0" layoutY="439.0" mnemonicParsing="false" onAction="#goBack" prefHeight="51.0" prefWidth="51.0" />        <Label fx:id="openDebtsLabel" layoutX="20.0" layoutY="21.0" styleClass="title" text="Open Debts">
     <font>                <Font size="43.0" />
     </font>        </Label>
       <ListView fx:id="debtListView" layoutX="20.0" layoutY="81.0" prefHeight="333.0" prefWidth="600.0" />
-      <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="521.0" layoutY="433.0" mouseTransparent="true">
+      <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="580.0" layoutY="446.0" mouseTransparent="true">
          <image>
             <Image url="@/images/return.png" />
          </image>

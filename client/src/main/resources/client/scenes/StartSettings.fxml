@@ -47,21 +47,23 @@
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-            <Button fx:id="startPageConfirm" layoutX="253.0" layoutY="178.0" mnemonicParsing="false" onAction="#showStart" prefHeight="26.0" prefWidth="141.0" text="OK" />
-            <Button fx:id="startPageAdmin" layoutX="252.0" layoutY="311.0" mnemonicParsing="false" onAction="#adminLogin" prefHeight="26.0" prefWidth="142.0" text="Admin" />
             <ComboBox fx:id="startPageLanguageSelector" layoutX="282.0" layoutY="97.0" prefHeight="45.0" prefWidth="83.0" />
-            <Button fx:id="changeButton" layoutX="490.0" layoutY="353.0" mnemonicParsing="false" onAction="#changeServer" prefHeight="36.0" prefWidth="83.0" text="Change" />
-            <Label fx:id="serverLabel" layoutX="100.0" layoutY="348.0" prefHeight="39.0" prefWidth="382.0" text="http://localhost:8080/">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Button fx:id="okButton" layoutX="490.0" layoutY="350.0" mnemonicParsing="false" onAction="#confirmServer" prefHeight="36.0" prefWidth="83.0" text="Ok" visible="false" />
+            <Button fx:id="startPageConfirm" layoutX="253.0" layoutY="178.0" mnemonicParsing="false" onAction="#showStart" prefHeight="26.0" prefWidth="141.0" text="OK" />
+            <Button fx:id="downloadButton" layoutX="252.0" layoutY="223.0" mnemonicParsing="false" onAction="#downloadTemplate" onMouseEntered="#showInfo" onMouseExited="#notShowInfo" prefHeight="26.0" prefWidth="142.0" text=" Download template" />
+            <Button fx:id="contrastButton" layoutX="252.0" layoutY="272.0" mnemonicParsing="false" onAction="#changeContrast" prefHeight="26.0" prefWidth="142.0" text="Enable High Contrast" />
+            <Button fx:id="startPageAdmin" layoutX="252.0" layoutY="311.0" mnemonicParsing="false" onAction="#adminLogin" prefHeight="26.0" prefWidth="142.0" text="Admin" />
             <TextField fx:id="serverTextField" layoutX="98.0" layoutY="349.0" prefHeight="44.0" prefWidth="374.0" visible="false">
                <font>
                   <Font size="20.0" />
                </font>
             </TextField>
+            <Label fx:id="serverLabel" layoutX="100.0" layoutY="348.0" prefHeight="39.0" prefWidth="382.0" text="http://localhost:8080/">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="changeButton" layoutX="490.0" layoutY="353.0" mnemonicParsing="false" onAction="#changeServer" prefHeight="36.0" prefWidth="83.0" text="Change" />
+            <Button fx:id="okButton" layoutX="490.0" layoutY="350.0" mnemonicParsing="false" onAction="#confirmServer" prefHeight="36.0" prefWidth="83.0" text="Ok" visible="false" />
             <ImageView fitHeight="15.0" fitWidth="17.0" layoutX="274.0" layoutY="317.0">
                <image>
                   <Image url="@/images/setting.png" />
@@ -73,7 +75,6 @@
                </font>
             </Label>
             <Line endX="464.199951171875" layoutX="135.0" layoutY="348.0" startX="-100.0" />
-            <Button fx:id="downloadButton" layoutX="252.0" layoutY="223.0" mnemonicParsing="false" onAction="#downloadTemplate" onMouseEntered="#showInfo" onMouseExited="#notShowInfo" prefHeight="26.0" prefWidth="142.0" text=" Download template" />
             <Label fx:id="infoLabel" layoutX="426.0" layoutY="205.0" prefHeight="133.0" prefWidth="174.0" wrapText="true" />
             <Label fx:id="changeLabel" layoutX="432.0" layoutY="393.0" prefHeight="46.0" prefWidth="180.0" wrapText="true" />
             <Label fx:id="startSettingsLabel" layoutX="201.0" layoutY="67.0" prefHeight="18.0" prefWidth="244.0" text="Please select your language">
@@ -81,7 +82,6 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button fx:id="contrastButton" layoutX="252.0" layoutY="272.0" mnemonicParsing="false" onAction="#changeContrast" prefHeight="26.0" prefWidth="142.0" text="Enable High Contrast" />
       </children>
     </AnchorPane>
   </children>

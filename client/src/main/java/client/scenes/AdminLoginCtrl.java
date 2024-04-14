@@ -86,7 +86,7 @@ public class AdminLoginCtrl {
         adminPasswordLabel.setText(resourceBundle.getString("admin.password.label"));
         passwordConsoleLabel.setText(resourceBundle.getString("password.console.label"));
         resendPasswordLabel.setText(resourceBundle.getString("resend.password.label"));
-        resendPasswordLabel.setText(resourceBundle.getString("resend.password.button"));
+        resendButton.setText(resourceBundle.getString("resend.password.button"));
         loginButton.setText(resourceBundle.getString("login.button"));
         backButton.setText(resourceBundle.getString("back.button"));
     }
