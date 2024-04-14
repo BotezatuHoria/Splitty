@@ -9,18 +9,26 @@
 .button{
     -fx-background-color: #F4D35E;
     -fx-text-fill: #0D3B66;
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color:#000000;
 }
 .text-field{
     -fx-background-color: #F4D35E;
     -fx-text-fill: #0D3B66;
     -fx-prompt-text-fill: #0D3B66;
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color:#000000;
 }
 .combo-box{
     -fx-background-color: #F4D35E;
     -fx-text-fill: #0D3B66;
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color:#000000;
 }
 .table-view .column-header-background .label{
     -fx-text-fill: #0D3B66;
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color:#000000;
 }
 
 .table-view .label {
@@ -31,17 +39,17 @@
 }
 
 .text-field:hover {
-    -fx-background-color: #fcd12b;
+    -fx-background-color: #F5EDC2;
 }
 
 .button:hover{
-    -fx-background-color: #fcd12b;
+    -fx-background-color: #F5EDC2;
 }
 
 .button:focused{
-    -fx-background-color: #fcd12b;
+    -fx-background-color: #F5EDC2;
 }
 
-combo-box:hover {
-    -fx-background-color: #fcd12b;
+.combo-box:hover {
+    -fx-background-color: #F5EDC2;
 }

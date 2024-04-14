@@ -4,14 +4,16 @@ import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import jakarta.inject.Inject;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 
+import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AdminLoginCtrl {
+public class AdminLoginCtrl implements Initializable {
     private final MainCtrl mainCtrl;
     private final ServerUtils serverUtils;
 
@@ -88,7 +90,6 @@ public class AdminLoginCtrl {
         resendPasswordLabel.setText(resourceBundle.getString("resend.password.label"));
         resendButton.setText(resourceBundle.getString("resend.password.button"));
         loginButton.setText(resourceBundle.getString("login.button"));
-        backButton.setText(resourceBundle.getString("back.button"));
     }
 
     /**
@@ -100,5 +101,12 @@ public class AdminLoginCtrl {
 
     public void goBack() {
         mainCtrl.showStartSettings();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        mainCtrl.handleEnterKeyPress(backButton, this::goBack);
+        mainCtrl.handleEnterKeyPress(loginButton, this::loginButton_onClick);
+        mainCtrl.handleEnterKeyPress(resendButton, this::resendPassword);
     }
 }

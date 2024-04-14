@@ -22,7 +22,6 @@ import java.io.*;
 import java.net.URISyntaxException;
 
 
-
 import client.scenes.*;
 import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;

@@ -256,6 +256,24 @@ public class StarterPageCtrl implements Initializable {
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        mainCtrl.handleEnterKeyPress(createButton, this::showEventPage);
+        mainCtrl.handleEnterKeyPress(joinButton, this::joinEvent);
+        mainCtrl.handleEnterKeyPress(settingButton, this::showSettingsPage);
+        listView.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.ENTER) {
+                    try {
+                        String token = listView.getSelectionModel().getSelectedItem().getToken();
+                        Event event = server.getEventByToken(token);
+                        mainCtrl.showEventPage(event.getId());
+                    }
+                    catch (Error e) {
+                        mainCtrl.showAlert(LanguageSingleton.getInstance().getResourceBundle().getString("error.event.nonexistent"));
+                    }
+                }
+            }
+        });
         server.registerForMessages("/topic/event", Object.class, object-> {
             System.out.println("This is also activated");
             for (Event e : recentEvents) {
