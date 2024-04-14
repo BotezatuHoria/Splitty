@@ -15,19 +15,27 @@
  */
 package client.scenes;
 
+import client.Config;
 import client.utils.LanguageSingleton;
 import client.utils.SelectedEventSingleton;
 import commons.Person;
 import commons.Transaction;
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.core.Response;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import client.utils.ServerUtils;
+import org.glassfish.jersey.client.ClientConfig;
 
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainCtrl {
 
@@ -85,6 +93,8 @@ public class MainCtrl {
 
     private Scene giveMoneyPage;
     private GiveMoneyCtrl giveMoneyCtrl;
+
+    private Config config;
 
     public MainCtrl() {
     }
@@ -227,6 +237,7 @@ public class MainCtrl {
      * Method for showing statistics page.
      */
     public void showStatisticsPage() {
+        statisticsCtrl.clear();
         statisticsCtrl.initializeStatistics();
         primaryStage.setTitle("Statistics Page");
         primaryStage.setScene(statistics);
@@ -495,6 +506,13 @@ public class MainCtrl {
         primaryStage.setTitle("Give Money");
         giveMoneyCtrl.updatePage();
         primaryStage.setScene(giveMoneyPage);
+    }
 
+    public void handleEnterKeyPress(Button button, Runnable action) {
+        button.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                action.run();
+            }
+        });
     }
 }

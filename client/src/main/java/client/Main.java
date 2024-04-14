@@ -20,7 +20,8 @@ import static com.google.inject.Guice.createInjector;
 import java.awt.*;
 import java.io.*;
 import java.net.URISyntaxException;
-
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 import client.scenes.*;
@@ -35,6 +36,7 @@ import com.google.inject.Injector;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.Response;
 import javafx.application.Application;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.glassfish.jersey.client.ClientConfig;

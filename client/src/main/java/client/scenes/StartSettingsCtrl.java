@@ -6,16 +6,19 @@ import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.*;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ResourceBundle;
 
-public class StartSettingsCtrl {
+public class StartSettingsCtrl implements Initializable {
     private final MainCtrl mainCtrl;
     private final ServerUtils serverUtils;
     private static Config config = ServerUtils.getConfig();
@@ -230,4 +233,21 @@ public class StartSettingsCtrl {
             mainCtrl.normalContrast();
         }
     }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        mainCtrl.handleEnterKeyPress(startPageAdmin, this::adminLogin);
+        mainCtrl.handleEnterKeyPress(startPageConfirm, this::showStart);
+        mainCtrl.handleEnterKeyPress(changeButton, this::changeServer);
+        mainCtrl.handleEnterKeyPress(okButton, () -> {
+            try {
+                confirmServer();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        mainCtrl.handleEnterKeyPress(downloadButton, this::downloadTemplate);
+        mainCtrl.handleEnterKeyPress(contrastButton, this::changeContrast);
+    }
+
 }

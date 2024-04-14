@@ -53,7 +53,7 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <Button fx:id="goBackButton" layoutX="568.0" layoutY="435.0" mnemonicParsing="false" onAction="#goBack" prefHeight="51.0" prefWidth="58.0" text="Back" />
+            <Button fx:id="goBackButton" layoutX="568.0" layoutY="435.0" mnemonicParsing="false" onAction="#goBack" onKeyPressed="#goBack" prefHeight="51.0" prefWidth="58.0" text="Back" />
       </children>
     </AnchorPane>
   </children>

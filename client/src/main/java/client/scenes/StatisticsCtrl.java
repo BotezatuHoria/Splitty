@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -43,13 +44,12 @@ public class StatisticsCtrl implements Initializable {
         this.server = server;
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
     public void initializeStatistics() {
         assert statsPieChart != null : "fx:id=\"statsPieChart\" was not injected: check your FXML file 'Statistics.fxml'.";
         assert statsTotalExpenses != null : "fx:id=\"statsTotalExpenses\" was not injected: check your FXML file 'Statistics.fxml'.";
 
         Event selectedEvent = server.getEventByID(mainCtrl.getCurrentEventID());
-
+        statsPieChart.layout();
         if (selectedEvent == null) {
             statsTotalExpenses.setText(LanguageSingleton.getInstance().getResourceBundle().getString("error.server.eventNotFound"));
         } else {
@@ -59,7 +59,7 @@ public class StatisticsCtrl implements Initializable {
             Map<String, Double> expensesData = new HashMap<>();
 
             for (Transaction transaction : transactions) {
-                if (transaction.isHandOff()) {
+                if (!transaction.isHandOff()) {
                     totalExpenses += transaction.getMoney();
 
                     double currentTotal;
@@ -99,11 +99,21 @@ public class StatisticsCtrl implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        goBackButton.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                goBack();
+            }
+        });
         server.registerForMessages("/topic/event", Object.class, object -> {
             if (mainCtrl.getCurrentEventID() != 0) {
                 Platform.runLater(this::initializeStatistics);
             }
         });
+    }
+
+    public void clear() {
+        statsTotalExpenses.setText("");
+        statsPieChart.getData().clear();
     }
 
 
