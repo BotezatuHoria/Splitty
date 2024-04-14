@@ -4,7 +4,6 @@
 
 package client.scenes;
 
-import client.Config;
 import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
@@ -122,7 +121,7 @@ public class InviteSendingCtrl implements Initializable {
             listOfMails.add(scanner.next());
         }
         for(String s : listOfMails){
-           // here we add the protocol to send emails if we want, using a mail API like google or the Java one.
+            // here we add the protocol to send emails if we want, using a mail API like google or the Java one.
             server.sendEmail(s, subject, message);
         }
 
@@ -149,7 +148,7 @@ public class InviteSendingCtrl implements Initializable {
         String subject = "Confirmation of credentials email";
         String address = ServerUtils.getConfig().getClientsEmailAddress();
 
-        // here we add the protocol to send emails if we want, using a mail API like google or the Java one.
+            // here we add the protocol to send emails if we want, using a mail API like google or the Java one.
             server.sendEmail(address, subject, message);
     }
 
