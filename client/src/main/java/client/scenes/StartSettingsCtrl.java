@@ -149,27 +149,25 @@ public class StartSettingsCtrl implements Initializable {
         //fileChooser.setSelectedFile(new File("languageTemplate.properties"));
         try{
             File saveFile = fileChooser.showSaveDialog(parent);
-            try (FileInputStream in = new FileInputStream(file); FileOutputStream out = new FileOutputStream(saveFile)) {
+            if (saveFile != null) {
+                try (FileInputStream in = new FileInputStream(file); FileOutputStream out = new FileOutputStream(saveFile)) {
 
-                int n;
+                    int n;
 
-                // read() function to read the
-                // byte of data
-                while ((n = in.read()) != -1) {
-                    // write() function to write
-                    // the byte of data
-                    out.write(n);
+                    // read() function to read the
+                    // byte of data
+                    while ((n = in.read()) != -1) {
+                        // write() function to write
+                        // the byte of data
+                        out.write(n);
+                    }
+                    in.close();
+                    out.close();
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("alert.template.download.success"));
+                    alert.showAndWait();
                 }
-            } finally {
-                // close() function to close the
-                // stream
-                // close() function to close
-                // the stream
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("alert.template.download.success"));
-                alert.showAndWait();
             }
-
         }catch(IOException e){
             e.printStackTrace();
         }

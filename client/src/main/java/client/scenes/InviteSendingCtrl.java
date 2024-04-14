@@ -159,5 +159,6 @@ public class InviteSendingCtrl implements Initializable {
                 throw new RuntimeException(e);
             }
         });
+        mainCtrl.handleEnterKeyPress(cancel, this::cancelGoBack);
     }
 }

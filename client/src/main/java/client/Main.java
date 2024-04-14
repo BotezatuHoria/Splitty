@@ -20,8 +20,6 @@ import static com.google.inject.Guice.createInjector;
 import java.awt.*;
 import java.io.*;
 import java.net.URISyntaxException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 import client.scenes.*;

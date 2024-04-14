@@ -1,5 +1,7 @@
 package client.scenes;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -7,6 +9,7 @@ import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import commons.DebtCellData;
 import commons.Person;
+import commons.Transaction;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -14,6 +17,7 @@ import javafx.scene.layout.*;
 
 import com.google.inject.Inject;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 
 public class DebtSettlementCtrl {
   @FXML
@@ -147,6 +151,7 @@ public class DebtSettlementCtrl {
             "Hey! You forgot to pay: " + debt.getDebt() + " EUR" + " to " + debt.getReceiver().toString() + ".");});
     Button settleDebt = new Button(settleDebtString);
     settleDebt.getStyleClass().add("debt-button");
+    settleDebt.setOnAction(actionEvent -> {settleDebt(debt);});
     HBox hBox = new HBox(10, markReceived, sendEmail, settleDebt); // 10 is the spacing between buttons
     hBox.getStyleClass().add("debt-hbox");
     return hBox;
@@ -164,7 +169,34 @@ public class DebtSettlementCtrl {
    * Settles debt.
    */
   private void settleDebt(DebtCellData debtToSettle){
+      addTransaction(debtToSettle);
+  }
 
+  public void addTransaction(DebtCellData debt) {
+    try {
+      Person payer = debt.getSender();
+      Person payee = debt.getReceiver();
+      double value = debt.getDebt();
+      LocalDate date = LocalDate.now();
+      int currency = 840;
+      List<Person> participants = new ArrayList<>();
+      participants.add(payee);
+      String title = payer +  " " +
+              LanguageSingleton.getInstance().getResourceBundle().getString("pays.misc") + " " + payee;
+      String expenseType = null;
+      Transaction transaction = new Transaction(title, date, value, currency, expenseType, participants, payer);
+      transaction.setHandOff(true);
+      Transaction result = server.addTransactionToCurrentEvent(mainCtrl.getCurrentEventID(), transaction);
+      System.out.println(result.toString());
+      Alert alert = new Alert(Alert.AlertType.INFORMATION);
+      alert.initModality(Modality.APPLICATION_MODAL);
+      String expenseCreatedAlert = LanguageSingleton.getInstance().getResourceBundle().getString("expense.created.alert");
+      alert.setContentText(expenseCreatedAlert);
+      alert.showAndWait();
+    }catch (Exception e) {
+      String expenseFailedAlert = LanguageSingleton.getInstance().getResourceBundle().getString("expense.created.fail.alert");
+      mainCtrl.showAlert(expenseFailedAlert);
+    }
   }
   /**
    * Method to go back to the event page.

@@ -506,7 +506,7 @@ public class MainCtrl {
         this.editExpensePage.getStylesheets().add(contrastStyleSheet);
 
         this.giveMoneyPage.getStylesheets().remove(styleSheet);
-        this.editExpensePage.getStylesheets().add(contrastStyleSheet);
+        this.giveMoneyPage.getStylesheets().add(contrastStyleSheet);
     }
 
     /**
@@ -553,7 +553,7 @@ public class MainCtrl {
         this.editExpensePage.getStylesheets().add(styleSheet);
 
         this.giveMoneyPage.getStylesheets().remove(contrastStyleSheet);
-        this.editExpensePage.getStylesheets().add(styleSheet);
+        this.giveMoneyPage.getStylesheets().add(styleSheet);
     }
 
     /**

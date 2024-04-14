@@ -50,6 +50,6 @@
     -fx-background-color: #f6da72;
 }
 
-combo-box:hover {
+.combo-box:hover {
     -fx-background-color: #f6da72;
 }
