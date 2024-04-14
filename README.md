@@ -27,8 +27,10 @@ Welcome to **Splitty**! This application **helps** you with party organization a
    ./gradlew run
    ```
 
-## First Screen
-
+## Starting using the app
+* The user should should set his credentials (email and password) in the config file
+* For the config file, the user must have an app password that they can obtain from Google.
+First screen
 1. **Language Selection**: Choose your preferred language.
 2. **Template Download**: Download a template for your language to add your own translations.
 3. **High Contrast Mode**: Enable high contrast mode for better distinction of elements, which can be useful for colorblind people.
@@ -49,7 +51,8 @@ Welcome to **Splitty**! This application **helps** you with party organization a
 - And finally if you are in the expense, invite sending, statistics, participant and debt overview pages you can always just press ctrl + b to go back to the event page.
 2. You can navigate the app using the Tab key or arrow keys and press enter to select an option or enter a field.
 3. When you’re in a textarea, you can press Ctrl + Tab to exit that field. This keyboard shortcut allows you to quickly move focus away from the current input area. 
-* For the config file, the user must have an app password that they can obtain from Google.
 * There are numerous error messages and confirmations to make sure the user is aware of what they are doing.
+---
+(Line 334-351 in event page controller, Lines 358-396 for websockets connection and registering for messages in ServerUtils)
 ---
 Feel free to explore our app and enjoy your parties using Splitty! 🎉
