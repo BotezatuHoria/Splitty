@@ -53,6 +53,7 @@ First screen
 3. When you’re in a textarea, you can press Ctrl + Tab to exit that field. This keyboard shortcut allows you to quickly move focus away from the current input area. 
 * There are numerous error messages and confirmations to make sure the user is aware of what they are doing.
 ---
-(Line 334-351 in event page controller, Lines 358-396 for websockets connection and registering for messages in ServerUtils)
+(Lines 358 until 396 consist of logic for the websockets connections and the registering of messages in the ServerUtils file, client side of the application.
+Lines 335 until 354 consist of a long polling connection logic and a register for updates in the Serverutils fiel, client side of the application. Lines 166 - 179 in the TransactionServiceImplementation also have long polling logic.)
 ---
 Feel free to explore our app and enjoy your parties using Splitty! 🎉
