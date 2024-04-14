@@ -28,7 +28,7 @@ Welcome to **Splitty**! This application **helps** you with party organization a
    ```
 
 ## Starting using the app
-* The user should should set his credentials (email and password) in the config file, before configuring your email credentials the app must be ran at least once, such that the config file can get created.
+* The user will have a configuration file to their disposal; in this config.json file the user can put their email credentials (email address and password) which the app will use to send emails to other persons in the event. Before configuring your email credentials the app must be ran at least once, such that the config file can get created.
 * For the config file, the user must have an app password that they can obtain from Google.
 First screen
 1. **Language Selection**: Choose your preferred language.
