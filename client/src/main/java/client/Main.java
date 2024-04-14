@@ -33,7 +33,6 @@ import com.google.inject.Injector;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.Response;
 import javafx.application.Application;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.glassfish.jersey.client.ClientConfig;
 
