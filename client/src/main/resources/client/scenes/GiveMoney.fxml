@@ -39,16 +39,16 @@
       <ComboBox fx:id="currencyBox" layoutX="502.0" layoutY="129.0" prefHeight="26.0" prefWidth="111.0" promptText="Currency" />
       <DatePicker fx:id="dateBox" layoutX="223.0" layoutY="164.0" prefHeight="26.0" prefWidth="392.0" promptText="Please select the date..." />
       <Button fx:id="addButton" layoutX="405.0" layoutY="215.0" mnemonicParsing="false" onAction="#addExpense" prefHeight="26.0" prefWidth="83.0" text="Add" />
-      <ImageView fitHeight="39.0" fitWidth="39.0" layoutX="539.0" layoutY="208.0">
-         <image>
-            <Image url="@/images/return.png" />
-         </image>
-      </ImageView>
       <Label fx:id="toWhomLabel1" layoutX="15.0" layoutY="98.0" prefHeight="26.0" prefWidth="119.0" text="To whom?">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
       <Button fx:id="abortButton" layoutX="532.0" layoutY="202.0" mnemonicParsing="false" onAction="#abortExpense" prefHeight="51.0" prefWidth="51.0" />
+      <ImageView fitHeight="41.0" fitWidth="45.0" layoutX="535.0" layoutY="207.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/return.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

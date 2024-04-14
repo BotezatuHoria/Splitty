@@ -73,6 +73,7 @@ public class DebtSettlementCtrl {
         allDebts();
       });
     });
+    mainCtrl.handleEnterKeyPress(goBackButton, this::goBack);
   }
   /**
    * Populates the open debts list.

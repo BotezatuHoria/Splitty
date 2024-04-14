@@ -8,7 +8,6 @@ import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -219,6 +218,9 @@ public class StartSettingsCtrl implements Initializable {
         }
     }
 
+    /**
+     * Method fot changing between normal contrast and high-contrast.
+     */
     public void changeContrast(){
         if (contrastButton.getText().equals(highContrast)){
             //set new button title
@@ -235,6 +237,11 @@ public class StartSettingsCtrl implements Initializable {
         }
     }
 
+    /**
+     * Initialize method for settings page.
+     * @param url -
+     * @param resourceBundle -
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         mainCtrl.handleEnterKeyPress(startPageAdmin, this::adminLogin);

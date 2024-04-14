@@ -10,6 +10,7 @@ import com.google.inject.Inject;
 import commons.Person;
 import jakarta.ws.rs.WebApplicationException;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,7 +23,7 @@ import javafx.stage.Modality;
 //TODO: fix the event id so that it is passed from the event controller.
 //TODO: Create the Create method after the server.utils is created.
 
-public class ParticipantAdditionPageCtrl {
+public class ParticipantAdditionPageCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
@@ -243,5 +244,11 @@ public class ParticipantAdditionPageCtrl {
         doublePersonResponse.setText("");
         // also reset the colors of the firstName bars etc if they changed after an error (wanted to implement that).
 
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        mainCtrl.handleEnterKeyPress(createButton, this::create);
+        mainCtrl.handleEnterKeyPress(abortButton, this::abort);
     }
 }

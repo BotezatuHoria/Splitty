@@ -269,6 +269,9 @@ public class ParticipantEditPageCtrl implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        mainCtrl.handleEnterKeyPress(abortButton, this::abort);
+        mainCtrl.handleEnterKeyPress(saveButton, this::saveUpdatedParticipant);
+        mainCtrl.handleEnterKeyPress(removeParticipantButton, this::removePerson);
         server.registerForMessages("/topic/events/people", Person.class, person -> {
             Platform.runLater(this::updatePage);
         });

@@ -47,6 +47,9 @@ public class StatisticsCtrl implements Initializable {
         this.server = server;
     }
 
+    /**
+     * Method for initializing the pie-chart and total amount.
+     */
     public void initializeStatistics() {
         assert statsPieChart != null : "fx:id=\"statsPieChart\" was not injected: check your FXML file 'Statistics.fxml'.";
         assert statsTotalExpenses != null : "fx:id=\"statsTotalExpenses\" was not injected: check your FXML file 'Statistics.fxml'.";
@@ -100,6 +103,11 @@ public class StatisticsCtrl implements Initializable {
         mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
     }
 
+    /**
+     * Initialize method for statistics page.
+     * @param url -
+     * @param resourceBundle -
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         goBackButton.setOnKeyPressed(event -> {
@@ -114,14 +122,12 @@ public class StatisticsCtrl implements Initializable {
         });
     }
 
+    /**
+     * Method to clear entire page.
+     */
     public void clear() {
         statsTotalExpenses.setText("");
         statsPieChart.getData().clear();
     }
 
-
-    public boolean checkNewData() {
-        Event currentEvent = server.getEventByID(mainCtrl.getCurrentEventID());
-        return currentEvent.getTransactions() != selectedEvent.getTransactions();
-    }
 }

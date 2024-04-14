@@ -323,6 +323,20 @@ public class EventPageCtrl implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        mainCtrl.handleEnterKeyPress(homeButton, this::goHome);
+        mainCtrl.handleEnterKeyPress(settingButton, this::showSettingsPage);
+        mainCtrl.handleEnterKeyPress(SendInvites, this::sendInvites);
+        mainCtrl.handleEnterKeyPress(editName, this::editName);
+        mainCtrl.handleEnterKeyPress(editParticipants, this::editParticipants);
+        mainCtrl.handleEnterKeyPress(AddParticipant, this::addParticipants);
+        mainCtrl.handleEnterKeyPress(allExpenses, this::displayTransactions);
+        mainCtrl.handleEnterKeyPress(fromParticipant, this::displayFrom);
+        mainCtrl.handleEnterKeyPress(includingParticipant, this::displayIncluding);
+        mainCtrl.handleEnterKeyPress(AddExpense, this::showAddExpensePage);
+        mainCtrl.handleEnterKeyPress(editExpense, this::showEditExpensePage);
+        mainCtrl.handleEnterKeyPress(giveMoney, this::giveMoneyPage);
+        mainCtrl.handleEnterKeyPress(SettleDebts, this::settleDebts);
+        mainCtrl.handleEnterKeyPress(showStatistics,this::showStatistics);
         namePane.setVisible(false);
         server.registerForMessages("/topic/events/people", Person.class, person -> {
             Platform.runLater(() -> {

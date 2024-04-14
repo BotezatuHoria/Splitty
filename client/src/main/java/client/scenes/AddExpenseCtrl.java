@@ -96,7 +96,9 @@ public class AddExpenseCtrl implements Initializable {
     @FXML
     private Button addTagButton;
 
-    //private final ServerUtils server;
+    @FXML
+    private Button addTag;
+
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
@@ -118,6 +120,11 @@ public class AddExpenseCtrl implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        mainCtrl.handleEnterKeyPress(addButton, this::createTransaction);
+        mainCtrl.handleEnterKeyPress(abortButton, this::abortExpense);
+        mainCtrl.handleEnterKeyPress(addTagButton, this::addNewTag);
+        mainCtrl.handleEnterKeyPress(addEverybody, this::addParticipantToView);
+        mainCtrl.handleEnterKeyPress(addTag, this::showTagPage);
         tagPane.visibleProperty().set(false);
     }
 
@@ -302,6 +309,10 @@ public class AddExpenseCtrl implements Initializable {
         }
         try {
             double x = Double.parseDouble(priceField.getText());
+            if (x < 0) {
+                mainCtrl.showAlert(messages.getString("expense.validation.error.validAmount"));
+                return false;
+            }
         } catch (NumberFormatException e) {
             mainCtrl.showAlert(messages.getString("expense.validation.error.validAmount"));
             return false;
