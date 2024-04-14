@@ -82,6 +82,7 @@ public class ServerUtils {
 
 	public static void setConfig(Config config) {
 		ServerUtils.config = config;
+		server = config.getClientsServer();
 		String path= "";
 		try {
 			path = Main.class

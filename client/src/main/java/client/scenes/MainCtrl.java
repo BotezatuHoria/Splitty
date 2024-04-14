@@ -48,7 +48,6 @@ public class MainCtrl {
     private Scene statistics;
 
     private StatisticsCtrl statisticsCtrl;
-    private LanguageManager languageManager;
 
     private Scene expense;
 
@@ -91,39 +90,48 @@ public class MainCtrl {
     private Scene giveMoneyPage;
     private GiveMoneyCtrl giveMoneyCtrl;
 
+    private LanguageManager languageManager;
+
     private Config config;
 
     public MainCtrl() {
     }
 
 
-    @SuppressWarnings({"parameterNumber", "MethodLength", "CyclomaticComplexity"})
     /**
-     * Initialize method for the main controller.
-     * @param primaryStage - primary stage
-     * @param starter - starter page
-     * @param event - event page
-     * @param statistics - statistics page
-     * @param expense - expense page
-     * @param addParticipant - add participants page
+     * initializes all the stages, pages of the application.
      *
-     * @param debt - debt page
-     * @param language - language page
+     * @param primaryStage    the primary stage.
+     * @param starter         starter page.
+     * @param event           event page.
+     * @param statistics      statistics page.
+     * @param expense         expense page.
+     * @param startSettings   start settings page.
+     * @param addParticipant  add participant page.
+     * @param editParticipant edit participant page.
+     * @param inviteSend      invite sending page.
+     * @param debt            debt page
+     * @param adminLoginPage  admin login page
+     * @param adminPage       admin page overview events.
+     * @param editExpensePage edit expense page.
+     * @param debtOverview    debt overview page.
+     * @param giveMoney       give money page.
      */
+    @SuppressWarnings({"parameterNumber", "MethodLength", "CyclomaticComplexity"})
     public void initialize(
             LanguageManager languageManager, Stage primaryStage, Pair<StarterPageCtrl, Parent> starter,
-                           Pair<EventPageCtrl, Parent> event, Pair<StatisticsCtrl, Parent> statistics,
-                           Pair<AddExpenseCtrl, Parent> expense,
-                           Pair<StartSettingsCtrl, Parent> startSettings,
-                           Pair<ParticipantAdditionPageCtrl, Parent> addParticipant,
-                           Pair<ParticipantEditPageCtrl, Parent> editParticipant,
-                           Pair<InviteSendingCtrl, Parent> inviteSend,
-                           Pair<DebtSettlementCtrl, Parent> debt,
-                           Pair<AdminLoginCtrl, Parent> adminLoginPage,
-                           Pair<AdminPageCtrl, Parent> adminPage,
-                           Pair<EditExpenseCtrl, Parent> editExpensePage,
-                           Pair<DebtOverviewPageCtrl, Parent> debtOverview,
-                           Pair<GiveMoneyCtrl, Parent> giveMoney){
+            Pair<EventPageCtrl, Parent> event, Pair<StatisticsCtrl, Parent> statistics,
+            Pair<AddExpenseCtrl, Parent> expense,
+            Pair<StartSettingsCtrl, Parent> startSettings,
+            Pair<ParticipantAdditionPageCtrl, Parent> addParticipant,
+            Pair<ParticipantEditPageCtrl, Parent> editParticipant,
+            Pair<InviteSendingCtrl, Parent> inviteSend,
+            Pair<DebtSettlementCtrl, Parent> debt,
+            Pair<AdminLoginCtrl, Parent> adminLoginPage,
+            Pair<AdminPageCtrl, Parent> adminPage,
+            Pair<EditExpenseCtrl, Parent> editExpensePage,
+            Pair<DebtOverviewPageCtrl, Parent> debtOverview,
+            Pair<GiveMoneyCtrl, Parent> giveMoney) {
         this.server = new ServerUtils();
 
         this.primaryStage = primaryStage;
@@ -210,50 +218,50 @@ public class MainCtrl {
 
         //shortcuts
         this.event.setOnKeyPressed(event1 -> {
-            if (ctrle.match(event1)){
+            if (ctrle.match(event1)) {
                 showExpensePage();
             } else if (ctrli.match(event1)) {
                 showInviteParticipantPage();
-            } else if (ctrls.match(event1)){
+            } else if (ctrls.match(event1)) {
                 showStatisticsPage();
-            } else if (ctrlp.match(event1)){
+            } else if (ctrlp.match(event1)) {
                 showAddParticipant();
-            } else if (ctrld.match(event1)){
+            } else if (ctrld.match(event1)) {
                 showDebtOverviewPage();
             } else if (ctrlh.match(event1)) {
                 showStarter();
-            }else if (esc.match(event1)) {
+            } else if (esc.match(event1)) {
                 showStartSettings();
             }
 
         });
 
         this.expense.setOnKeyPressed(event1 -> {
-            if(ctrlb.match(event1)){
+            if (ctrlb.match(event1)) {
                 showEventPage(getCurrentEventID());
             }
         });
 
         this.inviteSend.setOnKeyPressed(event1 -> {
-            if(ctrlb.match(event1)){
+            if (ctrlb.match(event1)) {
                 showEventPage(getCurrentEventID());
             }
         });
 
         this.statistics.setOnKeyPressed(event1 -> {
-            if(ctrlb.match(event1)){
+            if (ctrlb.match(event1)) {
                 showEventPage(getCurrentEventID());
             }
         });
 
         this.addParticipant.setOnKeyPressed(event1 -> {
-            if(ctrlb.match(event1)){
+            if (ctrlb.match(event1)) {
                 showEventPage(getCurrentEventID());
             }
         });
 
         this.debtOverview.setOnKeyPressed(event1 -> {
-            if(ctrlb.match(event1)){
+            if (ctrlb.match(event1)) {
                 showEventPage(getCurrentEventID());
             }
         });
@@ -321,7 +329,7 @@ public class MainCtrl {
      * Method for showing the add participant page.
      */
     public void showEditParticipant() {
-        primaryStage.setTitle("Edit participant" );
+        primaryStage.setTitle("Edit participant");
         editPageCtrl.updatePage();
         primaryStage.setScene(editParticipant);
     }
@@ -344,6 +352,7 @@ public class MainCtrl {
         debtOverviewPageCtrl.populateDebtList();
         primaryStage.setScene(debtOverview);
     }
+
     /**
      * Method for showing the debt page.
      */
@@ -355,9 +364,8 @@ public class MainCtrl {
     }
 
     /**
-<<<<<<< HEAD
-=======
      * Method for showing the debt page for a specific person.
+     *
      * @param person - the person to show the debt page for.
      */
     public void showDebtPageForSpecificPerson(Person person) {
@@ -368,10 +376,9 @@ public class MainCtrl {
     }
 
     /**
->>>>>>> main
      * Method for showing the admin login.
      */
-    public void showAdminLogin(){
+    public void showAdminLogin() {
         primaryStage.setTitle("Admin Login");
         primaryStage.setScene(adminLogin);
     }
@@ -379,7 +386,7 @@ public class MainCtrl {
     /**
      * Method for showing the admin page.
      */
-    public void showAdminPage(){
+    public void showAdminPage() {
         primaryStage.setTitle("Admin Page");
         primaryStage.setScene(adminPage);
         adminPageCtrl.showEvents();
@@ -388,6 +395,7 @@ public class MainCtrl {
 
     /**
      * Get current server instance.
+     *
      * @return current server instance.
      */
     public ServerUtils getServer() {
@@ -396,6 +404,7 @@ public class MainCtrl {
 
     /**
      * Gets the current EventID.
+     *
      * @return the current EventID.
      */
     public int getCurrentEventID() {
@@ -403,6 +412,11 @@ public class MainCtrl {
         return selectedEventInstance.getEventId();
     }
 
+    /**
+     * shows alerts.
+     *
+     * @param error takes the error that was wrong.
+     */
     public void showAlert(String error) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.initModality(Modality.APPLICATION_MODAL);
@@ -420,6 +434,11 @@ public class MainCtrl {
         primaryStage.setScene(editExpensePage);
     }
 
+    /**
+     * sets all the text in the file to the correct language chosen by the user.
+     *
+     * @param resourceBundle the language.
+     */
     public void setLanguageText(ResourceBundle resourceBundle) {
         starterPageCtrl.setLanguageSelector();
         startSettingsCtrl.setLanguageSelector();
@@ -442,8 +461,9 @@ public class MainCtrl {
 
     /**
      * Method that builds the string representation of a transaction with all the people inside it.
+     *
      * @param id of the transaction you want to display.
-     * @return
+     * @return the string representation of the transaction.
      */
     public String transactionString(int id) {
         Transaction t = server.getTransactionByID(id);
@@ -451,11 +471,11 @@ public class MainCtrl {
         String includingParticipantsLabel = languageManager.getResourceBundle().getString("including.participants");
         String noParticipants = languageManager.getResourceBundle().getString("no.participants");
 
-        String ret = t + " " + byLabel +  " " + server.getPersonByID(t.getCreator().getId()) + " " + includingParticipantsLabel + " ";
+        String ret = t + " " + byLabel + " " + server.getPersonByID(t.getCreator().getId()) + " " + includingParticipantsLabel + " ";
         if (t.getParticipants() == null || t.getParticipants().isEmpty()) {
             return ret + noParticipants;
         }
-        for(Person p: t.getParticipants()) {
+        for (Person p : t.getParticipants()) {
             ret += server.getPersonByID(p.getId()) + ", ";
         }
         return ret.substring(0, ret.length() - 2) + ";";
@@ -464,7 +484,7 @@ public class MainCtrl {
     /**
      * Changes all the pages from the normal contrast to the high contrast stylesheet.
      */
-    public void highContrast(){
+    public void highContrast() {
         this.startSettings.getStylesheets().remove(styleSheet);
         this.startSettings.getStylesheets().add(contrastStyleSheet);
 
@@ -511,7 +531,7 @@ public class MainCtrl {
     /**
      * Changes all the pages from the high contrast to normal contrast stylesheet.
      */
-    public void normalContrast(){
+    public void normalContrast() {
         this.startSettings.getStylesheets().remove(contrastStyleSheet);
         this.startSettings.getStylesheets().add(styleSheet);
 
@@ -557,7 +577,7 @@ public class MainCtrl {
 
     /**
      * Method that opens the Give Money Page.
-     * */
+     */
     public void showGiveMoneyPage() {
         primaryStage.setTitle("Give Money");
         giveMoneyCtrl.updatePage();

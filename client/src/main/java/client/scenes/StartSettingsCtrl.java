@@ -72,14 +72,24 @@ public class StartSettingsCtrl implements Initializable {
         this.languageManager = languageManager;
     }
 
+    /**
+     * initializes the language dropdown menu.
+     */
     void initializeLanguages() {
         serverUtils.initializeLanguages(startPageLanguageSelector);
     }
 
+    /**
+     * sets the correct language chosen by the user.
+     */
     public void setLanguageSelector() {
         serverUtils.setLanguageSelector(startPageLanguageSelector);
     }
 
+    /**
+     * sets all the text in the file to the correct language chosen by the user.
+     * @param resourceBundle the language.
+     */
     public void setLanguageText(ResourceBundle resourceBundle) {
         startSettingsLabel.setText(resourceBundle.getString("select.language"));
         downloadButton.setText(resourceBundle.getString("button.downloadTemplate"));
@@ -107,6 +117,9 @@ public class StartSettingsCtrl implements Initializable {
     }
 
 
+    /**
+     * When server changed wrongly buttons get disabled.
+     */
     public void changeServer() {
         serverLabel.visibleProperty().set(false);
         serverTextField.visibleProperty().set(true);
@@ -115,6 +128,9 @@ public class StartSettingsCtrl implements Initializable {
         okButton.visibleProperty().set(true);
     }
 
+    /**
+     * When server changed rightly buttons get visible again.
+     */
     public void confirmServer() throws IOException {
         responseServer();
         serverLabel.setText(serverTextField.getText().trim());
@@ -175,6 +191,10 @@ public class StartSettingsCtrl implements Initializable {
         }
     }
 
+    /**
+     * checks if the server is active by checking connection.
+     * @throws IOException if the path to config file is incorrect.
+     */
     public void responseServer() throws IOException {
         Main main = new Main();
         String host = serverTextField.getText();

@@ -126,6 +126,9 @@ public class AdminPageCtrl {
         });
     }
 
+    /**
+     * the initial list of all events that are joined/made.
+     */
     public void joinEventsList() {
         events.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -143,6 +146,9 @@ public class AdminPageCtrl {
         });
     }
 
+    /**
+     * to delete an event.
+     */
     public void delete() {
         Event event = events.getSelectionModel().getSelectedItem();
         if (event == null) {
@@ -165,10 +171,17 @@ public class AdminPageCtrl {
         });
     }
 
+    /**
+     * go back a page to the admin login.
+     */
     public void goBack() {
         mainCtrl.showAdminLogin();
     }
 
+    /**
+     * sets all the text that needs to be translated on the page.
+     * @param resourceBundle the language.
+     */
     public void setLanguageText(ResourceBundle resourceBundle) {
         adminPageLabel.setText(resourceBundle.getString("admin.page.label"));
         allEventsLabel.setText(resourceBundle.getString("events.all.label"));
@@ -181,6 +194,9 @@ public class AdminPageCtrl {
         backButton.setText(resourceBundle.getString("button.back"));
     }
 
+    /**
+     * downloads the event and the user can choose where to download the file.
+     */
     public void downloadEvent() {
         Event event = events.getSelectionModel().getSelectedItem();
         if (event == null) {
@@ -210,6 +226,9 @@ public class AdminPageCtrl {
         }
     }
 
+    /**
+     * imports an event into the application.
+     */
     public void importEvent() {
         Window parent = new Stage();
         FileChooser chooser = new FileChooser();
@@ -243,6 +262,9 @@ public class AdminPageCtrl {
         }
     }
 
+    /**
+     * clears all the fields in the page.
+     */
     public void clear() {
         events.getItems().clear();
     }

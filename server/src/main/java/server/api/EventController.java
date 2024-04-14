@@ -121,9 +121,9 @@ public class EventController {
 
     /**
      * Method for adding a new expense to the event.
-     * @param idEvent - id of the event
-     * @param transaction - transaction to be added
-     * @return - the state of the new event
+     * @param idEvent - id of the event.
+     * @param transaction - transaction to be added.
+     * @return - the state of the new event.
      */
     @PostMapping(path = {"/{idEvent}/expenses"})
     public ResponseEntity<Transaction> createNewExpense(@PathVariable("idEvent") long idEvent,
@@ -131,32 +131,67 @@ public class EventController {
         return esi.createNewExpense(idEvent, transaction);
     }
 
+    /**
+     * deletes an transaction.
+     * @param idEvent - id of the event.
+     * @param idTransaction id of transaction.
+     * @return deleted transaction.
+     */
     @DeleteMapping(path = "/{idEvent}/expenses")
     public ResponseEntity<Transaction> deleteTransaction(@PathVariable("idEvent") long idEvent,
                                                          @RequestParam("id") int idTransaction) {
         return esi.deleteTransaction(idEvent, idTransaction);
     }
 
+    /**
+     * deletes an person.
+     * @param idEvent - id of the event.
+     * @param idPerson id of person.
+     * @return deleted person.
+     */
     @DeleteMapping(path = {"/{idEvent}/person"})
     public ResponseEntity<Person> deletePerson(@PathVariable("idEvent") long idEvent,
                                                @RequestParam("id") int idPerson) {
         return esi.deletePerson(idEvent, idPerson);
     }
 
+    /**
+     * gets the token of session.
+     * @param token token of user session.
+     * @return token.
+     */
     @GetMapping(path = {"/token/{token}"})
     public ResponseEntity<Event> getEventByToken(@PathVariable("token") String token){
         return esi.getEventByToken(token);
     }
 
+    /**
+     * gets tag from event.
+     * @param id id of event.
+     * @return tags of the event.
+     */
     @GetMapping(path = {"/{idEvent}/tag"})
     public ResponseEntity<List<Tag>> getAllTags(@PathVariable("idEvent") long id) {
         return esi.getTags(id);
     }
+
+    /**
+     * creates new tag for event.
+     * @param id event id.
+     * @param tag tag entity.
+     * @return tag entity thats added.
+     */
     @PostMapping(path = "/{idEvent}/tag")
     public ResponseEntity<Tag> createTag(@PathVariable("idEvent") long id, @RequestBody Tag tag) {
         return esi.createTag(id, tag);
     }
 
+    /**
+     * deletes tag from event.
+     * @param id event id.
+     * @param idTag id of the tag.
+     * @return deleted id.
+     */
     @DeleteMapping(path = "/{idEvent}/tag")
     public ResponseEntity<Tag> removeTag(@PathVariable("idEvent") long id, @RequestParam("id") int idTag) {
         return esi.deleteTag(id, idTag);
