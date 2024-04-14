@@ -27,6 +27,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -549,13 +550,13 @@ public class ServerUtils {
 
 		Session session = Session.getInstance(props, new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(EMAIL_USERNAME, EMAIL_PASSWORD);
+				return new PasswordAuthentication(config.getClientsEmailAddress(), config.getPassword());
 			}
 		});
 
 		try {
 			Message mimeMessage = new MimeMessage(session);
-			mimeMessage.setFrom(new InternetAddress(EMAIL_USERNAME));
+			mimeMessage.setFrom(new InternetAddress(config.getClientsEmailAddress()));
 			mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
 			mimeMessage.setSubject(subject);
 			mimeMessage.setText(message);
@@ -568,24 +569,26 @@ public class ServerUtils {
 	}
 
 	public void sendConfirmAlert() {
+		ResourceBundle resourceBundle = LanguageSingleton.getInstance().getResourceBundle();
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.initModality(Modality.APPLICATION_MODAL);
-		alert.setContentText("Email sent successfully!");
+		alert.setContentText(resourceBundle.getString("email.sent"));
 		alert.showAndWait();
 	}
 
 	public void sendFailAlert(MessagingException e) {
+		ResourceBundle resourceBundle = LanguageSingleton.getInstance().getResourceBundle();
 		Alert alert = new Alert(Alert.AlertType.ERROR);
 		alert.initModality(Modality.APPLICATION_MODAL);
-		alert.setContentText("Failed to send email: " + e.getMessage());
+		alert.setContentText(resourceBundle.getString("email.failed") + e.getMessage());
 		alert.showAndWait();
 	}
 
 	public void sendBadEmailAlert() {
+		ResourceBundle resourceBundle = LanguageSingleton.getInstance().getResourceBundle();
 		Alert alert = new Alert(Alert.AlertType.ERROR);
 		alert.initModality(Modality.APPLICATION_MODAL);
-		alert.setContentText("The user does not have a valid email address registered, " +
-				"please reach out to him using another method!");
+		alert.setContentText(resourceBundle.getString("email.invalid"));
 		alert.showAndWait();
 	}
 

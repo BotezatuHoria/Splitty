@@ -33,89 +33,80 @@ public class EventPageCtrl implements Initializable {
 
     private ObservableList<Transaction> dataTransactions;
 
-    @FXML // fx:id="namePane"
-    private AnchorPane namePane;
+    @FXML
+    private Button addParticipant;
 
-    @FXML // fx:id="nameField"
-    private TextField nameField;
+    @FXML
+    private Button addExpense;
 
-    @FXML // fx:id="saveName"
-    private Button saveName;
+    @FXML
+    private Button allExpenses;
 
-    @FXML // fx:id="addExpense"
-    private Button addExpense; // Value injected by FXMLLoader
-
-    @FXML // fx:id="SendInvites"
-    private Button SendInvites; // Value injected by FXMLLoader
-
-    @FXML // fx:id="participantsLabel"
-    private Label participantsLabel; // Value injected by FXMLLoader
-
-    @FXML // fx:id="expensesLabel"
-    private Label expensesLabel; // Value injected by FXMLLoader
-
-    @FXML // fx:id="AddParticipant"
-    private Button AddParticipant; // Value injected by FXMLLoader
-
-    @FXML // fx:id="AddExpense"
-    private Button AddExpense; // Value injected by FXMLLoader
-
-    @FXML // fx:id="SettleDebts"
-    private Button SettleDebts; // Value injected by FXMLLoader
-
-    @FXML // fx:id="addParticipant"
-    private Button addParticipant; // Value injected by FXMLLoader
-
-    @FXML // fx:id="allExpenses"
-    private Button allExpenses; // Value injected by FXMLLoader
-
-    @FXML // fx:id="editParticipants"
-    private Button editParticipants; // Value injected by FXMLLoader
-
-    @FXML // fx:id="fromParticipant"
-    private Button fromParticipant; // Value injected by FXMLLoader
-
-    @FXML // fx:id="includingParticipant"
-    private Button includingParticipant; // Value injected by FXMLLoader
-
-    @FXML // fx:id="sendInvites"
-    private Button sendInvites; // Value injected by FXMLLoader
-
-    @FXML // fx:id="settleDebts"
-    private Button settleDebts; // Value injected by FXMLLoader
-
-    @FXML // fx:id="homeButton"
-    private Button homeButton; // Value injected by FXMLLoader
-
-    @FXML // fx:id="showStatistics"
-    private Button showStatistics; // Value injected by FXMLLoader
-
-    @FXML // fx:id="eventTitle"
-    private Label eventTitle;
-
-    @FXML // fx:id="participantsList"
-    private Label participantsList;
-
-    @FXML // fx:id="participantsScroll"
-    private ComboBox<Person> participantsScroll;
-
-    @FXML // fx:id="listTransactions"
-    private ListView<String> listTransactions;
-
-    @FXML // fx:id="editExpense"
+    @FXML
     private Button editExpense;
 
-    @FXML // fx:id="editName"
+    @FXML
     private Button editName;
 
     @FXML
-    private Button settingButton;
+    private Button editParticipants;
+
+    @FXML
+    private Label eventTitle;
+
+    @FXML
+    private Label expensesLabel;
+
+    @FXML
+    private Button fromParticipant;
+
+    @FXML
+    private Button giveMoney;
+
+    @FXML
+    private Button homeButton;
+
+    @FXML
+    private Button includingParticipant;
 
     @FXML
     private ComboBox languageSelector;
 
     @FXML
-    private Button giveMoney;
+    private ListView<String> listTransactions;
+
+    @FXML
+    private TextField nameField;
+
+    @FXML
+    private AnchorPane namePane;
+
+    @FXML
+    private AnchorPane pane;
+
+    @FXML
+    private Label participantsLabel;
+
+    @FXML
+    private Label participantsList;
+
+    @FXML
+    private ComboBox<Person> participantsScroll;
+
+    @FXML
+    private Button saveName;
+
+    @FXML
+    private Button sendInvites;
+
+    @FXML
+    private Button settingButton;
+
+    @FXML
+    private Button settleDebts;
+
+    @FXML
+    private Button showStatistics;
 
 
     /**
@@ -189,6 +180,7 @@ public class EventPageCtrl implements Initializable {
 
     public void editName() {
         namePane.setVisible(true);
+        nameField.setText(eventTitle.getText());
     }
 
     public void saveName() {
@@ -323,6 +315,21 @@ public class EventPageCtrl implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        mainCtrl.handleEnterKeyPress(homeButton, this::goHome);
+        mainCtrl.handleEnterKeyPress(settingButton, this::showSettingsPage);
+        mainCtrl.handleEnterKeyPress(sendInvites, this::sendInvites);
+        mainCtrl.handleEnterKeyPress(editName, this::editName);
+        mainCtrl.handleEnterKeyPress(editParticipants, this::editParticipants);
+        mainCtrl.handleEnterKeyPress(addParticipant, this::addParticipants);
+        mainCtrl.handleEnterKeyPress(allExpenses, this::displayTransactions);
+        mainCtrl.handleEnterKeyPress(fromParticipant, this::displayFrom);
+        mainCtrl.handleEnterKeyPress(includingParticipant, this::displayIncluding);
+        mainCtrl.handleEnterKeyPress(addExpense, this::showAddExpensePage);
+        mainCtrl.handleEnterKeyPress(editExpense, this::showEditExpensePage);
+        mainCtrl.handleEnterKeyPress(giveMoney, this::giveMoneyPage);
+        mainCtrl.handleEnterKeyPress(settleDebts, this::settleDebts);
+        mainCtrl.handleEnterKeyPress(showStatistics,this::showStatistics);
+        mainCtrl.handleEnterKeyPress(saveName, this::saveName);
         namePane.setVisible(false);
         server.registerForMessages("/topic/events/people", Person.class, person -> {
             Platform.runLater(() -> {
@@ -361,10 +368,10 @@ public class EventPageCtrl implements Initializable {
     public void setLanguageText(ResourceBundle resourceBundle) {
         fromParticipant.setText(resourceBundle.getString("from.button"));
         includingParticipant.setText(resourceBundle.getString("including.button"));
-        AddExpense.setText(resourceBundle.getString("addExpense.button"));
-        SettleDebts.setText(resourceBundle.getString("settleDebts.button"));
+        addExpense.setText(resourceBundle.getString("addExpense.button"));
+        settleDebts.setText(resourceBundle.getString("settleDebts.button"));
         showStatistics.setText(resourceBundle.getString("showStats.button"));
-        SendInvites.setText(resourceBundle.getString("sendInvites.button"));
+        sendInvites.setText(resourceBundle.getString("sendInvites.button"));
         participantsLabel.setText(resourceBundle.getString("participants"));
         expensesLabel.setText(resourceBundle.getString("expenses"));
         allExpenses.setText(resourceBundle.getString("all.button"));

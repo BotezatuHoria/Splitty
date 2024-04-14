@@ -4,6 +4,7 @@ import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Person;
+import commons.Transaction;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -35,6 +36,14 @@ public class DebtOverviewPageCtrl implements Initializable {
   private MainCtrl mainCtrl; // Reference to the MainController
   @FXML
   private final ServerUtils server;
+
+  @FXML
+  private Label sharePerPersonLabel;
+
+  @FXML
+  private Label sumValue;
+
+  private static final DecimalFormat df = new DecimalFormat("0.00");
 
   private static final DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
@@ -83,14 +92,29 @@ public class DebtOverviewPageCtrl implements Initializable {
    * Populate the debt list.
    */
   public void populateDebtList() {
+
     debtValueTable.getItems().clear();
     List<Person> people = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
+    List<Transaction> transactions = server.getTransactions(mainCtrl.getCurrentEventID());
+    if (transactions != null) {
+      double sum = 0.0;
+      for (Transaction t : transactions) {
+        if (!t.isHandOff()) {
+          sum += t.getMoney();
+        }
+      }
+      if (!people.isEmpty()) {
+        sum /= people.size();
+        sumValue.setText(df.format(sum) + " EUR");
+      }
+    }
+
     debtValueTable.getItems().addAll(people);
     name.setText(LanguageSingleton.getInstance().getResourceBundle().getString("nameInTable"));
     debt.setText(LanguageSingleton.getInstance().getResourceBundle().getString("debtInTable"));
     settleDebtButton.setText(LanguageSingleton.getInstance().getResourceBundle().getString("settleList.button"));
     debtOverviewLabel.setText(LanguageSingleton.getInstance().getResourceBundle().getString("debtOverview.title"));
-
+    sharePerPersonLabel.setText(LanguageSingleton.getInstance().getResourceBundle().getString("share.person"));
   }
 
   /**
@@ -110,7 +134,12 @@ public class DebtOverviewPageCtrl implements Initializable {
 
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
+    mainCtrl.handleEnterKeyPress(settleDebtButton, this::buttonPressHandle);
+    mainCtrl.handleEnterKeyPress(goBackButton, () -> {
+      mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
+    });
     initializeTable();
+
     server.registerForMessages("/topic/events/people", Person.class, person -> {
       Platform.runLater(this::populateDebtList);
     });

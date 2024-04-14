@@ -10,13 +10,13 @@ import client.utils.ServerUtils;
 import commons.Person;
 import commons.Transaction;
 import jakarta.inject.Inject;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 
-public class GiveMoneyCtrl {
+public class GiveMoneyCtrl implements Initializable {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -67,19 +67,17 @@ public class GiveMoneyCtrl {
 
     /**
      * Aborts the expense and goes back to the event page.
-     * @param event
      */
     @FXML
-    void abortExpense(ActionEvent event) {
+    void abortExpense() {
         mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
     }
 
     /**
      * Adds expense to the event.
-     * @param event
      */
     @FXML
-    void addExpense(ActionEvent event) {
+    void addExpense() {
         if (checkCompleted()) {
             addTransaction();
             clear();
@@ -264,4 +262,14 @@ public class GiveMoneyCtrl {
         addButton.setText(resourceBundle.getString("add.button"));
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        mainCtrl.handleEnterKeyPress(addButton, this::addTransaction);
+        mainCtrl.handleEnterKeyPress(abortButton, this::abortExpense);
+        dateBox.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                dateBox.show();
+            }
+        });
+    }
 }

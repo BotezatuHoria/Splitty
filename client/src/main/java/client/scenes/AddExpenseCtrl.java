@@ -10,9 +10,12 @@ import client.utils.ServerUtils;
 import commons.Person;
 import commons.Tag;
 import commons.Transaction;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
 import com.google.inject.Inject;
@@ -96,7 +99,9 @@ public class AddExpenseCtrl implements Initializable {
     @FXML
     private Button addTagButton;
 
-    //private final ServerUtils server;
+    @FXML
+    private Button addTag;
+
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
@@ -118,6 +123,25 @@ public class AddExpenseCtrl implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        mainCtrl.handleEnterKeyPress(addButton, this::createTransaction);
+        mainCtrl.handleEnterKeyPress(abortButton, this::abortExpense);
+        mainCtrl.handleEnterKeyPress(addTagButton, this::addNewTag);
+        mainCtrl.handleEnterKeyPress(addEverybody, this::addParticipantToView);
+        mainCtrl.handleEnterKeyPress(addTag, this::showTagPage);
+        peopleLIstView.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.ENTER) {
+                    peopleLIstView.getSelectionModel().getSelectedItem().
+                            setSelected(!peopleLIstView.getSelectionModel().getSelectedItem().isSelected());
+                }
+            }
+        });
+        dateBox.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                dateBox.show();
+            }
+        });
         tagPane.visibleProperty().set(false);
     }
 
@@ -257,6 +281,7 @@ public class AddExpenseCtrl implements Initializable {
 
             alert.setContentText(expenseCreatedAlert);
             alert.showAndWait();
+            abortExpense();
         }catch (Exception e) {
             String expenseFailedAlert = LanguageSingleton.getInstance().getResourceBundle().getString("expense.created.fail.alert");
 
@@ -302,6 +327,10 @@ public class AddExpenseCtrl implements Initializable {
         }
         try {
             double x = Double.parseDouble(priceField.getText());
+            if (x < 0) {
+                mainCtrl.showAlert(messages.getString("expense.validation.error.validAmount"));
+                return false;
+            }
         } catch (NumberFormatException e) {
             mainCtrl.showAlert(messages.getString("expense.validation.error.validAmount"));
             return false;

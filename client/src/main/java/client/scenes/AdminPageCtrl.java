@@ -108,6 +108,10 @@ public class AdminPageCtrl {
         server.registerForMessages("/topic/event", Person.class, event -> {
             Platform.runLater(this::showEvents);
         });
+        mainCtrl.handleEnterKeyPress(backButton, this::goBack);
+        mainCtrl.handleEnterKeyPress(downloadEvent, this::downloadEvent);
+        mainCtrl.handleEnterKeyPress(importEvent, this::importEvent);
+        mainCtrl.handleEnterKeyPress(deleteEvent, this::delete);
     }
 
     /**
@@ -149,12 +153,18 @@ public class AdminPageCtrl {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete");
         alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("confirm.deleteEvent") + event.getTitle());
-        alert.showAndWait().filter(ButtonType.OK::equals).ifPresent(b -> {
-            server.deleteEventById(event, event.getId());
-            clear();
-            showEvents();
+        alert.show();
+        alert.setOnCloseRequest(new EventHandler<DialogEvent>() {
+            @Override
+            public void handle(DialogEvent dialogEvent) {
+                if (alert.getResult() == ButtonType.OK) {
+                    // Handle OK button click
+                    server.deleteEventById(event, event.getId());
+                    clear();
+                    showEvents();
+                }
+            }
         });
-        alert.close();
     }
 
     public void goBack() {
@@ -210,27 +220,29 @@ public class AdminPageCtrl {
                 new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json");
         chooser.getExtensionFilters().add(extensionFilter);
         File file = chooser.showOpenDialog(parent);
-        try {
-            Event event = objectMapper.readValue(file, Event.class);
-            event.setId(0);
-            System.out.println(event);
-            try{
-                server.getEventByToken(event.getToken());
-            }catch (BadRequestException e){
-                server.addEvent(event);
-                showEvents();
-                return;
+        if (file != null) {
+            try {
+                Event event = objectMapper.readValue(file, Event.class);
+                event.setId(0);
+                System.out.println(event);
+                try{
+                    server.getEventByToken(event.getToken());
+                }catch (BadRequestException e){
+                    server.addEvent(event);
+                    showEvents();
+                    return;
+                }
+            } catch (IOException e) {
+                Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                alert2.setTitle("Importing Error");
+                alert2.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("error.importEvent"));
+                alert2.show();
             }
-        } catch (IOException e) {
-            Alert alert2 = new Alert(Alert.AlertType.ERROR);
-            alert2.setTitle("Importing Error");
-            alert2.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("error.importEvent"));
-            alert2.show();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error importing event");
+            alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("error.importEventExists"));
+            alert.show();
         }
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error importing event");
-        alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("error.importEventExists"));
-        alert.show();
     }
 
     public void clear() {

@@ -9,6 +9,7 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -16,11 +17,12 @@ import javafx.scene.control.TextArea;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard; //to set the clipboard of the user when clicking the copy button, in method CopyCode.
 import java.awt.datatransfer.StringSelection; // Also in method CopyCode.
+import java.net.URL;
 import java.util.*;
 import java.util.List;
 
 
-public class InviteSendingCtrl{
+public class InviteSendingCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
@@ -147,4 +149,16 @@ public class InviteSendingCtrl{
     }
 
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        mainCtrl.handleEnterKeyPress(sendInviteButton, this::sendInvite);
+        mainCtrl.handleEnterKeyPress(copyInviteCodeButton, () -> {
+            try {
+                copyCode();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        mainCtrl.handleEnterKeyPress(cancel, this::cancelGoBack);
+    }
 }
