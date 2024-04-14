@@ -4,7 +4,7 @@
 
 package client.scenes;
 
-import client.utils.LanguageSingleton;
+import client.utils.LanguageManager;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 
@@ -28,6 +28,7 @@ import java.util.ResourceBundle;
 public class EventPageCtrl implements Initializable {
     private final MainCtrl mainCtrl;
     private final ServerUtils server;
+    private final LanguageManager languageManager;
 
     private ObservableList<Person> data;
 
@@ -116,9 +117,10 @@ public class EventPageCtrl implements Initializable {
      * @param server
      */
     @Inject
-    public EventPageCtrl(MainCtrl mainCtrl, ServerUtils server) {
+    public EventPageCtrl(MainCtrl mainCtrl, ServerUtils server, LanguageManager languageManager) {
         this.mainCtrl = mainCtrl;
         this.server = server;
+        this.languageManager = languageManager;
     }
 
 
@@ -237,7 +239,7 @@ public class EventPageCtrl implements Initializable {
         }
 
         if (person != null) {
-            ResourceBundle resourceBundle = LanguageSingleton.getInstance().getResourceBundle();
+            ResourceBundle resourceBundle = languageManager.getResourceBundle();
 
             fromParticipant.setText(resourceBundle.getString("label.from") + person);
             includingParticipant.setText(resourceBundle.getString("label.including") + person);
@@ -297,7 +299,7 @@ public class EventPageCtrl implements Initializable {
      * Method that clears the page of all previous inputs.
      */
     public void clear() {
-        ResourceBundle resourceBundle = LanguageSingleton.getInstance().getResourceBundle();
+        ResourceBundle resourceBundle = languageManager.getResourceBundle();
 
         participantsScroll.getItems().clear();
         listTransactions.getItems().clear();
@@ -383,7 +385,7 @@ public class EventPageCtrl implements Initializable {
 
     public void updateLanguage() {
         // Show current language
-        Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
+        Pair<String, Image> currentLanguage = languageManager.getLanguage();
     }
 }
 

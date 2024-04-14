@@ -4,7 +4,7 @@
 
 package client.scenes;
 
-import client.utils.LanguageSingleton;
+import client.utils.LanguageManager;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Event;
@@ -26,6 +26,7 @@ public class InviteSendingCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private final LanguageManager languageManager;
 
     @FXML // fx:id="CopyInviteCodeButton"
     private Button copyInviteCodeButton; // Value injected by FXMLLoader
@@ -60,10 +61,10 @@ public class InviteSendingCtrl implements Initializable {
      * @param mainCtrl main control page to connect with.
      */
     @Inject
-    public InviteSendingCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public InviteSendingCtrl(ServerUtils server, MainCtrl mainCtrl, LanguageManager languageManager) {
         this.server = server;
         this.mainCtrl = mainCtrl;
-
+        this.languageManager = languageManager;
     }
 
     /**
@@ -128,7 +129,7 @@ public class InviteSendingCtrl implements Initializable {
         StringSelection selection = new StringSelection(inviteCode); //make it a stringselection so that we can set the clipboard contents to it.
         Clipboard board = Toolkit.getDefaultToolkit().getSystemClipboard(); // get our clipboard.
         board.setContents(selection, selection); //copy the eventinvite code to our clipboard.
-        ResourceBundle resourceBundle = LanguageSingleton.getInstance().getResourceBundle();
+        ResourceBundle resourceBundle = languageManager.getResourceBundle();
 
         responseCopy.setText(resourceBundle.getString("message.code.copied"));
     }

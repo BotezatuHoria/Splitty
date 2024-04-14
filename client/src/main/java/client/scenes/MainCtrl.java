@@ -16,7 +16,7 @@
 package client.scenes;
 
 import client.Config;
-import client.utils.LanguageSingleton;
+import client.utils.LanguageManager;
 import client.utils.SelectedEventSingleton;
 import commons.Person;
 import commons.Transaction;
@@ -48,6 +48,7 @@ public class MainCtrl {
     private Scene statistics;
 
     private StatisticsCtrl statisticsCtrl;
+    private LanguageManager languageManager;
 
     private Scene expense;
 
@@ -109,7 +110,8 @@ public class MainCtrl {
      * @param debt - debt page
      * @param language - language page
      */
-    public void initialize(Stage primaryStage, Pair<StarterPageCtrl, Parent> starter,
+    public void initialize(
+            LanguageManager languageManager, Stage primaryStage, Pair<StarterPageCtrl, Parent> starter,
                            Pair<EventPageCtrl, Parent> event, Pair<StatisticsCtrl, Parent> statistics,
                            Pair<AddExpenseCtrl, Parent> expense,
                            Pair<StartSettingsCtrl, Parent> startSettings,
@@ -185,15 +187,13 @@ public class MainCtrl {
         this.giveMoneyPage = new Scene(giveMoney.getValue());
         this.giveMoneyPage.getStylesheets().add(styleSheet);
 
-
-
         startSettingsCtrl.initializeLanguages();
         starterPageCtrl.initializeLanguages();
         eventCtrl.initializeLanguages();
 
-        LanguageSingleton languageSingleton = LanguageSingleton.getInstance();
-        languageSingleton.setLanguageByCode(ServerUtils.getConfig().getClientsLanguage());
-        languageSingleton.setLanguageText();
+        this.languageManager = languageManager;
+        languageManager.setLanguageByCode(ServerUtils.getConfig().getClientsLanguage());
+        languageManager.setLanguageText();
 
         showStartSettings();
         primaryStage.show();
@@ -447,9 +447,9 @@ public class MainCtrl {
      */
     public String transactionString(int id) {
         Transaction t = server.getTransactionByID(id);
-        String byLabel = LanguageSingleton.getInstance().getResourceBundle().getString("by.label");
-        String includingParticipantsLabel = LanguageSingleton.getInstance().getResourceBundle().getString("including.participants");
-        String noParticipants = LanguageSingleton.getInstance().getResourceBundle().getString("no.participants");
+        String byLabel = languageManager.getResourceBundle().getString("by.label");
+        String includingParticipantsLabel = languageManager.getResourceBundle().getString("including.participants");
+        String noParticipants = languageManager.getResourceBundle().getString("no.participants");
 
         String ret = t + " " + byLabel +  " " + server.getPersonByID(t.getCreator().getId()) + " " + includingParticipantsLabel + " ";
         if (t.getParticipants() == null || t.getParticipants().isEmpty()) {

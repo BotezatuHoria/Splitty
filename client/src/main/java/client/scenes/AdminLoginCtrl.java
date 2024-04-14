@@ -1,6 +1,6 @@
 package client.scenes;
 
-import client.utils.LanguageSingleton;
+import client.utils.LanguageManager;
 import client.utils.ServerUtils;
 import jakarta.inject.Inject;
 import javafx.fxml.FXML;
@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 public class AdminLoginCtrl implements Initializable {
     private final MainCtrl mainCtrl;
     private final ServerUtils serverUtils;
+    private final LanguageManager languageManager;
 
     @FXML
     private Button backButton;
@@ -60,9 +61,10 @@ public class AdminLoginCtrl implements Initializable {
      * @param mainCtrl the main controller
      */
     @Inject
-    public AdminLoginCtrl(ServerUtils server, MainCtrl mainCtrl){
+    public AdminLoginCtrl(MainCtrl mainCtrl, ServerUtils server, LanguageManager languageManager) {
         this.serverUtils = server;
         this.mainCtrl = mainCtrl;
+        this.languageManager = languageManager;
     }
 
     /**
@@ -76,7 +78,7 @@ public class AdminLoginCtrl implements Initializable {
             mainCtrl.showAdminPage();
         } else {
             a.setAlertType(Alert.AlertType.ERROR);
-            String passwordString = LanguageSingleton.getInstance().getResourceBundle().getString("admin.login.password.error");
+            String passwordString = languageManager.getResourceBundle().getString("admin.login.password.error");
             a.setContentText(passwordString);
             a.show();
         }

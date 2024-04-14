@@ -5,7 +5,7 @@
 package client.scenes;
 
 import client.Config;
-import client.utils.LanguageSingleton;
+import client.utils.LanguageManager;
 import client.utils.ServerUtils;
 import commons.Person;
 import commons.Tag;
@@ -105,15 +105,17 @@ public class AddExpenseCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private final LanguageManager languageManager;
 
     /**
      * Constructor for the add expense controller.
      * @param mainCtrl - reference to the main controller
      */
     @Inject
-    public AddExpenseCtrl(MainCtrl mainCtrl, ServerUtils server) {
+    public AddExpenseCtrl(MainCtrl mainCtrl, ServerUtils server, LanguageManager languageManager) {
         this.mainCtrl = mainCtrl;
         this.server = server;
+        this.languageManager = languageManager;
     }
 
     /**
@@ -182,9 +184,9 @@ public class AddExpenseCtrl implements Initializable {
         addPeopleToPayerBox(people);
         currencyBox.getItems().add("EUR");
         Config config = ServerUtils.getConfig();
-        String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
-        String entranceFeeString= LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
-        String travelString = LanguageSingleton.getInstance().getResourceBundle().getString("travel.label");
+        String foodString = languageManager.getResourceBundle().getString("food.label");
+        String entranceFeeString= languageManager.getResourceBundle().getString("entrance.fee.label");
+        String travelString = languageManager.getResourceBundle().getString("travel.label");
         for (Tag t : server.getEventByID(mainCtrl.getCurrentEventID()).getTagList()) {
             if (!config.getClientsLanguage().equals("en")) {
                 if (t.getTitle().equals("Food")) {
@@ -272,13 +274,13 @@ public class AddExpenseCtrl implements Initializable {
             System.out.println(result.toString());
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.initModality(Modality.APPLICATION_MODAL);
-            String expenseCreatedAlert = LanguageSingleton.getInstance().getResourceBundle().getString("expense.created.alert");
+            String expenseCreatedAlert = languageManager.getResourceBundle().getString("expense.created.alert");
 
             alert.setContentText(expenseCreatedAlert);
             alert.showAndWait();
             abortExpense();
         }catch (Exception e) {
-            String expenseFailedAlert = LanguageSingleton.getInstance().getResourceBundle().getString("expense.created.fail.alert");
+            String expenseFailedAlert = languageManager.getResourceBundle().getString("expense.created.fail.alert");
 
             mainCtrl.showAlert(expenseFailedAlert);
         }
@@ -331,8 +333,7 @@ public class AddExpenseCtrl implements Initializable {
      */
 
     public boolean checkFields() {
-        LanguageSingleton lang = LanguageSingleton.getInstance();
-        ResourceBundle messages = lang.getResourceBundle();
+        ResourceBundle messages = languageManager.getResourceBundle();
 
         if (expenseField.getText() == null || expenseField.getText().equals(" ")) {
             mainCtrl.showAlert(messages.getString("expense.validation.error.provideExpense"));
@@ -362,8 +363,7 @@ public class AddExpenseCtrl implements Initializable {
      * @return - true if anything is selected, otherwise false.
      */
     public boolean checkBoxes() {
-        LanguageSingleton lang = LanguageSingleton.getInstance();
-        ResourceBundle messages = lang.getResourceBundle();
+        ResourceBundle messages = languageManager.getResourceBundle();
 
         if (payerBox.valueProperty().get() == null) {
             mainCtrl.showAlert(messages.getString("validation.error.providePayer"));
@@ -404,7 +404,7 @@ public class AddExpenseCtrl implements Initializable {
         if (checked) {
             return true;
         }
-        mainCtrl.showAlert(LanguageSingleton.getInstance().getResourceBundle().getString("selection.error.minPerson"));
+        mainCtrl.showAlert(languageManager.getResourceBundle().getString("selection.error.minPerson"));
         return false;
     }
 

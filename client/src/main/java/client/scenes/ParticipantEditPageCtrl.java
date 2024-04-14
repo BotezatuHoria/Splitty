@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import client.utils.LanguageSingleton;
+import client.utils.LanguageManager;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Person;
@@ -19,6 +19,7 @@ public class ParticipantEditPageCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private final LanguageManager languageManager;
 
     @FXML
     private ResourceBundle resources;
@@ -108,9 +109,10 @@ public class ParticipantEditPageCtrl implements Initializable {
      * @param mainCtrl the main controller
      */
     @Inject
-    public ParticipantEditPageCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public ParticipantEditPageCtrl(ServerUtils server, MainCtrl mainCtrl, LanguageManager languageManager) {
         this.mainCtrl = mainCtrl;
         this.server = server;
+        this.languageManager = languageManager;
     }
 
 
@@ -158,7 +160,7 @@ public class ParticipantEditPageCtrl implements Initializable {
         String newIban = iban.getText();
 
         if (newFirstName.isEmpty() || newLastName.isEmpty()) {
-            warningLabel.setText(LanguageSingleton.getInstance().getResourceBundle().getString("warning.fields.empty"));
+            warningLabel.setText(languageManager.getResourceBundle().getString("warning.fields.empty"));
         }
         else if (!(personExists(newFirstName, newLastName))) {
             person.setFirstName(newFirstName);
@@ -168,13 +170,13 @@ public class ParticipantEditPageCtrl implements Initializable {
             Person updatedperson = server.updatePerson(person.getId(), person);
             System.out.println("PERSON EDITED: person with id " + person.getId() + " was adjusted to " + updatedperson);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("person.edit.success"));
+            alert.setContentText(languageManager.getResourceBundle().getString("person.edit.success"));
             alert.showAndWait();
             clearFields();
             mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
         } else {
             if(!(personExists(newFirstName,newLastName))){
-                warningLabel.setText(LanguageSingleton.getInstance().getResourceBundle().getString("error.generic"));
+                warningLabel.setText(languageManager.getResourceBundle().getString("error.generic"));
             }
         }
 
@@ -194,7 +196,7 @@ public class ParticipantEditPageCtrl implements Initializable {
             if (firstname.equals(e.getFirstName()) && lastname.equals(e.getLastName())) {
                 if (!(participantsScroll.getSelectionModel().getSelectedItem().equals(e))) {
                     personIsDuplicate = true;
-                    warningLabel.setText(LanguageSingleton.getInstance().getResourceBundle().getString("error.duplicate.name"));
+                    warningLabel.setText(languageManager.getResourceBundle().getString("error.duplicate.name"));
                     System.out.println("ADDING FAILED: Tried to add a combination of firstname and lastname that already exists");
                     return personIsDuplicate;
                 }
@@ -214,7 +216,7 @@ public class ParticipantEditPageCtrl implements Initializable {
         int serverID = mainCtrl.getCurrentEventID();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initModality(Modality.APPLICATION_MODAL);
-        alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("confirm.delete.person"));
+        alert.setContentText(languageManager.getResourceBundle().getString("confirm.delete.person"));
         Optional<ButtonType> result = alert.showAndWait();
         if(result.isPresent() && result.get() == ButtonType.OK){
             Person removedPerson = server.removePerson(personID, serverID);
@@ -223,7 +225,7 @@ public class ParticipantEditPageCtrl implements Initializable {
         }
         else{
             Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-            alert2.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("person.delete.cancelled"));
+            alert2.setContentText(languageManager.getResourceBundle().getString("person.delete.cancelled"));
             alert2.show();
         }
     }

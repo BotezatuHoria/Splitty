@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import client.utils.LanguageSingleton;
+import client.utils.LanguageManager;
 import client.utils.ServerUtils;
 import commons.Person;
 import commons.Transaction;
@@ -64,6 +64,7 @@ public class GiveMoneyCtrl implements Initializable {
     private Label whoPaidLabel; // Value injected by FXMLLoader
     private MainCtrl mainCtrl;
     private ServerUtils server;
+    private LanguageManager languageManager;
 
     /**
      * Aborts the expense and goes back to the event page.
@@ -99,7 +100,7 @@ public class GiveMoneyCtrl implements Initializable {
             List<Person> participants = new ArrayList<>();
             participants.add(payee);
             String title = payer +  " " +
-                    LanguageSingleton.getInstance().getResourceBundle().getString("pays.misc") + " " + payee;
+                    languageManager.getResourceBundle().getString("pays.misc") + " " + payee;
             String expenseType = null;
             Transaction transaction = new Transaction(title, date, value, currency, expenseType, participants, payer);
             transaction.setHandOff(true);
@@ -108,12 +109,12 @@ public class GiveMoneyCtrl implements Initializable {
             System.out.println(result.toString());
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.initModality(Modality.APPLICATION_MODAL);
-            String expenseCreatedAlert = LanguageSingleton.getInstance().getResourceBundle().getString("expense.created.alert");
+            String expenseCreatedAlert = languageManager.getResourceBundle().getString("expense.created.alert");
 
             alert.setContentText(expenseCreatedAlert);
             alert.showAndWait();
         }catch (Exception e) {
-            String expenseFailedAlert = LanguageSingleton.getInstance().getResourceBundle().getString("expense.created.fail.alert");
+            String expenseFailedAlert = languageManager.getResourceBundle().getString("expense.created.fail.alert");
 
             mainCtrl.showAlert(expenseFailedAlert);
         }
@@ -126,9 +127,10 @@ public class GiveMoneyCtrl implements Initializable {
      * @param server to get stuff
      */
     @Inject
-    public GiveMoneyCtrl(MainCtrl mainCtrl, ServerUtils server) {
+    public GiveMoneyCtrl(MainCtrl mainCtrl, ServerUtils server, LanguageManager languageManager) {
         this.mainCtrl = mainCtrl;
         this.server = server;
+        this.languageManager = languageManager;
     }
 
     /**
@@ -194,8 +196,7 @@ public class GiveMoneyCtrl implements Initializable {
     public boolean checkCompleted() {return checkBoxes() && checkFields();}
 
     private boolean checkBoxes() {
-        LanguageSingleton lang = LanguageSingleton.getInstance();
-        ResourceBundle messages = lang.getResourceBundle();
+        ResourceBundle messages = languageManager.getResourceBundle();
 
 
         if (payerBox.valueProperty().get() == null) {
@@ -226,8 +227,7 @@ public class GiveMoneyCtrl implements Initializable {
      * @return true if they are indeed full
      */
     private boolean checkFields() {
-        LanguageSingleton lang = LanguageSingleton.getInstance();
-        ResourceBundle messages = lang.getResourceBundle();
+        ResourceBundle messages = languageManager.getResourceBundle();
 
         if (priceField.getText() == null || priceField.getText().equals(" ")) {
             mainCtrl.showAlert(messages.getString("expense.validation.error.provideAmount"));
