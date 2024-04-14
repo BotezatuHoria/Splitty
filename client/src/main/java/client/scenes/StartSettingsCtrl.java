@@ -6,6 +6,7 @@ import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -13,9 +14,10 @@ import javafx.stage.Window;
 
 import java.io.*;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ResourceBundle;
 
-public class StartSettingsCtrl {
+public class StartSettingsCtrl implements Initializable {
     private final MainCtrl mainCtrl;
     private final ServerUtils serverUtils;
     private static Config config = ServerUtils.getConfig();
@@ -147,27 +149,25 @@ public class StartSettingsCtrl {
         //fileChooser.setSelectedFile(new File("languageTemplate.properties"));
         try{
             File saveFile = fileChooser.showSaveDialog(parent);
-            try (FileInputStream in = new FileInputStream(file); FileOutputStream out = new FileOutputStream(saveFile)) {
+            if (saveFile != null) {
+                try (FileInputStream in = new FileInputStream(file); FileOutputStream out = new FileOutputStream(saveFile)) {
 
-                int n;
+                    int n;
 
-                // read() function to read the
-                // byte of data
-                while ((n = in.read()) != -1) {
-                    // write() function to write
-                    // the byte of data
-                    out.write(n);
+                    // read() function to read the
+                    // byte of data
+                    while ((n = in.read()) != -1) {
+                        // write() function to write
+                        // the byte of data
+                        out.write(n);
+                    }
+                    in.close();
+                    out.close();
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("alert.template.download.success"));
+                    alert.showAndWait();
                 }
-            } finally {
-                // close() function to close the
-                // stream
-                // close() function to close
-                // the stream
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("alert.template.download.success"));
-                alert.showAndWait();
             }
-
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -216,6 +216,9 @@ public class StartSettingsCtrl {
         }
     }
 
+    /**
+     * Method fot changing between normal contrast and high-contrast.
+     */
     public void changeContrast(){
         if (contrastButton.getText().equals(highContrast)){
             //set new button title
@@ -231,4 +234,26 @@ public class StartSettingsCtrl {
             mainCtrl.normalContrast();
         }
     }
+
+    /**
+     * Initialize method for settings page.
+     * @param url -
+     * @param resourceBundle -
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        mainCtrl.handleEnterKeyPress(startPageAdmin, this::adminLogin);
+        mainCtrl.handleEnterKeyPress(startPageConfirm, this::showStart);
+        mainCtrl.handleEnterKeyPress(changeButton, this::changeServer);
+        mainCtrl.handleEnterKeyPress(okButton, () -> {
+            try {
+                confirmServer();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        mainCtrl.handleEnterKeyPress(downloadButton, this::downloadTemplate);
+        mainCtrl.handleEnterKeyPress(contrastButton, this::changeContrast);
+    }
+
 }

@@ -9,21 +9,12 @@
 
 <AnchorPane fx:id="pane" prefHeight="500.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.AdminPageCtrl">
    <children>
-      <Label fx:id="adminPageLabel" layoutX="14.0" layoutY="14.0" text="Admin Page">
+      <Label fx:id="adminPageLabel" layoutX="36.0" layoutY="14.0" text="Admin Page">
          <font>
             <Font size="28.0" />
          </font>
       </Label>
-      <Button fx:id="backButton" layoutX="523.0" layoutY="436.0" mnemonicParsing="false" onAction="#goBack" prefHeight="44.0" prefWidth="57.0" text="Back" />
       <Label fx:id="allEventsLabel" layoutX="36.0" layoutY="69.0" prefHeight="30.0" prefWidth="190.0" text="All Events:">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Button fx:id="downloadEvent" layoutX="522.0" layoutY="113.0" mnemonicParsing="false" onAction="#downloadEvent" prefHeight="26.0" prefWidth="95.0" text="Download" />
-      <Button fx:id="deleteEvent" layoutX="523.0" layoutY="383.0" mnemonicParsing="false" onAction="#delete" prefHeight="26.0" prefWidth="95.0" text="Delete" />
-      <Button fx:id="importEvent" layoutX="523.0" layoutY="248.0" mnemonicParsing="false" onAction="#importEvent" prefHeight="26.0" prefWidth="95.0" text="Import" />
-      <Label fx:id="selectedEventLabel" layoutX="36.0" layoutY="420.0" prefHeight="30.0" prefWidth="278.0" text="Selected Event:">
          <font>
             <Font size="20.0" />
          </font>
@@ -35,6 +26,15 @@
             <TableColumn fx:id="lastModifiedColumn" prefWidth="214.0" text="Last Activity" />
         </columns>
       </TableView>
+      <Button fx:id="downloadEvent" layoutX="522.0" layoutY="113.0" mnemonicParsing="false" onAction="#downloadEvent" prefHeight="26.0" prefWidth="95.0" text="Download" />
+      <Button fx:id="importEvent" layoutX="523.0" layoutY="248.0" mnemonicParsing="false" onAction="#importEvent" prefHeight="26.0" prefWidth="95.0" text="Import" />
+      <Button fx:id="deleteEvent" layoutX="523.0" layoutY="383.0" mnemonicParsing="false" onAction="#delete" prefHeight="26.0" prefWidth="95.0" text="Delete" />
+      <Label fx:id="selectedEventLabel" layoutX="36.0" layoutY="420.0" prefHeight="30.0" prefWidth="278.0" text="Selected Event:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="backButton" layoutX="523.0" layoutY="436.0" mnemonicParsing="false" onAction="#goBack" prefHeight="44.0" prefWidth="57.0" text="Back" />
       <Label fx:id="selectedEvent" layoutX="314.0" layoutY="421.0" prefHeight="30.0" prefWidth="189.0" text="None">
          <font>
             <Font size="20.0" />

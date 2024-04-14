@@ -15,6 +15,7 @@
  */
 package client.scenes;
 
+import client.Config;
 import client.utils.LanguageSingleton;
 import client.utils.SelectedEventSingleton;
 import commons.Person;
@@ -22,6 +23,7 @@ import commons.Transaction;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -29,6 +31,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import client.utils.ServerUtils;
+
 import java.util.ResourceBundle;
 
 public class MainCtrl {
@@ -87,6 +90,8 @@ public class MainCtrl {
 
     private Scene giveMoneyPage;
     private GiveMoneyCtrl giveMoneyCtrl;
+
+    private Config config;
 
     public MainCtrl() {
     }
@@ -289,6 +294,7 @@ public class MainCtrl {
      * Method for showing statistics page.
      */
     public void showStatisticsPage() {
+        statisticsCtrl.clear();
         statisticsCtrl.initializeStatistics();
         primaryStage.setTitle("Statistics Page");
         primaryStage.setScene(statistics);
@@ -500,7 +506,7 @@ public class MainCtrl {
         this.editExpensePage.getStylesheets().add(contrastStyleSheet);
 
         this.giveMoneyPage.getStylesheets().remove(styleSheet);
-        this.editExpensePage.getStylesheets().add(contrastStyleSheet);
+        this.giveMoneyPage.getStylesheets().add(contrastStyleSheet);
     }
 
     /**
@@ -547,7 +553,7 @@ public class MainCtrl {
         this.editExpensePage.getStylesheets().add(styleSheet);
 
         this.giveMoneyPage.getStylesheets().remove(contrastStyleSheet);
-        this.editExpensePage.getStylesheets().add(styleSheet);
+        this.giveMoneyPage.getStylesheets().add(styleSheet);
     }
 
     /**
@@ -557,6 +563,13 @@ public class MainCtrl {
         primaryStage.setTitle("Give Money");
         giveMoneyCtrl.updatePage();
         primaryStage.setScene(giveMoneyPage);
+    }
 
+    public void handleEnterKeyPress(Button button, Runnable action) {
+        button.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                action.run();
+            }
+        });
     }
 }

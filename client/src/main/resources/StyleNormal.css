@@ -19,15 +19,21 @@
     -fx-text-fill: #000000;
 }
 .button{
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color:#000000;
     -fx-background-color: #F7E3AF;
     -fx-text-fill: #000000;
 }
 .text-field{
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color:#000000;
     -fx-background-color: #F7E3AF;
     -fx-text-fill: #000000;
     -fx-prompt-text-fill: #000000;
 }
 .combo-box{
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color:#000000;
     -fx-background-color: #F7E3AF;
     -fx-text-fill: #000000;
 }
@@ -44,6 +50,6 @@
     -fx-background-color: #f6da72;
 }
 
-combo-box:hover {
+.combo-box:hover {
     -fx-background-color: #f6da72;
 }

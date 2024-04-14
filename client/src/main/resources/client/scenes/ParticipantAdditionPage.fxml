@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane fx:id="pane" prefHeight="500.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.ParticipantAdditionPageCtrl">
+<AnchorPane fx:id="pane" prefHeight="411.0" prefWidth="534.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.ParticipantAdditionPageCtrl">
    <children>
       <Label fx:id="participantAdditionLabel" layoutX="26.0" layoutY="14.0" text="Add new Participant">
          <font>
@@ -33,18 +32,18 @@
          </font>
       </Label>
       <TextField fx:id="iban" layoutX="97.0" layoutY="229.0" prefHeight="32.0" prefWidth="350.0" promptText="IBAN" />
-      <Button fx:id="createButton" layoutX="357.0" layoutY="335.0" mnemonicParsing="false" onAction="#create" prefHeight="45.0" prefWidth="90.0" text="Ok">
+      <Button fx:id="createButton" layoutX="402.0" layoutY="335.0" mnemonicParsing="false" onAction="#create" prefHeight="45.0" prefWidth="90.0" text="Ok">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
-      <Button fx:id="abortButton" layoutX="221.0" layoutY="335.0" mnemonicParsing="false" onAction="#abort" prefHeight="45.0" prefWidth="115.0" text="Abort">
+      <Button fx:id="abortButton" layoutX="252.0" layoutY="335.0" mnemonicParsing="false" onAction="#abort" prefHeight="45.0" prefWidth="126.0" text="Abort">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
       <Label fx:id="firstnameResponse" layoutX="96.0" layoutY="99.0" />
       <Label fx:id="lastnameResponse" layoutX="96.0" layoutY="152.0" />
-      <Label fx:id="doublePersonResponse" layoutX="446.0" layoutY="53.0" prefHeight="93.0" prefWidth="100.0" wrapText="true" />
+      <Label fx:id="doublePersonResponse" layoutX="32.0" layoutY="289.0" prefHeight="93.0" prefWidth="100.0" wrapText="true" />
    </children>
 </AnchorPane>

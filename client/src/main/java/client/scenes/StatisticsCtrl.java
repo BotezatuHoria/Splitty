@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -46,13 +47,15 @@ public class StatisticsCtrl implements Initializable {
         this.server = server;
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    /**
+     * Method for initializing the pie-chart and total amount.
+     */
     public void initializeStatistics() {
         assert statsPieChart != null : "fx:id=\"statsPieChart\" was not injected: check your FXML file 'Statistics.fxml'.";
         assert statsTotalExpenses != null : "fx:id=\"statsTotalExpenses\" was not injected: check your FXML file 'Statistics.fxml'.";
 
         Event selectedEvent = server.getEventByID(mainCtrl.getCurrentEventID());
-
+        statsPieChart.layout();
         if (selectedEvent == null) {
             statsTotalExpenses.setText(LanguageSingleton.getInstance().getResourceBundle().getString("error.server.eventNotFound"));
         } else {
@@ -70,7 +73,6 @@ public class StatisticsCtrl implements Initializable {
                         currentTotal = 0.0;
                     }
                     else {
-
                         currentTotal = expensesData.get(transaction.getExpenseType());
                     }
                     translateData(transaction);
@@ -101,8 +103,18 @@ public class StatisticsCtrl implements Initializable {
         mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
     }
 
+    /**
+     * Initialize method for statistics page.
+     * @param url -
+     * @param resourceBundle -
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        goBackButton.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                goBack();
+            }
+        });
         server.registerForMessages("/topic/event", Object.class, object -> {
             if (mainCtrl.getCurrentEventID() != 0) {
                 Platform.runLater(this::initializeStatistics);
@@ -113,7 +125,7 @@ public class StatisticsCtrl implements Initializable {
 
     public void translateData(Transaction transaction) {
         String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
-        String entranceFeeString= LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
+        String entranceFeeString = LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
         String travelString = LanguageSingleton.getInstance().getResourceBundle().getString("travel.label");
         if (transaction.getExpenseType().equals("Food")) {
             transaction.setExpenseType(foodString);
@@ -125,4 +137,13 @@ public class StatisticsCtrl implements Initializable {
             transaction.setExpenseType(travelString);
         }
     }
+
+    /**
+     * Method to clear entire page.
+     */
+    public void clear() {
+        statsTotalExpenses.setText("");
+        statsPieChart.getData().clear();
+    }
+
 }
