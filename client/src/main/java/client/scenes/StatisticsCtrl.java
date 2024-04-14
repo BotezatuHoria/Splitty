@@ -62,7 +62,7 @@ public class StatisticsCtrl implements Initializable {
             Map<String, Double> expensesData = new HashMap<>();
 
             for (Transaction transaction : transactions) {
-                if (transaction.isHandOff()) {
+                if (!transaction.isHandOff()) {
                     totalExpenses += transaction.getMoney();
 
                     double currentTotal;
@@ -70,9 +70,10 @@ public class StatisticsCtrl implements Initializable {
                         currentTotal = 0.0;
                     }
                     else {
+
                         currentTotal = expensesData.get(transaction.getExpenseType());
                     }
-
+                    translateData(transaction);
                     expensesData.put(transaction.getExpenseType(), currentTotal + transaction.getMoney());
                 }
             }
@@ -110,8 +111,18 @@ public class StatisticsCtrl implements Initializable {
     }
 
 
-    public boolean checkNewData() {
-        Event currentEvent = server.getEventByID(mainCtrl.getCurrentEventID());
-        return currentEvent.getTransactions() != selectedEvent.getTransactions();
+    public void translateData(Transaction transaction) {
+        String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
+        String entranceFeeString= LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
+        String travelString = LanguageSingleton.getInstance().getResourceBundle().getString("travel.label");
+        if (transaction.getExpenseType().equals("Food")) {
+            transaction.setExpenseType(foodString);
+        }
+        if (transaction.getExpenseType().equals("Entrance Fees")) {
+            transaction.setExpenseType(entranceFeeString);
+        }
+        if (transaction.getExpenseType().equals("Travel")) {
+            transaction.setExpenseType(travelString);
+        }
     }
 }
