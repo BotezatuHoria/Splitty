@@ -24,6 +24,7 @@ import java.net.URISyntaxException;
 import client.scenes.*;
 import client.utils.FlagListCell;
 import client.utils.LanguageManager;
+import client.utils.SelectedEventManager;
 import client.utils.ServerUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Injector;
@@ -63,10 +64,11 @@ public class Main extends Application {
         boolean result = checkConnection(host);
 
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
-
-        LanguageManager languageManager = new LanguageManager(mainCtrl.getServer(), new FlagListCell());
+        ServerUtils serverUtils = new ServerUtils();
+        LanguageManager languageManager = new LanguageManager(serverUtils, new FlagListCell());
         languageManager.setMainCtrl(mainCtrl);
-        ServerUtils.setLanguageManager(languageManager);
+        serverUtils.setLanguageManager(languageManager);
+        SelectedEventManager selectedEventManager = new SelectedEventManager();
 
         var starterPage = FXML.load(StarterPageCtrl.class, "client", "scenes", "StarterPage.fxml");
         var eventPage = FXML.load(EventPageCtrl.class, "client", "scenes", "EventPage.fxml");
@@ -86,7 +88,7 @@ public class Main extends Application {
         var debtOverviewPage = FXML.load(DebtOverviewPageCtrl.class, "client", "scenes", "DebtOverviewPage.fxml");
         var giveMoneyPage = FXML.load(GiveMoneyCtrl.class, "client", "scenes", "GiveMoney.fxml");
 
-        mainCtrl.initialize(languageManager, primaryStage, starterPage, eventPage, statisticsPage, expensePage, startSettings,
+        mainCtrl.initialize(serverUtils, selectedEventManager, languageManager, primaryStage, starterPage, eventPage, statisticsPage, expensePage, startSettings,
                 addParticipants, editParticipants, inviteSend, debtPage,adminLogin, adminPage, editExpensePage, debtOverviewPage, giveMoneyPage);
 
         primaryStage.setOnCloseRequest(e -> {

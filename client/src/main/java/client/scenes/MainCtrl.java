@@ -17,7 +17,7 @@ package client.scenes;
 
 import client.Config;
 import client.utils.LanguageManager;
-import client.utils.SelectedEventSingleton;
+import client.utils.SelectedEventManager;
 import commons.Person;
 import commons.Transaction;
 import javafx.scene.Parent;
@@ -38,7 +38,7 @@ public class MainCtrl {
     private ServerUtils server;
 
     private Stage primaryStage;
-
+    private SelectedEventManager selectedEventManager;
     private Scene starter;
     private StarterPageCtrl starterPageCtrl;
 
@@ -110,7 +110,7 @@ public class MainCtrl {
      * @param debt - debt page
      * @param language - language page
      */
-    public void initialize(
+    public void initialize(ServerUtils serverUtils, SelectedEventManager selectedEventManager,
             LanguageManager languageManager, Stage primaryStage, Pair<StarterPageCtrl, Parent> starter,
                            Pair<EventPageCtrl, Parent> event, Pair<StatisticsCtrl, Parent> statistics,
                            Pair<AddExpenseCtrl, Parent> expense,
@@ -124,8 +124,8 @@ public class MainCtrl {
                            Pair<EditExpenseCtrl, Parent> editExpensePage,
                            Pair<DebtOverviewPageCtrl, Parent> debtOverview,
                            Pair<GiveMoneyCtrl, Parent> giveMoney){
-        this.server = new ServerUtils();
-
+        this.server = serverUtils;
+        this.server.setLanguageManager(languageManager);
         this.primaryStage = primaryStage;
 
         styleSheet = "/StyleNormal.css";
@@ -191,6 +191,7 @@ public class MainCtrl {
         starterPageCtrl.initializeLanguages();
         eventCtrl.initializeLanguages();
 
+        this.selectedEventManager = selectedEventManager;
         this.languageManager = languageManager;
         languageManager.setLanguageByCode(ServerUtils.getConfig().getClientsLanguage());
         languageManager.setLanguageText();
@@ -281,8 +282,7 @@ public class MainCtrl {
      */
     public void showEventPage(int eventID) {
         primaryStage.setTitle("Event Page");
-        SelectedEventSingleton selectedEventInstance = SelectedEventSingleton.getInstance();
-        selectedEventInstance.setEventId(eventID);
+        selectedEventManager.setEventId(eventID);
         eventCtrl.refresh();
         eventCtrl.updatePage();
         eventCtrl.updateLanguage();
@@ -399,8 +399,7 @@ public class MainCtrl {
      * @return the current EventID.
      */
     public int getCurrentEventID() {
-        SelectedEventSingleton selectedEventInstance = SelectedEventSingleton.getInstance();
-        return selectedEventInstance.getEventId();
+        return selectedEventManager.getEventId();
     }
 
     public void showAlert(String error) {
