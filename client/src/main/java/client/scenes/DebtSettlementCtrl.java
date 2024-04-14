@@ -142,8 +142,20 @@ public class DebtSettlementCtrl {
     markReceived.setOnAction(event -> settleDebt(debt));
     Button sendEmail = new Button(sendEmailString);
     sendEmail.getStyleClass().add("debt-button");
-    sendEmail.setOnAction(actionEvent -> {server.sendEmail(debt.getSender().getEmail(), "You owe some money",
-            "Hey! You forgot to pay: " + debt.getDebt() + " EUR" + " to " + debt.getReceiver().toString() + ".");});
+
+    String titleOfEvent = server.getEventByID(mainCtrl.getCurrentEventID()).getTitle();
+    String subject = "You owe money in: " + titleOfEvent;
+    String message = "Dear participant of " + titleOfEvent + ", \n This is a reminder of your debt that is still open in this event. \n" +
+            "To repay your debt, you need to pay " + debt.getDebt() + " EUR" + " to " + debt.getReceiver().toString() + ".\n" +
+            "If, by some mistake, this debt is incorrect or already paid; please check the app and contact " + debt.getReceiver().toString() + "." +
+            "Note: this email was auto-generated, not made by the person that send you this themselves. If there are inconsistencies please contact the moderators of the application." +
+            "\n\n" +
+            "Best regards,\n" +
+            "" +  ServerUtils.getConfig().getClientsEmailAddress()+ "\n";
+    sendEmail.setOnAction(actionEvent -> {server.sendEmail(debt.getSender().getEmail(), subject,
+            message);});
+
+
     Button settleDebt = new Button(settleDebtString);
     settleDebt.getStyleClass().add("debt-button");
     HBox hBox = new HBox(10, markReceived, sendEmail, settleDebt); // 10 is the spacing between buttons
