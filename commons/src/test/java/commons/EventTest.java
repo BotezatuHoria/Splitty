@@ -253,4 +253,59 @@ class EventTest {
         Event test2 = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
         assertEquals(test.hashCode(), test2.hashCode());
     }
+
+
+    @Test
+    void setId() {
+        Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+        test.setId(2);
+        assertEquals(test.getId(), 2);
+    }
+
+    @Test
+    void getTagList() {
+        Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+        List<Tag> tagList = test.getTagList();
+        assertEquals(test.getTagList().size(), 3);
+    }
+
+    @Test
+    void setTagList() {
+        Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+        List<Tag> tagList = List.of(new Tag("Test"), new Tag("Test2"));
+        test.setTagList(tagList);
+        assertEquals(test.getTagList().size(), 2);
+    }
+
+    @Test
+    void addTag() {
+        Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+        List<Tag> tagList = new ArrayList<>();
+        tagList.add(new Tag("Test"));
+        tagList.add(new Tag("Test2"));
+        test.setTagList(tagList);
+        test.addTag(new Tag("tag"));
+        assertEquals(test.getTagList().size(), 3);
+    }
+
+    @Test
+    void removeTag() {
+        Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+        Tag tag = new Tag("Test");
+        List<Tag> tagList = new ArrayList<>();
+        tagList.add(tag);
+        tagList.add(new Tag("Test2"));
+        test.setTagList(tagList);
+        test.removeTag(tag);
+        assertEquals(test.getTagList().size(), 1);
+    }
+
+    @Test
+    public void removeTags() {
+        Event test = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+        Tag tag = new Tag("Test");
+        List<Tag> tagList = List.of(tag, new Tag("Test2"));
+        test.removeTags();
+        assertEquals(test.getTagList().size(), 0);
+    }
 }

@@ -222,14 +222,5 @@ public class InviteSendingCtrl implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        mainCtrl.handleEnterKeyPress(sendInviteButton, this::sendInvite);
-        mainCtrl.handleEnterKeyPress(copyInviteCodeButton, () -> {
-            try {
-                copyCode();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        mainCtrl.handleEnterKeyPress(cancel, this::cancelGoBack);
     }
 }

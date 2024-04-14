@@ -115,8 +115,5 @@ public class AdminLoginCtrl implements Initializable {
      * initializes the buttons with their functions.
      */
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        mainCtrl.handleEnterKeyPress(backButton, this::goBack);
-        mainCtrl.handleEnterKeyPress(loginButton, this::loginButton_onClick);
-        mainCtrl.handleEnterKeyPress(resendButton, this::resendPassword);
     }
 }

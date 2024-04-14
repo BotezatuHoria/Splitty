@@ -36,7 +36,7 @@
       </Label>
       <ImageView fitHeight="48.0" fitWidth="45.0" layoutX="347.0" layoutY="324.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../images/return.png" />
+            <Image url="@images/return.png" />
          </image>
       </ImageView>
    </children>

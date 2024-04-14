@@ -123,11 +123,6 @@ public class AddExpenseCtrl implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        mainCtrl.handleEnterKeyPress(addButton, this::createTransaction);
-        mainCtrl.handleEnterKeyPress(abortButton, this::abortExpense);
-        mainCtrl.handleEnterKeyPress(addTagButton, this::addNewTag);
-        mainCtrl.handleEnterKeyPress(addEverybody, this::addParticipantToView);
-        mainCtrl.handleEnterKeyPress(addTag, this::showTagPage);
         peopleLIstView.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
@@ -270,7 +265,7 @@ public class AddExpenseCtrl implements Initializable {
                     participants.add((Person) checkBox.getUserData());
                 }
             }
-            String expenseType = expenseTypeBox.getValue();
+            String expenseType = translateData();
             Transaction transaction = new Transaction(title, date, value, currency, expenseType, participants, payer);
             System.out.println(transaction.getCreator().toString());
             Transaction result = server.addTransactionToCurrentEvent(mainCtrl.getCurrentEventID(), transaction);
@@ -288,6 +283,28 @@ public class AddExpenseCtrl implements Initializable {
             mainCtrl.showAlert(expenseFailedAlert);
         }
 
+    }
+
+    public String translateData() {
+        if (expenseTypeBox.getValue().equals("Mancare")) {
+            return "Food";
+        }
+        if (expenseTypeBox.getValue().equals("Calatorie")) {
+            return "Travel";
+        }
+        if (expenseTypeBox.getValue().equals("Bilete")) {
+            return "Entrance Fees";
+        }
+        if (expenseTypeBox.getValue().equals("Eten")) {
+            return "Food";
+        }
+        if (expenseTypeBox.getValue().equals("Toegangsprijs")) {
+            return "Entrance Fees";
+        }
+        if (expenseTypeBox.getValue().equals("Reizen")) {
+            return "Travel";
+        }
+        return expenseTypeBox.getValue();
     }
 
     /**

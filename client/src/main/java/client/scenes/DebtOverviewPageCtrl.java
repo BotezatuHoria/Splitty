@@ -138,10 +138,6 @@ public class DebtOverviewPageCtrl implements Initializable {
    * initializes all the buttons to refer to the correct pages.
    */
   public void initialize(URL url, ResourceBundle resourceBundle) {
-    mainCtrl.handleEnterKeyPress(settleDebtButton, this::buttonPressHandle);
-    mainCtrl.handleEnterKeyPress(goBackButton, () -> {
-      mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
-    });
     initializeTable();
 
     server.registerForMessages("/topic/events/people", Person.class, person -> {

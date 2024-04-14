@@ -252,7 +252,5 @@ public class ParticipantAdditionPageCtrl implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        mainCtrl.handleEnterKeyPress(createButton, this::create);
-        mainCtrl.handleEnterKeyPress(abortButton, this::abort);
     }
 }

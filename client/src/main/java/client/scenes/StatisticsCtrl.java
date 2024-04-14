@@ -13,7 +13,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -75,7 +74,7 @@ public class StatisticsCtrl implements Initializable {
                     else {
                         currentTotal = expensesData.get(transaction.getExpenseType());
                     }
-
+                    translateData(transaction);
                     expensesData.put(transaction.getExpenseType(), currentTotal + transaction.getMoney());
                 }
             }
@@ -110,16 +109,27 @@ public class StatisticsCtrl implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        goBackButton.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                goBack();
-            }
-        });
         server.registerForMessages("/topic/event", Object.class, object -> {
             if (mainCtrl.getCurrentEventID() != 0) {
                 Platform.runLater(this::initializeStatistics);
             }
         });
+    }
+
+
+    public void translateData(Transaction transaction) {
+        String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
+        String entranceFeeString = LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
+        String travelString = LanguageSingleton.getInstance().getResourceBundle().getString("travel.label");
+        if (transaction.getExpenseType().equals("Food")) {
+            transaction.setExpenseType(foodString);
+        }
+        if (transaction.getExpenseType().equals("Entrance Fees")) {
+            transaction.setExpenseType(entranceFeeString);
+        }
+        if (transaction.getExpenseType().equals("Travel")) {
+            transaction.setExpenseType(travelString);
+        }
     }
 
     /**
