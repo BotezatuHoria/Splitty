@@ -34,10 +34,10 @@
          </font>
       </Label>
       <ComboBox fx:id="payerBox" layoutX="221.0" layoutY="66.0" prefHeight="26.0" prefWidth="197.0" promptText="Payer" />
+      <ComboBox fx:id="payeeBox" layoutX="221.0" layoutY="100.0" prefHeight="26.0" prefWidth="197.0" promptText="Payee" />
       <TextField fx:id="priceField" layoutX="221.0" layoutY="131.0" prefHeight="26.0" prefWidth="273.0" promptText="Value of the expense..." />
       <ComboBox fx:id="currencyBox" layoutX="502.0" layoutY="129.0" prefHeight="26.0" prefWidth="111.0" promptText="Currency" />
       <DatePicker fx:id="dateBox" layoutX="223.0" layoutY="164.0" prefHeight="26.0" prefWidth="392.0" promptText="Please select the date..." />
-      <Button fx:id="abortButton" layoutX="532.0" layoutY="202.0" mnemonicParsing="false" onAction="#abortExpense" prefHeight="51.0" prefWidth="51.0" />
       <Button fx:id="addButton" layoutX="405.0" layoutY="215.0" mnemonicParsing="false" onAction="#addExpense" prefHeight="26.0" prefWidth="83.0" text="Add" />
       <ImageView fitHeight="39.0" fitWidth="39.0" layoutX="539.0" layoutY="208.0">
          <image>
@@ -49,6 +49,6 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <ComboBox fx:id="payeeBox" layoutX="221.0" layoutY="100.0" prefHeight="26.0" prefWidth="197.0" promptText="Payee" />
+      <Button fx:id="abortButton" layoutX="532.0" layoutY="202.0" mnemonicParsing="false" onAction="#abortExpense" prefHeight="51.0" prefWidth="51.0" />
    </children>
 </AnchorPane>

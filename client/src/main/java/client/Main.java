@@ -62,8 +62,7 @@ public class Main extends Application {
 
         getConfigFile();
         String host = config.getClientsServer();
-        boolean result = checkConnection(host); //if this is false, the client is trying to connect to a server that is not running.
-        // we can choose to have ui for this or not...
+        boolean result = checkConnection(host);
 
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 
@@ -157,36 +156,12 @@ public class Main extends Application {
      * checks whether the server the client wants to connect to is running (tested with an api call).
      * @return true when client connects to running server, false otherwise.
      */
-    /*public boolean checkConnection(String host){
-        String uri = host + "/api/events";
-        URL url;
-        try {
-            url = new URI(uri).toURL();
-            var is = url.openConnection().getInputStream();
-            var br = new BufferedReader(new InputStreamReader(is));
-            String line;
-            while ((line = br.readLine()) != null) {
-                System.out.println(line);
-            }
-        }  catch (BadRequestException e) {
-            //if it is a bad request, then apparently there is a connection with the server (because they responded this)
-            // therefore connection is true.
-            return true;
-        }
-        catch (ConnectException e) {
-            //no connection, wrong port.
-            return false;
-        }
-        catch (Exception e) {
-            //connection but file not found, does not matter, so still true.
-            return true;
-        }
-        return true;
-
-
-    }*/
 
     public boolean checkConnection(String host) {
+        if(host.length() > 22){
+            return false;
+        }
+
         try {
             Response response = ClientBuilder.newClient(new ClientConfig()) //
                     .target(host)

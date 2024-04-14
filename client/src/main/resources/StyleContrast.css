@@ -29,3 +29,19 @@
 .date-picker .label{
     -fx-text-fill: #0D3B66;
 }
+
+.text-field:hover {
+    -fx-background-color: #fcd12b;
+}
+
+.button:hover{
+    -fx-background-color: #fcd12b;
+}
+
+.button:focused{
+    -fx-background-color: #fcd12b;
+}
+
+combo-box:hover {
+    -fx-background-color: #fcd12b;
+}
