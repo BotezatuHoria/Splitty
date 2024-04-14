@@ -75,7 +75,7 @@ public class StatisticsCtrl implements Initializable {
                     else {
                         currentTotal = expensesData.get(transaction.getExpenseType());
                     }
-
+                    translateData(transaction);
                     expensesData.put(transaction.getExpenseType(), currentTotal + transaction.getMoney());
                 }
             }
@@ -120,6 +120,22 @@ public class StatisticsCtrl implements Initializable {
                 Platform.runLater(this::initializeStatistics);
             }
         });
+    }
+
+
+    public void translateData(Transaction transaction) {
+        String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
+        String entranceFeeString = LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
+        String travelString = LanguageSingleton.getInstance().getResourceBundle().getString("travel.label");
+        if (transaction.getExpenseType().equals("Food")) {
+            transaction.setExpenseType(foodString);
+        }
+        if (transaction.getExpenseType().equals("Entrance Fees")) {
+            transaction.setExpenseType(entranceFeeString);
+        }
+        if (transaction.getExpenseType().equals("Travel")) {
+            transaction.setExpenseType(travelString);
+        }
     }
 
     /**
