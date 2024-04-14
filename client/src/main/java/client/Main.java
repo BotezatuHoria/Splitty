@@ -17,7 +17,6 @@ package client;
 
 import static com.google.inject.Guice.createInjector;
 
-import java.awt.*;
 import java.io.*;
 import java.net.URISyntaxException;
 
@@ -34,7 +33,6 @@ import com.google.inject.Injector;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.Response;
 import javafx.application.Application;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.glassfish.jersey.client.ClientConfig;
 
@@ -93,18 +91,6 @@ public class Main extends Application {
             eventPage.getKey().stop();
         });
 
-        primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/images/Splitty.png")));
-
-        if (Taskbar.isTaskbarSupported()) {
-            var taskbar = Taskbar.getTaskbar();
-
-            if (taskbar.isSupported(Taskbar.Feature.ICON_IMAGE)) {
-                final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
-                var dockIcon = defaultToolkit.getImage(getClass().getResource("/images/Splitty.png"));
-                taskbar.setIconImage(dockIcon);
-            }
-
-        }
     }
 
     /**

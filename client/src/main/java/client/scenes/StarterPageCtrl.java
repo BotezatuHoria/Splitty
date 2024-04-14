@@ -256,9 +256,6 @@ public class StarterPageCtrl implements Initializable {
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        mainCtrl.handleEnterKeyPress(createButton, this::showEventPage);
-        mainCtrl.handleEnterKeyPress(joinButton, this::joinEvent);
-        mainCtrl.handleEnterKeyPress(settingButton, this::showSettingsPage);
         listView.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {

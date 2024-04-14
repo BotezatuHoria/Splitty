@@ -13,7 +13,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -110,11 +109,6 @@ public class StatisticsCtrl implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        goBackButton.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                goBack();
-            }
-        });
         server.registerForMessages("/topic/event", Object.class, object -> {
             if (mainCtrl.getCurrentEventID() != 0) {
                 Platform.runLater(this::initializeStatistics);

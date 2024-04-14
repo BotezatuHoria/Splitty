@@ -23,7 +23,6 @@ import commons.Transaction;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -565,11 +564,4 @@ public class MainCtrl {
         primaryStage.setScene(giveMoneyPage);
     }
 
-    public void handleEnterKeyPress(Button button, Runnable action) {
-        button.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                action.run();
-            }
-        });
-    }
 }
