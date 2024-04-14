@@ -66,13 +66,19 @@ import javax.mail.internet.MimeMessage;
 
 public class ServerUtils {
 
-	private static String server;
-
-
+	private static String server = "http://localhost:8080/";
+	private static final String EMAIL_USERNAME = "";
+	private static final String EMAIL_PASSWORD = "";
+	private static LanguageManager languageManager;
 	private static Config config;
 	public static void setServer(String server) {
 		ServerUtils.server = server;
 	}
+
+	public static void setLanguageManager(LanguageManager languageManager) {
+		ServerUtils.languageManager = languageManager;
+	}
+
 
 	public static void setConfig(Config config) {
 		ServerUtils.config = config;
@@ -569,7 +575,7 @@ public class ServerUtils {
 	}
 
 	public void sendConfirmAlert() {
-		ResourceBundle resourceBundle = LanguageSingleton.getInstance().getResourceBundle();
+		ResourceBundle resourceBundle = languageManager.getResourceBundle();
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.initModality(Modality.APPLICATION_MODAL);
 		alert.setContentText(resourceBundle.getString("email.sent"));
@@ -577,7 +583,7 @@ public class ServerUtils {
 	}
 
 	public void sendFailAlert(MessagingException e) {
-		ResourceBundle resourceBundle = LanguageSingleton.getInstance().getResourceBundle();
+		ResourceBundle resourceBundle = languageManager.getResourceBundle();
 		Alert alert = new Alert(Alert.AlertType.ERROR);
 		alert.initModality(Modality.APPLICATION_MODAL);
 		alert.setContentText(resourceBundle.getString("email.failed") + e.getMessage());
@@ -585,7 +591,7 @@ public class ServerUtils {
 	}
 
 	public void sendBadEmailAlert() {
-		ResourceBundle resourceBundle = LanguageSingleton.getInstance().getResourceBundle();
+		ResourceBundle resourceBundle = languageManager.getResourceBundle();
 		Alert alert = new Alert(Alert.AlertType.ERROR);
 		alert.initModality(Modality.APPLICATION_MODAL);
 		alert.setContentText(resourceBundle.getString("email.invalid"));
@@ -602,8 +608,8 @@ public class ServerUtils {
 
 		languageSelector.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
 			if (newVal != null) {
-				LanguageSingleton.getInstance().setLanguage((org.apache.commons.lang3.tuple.Pair<String, Image>) newVal);
-				LanguageSingleton.getInstance().setLanguageText();
+				languageManager.setLanguage((org.apache.commons.lang3.tuple.Pair<String, Image>) newVal);
+				languageManager.setLanguageText();
 
 				Config config = ServerUtils.getConfig();
 				if (config != null) {
@@ -614,12 +620,12 @@ public class ServerUtils {
 		});
 
 		// Show current language
-		org.apache.commons.lang3.tuple.Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
+		org.apache.commons.lang3.tuple.Pair<String, Image> currentLanguage = languageManager.getLanguage();
 		languageSelector.getSelectionModel().select(currentLanguage);
 	}
 
 	public void setLanguageSelector(ComboBox languageSelector) {
-		org.apache.commons.lang3.tuple.Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
+		org.apache.commons.lang3.tuple.Pair<String, Image> currentLanguage = languageManager.getLanguage();
 		languageSelector.getSelectionModel().select(currentLanguage);
 	}
 

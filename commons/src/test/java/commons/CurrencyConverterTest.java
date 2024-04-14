@@ -1,6 +1,7 @@
 package commons;
 
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.junit.jupiter.api.Test;
 import org.apache.commons.lang3.tuple.Pair;
 import java.util.HashMap;
@@ -41,6 +42,31 @@ class CurrencyConverterTest {
     cc.addCurrencyConversionRate(currency1, currency2, 0.01);
     assertEquals(cc.convert(currency1, currency2, 500), 5);
   }
+
+  @Test
+  void currencyConverterThrows() {
+    Currency currency1 = new Currency(67890, "Rubbles");
+    Currency currency2 = new Currency(56800, "Euro ");
+    CurrencyConverter cc = new CurrencyConverter();
+
+    assertThrows(IllegalArgumentException.class, () -> cc.convert(currency1, currency2, 10.0));
+  }
+
+  @Test
+  void currencyConversionConstructor() {
+    Currency currency1 = new Currency(67890, "Rubbles");
+    Currency currency2 = new Currency(56800, "Euro ");
+    HashMap<Pair<Currency, Currency>, Double> currencyConversionRates = new HashMap<>();
+    currencyConversionRates.put(new ImmutablePair<>(currency1, currency2), 10.0);
+    currencyConversionRates.put(new ImmutablePair<>(currency2, currency1), 0.1);
+
+    CurrencyConverter cc1 = new CurrencyConverter(currencyConversionRates);
+    CurrencyConverter cc2 = new CurrencyConverter();
+    cc2.addCurrencyConversionRate(currency1, currency2, 10.0);
+
+    assertEquals(cc1.getCurrencyRates(), cc2.getCurrencyRates());
+  }
+
   /**
    * test for correct getting of conversion rates.
    */

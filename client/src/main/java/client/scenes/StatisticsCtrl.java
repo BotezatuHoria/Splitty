@@ -1,6 +1,6 @@
 package client.scenes;
 
-import client.utils.LanguageSingleton;
+import client.utils.LanguageManager;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Event;
@@ -23,6 +23,8 @@ import java.util.ResourceBundle;
 public class StatisticsCtrl implements Initializable {
     private final MainCtrl mainCtrl;
     private final ServerUtils server;
+    private final LanguageManager languageManager;
+
     @FXML // fx:id="statsPieChart"
     private PieChart statsPieChart;
 
@@ -41,9 +43,10 @@ public class StatisticsCtrl implements Initializable {
      * @param mainCtrl - reference to the main controller.
      */
     @Inject
-    public StatisticsCtrl(MainCtrl mainCtrl, ServerUtils server) {
+    public StatisticsCtrl(MainCtrl mainCtrl, ServerUtils server, LanguageManager languageManager) {
         this.mainCtrl = mainCtrl;
         this.server = server;
+        this.languageManager = languageManager;
     }
 
     /**
@@ -56,7 +59,7 @@ public class StatisticsCtrl implements Initializable {
         Event selectedEvent = server.getEventByID(mainCtrl.getCurrentEventID());
         statsPieChart.layout();
         if (selectedEvent == null) {
-            statsTotalExpenses.setText(LanguageSingleton.getInstance().getResourceBundle().getString("error.server.eventNotFound"));
+            statsTotalExpenses.setText(languageManager.getResourceBundle().getString("error.server.eventNotFound"));
         } else {
             List<Transaction> transactions = selectedEvent.getTransactions();
 
@@ -85,8 +88,8 @@ public class StatisticsCtrl implements Initializable {
             }
 
             statsPieChart.setData(chartData);
-            statsLabel.setText(LanguageSingleton.getInstance().getResourceBundle().getString("stats.title"));
-            String totalExpensesString = (LanguageSingleton.getInstance().getResourceBundle().getString("total.expenses"));
+            statsLabel.setText(languageManager.getResourceBundle().getString("stats.title"));
+            String totalExpensesString = (languageManager.getResourceBundle().getString("total.expenses"));
             statsTotalExpenses.setText(totalExpensesString + " " + totalExpenses + " EUR");
         }
     }
@@ -118,9 +121,9 @@ public class StatisticsCtrl implements Initializable {
 
 
     public void translateData(Transaction transaction) {
-        String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
-        String entranceFeeString = LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
-        String travelString = LanguageSingleton.getInstance().getResourceBundle().getString("travel.label");
+        String foodString = languageManager.getResourceBundle().getString("food.label");
+        String entranceFeeString = languageManager.getResourceBundle().getString("entrance.fee.label");
+        String travelString = languageManager.getResourceBundle().getString("travel.label");
         if (transaction.getExpenseType().equals("Food")) {
             transaction.setExpenseType(foodString);
         }

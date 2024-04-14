@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import client.utils.LanguageSingleton;
+import client.utils.LanguageManager;
 import client.utils.ServerUtils;
 import commons.DebtCellData;
 import commons.Person;
@@ -51,15 +51,17 @@ public class DebtSettlementCtrl {
   private Button goBackButton; // Value injected by FXMLLoader
   private final ServerUtils server;
   private final MainCtrl mainCtrl;
+  private final LanguageManager languageManager;
+
   /**
    * Constructor for the debt settlement controller.
    * @param mainCtrl - reference to the main controller
    */
   @Inject
-  public DebtSettlementCtrl(MainCtrl mainCtrl, ServerUtils server) {
+  public DebtSettlementCtrl(MainCtrl mainCtrl, ServerUtils server, LanguageManager languageManager) {
     this.mainCtrl = mainCtrl;
     this.server = server;
-
+    this.languageManager = languageManager;
   }
   /**
    * Method to initialize the debt settlement controller.
@@ -93,8 +95,7 @@ public class DebtSettlementCtrl {
    * Populates the open debts list.
    */
   public void populateOpenDebts(List<DebtCellData> debts){
-    LanguageSingleton lang = LanguageSingleton.getInstance();
-    ResourceBundle messages = lang.getResourceBundle();
+    ResourceBundle messages = languageManager.getResourceBundle();
 
     for(DebtCellData debt : debts){
       String iban = debt.getReceiver().getIban();
@@ -124,7 +125,7 @@ public class DebtSettlementCtrl {
     HBox hBox = createButtonBox(debt);
     VBox vBox = new VBox(10, hBox, textArea); // 10 is the spacing between elements
     vBox.getStyleClass().add("debt-vbox");
-    String text = (LanguageSingleton.getInstance().getResourceBundle().getString("string.format"));
+    String text = (languageManager.getResourceBundle().getString("string.format"));
     String title = String.format(text, debt.getSender(), debt.getDebt(), debt.getReceiver());
     AnchorPane anchorPane = new AnchorPane(vBox);
     anchorPane.getStyleClass().add("debt-anchor-pane");
@@ -137,9 +138,9 @@ public class DebtSettlementCtrl {
    * @return returns a HBox with the buttons.
    */
   private HBox createButtonBox(DebtCellData debt) {
-    String markReceivedString = (LanguageSingleton.getInstance().getResourceBundle().getString("mark.button"));
-    String sendEmailString = (LanguageSingleton.getInstance().getResourceBundle().getString("sendMail.button"));
-    String settleDebtString = (LanguageSingleton.getInstance().getResourceBundle().getString("settle.button"));
+    String markReceivedString = (languageManager.getResourceBundle().getString("mark.button"));
+    String sendEmailString = (languageManager.getResourceBundle().getString("sendMail.button"));
+    String settleDebtString = (languageManager.getResourceBundle().getString("settle.button"));
 
     Button markReceived = new Button(markReceivedString);
     markReceived.getStyleClass().add("debt-button");
@@ -204,7 +205,7 @@ public class DebtSettlementCtrl {
       List<Person> participants = new ArrayList<>();
       participants.add(payee);
       String title = payer +  " " +
-              LanguageSingleton.getInstance().getResourceBundle().getString("pays.misc") + " " + payee;
+              languageManager.getResourceBundle().getString("pays.misc") + " " + payee;
       String expenseType = null;
       Transaction transaction = new Transaction(title, date, value, currency, expenseType, participants, payer);
       transaction.setHandOff(true);
@@ -212,11 +213,11 @@ public class DebtSettlementCtrl {
       System.out.println(result.toString());
       Alert alert = new Alert(Alert.AlertType.INFORMATION);
       alert.initModality(Modality.APPLICATION_MODAL);
-      String expenseCreatedAlert = LanguageSingleton.getInstance().getResourceBundle().getString("expense.created.alert");
+      String expenseCreatedAlert = languageManager.getResourceBundle().getString("expense.created.alert");
       alert.setContentText(expenseCreatedAlert);
       alert.showAndWait();
     }catch (Exception e) {
-      String expenseFailedAlert = LanguageSingleton.getInstance().getResourceBundle().getString("expense.created.fail.alert");
+      String expenseFailedAlert = languageManager.getResourceBundle().getString("expense.created.fail.alert");
       mainCtrl.showAlert(expenseFailedAlert);
     }
   }

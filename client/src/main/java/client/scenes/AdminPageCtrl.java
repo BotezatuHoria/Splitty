@@ -1,6 +1,6 @@
 package client.scenes;
 
-import client.utils.LanguageSingleton;
+import client.utils.LanguageManager;
 import client.utils.ServerUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -36,6 +36,7 @@ public class AdminPageCtrl {
 
     private final MainCtrl mainCtrl;
     private final ServerUtils server;
+    private final LanguageManager languageManager;
 
     private ObservableList<Event> data;
 
@@ -81,9 +82,10 @@ public class AdminPageCtrl {
      * @param mainCtrl the main controller
      */
     @Inject
-    public AdminPageCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public AdminPageCtrl(MainCtrl mainCtrl, ServerUtils server, LanguageManager languageManager) {
         this.server = server;
         this.mainCtrl = mainCtrl;
+        this.languageManager = languageManager;
         data = FXCollections.observableList(new ArrayList<>());
     }
 
@@ -137,7 +139,7 @@ public class AdminPageCtrl {
                         mainCtrl.showEventPage(event.getId());
                     }
                     catch (Error e) {
-                        mainCtrl.showAlert(LanguageSingleton.getInstance().getResourceBundle().getString("error.event.notExist"));
+                        mainCtrl.showAlert(languageManager.getResourceBundle().getString("error.event.notExist"));
                     }
                 }
             }
@@ -154,7 +156,7 @@ public class AdminPageCtrl {
         }
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete");
-        alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("confirm.deleteEvent") + event.getTitle());
+        alert.setContentText(languageManager.getResourceBundle().getString("confirm.deleteEvent") + event.getTitle());
         alert.show();
         alert.setOnCloseRequest(new EventHandler<DialogEvent>() {
             @Override
@@ -250,12 +252,12 @@ public class AdminPageCtrl {
             } catch (IOException e) {
                 Alert alert2 = new Alert(Alert.AlertType.ERROR);
                 alert2.setTitle("Importing Error");
-                alert2.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("error.importEvent"));
+                alert2.setContentText(languageManager.getResourceBundle().getString("error.importEvent"));
                 alert2.show();
             }
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error importing event");
-            alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("error.importEventExists"));
+            alert.setContentText(languageManager.getResourceBundle().getString("error.importEventExists"));
             alert.show();
         }
     }

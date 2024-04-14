@@ -51,6 +51,12 @@ public class TagTest {
         assertFalse(tag1.equals(tag3));
         assertFalse(tag1.equals(null));
     }
+    @Test
+    public void testEqualsNull() {
+        Tag tag1 = new Tag("Test1");
+        Tag tag2 = null;
+        assertNotEquals(tag1, tag2);
+    }
 
     @Test
     public void testHashCode() {

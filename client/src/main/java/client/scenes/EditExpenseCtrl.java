@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import client.Config;
-import client.utils.LanguageSingleton;
+import client.utils.LanguageManager;
 import client.utils.ServerUtils;
 import commons.Person;
 import commons.Tag;
@@ -110,6 +110,7 @@ public class EditExpenseCtrl implements Initializable {
 
     private MainCtrl mainCtrl;
     private ServerUtils server;
+    private LanguageManager languageManager;
 
     /**
      * Button that aborts actions and returns to event page.
@@ -172,12 +173,12 @@ public class EditExpenseCtrl implements Initializable {
     @FXML
     public void removeExpense() {
         if(expenseScroll.getValue() == null) {
-            mainCtrl.showAlert(LanguageSingleton.getInstance().getResourceBundle().getString("error.expense.noneSelected"));
+            mainCtrl.showAlert(languageManager.getResourceBundle().getString("error.expense.noneSelected"));
             return;
         }
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initModality(Modality.APPLICATION_MODAL);
-        alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("confirm.expense.delete"));
+        alert.setContentText(languageManager.getResourceBundle().getString("confirm.expense.delete"));
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             server.deleteTransactionFromCurrentEvent(mainCtrl.getCurrentEventID(), expenseScroll.getValue().getId());
@@ -191,7 +192,7 @@ public class EditExpenseCtrl implements Initializable {
     @FXML
     public void saveExpense() {
         if(expenseScroll.getValue() == null) {
-            mainCtrl.showAlert(LanguageSingleton.getInstance().getResourceBundle().getString("prompt.transaction.selectToUpdate"));
+            mainCtrl.showAlert(languageManager.getResourceBundle().getString("prompt.transaction.selectToUpdate"));
             return;
         }
         if (checkCompleted()) {
@@ -224,10 +225,10 @@ public class EditExpenseCtrl implements Initializable {
             System.out.println(result.toString());
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.initModality(Modality.APPLICATION_MODAL);
-            alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("info.expense.updated"));
+            alert.setContentText(languageManager.getResourceBundle().getString("info.expense.updated"));
             alert.showAndWait();
         }catch (Exception e) {
-            mainCtrl.showAlert(LanguageSingleton.getInstance().getResourceBundle().getString("error.transaction.notUpdated"));
+            mainCtrl.showAlert(languageManager.getResourceBundle().getString("error.transaction.notUpdated"));
         }
 
     }
@@ -246,8 +247,7 @@ public class EditExpenseCtrl implements Initializable {
      * @return - true if anything is selected, otherwise false.
      */
     public boolean checkBoxes() {
-        LanguageSingleton lang = LanguageSingleton.getInstance();
-        ResourceBundle messages = lang.getResourceBundle();
+        ResourceBundle messages = languageManager.getResourceBundle();
 
         if (payerBox.valueProperty().get() == null) {
             mainCtrl.showAlert(messages.getString("validation.error.providePayer"));
@@ -278,8 +278,7 @@ public class EditExpenseCtrl implements Initializable {
      * @return - true if all fields have a value, otherwise false.
      */
     public boolean checkFields() {
-        LanguageSingleton lang = LanguageSingleton.getInstance();
-        ResourceBundle messages = lang.getResourceBundle();
+        ResourceBundle messages = languageManager.getResourceBundle();
 
         if (expenseField.getText() == null || expenseField.getText().equals(" ")) {
             mainCtrl.showAlert(messages.getString("expense.validation.error.provideExpense"));
@@ -315,7 +314,7 @@ public class EditExpenseCtrl implements Initializable {
         if (checked) {
             return true;
         }
-        mainCtrl.showAlert(LanguageSingleton.getInstance().getResourceBundle().getString("selection.error.minPerson"));
+        mainCtrl.showAlert(languageManager.getResourceBundle().getString("selection.error.minPerson"));
         return false;
     }
 
@@ -364,9 +363,9 @@ public class EditExpenseCtrl implements Initializable {
         addPeopleToView(people);
         currencyBox.getItems().add("EUR");
         Config config = ServerUtils.getConfig();
-        String foodString = LanguageSingleton.getInstance().getResourceBundle().getString("food.label");
-        String entranceFeeString= LanguageSingleton.getInstance().getResourceBundle().getString("entrance.fee.label");
-        String travelString = LanguageSingleton.getInstance().getResourceBundle().getString("travel.label");
+        String foodString = languageManager.getResourceBundle().getString("food.label");
+        String entranceFeeString= languageManager.getResourceBundle().getString("entrance.fee.label");
+        String travelString = languageManager.getResourceBundle().getString("travel.label");
         for (Tag t : server.getEventByID(mainCtrl.getCurrentEventID()).getTagList()) {
             if (!config.getClientsLanguage().equals("en")) {
                 if (t.getTitle().equals("Food")) {
@@ -426,9 +425,10 @@ public class EditExpenseCtrl implements Initializable {
      * @param server server we are using
      */
     @Inject
-    public EditExpenseCtrl(MainCtrl mainCtrl, ServerUtils server) {
+    public EditExpenseCtrl(MainCtrl mainCtrl, ServerUtils server, LanguageManager languageManager) {
         this.mainCtrl = mainCtrl;
         this.server = server;
+        this.languageManager = languageManager;
     }
 
     /**

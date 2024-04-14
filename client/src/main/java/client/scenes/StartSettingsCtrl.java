@@ -2,7 +2,7 @@ package client.scenes;
 
 import client.Config;
 import client.Main;
-import client.utils.LanguageSingleton;
+import client.utils.LanguageManager;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
@@ -20,6 +20,7 @@ import java.util.ResourceBundle;
 public class StartSettingsCtrl implements Initializable {
     private final MainCtrl mainCtrl;
     private final ServerUtils serverUtils;
+    private final LanguageManager languageManager;
     private static Config config = ServerUtils.getConfig();
     @FXML
     public Label serverLabel;
@@ -65,9 +66,10 @@ public class StartSettingsCtrl implements Initializable {
      * @param mainCtrl - reference to the main controller.
      */
     @Inject
-    public StartSettingsCtrl(MainCtrl mainCtrl, ServerUtils serverUtils) {
+    public StartSettingsCtrl(MainCtrl mainCtrl, ServerUtils serverUtils, LanguageManager languageManager) {
         this.mainCtrl = mainCtrl;
         this.serverUtils = serverUtils;
+        this.languageManager = languageManager;
     }
 
     /**
@@ -143,7 +145,7 @@ public class StartSettingsCtrl implements Initializable {
      * makes info text about importing the template file appear.
      */
     public void showInfo(){
-        infoLabel.setText(LanguageSingleton.getInstance().getResourceBundle().getString("info.import.template"));
+        infoLabel.setText(languageManager.getResourceBundle().getString("info.import.template"));
     }
 
     /**
@@ -181,7 +183,7 @@ public class StartSettingsCtrl implements Initializable {
                     in.close();
                     out.close();
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("alert.template.download.success"));
+                    alert.setContentText(languageManager.getResourceBundle().getString("alert.template.download.success"));
                     alert.showAndWait();
                 }
                 catch(FileNotFoundException e) {
@@ -202,9 +204,9 @@ public class StartSettingsCtrl implements Initializable {
         String host = serverTextField.getText();
         boolean canWeConnect = main.checkConnection(host);
         if (!(canWeConnect)){
-            changeLabel.setText(LanguageSingleton.getInstance().getResourceBundle().getString("error.incorrectServerInput"));
+            changeLabel.setText(languageManager.getResourceBundle().getString("error.incorrectServerInput"));
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("alert.serverIncorrect"));
+            alert.setContentText(languageManager.getResourceBundle().getString("alert.serverIncorrect"));
             alert.showAndWait();
             startPageConfirm.setDisable(true);
             downloadButton.setDisable(true);
@@ -212,7 +214,7 @@ public class StartSettingsCtrl implements Initializable {
         }
         else{
             Alert alertb = new Alert(Alert.AlertType.INFORMATION);
-            alertb.setContentText(LanguageSingleton.getInstance().getResourceBundle().getString("alert.serverConnectSuccess"));
+            alertb.setContentText(languageManager.getResourceBundle().getString("alert.serverConnectSuccess"));
             alertb.showAndWait();
             changeLabel.setText("");
             startPageConfirm.setDisable(false);
