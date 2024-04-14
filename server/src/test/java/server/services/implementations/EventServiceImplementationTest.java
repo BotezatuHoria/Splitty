@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 
 import commons.Event;
 import commons.Person;
+import commons.Tag;
 import commons.Transaction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,9 @@ class EventServiceImplementationTest {
   private PersonServiceImplementation psi;
   @Mock
   private TransactionServiceImplementation tsi;
+
+  @Mock
+  private TagServiceImplementation tagServiceImplementation;
   //inject mocks
   @InjectMocks
   private EventServiceImplementation eventServiceImplementation;
@@ -425,5 +429,46 @@ class EventServiceImplementationTest {
     ResponseEntity<Person> response = eventServiceImplementation.add(1L, person);
 
     assertEquals(person, response.getBody());
+  }
+
+  @Test
+  void testAddTags() {
+    Event event = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+    Tag tag = new Tag("Test");
+    when(eventRepository.existsById(1L)).thenReturn(true);
+    when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+    when(tagServiceImplementation.add(tag)).thenReturn(ResponseEntity.ok(tag));
+    when(eventRepository.save(event)).thenReturn(event);
+    when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+    ResponseEntity<Tag> response = eventServiceImplementation.createTag(1L, tag);
+    assertEquals(tag, response.getBody());
+  }
+
+  @Test
+  void testDeleteTags() {
+    Event event = new Event("Event one", "Party", 1, "1234", new ArrayList<>(), new ArrayList<>());
+    Tag tag = new Tag("Test");
+    event.addTag(tag);
+    when(eventRepository.existsById(1L)).thenReturn(true);
+    when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+    when(eventRepository.save(event)).thenReturn(event);
+    when(tagServiceImplementation.deleteById(anyInt())).thenReturn(ResponseEntity.ok(tag)); // Mock the deleteById method to return a non-null value
+    when(tagServiceImplementation.getById(1)).thenReturn(ResponseEntity.ok(tag));
+
+    ResponseEntity<Tag> response = eventServiceImplementation.deleteTag(1L, 1);
+
+    assertEquals(tag, response.getBody());
+  }
+
+  @Test
+  void testGetTags() {
+    Event event = new Event();
+    event.setId(1);
+    when(eventRepository.existsById(1L)).thenReturn(true);
+    when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+
+    ResponseEntity<List<Tag>> response = eventServiceImplementation.getTags(1L);
+
+    assertEquals(event.getTagList(), response.getBody());
   }
 }
