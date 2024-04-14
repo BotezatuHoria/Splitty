@@ -99,8 +99,9 @@ public class DebtOverviewPageCtrl implements Initializable {
     if (transactions != null) {
       double sum = 0.0;
       for (Transaction t : transactions) {
-        if (!t.isHandOff())
+        if (!t.isHandOff()) {
           sum += t.getMoney();
+        }
       }
       if (!people.isEmpty()) {
         sum /= people.size();
