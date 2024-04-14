@@ -97,6 +97,24 @@ public class MainCtrl {
     }
 
 
+    /**
+     * initializes all the stages, pages of the application.
+     * @param primaryStage the primary stage.
+     * @param starter starter page.
+     * @param event event page.
+     * @param statistics statistics page.
+     * @param expense expense page.
+     * @param startSettings start settings page.
+     * @param addParticipant add participant page.
+     * @param editParticipant edit participant page.
+     * @param inviteSend invite sending page.
+     * @param debt debt page
+     * @param adminLoginPage admin login page
+     * @param adminPage admin page overview events.
+     * @param editExpensePage edit expense page.
+     * @param debtOverview debt overview page.
+     * @param giveMoney give money page.
+     */
     @SuppressWarnings({"parameterNumber", "MethodLength", "CyclomaticComplexity"})
     public void initialize(Stage primaryStage, Pair<StarterPageCtrl, Parent> starter,
                            Pair<EventPageCtrl, Parent> event, Pair<StatisticsCtrl, Parent> statistics,

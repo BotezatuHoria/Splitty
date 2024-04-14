@@ -107,6 +107,10 @@ public class TransactionController {
        return tsi.updateMoneyById(id, money);
     }
 
+    /**
+     * return the transaction that are updated.
+     * @return updated transaction.
+     */
     @GetMapping(path = "/channel")
     public DeferredResult<ResponseEntity<Transaction>> getUpdates() {
         return tsi.getUpdates();
