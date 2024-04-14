@@ -32,5 +32,15 @@
             <Font size="31.0" />
          </font>
       </Label>
+      <Label fx:id="sharePerPersonLabel" layoutX="32.0" layoutY="435.0" prefHeight="34.0" prefWidth="239.0" text="Share per person:">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Label fx:id="sumValue" layoutX="273.0" layoutY="435.0" prefHeight="34.0" prefWidth="228.0">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
