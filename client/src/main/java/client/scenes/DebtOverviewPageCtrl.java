@@ -124,6 +124,7 @@ public class DebtOverviewPageCtrl implements Initializable {
   public void openDebtsForSpecificPerson(Person person) {
     mainCtrl.showDebtPageForSpecificPerson(person);
   }
+
   /**
    * Handle button press.
    */
@@ -133,6 +134,9 @@ public class DebtOverviewPageCtrl implements Initializable {
   }
 
   @Override
+  /**
+   * initializes all the buttons to refer to the correct pages.
+   */
   public void initialize(URL url, ResourceBundle resourceBundle) {
     mainCtrl.handleEnterKeyPress(settleDebtButton, this::buttonPressHandle);
     mainCtrl.handleEnterKeyPress(goBackButton, () -> {

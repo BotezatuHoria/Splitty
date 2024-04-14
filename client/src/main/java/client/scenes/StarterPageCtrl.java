@@ -192,6 +192,9 @@ public class StarterPageCtrl implements Initializable {
         return total;
     }
 
+    /**
+     * list of all the events that have been joined with this token.
+     */
     public void joinEventsList() {
         listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -210,11 +213,18 @@ public class StarterPageCtrl implements Initializable {
         });
     }
 
+    /**
+     * updates the flag the user chooses.
+     */
     public void updateLanguage() {
         // Show current language
         Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();
     }
 
+    /**
+     * sets all the text in the file to the correct language chosen by the user.
+     * @param resourceBundle the language.
+     */
     public void setLanguageText(ResourceBundle resourceBundle) {
         createTextLabel.setText(resourceBundle.getString("create.event"));
         createButton.setText(resourceBundle.getString("create.button"));
@@ -225,6 +235,10 @@ public class StarterPageCtrl implements Initializable {
         joinTextField.setPromptText(resourceBundle.getString("join.event.placeholder"));
     }
 
+    /**
+     * acts on the keyevent.
+     * @param e the keyevent that happened.
+     */
     public void keyPressed(KeyEvent e) {
         TextField source = (TextField) e.getSource();
         if (e.getCode() == KeyCode.ENTER) {
@@ -236,10 +250,16 @@ public class StarterPageCtrl implements Initializable {
         }
     }
 
+    /**
+     * shows settings page after clicking the settings icon.
+     */
     public void showSettingsPage(){
         mainCtrl.showStartSettings();
     }
 
+    /**
+     * refreshes the list of recent events.
+     */
     void refreshListView() {
         listView.getItems().clear();
         for (Event e : recentEvents) {
@@ -247,14 +267,25 @@ public class StarterPageCtrl implements Initializable {
         }
     }
 
+    /**
+     * initializes the language in the language dropdown menu.
+     */
     void initializeLanguages() {
         server.initializeLanguages(languageSelector);
     }
 
+    /**
+     * sets the correct language chosen by the user.
+     */
     public void setLanguageSelector() {
         server.setLanguageSelector(languageSelector);
     }
 
+    /**
+     * initializes the buttons and pages corresponding.
+     * @param url the event URL.
+     * @param resourceBundle the language.
+     */
     public void initialize(URL url, ResourceBundle resourceBundle) {
         mainCtrl.handleEnterKeyPress(createButton, this::showEventPage);
         mainCtrl.handleEnterKeyPress(joinButton, this::joinEvent);

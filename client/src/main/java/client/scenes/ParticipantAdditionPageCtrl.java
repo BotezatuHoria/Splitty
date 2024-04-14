@@ -91,7 +91,7 @@ public class ParticipantAdditionPageCtrl implements Initializable {
     }
 
     /**
-     * TODO: fix the event reference so that it is passed from the event controller.
+     *
      * @return returns the created person
      */
     private Person getPerson(){
@@ -227,6 +227,10 @@ public class ParticipantAdditionPageCtrl implements Initializable {
         return personIsDuplicate;
     }
 
+    /**
+     * sets all the text in the file to the correct language chosen by the user.
+     * @param resourceBundle the language.
+     */
     public void setLanguageText(ResourceBundle resourceBundle) {
         participantAdditionLabel.setText(resourceBundle.getString("participant.form.title"));
         nameLabel.setText(resourceBundle.getString("participant.form.label.name"));

@@ -169,10 +169,17 @@ public class DebtSettlementCtrl {
     return hBox;
   }
 
+  /**
+   * clears the fields in the page.
+   */
   public void clear() {
     debtListView.getItems().clear();
   }
 
+  /**
+   * sets all the text in the file to the correct language chosen by the user.
+   * @param resourceBundle the language.
+   */
   public void setLanguageText(ResourceBundle resourceBundle) {
     openDebtsLabel.setText(resourceBundle.getString("openDebts.text"));
   }
@@ -184,6 +191,10 @@ public class DebtSettlementCtrl {
       addTransaction(debtToSettle);
   }
 
+  /**
+   * adds a transaction the current event.
+   * @param debt debt that is associated with this transaction (total cost).
+   */
   public void addTransaction(DebtCellData debt) {
     try {
       Person payer = debt.getSender();

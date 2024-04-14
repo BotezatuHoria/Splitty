@@ -66,9 +66,9 @@ import javax.mail.internet.MimeMessage;
 
 public class ServerUtils {
 
-	private static String server = "http://localhost:8080/";
-	private static final String EMAIL_USERNAME = "group53.splitty@gmail.com";
-	private static final String EMAIL_PASSWORD = "pigu txlq kfdl rwsq";
+	private static String server;
+//	private static final String EMAIL_USERNAME = "group53.splitty@gmail.com";
+//	private static final String EMAIL_PASSWORD = "pigu txlq kfdl rwsq";
 
 	private static Config config;
 	public static void setServer(String server) {
@@ -77,6 +77,7 @@ public class ServerUtils {
 
 	public static void setConfig(Config config) {
 		ServerUtils.config = config;
+		server = config.getClientsServer();
 		String path= "";
 		try {
 			path = Main.class
