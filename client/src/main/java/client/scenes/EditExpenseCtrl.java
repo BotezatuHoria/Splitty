@@ -126,12 +126,6 @@ public class EditExpenseCtrl implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        mainCtrl.handleEnterKeyPress(saveButton, this::updateTransaction);
-        mainCtrl.handleEnterKeyPress(remove, this::removeExpense);
-        mainCtrl.handleEnterKeyPress(abortButton, this::abortExpense);
-        mainCtrl.handleEnterKeyPress(addTagButton, this::addNewTag);
-        mainCtrl.handleEnterKeyPress(addEverybody, this::addParticipantToView);
-        mainCtrl.handleEnterKeyPress(addTag, this::showTagPage);
         peopleLIstView.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {

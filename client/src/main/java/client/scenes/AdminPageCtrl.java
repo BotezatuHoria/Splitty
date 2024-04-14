@@ -108,10 +108,6 @@ public class AdminPageCtrl {
         server.registerForMessages("/topic/event", Person.class, event -> {
             Platform.runLater(this::showEvents);
         });
-        mainCtrl.handleEnterKeyPress(backButton, this::goBack);
-        mainCtrl.handleEnterKeyPress(downloadEvent, this::downloadEvent);
-        mainCtrl.handleEnterKeyPress(importEvent, this::importEvent);
-        mainCtrl.handleEnterKeyPress(deleteEvent, this::delete);
     }
 
     /**

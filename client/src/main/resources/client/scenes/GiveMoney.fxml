@@ -45,9 +45,9 @@
          </font>
       </Label>
       <Button fx:id="abortButton" layoutX="558.0" layoutY="216.0" mnemonicParsing="false" onAction="#abortExpense" prefHeight="51.0" prefWidth="51.0" />
-      <ImageView fitHeight="41.0" fitWidth="45.0" layoutX="561.0" layoutY="221.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="39.0" fitWidth="39.0" layoutX="564.0" layoutY="222.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../images/return.png" />
+            <Image url="@/images/return.png" />
          </image>
       </ImageView>
    </children>

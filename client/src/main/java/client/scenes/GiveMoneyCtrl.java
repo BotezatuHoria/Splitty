@@ -264,8 +264,6 @@ public class GiveMoneyCtrl implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        mainCtrl.handleEnterKeyPress(addButton, this::addTransaction);
-        mainCtrl.handleEnterKeyPress(abortButton, this::abortExpense);
         dateBox.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 dateBox.show();

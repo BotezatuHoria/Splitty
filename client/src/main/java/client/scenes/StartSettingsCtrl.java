@@ -242,18 +242,6 @@ public class StartSettingsCtrl implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        mainCtrl.handleEnterKeyPress(startPageAdmin, this::adminLogin);
-        mainCtrl.handleEnterKeyPress(startPageConfirm, this::showStart);
-        mainCtrl.handleEnterKeyPress(changeButton, this::changeServer);
-        mainCtrl.handleEnterKeyPress(okButton, () -> {
-            try {
-                confirmServer();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        mainCtrl.handleEnterKeyPress(downloadButton, this::downloadTemplate);
-        mainCtrl.handleEnterKeyPress(contrastButton, this::changeContrast);
     }
 
 }

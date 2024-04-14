@@ -17,7 +17,6 @@ package client;
 
 import static com.google.inject.Guice.createInjector;
 
-import java.awt.*;
 import java.io.*;
 import java.net.URISyntaxException;
 
@@ -93,18 +92,6 @@ public class Main extends Application {
             eventPage.getKey().stop();
         });
 
-        primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/images/Splitty.png")));
-
-        if (Taskbar.isTaskbarSupported()) {
-            var taskbar = Taskbar.getTaskbar();
-
-            if (taskbar.isSupported(Taskbar.Feature.ICON_IMAGE)) {
-                final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
-                var dockIcon = defaultToolkit.getImage(getClass().getResource("/images/Splitty.png"));
-                taskbar.setIconImage(dockIcon);
-            }
-
-        }
     }
 
     /**
