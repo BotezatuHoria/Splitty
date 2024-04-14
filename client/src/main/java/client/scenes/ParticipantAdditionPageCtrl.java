@@ -91,7 +91,7 @@ public class ParticipantAdditionPageCtrl implements Initializable {
     }
 
     /**
-     *
+     * gets the person.
      * @return returns the created person
      */
     private Person getPerson(){

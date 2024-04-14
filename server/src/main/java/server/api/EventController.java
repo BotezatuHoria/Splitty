@@ -156,7 +156,7 @@ public class EventController {
     }
 
     /**
-     *
+     * gets the token of session.
      * @param token token of user session.
      * @return token.
      */

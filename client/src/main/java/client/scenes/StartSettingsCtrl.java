@@ -128,7 +128,8 @@ public class StartSettingsCtrl implements Initializable {
 
     /**
      * When server changed rightly buttons get visible again.
-     */public void confirmServer() throws IOException {
+     */
+    public void confirmServer() throws IOException {
         responseServer();
         serverLabel.setText(serverTextField.getText().trim());
         ServerUtils.setServer(serverLabel.getText().trim());

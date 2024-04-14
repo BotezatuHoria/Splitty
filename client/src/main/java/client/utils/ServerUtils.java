@@ -67,8 +67,7 @@ import javax.mail.internet.MimeMessage;
 public class ServerUtils {
 
 	private static String server;
-//	private static final String EMAIL_USERNAME = "group53.splitty@gmail.com";
-//	private static final String EMAIL_PASSWORD = "pigu txlq kfdl rwsq";
+
 
 	private static Config config;
 	public static void setServer(String server) {

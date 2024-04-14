@@ -57,7 +57,7 @@ public class Main extends Application {
     }
 
     /**
-     *
+     *starts the primary stage of app.
      * @param primaryStage
      * @throws IOException
      */
