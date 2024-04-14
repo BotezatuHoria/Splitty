@@ -54,7 +54,11 @@ public class InviteSendingCtrl{
     @FXML // fx:id="responseCopy"
     private Label responseCopy; // Value injected by FXMLLoader
 
-    private static Config config = new Config();
+    @FXML
+    private Button checkButton;
+
+    @FXML
+    private Label checkLabel;
 
     /**
      *Constructor and therefore making the connection.
@@ -69,7 +73,7 @@ public class InviteSendingCtrl{
     }
 
     /**
-     * The method that, when called, should send emails with invites to the event in every mail that has been put in the MainInputField.
+     * The method that, when called, sends emails with invites to the event in every mail that has been put in the MainInputField.
      */
     public void sendInvite(){
         String mails = mailInputField.getText();
@@ -86,7 +90,6 @@ public class InviteSendingCtrl{
                 listOfPeople += list.get(i) + ", ";
             }
         }
-
 
         String message = "Dear invited,\n" +
                 "\n" +
@@ -117,11 +120,52 @@ public class InviteSendingCtrl{
             listOfMails.add(scanner.next());
         }
         for(String s : listOfMails){
-            String doSomethingWithThis= s.toLowerCase();// here we add the protocol to send emails if we want, using a mail API like google or the Java one.
+           // here we add the protocol to send emails if we want, using a mail API like google or the Java one.
             server.sendEmail(s, subject, message);
         }
 
     }
+
+
+    /**
+     * sends an email to the email-address that is configured in the config file. If the email is not received, then the credentials are wrong.
+     */
+    public void sendCheck(){
+        String message = "Dear user of Splitty,\n" +
+                "\n" +
+                "This email is an confirmation email: by receiving this email, you are sure to have your credentials correct." +
+                "\n" +
+                "If by some mistake this mail is not of your doing, then that means that a user of this app filled in the wrong credentials (and had yours)." +
+                "\n" +
+                "Our excuses for this inconvenience; you should just ignore this email." +
+                "\n" +
+                "Note: this is an auto-generated email.\n" +
+                "\n" +
+                "Best regards (to yourself)\n" +
+                "" +  ServerUtils.getConfig().getClientsEmailAddress()+ "\n";
+
+        String subject = "Confirmation of credentials email";
+        String address = ServerUtils.getConfig().getClientsEmailAddress();
+
+        // here we add the protocol to send emails if we want, using a mail API like google or the Java one.
+            server.sendEmail(address, subject, message);
+    }
+
+    /**
+     * sets the info of the check button visible.
+     */
+    public void setCheckLabel(){
+        ResourceBundle resourceBundle = LanguageSingleton.getInstance().getResourceBundle();
+        checkLabel.setText(resourceBundle.getString("check.label"));
+    }
+    /**
+     * sets the info of the check button invisible.
+     */
+    public void unSetCheckLabel(){
+        checkLabel.setText("");
+    }
+
+
 
     /**
      * Sets the title of the event on the invitepage.
@@ -154,12 +198,17 @@ public class InviteSendingCtrl{
         responseCopy.setText(resourceBundle.getString("message.code.copied"));
     }
 
+    /**
+     * sets the language of al the items that need it on the whole page.
+     * @param resourceBundle the recourseBundle with the correct language.
+     */
     public void setLanguageText(ResourceBundle resourceBundle) {
         copyInviteCodeButton.setText(resourceBundle.getString("copy.button"));
         copyText.setText(resourceBundle.getString("copy.text"));
         inviteText.setText(resourceBundle.getString("invite.text"));
         mailInputField.setPromptText(resourceBundle.getString("textfield.text"));
         sendInviteButton.setText(resourceBundle.getString("send.button"));
+        checkButton.setText(resourceBundle.getString("check.button"));
     }
 
     /**
