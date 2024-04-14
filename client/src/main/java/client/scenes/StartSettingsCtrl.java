@@ -168,8 +168,9 @@ public class StartSettingsCtrl implements Initializable {
         try{
             File saveFile = fileChooser.showSaveDialog(parent);
             if (saveFile != null) {
-                try (FileInputStream in = new FileInputStream(file); FileOutputStream out = new FileOutputStream(saveFile)) {
-
+                try {
+                    FileInputStream in = new FileInputStream(file);
+                    FileOutputStream out = new FileOutputStream(saveFile);
                     int n;
 
                     // read() function to read the
@@ -184,6 +185,9 @@ public class StartSettingsCtrl implements Initializable {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setContentText(languageManager.getResourceBundle().getString("alert.template.download.success"));
                     alert.showAndWait();
+                }
+                catch(FileNotFoundException e) {
+                    mainCtrl.showAlert(languageManager.getResourceBundle().getString("error.fileNotFound"));
                 }
             }
         }catch(IOException e){
