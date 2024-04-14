@@ -75,7 +75,7 @@ public class ServerUtils {
 		ServerUtils.server = server;
 	}
 
-	public static void setLanguageManager(LanguageManager languageManager) {
+	public void setLanguageManager(LanguageManager languageManager) {
 		ServerUtils.languageManager = languageManager;
 	}
 
