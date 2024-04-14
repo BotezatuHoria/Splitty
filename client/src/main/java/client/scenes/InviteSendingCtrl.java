@@ -4,10 +4,12 @@
 
 package client.scenes;
 
+import client.Config;
 import client.utils.LanguageSingleton;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Event;
+import commons.Person;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -52,6 +54,8 @@ public class InviteSendingCtrl{
     @FXML // fx:id="responseCopy"
     private Label responseCopy; // Value injected by FXMLLoader
 
+    private static Config config = new Config();
+
     /**
      *Constructor and therefore making the connection.
      * @param server the server to connect with.
@@ -71,12 +75,50 @@ public class InviteSendingCtrl{
         String mails = mailInputField.getText();
         Scanner scanner = new Scanner(mails);
         List<String> listOfMails = new ArrayList<>();
+        List<Person> list = server.getEventByID(mainCtrl.getCurrentEventID()).getPeople();
+        String titleOfEvent = server.getEventByID(mainCtrl.getCurrentEventID()).getTitle();
+        String listOfPeople = "";
+        for (int i = 0; i < list.size(); i ++){
+            if(i == list.size() - 1){
+                listOfPeople += list.get(i);
+            }
+            else{
+                listOfPeople += list.get(i) + ", ";
+            }
+        }
+
+
+        String message = "Dear invited,\n" +
+                "\n" +
+                "I am excited to invite you to join me on Splitty for an upcoming event called \""+ titleOfEvent + "\" \n" +
+                "With splitty, we can organize and manage events and transactions." +
+                "\n" +
+                "Here are the details of the event:\n" +
+                "\n" +
+                "Event Name: " + titleOfEvent + "\n" +
+                "Persons that already joined: "+ listOfPeople+ "\n" +
+                "To join the event, simply follow these steps:\n" +
+                "\n" +
+                "Download the Splitty app from the App Store or Google Play Store if you haven't already.\n" +
+                "Once started, choose a language and color palette, then navigate to the Events joining page and enter the event code: "+ inviteCode.getText()+ ".\n" +
+                "You will now be able to access all the details of the event and start making transactions with other participants, " +
+                "as well as adding, editing and inviting new people to the event.\n" +
+                "\n" +
+                "I look forward to seeing you at "+ titleOfEvent + ".\n" +
+                "Note: this email is auto generated. When in doubt, try to connect the persons inviting you.\n" +
+                "If this mail is not destined for you, don't use it.\n" +
+                "\n" +
+                "Best regards,\n" +
+                "" +  ServerUtils.getConfig().getClientsEmailAddress()+ "\n";
+
+        String subject = "Invite to the Splitty event: " + titleOfEvent;
+
         while (scanner.hasNext()){
             listOfMails.add(scanner.next());
         }
         for(String s : listOfMails){
             String doSomethingWithThis= s.toLowerCase();// here we add the protocol to send emails if we want, using a mail API like google or the Java one.
-            server.sendEmail(s, "Invite to Splitty App", inviteCode.getText());
+            server.sendEmail(s, subject, message);
         }
 
     }
@@ -96,25 +138,6 @@ public class InviteSendingCtrl{
     public void setShareCode(){
         Event event = server.getEventByID(mainCtrl.getCurrentEventID());
         inviteCode.setText(event.getToken());
-    }
-
-    /**
-     * Translates the sharecode back to the id, needed to join an event via sharecode.
-     * @param shareCode the sharecode to translate to the id.
-     * @return the id of the event.
-     */
-    public int translateShareCode(String shareCode){
-        //String hardCodedShareCode = inviteCode.getText();
-        int size = shareCode.length();
-        String result = "";
-        for( int i =0; i < size; i++){
-            int number = shareCode.charAt(i);
-            number = number - 65;
-            result += number;
-        }
-        int total = Integer.parseInt(result);
-        total = total/3000929;
-        return total;
     }
 
     /**
