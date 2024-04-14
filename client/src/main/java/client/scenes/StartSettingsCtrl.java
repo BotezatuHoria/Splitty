@@ -187,7 +187,7 @@ public class StartSettingsCtrl implements Initializable {
                     alert.showAndWait();
                 }
                 catch(FileNotFoundException e) {
-                    mainCtrl.showAlert(LanguageSingleton.getInstance().getResourceBundle().getString("error.fileNotFound"));
+                    mainCtrl.showAlert(languageManager.getResourceBundle().getString("error.fileNotFound"));
                 }
             }
         }catch(IOException e){
