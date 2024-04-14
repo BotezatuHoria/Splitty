@@ -15,12 +15,20 @@ public class LoginController {
         password = PasswordGenerator.getPassword();
     }
 
+    /**
+     * gets the password of admin.
+     * @return admin password.
+     */
     @GetMapping(path = {"/", ""})
     public ResponseEntity<String> getPassword(){
         password = PasswordGenerator.getPassword();
         return ResponseEntity.ok(password);
     }
 
+    /**
+     * sends password to console.
+     * @return password.
+     */
     @GetMapping(path = {"log", "/log"})
     public ResponseEntity<Void> sendPassword(){
         PasswordGenerator.logPassword();

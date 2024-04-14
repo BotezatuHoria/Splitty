@@ -236,6 +236,10 @@ public class ParticipantEditPageCtrl implements Initializable {
         mainCtrl.showEventPage(mainCtrl.getCurrentEventID());
     }
 
+    /**
+     * sets all the text in the file to the correct language chosen by the user.
+     * @param resourceBundle the language.
+     */
     public void setLanguageText(ResourceBundle resourceBundle) {
         editParticipantLabel.setText(resourceBundle.getString("edit.participant.title"));
         selectParticipantLabel.setText(resourceBundle.getString("edit.participant.selectLabel"));

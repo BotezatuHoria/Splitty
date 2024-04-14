@@ -146,8 +146,20 @@ public class DebtSettlementCtrl {
     markReceived.setOnAction(event -> settleDebt(debt));
     Button sendEmail = new Button(sendEmailString);
     sendEmail.getStyleClass().add("debt-button");
-    sendEmail.setOnAction(actionEvent -> {server.sendEmail(debt.getSender().getEmail(), "You owe some money",
-            "Hey! You forgot to pay: " + debt.getDebt() + " EUR" + " to " + debt.getReceiver().toString() + ".");});
+
+    String titleOfEvent = server.getEventByID(mainCtrl.getCurrentEventID()).getTitle();
+    String subject = "You owe money in: " + titleOfEvent;
+    String message = "Dear participant of " + titleOfEvent + ", \n This is a reminder of your debt that is still open in this event. \n" +
+            "To repay your debt, you need to pay " + debt.getDebt() + " EUR" + " to " + debt.getReceiver().toString() + ".\n" +
+            "If, by some mistake, this debt is incorrect or already paid; please check the app and contact " + debt.getReceiver().toString() + "." +
+            "Note: this email was auto-generated, not made by the person that send you this themselves. If there are inconsistencies please contact the moderators of the application." +
+            "\n\n" +
+            "Best regards,\n" +
+            "" +  ServerUtils.getConfig().getClientsEmailAddress()+ "\n";
+    sendEmail.setOnAction(actionEvent -> {server.sendEmail(debt.getSender().getEmail(), subject,
+            message);});
+
+
     Button settleDebt = new Button(settleDebtString);
     settleDebt.getStyleClass().add("debt-button");
     settleDebt.setOnAction(actionEvent -> {settleDebt(debt);});
@@ -156,10 +168,17 @@ public class DebtSettlementCtrl {
     return hBox;
   }
 
+  /**
+   * clears the fields in the page.
+   */
   public void clear() {
     debtListView.getItems().clear();
   }
 
+  /**
+   * sets all the text in the file to the correct language chosen by the user.
+   * @param resourceBundle the language.
+   */
   public void setLanguageText(ResourceBundle resourceBundle) {
     openDebtsLabel.setText(resourceBundle.getString("openDebts.text"));
   }
@@ -171,6 +190,10 @@ public class DebtSettlementCtrl {
       addTransaction(debtToSettle);
   }
 
+  /**
+   * adds a transaction the current event.
+   * @param debt debt that is associated with this transaction (total cost).
+   */
   public void addTransaction(DebtCellData debt) {
     try {
       Person payer = debt.getSender();

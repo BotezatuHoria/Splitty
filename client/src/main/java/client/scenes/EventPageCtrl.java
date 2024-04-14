@@ -178,11 +178,17 @@ public class EventPageCtrl implements Initializable {
     }
 
 
+    /**
+     * sets the panes and field visible when editing event name.
+     */
     public void editName() {
         namePane.setVisible(true);
         nameField.setText(eventTitle.getText());
     }
 
+    /**
+     * saves the edited new event name.
+     */
     public void saveName() {
         String name = nameField.getText().trim();
         if (!name.isEmpty()) {
@@ -306,6 +312,9 @@ public class EventPageCtrl implements Initializable {
     }
 
 
+    /**
+     * refreshes the page, getting values from the db.
+     */
     public void refresh() {
         var people = server.getPeopleInCurrentEvent(mainCtrl.getCurrentEventID());
         var transactions = server.getTransactions(mainCtrl.getCurrentEventID());
@@ -314,6 +323,9 @@ public class EventPageCtrl implements Initializable {
     }
 
     @Override
+    /**
+     * intializes all the buttons and pages corresponding.
+     */
     public void initialize(URL url, ResourceBundle resourceBundle) {
         namePane.setVisible(false);
         server.registerForMessages("/topic/events/people", Person.class, person -> {
@@ -350,6 +362,10 @@ public class EventPageCtrl implements Initializable {
         mainCtrl.showEditExpensePage();
     }
 
+    /**
+     * sets all the text in the file to the correct language chosen by the user.
+     * @param resourceBundle the language.
+     */
     public void setLanguageText(ResourceBundle resourceBundle) {
         fromParticipant.setText(resourceBundle.getString("from.button"));
         includingParticipant.setText(resourceBundle.getString("including.button"));
@@ -365,22 +381,37 @@ public class EventPageCtrl implements Initializable {
         giveMoney.setText(resourceBundle.getString("giveMoney.button"));
     }
 
+    /**
+     * stops the server.
+     */
     public void stop() {
         server.stop();
     }
 
+    /**
+     * shows settings page.
+     */
     public void showSettingsPage(){
         mainCtrl.showStartSettings();
     }
 
+    /**
+     * intializes the languages in the language selector.
+     */
     void initializeLanguages() {
         server.initializeLanguages(languageSelector);
     }
 
+    /**
+     * sets the languages in the language selector.
+     */
     public void setLanguageSelector() {
         server.setLanguageSelector(languageSelector);
     }
 
+    /**
+     * updates the language to show the current one chosen by the client.
+     */
     public void updateLanguage() {
         // Show current language
         Pair<String, Image> currentLanguage = LanguageSingleton.getInstance().getLanguage();

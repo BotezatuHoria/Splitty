@@ -23,6 +23,7 @@ import commons.Transaction;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -96,19 +97,25 @@ public class MainCtrl {
     }
 
 
-    @SuppressWarnings({"parameterNumber", "MethodLength", "CyclomaticComplexity"})
     /**
-     * Initialize method for the main controller.
-     * @param primaryStage - primary stage
-     * @param starter - starter page
-     * @param event - event page
-     * @param statistics - statistics page
-     * @param expense - expense page
-     * @param addParticipant - add participants page
-     *
-     * @param debt - debt page
-     * @param language - language page
+     * initializes all the stages, pages of the application.
+     * @param primaryStage the primary stage.
+     * @param starter starter page.
+     * @param event event page.
+     * @param statistics statistics page.
+     * @param expense expense page.
+     * @param startSettings start settings page.
+     * @param addParticipant add participant page.
+     * @param editParticipant edit participant page.
+     * @param inviteSend invite sending page.
+     * @param debt debt page
+     * @param adminLoginPage admin login page
+     * @param adminPage admin page overview events.
+     * @param editExpensePage edit expense page.
+     * @param debtOverview debt overview page.
+     * @param giveMoney give money page.
      */
+    @SuppressWarnings({"parameterNumber", "MethodLength", "CyclomaticComplexity"})
     public void initialize(Stage primaryStage, Pair<StarterPageCtrl, Parent> starter,
                            Pair<EventPageCtrl, Parent> event, Pair<StatisticsCtrl, Parent> statistics,
                            Pair<AddExpenseCtrl, Parent> expense,
@@ -355,8 +362,6 @@ public class MainCtrl {
     }
 
     /**
-<<<<<<< HEAD
-=======
      * Method for showing the debt page for a specific person.
      * @param person - the person to show the debt page for.
      */
@@ -368,7 +373,6 @@ public class MainCtrl {
     }
 
     /**
->>>>>>> main
      * Method for showing the admin login.
      */
     public void showAdminLogin(){
@@ -403,6 +407,10 @@ public class MainCtrl {
         return selectedEventInstance.getEventId();
     }
 
+    /**
+     * shows alerts.
+     * @param error takes the error that was wrong.
+     */
     public void showAlert(String error) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.initModality(Modality.APPLICATION_MODAL);
@@ -420,6 +428,10 @@ public class MainCtrl {
         primaryStage.setScene(editExpensePage);
     }
 
+    /**
+     * sets all the text in the file to the correct language chosen by the user.
+     * @param resourceBundle the language.
+     */
     public void setLanguageText(ResourceBundle resourceBundle) {
         starterPageCtrl.setLanguageSelector();
         startSettingsCtrl.setLanguageSelector();
@@ -443,7 +455,7 @@ public class MainCtrl {
     /**
      * Method that builds the string representation of a transaction with all the people inside it.
      * @param id of the transaction you want to display.
-     * @return
+     * @return the string representation of the transaction.
      */
     public String transactionString(int id) {
         Transaction t = server.getTransactionByID(id);
@@ -564,4 +576,16 @@ public class MainCtrl {
         primaryStage.setScene(giveMoneyPage);
     }
 
+    /**
+     * handles keyboard presses.
+     * @param button button that is pressed.
+     * @param action action that should happen.
+     */
+    public void handleEnterKeyPress(Button button, Runnable action) {
+        button.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                action.run();
+            }
+        });
+    }
 }
