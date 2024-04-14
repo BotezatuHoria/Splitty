@@ -191,10 +191,14 @@ public class GiveMoneyCtrl implements Initializable {
 
     /**
      * Method that checks that all fields and boxes are filled.
-     * @return
+     * @return true if everything is filled.
      */
     public boolean checkCompleted() {return checkBoxes() && checkFields();}
 
+    /**
+     * checks that all input is correct per box.
+     * @return true if boxes are filled correctly, false otherwise.
+     */
     private boolean checkBoxes() {
         ResourceBundle messages = languageManager.getResourceBundle();
 

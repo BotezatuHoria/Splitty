@@ -56,6 +56,11 @@ public class Main extends Application {
         launch();
     }
 
+    /**
+     *starts the primary stage of app.
+     * @param primaryStage
+     * @throws IOException
+     */
     @Override
     public void start(Stage primaryStage) throws IOException {
 

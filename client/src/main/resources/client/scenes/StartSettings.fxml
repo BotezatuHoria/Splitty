@@ -76,7 +76,7 @@
             </Label>
             <Line endX="464.199951171875" layoutX="135.0" layoutY="348.0" startX="-100.0" />
             <Label fx:id="infoLabel" layoutX="426.0" layoutY="205.0" prefHeight="133.0" prefWidth="174.0" wrapText="true" />
-            <Label fx:id="changeLabel" layoutX="432.0" layoutY="393.0" prefHeight="46.0" prefWidth="180.0" wrapText="true" />
+            <Label fx:id="changeLabel" layoutX="432.0" layoutY="393.0" prefHeight="82.0" prefWidth="174.0" wrapText="true" />
             <Label fx:id="startSettingsLabel" layoutX="201.0" layoutY="67.0" prefHeight="18.0" prefWidth="244.0" text="Please select your language">
                <font>
                   <Font size="20.0" />

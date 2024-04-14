@@ -408,6 +408,10 @@ public class AddExpenseCtrl implements Initializable {
         return false;
     }
 
+    /**
+     * sets all the text in the file to the correct language chosen by the user.
+     * @param resourceBundle the language.
+     */
     public void setLanguageText(ResourceBundle resourceBundle) {
         addExpenseTitle.setText(resourceBundle.getString("title.text"));
         whoPaidLabel.setText(resourceBundle.getString("who.text"));
